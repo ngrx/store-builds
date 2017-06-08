@@ -1,1 +1,1 @@
-e21d688 fix(StoreDevtools): Type InjectionToken for AOT compilation
+015107f refactor(Effects): Simplified AP, added better error reporting and effects stream control
