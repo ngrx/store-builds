@@ -1,1 +1,1 @@
-3459bc5 docs(Effects): Updated documentation for @ngrx/effects (#35)
+069b12f feat(Store): Allow parent modules to provide reducers with tokens (#36)

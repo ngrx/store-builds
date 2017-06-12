@@ -1,4 +1,4 @@
-import { Inject, Injectable, NgModule, OpaqueToken } from '@angular/core';
+import { Inject, Injectable, InjectionToken, NgModule, OpaqueToken } from '@angular/core';
 import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 import { Observable } from 'rxjs/Observable';
 import { Subject } from 'rxjs/Subject';
@@ -139,7 +139,7 @@ class ReducerManager extends BehaviorSubject {
      * @return {?}
      */
     addFeature({ reducers, reducerFactory, initialState, key }) {
-        const /** @type {?} */ reducer = reducerFactory(reducers, initialState);
+        const /** @type {?} */ reducer = typeof reducers === 'function' ? reducers : reducerFactory(reducers, initialState);
         this.addReducer(key, reducer);
     }
     /**
@@ -276,6 +276,80 @@ const STATE_PROVIDERS = [
     { provide: StateObservable, useExisting: State },
 ];
 
+/**
+ * @param {?} t
+ * @return {?}
+ */
+function memoize(t) {
+    let /** @type {?} */ lastArguments = null;
+    let /** @type {?} */ lastResult = null;
+    /**
+     * @return {?}
+     */
+    function reset() {
+        lastArguments = null;
+        lastResult = null;
+    }
+    /**
+     * @return {?}
+     */
+    function memoized() {
+        if (!lastArguments) {
+            lastResult = t.apply(null, arguments);
+            lastArguments = arguments;
+            return lastResult;
+        }
+        for (let /** @type {?} */ i = 0; i < arguments.length; i++) {
+            if (arguments[i] !== lastArguments[i]) {
+                lastResult = t.apply(null, arguments);
+                lastArguments = arguments;
+                return lastResult;
+            }
+        }
+        return lastResult;
+    }
+    return { memoized, reset };
+}
+/**
+ * @param {...?} args
+ * @return {?}
+ */
+function createSelector(...args) {
+    const /** @type {?} */ selectors = args.slice(0, args.length - 1);
+    const /** @type {?} */ projector = args[args.length - 1];
+    const /** @type {?} */ memoizedSelectors = selectors.filter((selector) => selector.release && typeof selector.release === 'function');
+    const { memoized, reset } = memoize(function (state) {
+        const /** @type {?} */ args = selectors.map(fn => fn(state));
+        return projector.apply(null, args);
+    });
+    /**
+     * @return {?}
+     */
+    function release() {
+        reset();
+        memoizedSelectors.forEach(selector => selector.release());
+    }
+    return Object.assign(memoized, { release });
+}
+/**
+ * @template T
+ * @param {?} featureName
+ * @return {?}
+ */
+function createFeatureSelector(featureName) {
+    const { memoized, reset } = memoize(function (state) {
+        return state[featureName];
+    });
+    return Object.assign(memoized, { release: reset });
+}
+/**
+ * @param {?} v
+ * @return {?}
+ */
+function isSelector(v) {
+    return typeof v === 'function' && v.release && typeof v.release === 'function';
+}
+
 class Store extends Observable {
     /**
      * @param {?} state$
@@ -298,8 +372,11 @@ class Store extends Observable {
         if (typeof pathOrMapFn === 'string') {
             mapped$ = pluck.call(this, pathOrMapFn, ...paths);
         }
-        else if (typeof pathOrMapFn === 'function') {
+        else if (typeof pathOrMapFn === 'function' && isSelector(pathOrMapFn)) {
             mapped$ = map.call(this, pathOrMapFn);
+        }
+        else if (typeof pathOrMapFn === 'function') {
+            mapped$ = map.call(this, createSelector(s => s, pathOrMapFn));
         }
         else {
             throw new TypeError(`Unexpected type '${typeof pathOrMapFn}' in select operator,`
@@ -425,7 +502,7 @@ class StoreModule {
             ngModule: StoreRootModule,
             providers: [
                 { provide: INITIAL_STATE, useValue: config.initialState },
-                { provide: INITIAL_REDUCERS, useValue: reducers },
+                reducers instanceof InjectionToken ? { provide: INITIAL_REDUCERS, useExisting: reducers } : { provide: INITIAL_REDUCERS, useValue: reducers },
                 { provide: REDUCER_FACTORY, useValue: config.reducerFactory ? config.reducerFactory : combineReducers },
                 ACTIONS_SUBJECT_PROVIDERS,
                 REDUCER_MANAGER_PROVIDERS,
@@ -466,73 +543,6 @@ StoreModule.decorators = [
  * @nocollapse
  */
 StoreModule.ctorParameters = () => [];
-
-/**
- * @param {?} t
- * @return {?}
- */
-function memoize(t) {
-    let /** @type {?} */ lastArguments = null;
-    let /** @type {?} */ lastResult = null;
-    /**
-     * @return {?}
-     */
-    function reset() {
-        lastArguments = null;
-        lastResult = null;
-    }
-    /**
-     * @return {?}
-     */
-    function memoized() {
-        if (!lastArguments) {
-            lastResult = t.apply(null, arguments);
-            lastArguments = arguments;
-            return lastResult;
-        }
-        for (let /** @type {?} */ i = 0; i < arguments.length; i++) {
-            if (arguments[i] !== lastArguments[i]) {
-                lastResult = t.apply(null, arguments);
-                lastArguments = arguments;
-                return lastResult;
-            }
-        }
-        return lastResult;
-    }
-    return { memoized, reset };
-}
-/**
- * @param {...?} args
- * @return {?}
- */
-function createSelector(...args) {
-    const /** @type {?} */ selectors = args.slice(0, args.length - 1);
-    const /** @type {?} */ projector = args[args.length - 1];
-    const /** @type {?} */ memoizedSelectors = selectors.filter((selector) => selector.release && typeof selector.release === 'function');
-    const { memoized, reset } = memoize(function (state) {
-        const /** @type {?} */ args = selectors.map(fn => fn(state));
-        return projector.apply(null, args);
-    });
-    /**
-     * @return {?}
-     */
-    function release() {
-        reset();
-        memoizedSelectors.forEach(selector => selector.release());
-    }
-    return Object.assign(memoized, { release });
-}
-/**
- * @template T
- * @param {?} featureName
- * @return {?}
- */
-function createFeatureSelector(featureName) {
-    const { memoized, reset } = memoize(function (state) {
-        return state[featureName];
-    });
-    return Object.assign(memoized, { release: reset });
-}
 
 /**
  * Generated bundle index. Do not edit.

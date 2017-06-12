@@ -161,7 +161,7 @@ var ReducerManager = (function (_super) {
      */
     ReducerManager.prototype.addFeature = function (_a) {
         var reducers = _a.reducers, reducerFactory = _a.reducerFactory, initialState = _a.initialState, key = _a.key;
-        var /** @type {?} */ reducer = reducerFactory(reducers, initialState);
+        var /** @type {?} */ reducer = typeof reducers === 'function' ? reducers : reducerFactory(reducers, initialState);
         this.addReducer(key, reducer);
     };
     /**
@@ -314,6 +314,83 @@ var STATE_PROVIDERS = [
     State,
     { provide: StateObservable, useExisting: State },
 ];
+/**
+ * @param {?} t
+ * @return {?}
+ */
+function memoize(t) {
+    var /** @type {?} */ lastArguments = null;
+    var /** @type {?} */ lastResult = null;
+    /**
+     * @return {?}
+     */
+    function reset() {
+        lastArguments = null;
+        lastResult = null;
+    }
+    /**
+     * @return {?}
+     */
+    function memoized() {
+        if (!lastArguments) {
+            lastResult = t.apply(null, arguments);
+            lastArguments = arguments;
+            return lastResult;
+        }
+        for (var /** @type {?} */ i = 0; i < arguments.length; i++) {
+            if (arguments[i] !== lastArguments[i]) {
+                lastResult = t.apply(null, arguments);
+                lastArguments = arguments;
+                return lastResult;
+            }
+        }
+        return lastResult;
+    }
+    return { memoized: memoized, reset: reset };
+}
+/**
+ * @param {...?} args
+ * @return {?}
+ */
+function createSelector() {
+    var args = [];
+    for (var _i = 0; _i < arguments.length; _i++) {
+        args[_i] = arguments[_i];
+    }
+    var /** @type {?} */ selectors = args.slice(0, args.length - 1);
+    var /** @type {?} */ projector = args[args.length - 1];
+    var /** @type {?} */ memoizedSelectors = selectors.filter(function (selector) { return selector.release && typeof selector.release === 'function'; });
+    var _a = memoize(function (state) {
+        var /** @type {?} */ args = selectors.map(function (fn) { return fn(state); });
+        return projector.apply(null, args);
+    }), memoized = _a.memoized, reset = _a.reset;
+    /**
+     * @return {?}
+     */
+    function release() {
+        reset();
+        memoizedSelectors.forEach(function (selector) { return selector.release(); });
+    }
+    return Object.assign(memoized, { release: release });
+}
+/**
+ * @template T
+ * @param {?} featureName
+ * @return {?}
+ */
+function createFeatureSelector(featureName) {
+    var _a = memoize(function (state) {
+        return state[featureName];
+    }), memoized = _a.memoized, reset = _a.reset;
+    return Object.assign(memoized, { release: reset });
+}
+/**
+ * @param {?} v
+ * @return {?}
+ */
+function isSelector(v) {
+    return typeof v === 'function' && v.release && typeof v.release === 'function';
+}
 var Store = (function (_super) {
     __extends(Store, _super);
     /**
@@ -342,8 +419,11 @@ var Store = (function (_super) {
         if (typeof pathOrMapFn === 'string') {
             mapped$ = rxjs_operator_pluck.pluck.call.apply(rxjs_operator_pluck.pluck, [this, pathOrMapFn].concat(paths));
         }
-        else if (typeof pathOrMapFn === 'function') {
+        else if (typeof pathOrMapFn === 'function' && isSelector(pathOrMapFn)) {
             mapped$ = rxjs_operator_map.map.call(this, pathOrMapFn);
+        }
+        else if (typeof pathOrMapFn === 'function') {
+            mapped$ = rxjs_operator_map.map.call(this, createSelector(function (s) { return s; }, pathOrMapFn));
         }
         else {
             throw new TypeError("Unexpected type '" + typeof pathOrMapFn + "' in select operator,"
@@ -477,7 +557,7 @@ var StoreModule = (function () {
             ngModule: StoreRootModule,
             providers: [
                 { provide: INITIAL_STATE, useValue: config.initialState },
-                { provide: INITIAL_REDUCERS, useValue: reducers },
+                reducers instanceof _angular_core.InjectionToken ? { provide: INITIAL_REDUCERS, useExisting: reducers } : { provide: INITIAL_REDUCERS, useValue: reducers },
                 { provide: REDUCER_FACTORY, useValue: config.reducerFactory ? config.reducerFactory : combineReducers },
                 ACTIONS_SUBJECT_PROVIDERS,
                 REDUCER_MANAGER_PROVIDERS,
@@ -520,76 +600,6 @@ StoreModule.decorators = [
  * @nocollapse
  */
 StoreModule.ctorParameters = function () { return []; };
-/**
- * @param {?} t
- * @return {?}
- */
-function memoize(t) {
-    var /** @type {?} */ lastArguments = null;
-    var /** @type {?} */ lastResult = null;
-    /**
-     * @return {?}
-     */
-    function reset() {
-        lastArguments = null;
-        lastResult = null;
-    }
-    /**
-     * @return {?}
-     */
-    function memoized() {
-        if (!lastArguments) {
-            lastResult = t.apply(null, arguments);
-            lastArguments = arguments;
-            return lastResult;
-        }
-        for (var /** @type {?} */ i = 0; i < arguments.length; i++) {
-            if (arguments[i] !== lastArguments[i]) {
-                lastResult = t.apply(null, arguments);
-                lastArguments = arguments;
-                return lastResult;
-            }
-        }
-        return lastResult;
-    }
-    return { memoized: memoized, reset: reset };
-}
-/**
- * @param {...?} args
- * @return {?}
- */
-function createSelector() {
-    var args = [];
-    for (var _i = 0; _i < arguments.length; _i++) {
-        args[_i] = arguments[_i];
-    }
-    var /** @type {?} */ selectors = args.slice(0, args.length - 1);
-    var /** @type {?} */ projector = args[args.length - 1];
-    var /** @type {?} */ memoizedSelectors = selectors.filter(function (selector) { return selector.release && typeof selector.release === 'function'; });
-    var _a = memoize(function (state) {
-        var /** @type {?} */ args = selectors.map(function (fn) { return fn(state); });
-        return projector.apply(null, args);
-    }), memoized = _a.memoized, reset = _a.reset;
-    /**
-     * @return {?}
-     */
-    function release() {
-        reset();
-        memoizedSelectors.forEach(function (selector) { return selector.release(); });
-    }
-    return Object.assign(memoized, { release: release });
-}
-/**
- * @template T
- * @param {?} featureName
- * @return {?}
- */
-function createFeatureSelector(featureName) {
-    var _a = memoize(function (state) {
-        return state[featureName];
-    }), memoized = _a.memoized, reset = _a.reset;
-    return Object.assign(memoized, { release: reset });
-}
 
 exports.StoreModule = StoreModule;
 exports.Store = Store;

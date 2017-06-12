@@ -1,5 +1,5 @@
-import { ModuleWithProviders, OnDestroy } from '@angular/core';
-import { Action, ActionReducerMap, ActionReducerFactory, StoreFeature } from './models';
+import { ModuleWithProviders, OnDestroy, InjectionToken } from '@angular/core';
+import { Action, ActionReducer, ActionReducerMap, ActionReducerFactory, StoreFeature } from './models';
 import { ReducerManager } from './reducer_manager';
 export declare class StoreRootModule {
 }
@@ -14,6 +14,7 @@ export declare type StoreConfig<T, V extends Action = Action> = {
     reducerFactory?: ActionReducerFactory<T, V>;
 };
 export declare class StoreModule {
-    static forRoot<T, V extends Action = Action>(reducers: ActionReducerMap<T, V>, config?: StoreConfig<T, V>): ModuleWithProviders;
+    static forRoot<T, V extends Action = Action>(reducers: ActionReducerMap<T, V> | InjectionToken<ActionReducerMap<T, V>>, config?: StoreConfig<T, V>): ModuleWithProviders;
     static forFeature<T, V extends Action = Action>(featureName: string, reducers: ActionReducerMap<T, V>, config?: StoreConfig<T, V>): ModuleWithProviders;
+    static forFeature<T, V extends Action = Action>(featureName: string, reducer: ActionReducer<T, V>, config?: StoreConfig<T, V>): ModuleWithProviders;
 }
