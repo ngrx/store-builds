@@ -1,1 +1,1 @@
-0be1bee docs(Effects): Updated migration guide for @ngrx/effects (#38)
+931adb1 fix(Effects): Start child effects after running root effects (#43)
