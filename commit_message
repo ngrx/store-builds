@@ -1,1 +1,1 @@
-931adb1 fix(Effects): Start child effects after running root effects (#43)
+1f67cb3 feat(router-store): Added action types (#47)
