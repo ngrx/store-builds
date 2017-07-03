@@ -1,1 +1,1 @@
-1f67cb3 feat(router-store): Added action types (#47)
+b90df34 fix(Devtools): Removed SHOULD_INSTRUMENT token used to eagerly inject providers (#57)
