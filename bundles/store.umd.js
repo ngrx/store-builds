@@ -73,6 +73,10 @@ function compose() {
         return rest.reduceRight(function (composed, fn) { return fn(composed); }, last(arg));
     };
 }
+/**
+ * \@internal
+ */
+var _INITIAL_STATE = new _angular_core.OpaqueToken('_ngrx/store Initial State');
 var INITIAL_STATE = new _angular_core.OpaqueToken('@ngrx/store Initial State');
 var REDUCER_FACTORY = new _angular_core.OpaqueToken('@ngrx/store Reducer Factory');
 var INITIAL_REDUCERS = new _angular_core.OpaqueToken('@ngrx/store Initial Reducers');
@@ -556,7 +560,8 @@ var StoreModule = (function () {
         return {
             ngModule: StoreRootModule,
             providers: [
-                { provide: INITIAL_STATE, useValue: config.initialState },
+                { provide: _INITIAL_STATE, useValue: config.initialState },
+                { provide: INITIAL_STATE, useFactory: _initialStateFactory, deps: [_INITIAL_STATE] },
                 reducers instanceof _angular_core.InjectionToken ? { provide: INITIAL_REDUCERS, useExisting: reducers } : { provide: INITIAL_REDUCERS, useValue: reducers },
                 { provide: REDUCER_FACTORY, useValue: config.reducerFactory ? config.reducerFactory : combineReducers },
                 ACTIONS_SUBJECT_PROVIDERS,
@@ -600,6 +605,17 @@ StoreModule.decorators = [
  * @nocollapse
  */
 StoreModule.ctorParameters = function () { return []; };
+/**
+ * \@internal
+ * @param {?} initialState
+ * @return {?}
+ */
+function _initialStateFactory(initialState) {
+    if (typeof initialState === 'function') {
+        return initialState();
+    }
+    return initialState;
+}
 
 exports.StoreModule = StoreModule;
 exports.Store = Store;
@@ -623,11 +639,13 @@ exports.INITIAL_REDUCERS = INITIAL_REDUCERS;
 exports.STORE_FEATURES = STORE_FEATURES;
 exports.StoreRootModule = StoreRootModule;
 exports.StoreFeatureModule = StoreFeatureModule;
-exports.ɵc = ACTIONS_SUBJECT_PROVIDERS;
-exports.ɵd = REDUCER_MANAGER_PROVIDERS;
-exports.ɵe = SCANNED_ACTIONS_SUBJECT_PROVIDERS;
-exports.ɵf = STATE_PROVIDERS;
-exports.ɵb = STORE_PROVIDERS;
+exports.ɵd = ACTIONS_SUBJECT_PROVIDERS;
+exports.ɵe = REDUCER_MANAGER_PROVIDERS;
+exports.ɵf = SCANNED_ACTIONS_SUBJECT_PROVIDERS;
+exports.ɵg = STATE_PROVIDERS;
+exports.ɵc = STORE_PROVIDERS;
+exports.ɵb = _initialStateFactory;
+exports.ɵh = _INITIAL_STATE;
 
 Object.defineProperty(exports, '__esModule', { value: true });
 

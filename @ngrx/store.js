@@ -64,6 +64,10 @@ function compose(...functions) {
     };
 }
 
+/**
+ * \@internal
+ */
+const _INITIAL_STATE = new OpaqueToken('_ngrx/store Initial State');
 const INITIAL_STATE = new OpaqueToken('@ngrx/store Initial State');
 const REDUCER_FACTORY = new OpaqueToken('@ngrx/store Reducer Factory');
 const INITIAL_REDUCERS = new OpaqueToken('@ngrx/store Initial Reducers');
@@ -501,7 +505,8 @@ class StoreModule {
         return {
             ngModule: StoreRootModule,
             providers: [
-                { provide: INITIAL_STATE, useValue: config.initialState },
+                { provide: _INITIAL_STATE, useValue: config.initialState },
+                { provide: INITIAL_STATE, useFactory: _initialStateFactory, deps: [_INITIAL_STATE] },
                 reducers instanceof InjectionToken ? { provide: INITIAL_REDUCERS, useExisting: reducers } : { provide: INITIAL_REDUCERS, useValue: reducers },
                 { provide: REDUCER_FACTORY, useValue: config.reducerFactory ? config.reducerFactory : combineReducers },
                 ACTIONS_SUBJECT_PROVIDERS,
@@ -543,10 +548,21 @@ StoreModule.decorators = [
  * @nocollapse
  */
 StoreModule.ctorParameters = () => [];
+/**
+ * \@internal
+ * @param {?} initialState
+ * @return {?}
+ */
+function _initialStateFactory(initialState) {
+    if (typeof initialState === 'function') {
+        return initialState();
+    }
+    return initialState;
+}
 
 /**
  * Generated bundle index. Do not edit.
  */
 
-export { StoreModule, Store, combineReducers, compose, ActionsSubject, INIT, ReducerManager, ReducerObservable, ReducerManagerDispatcher, UPDATE, ScannedActionsSubject, createSelector, createFeatureSelector, State, StateObservable, reduceState, INITIAL_STATE, REDUCER_FACTORY, INITIAL_REDUCERS, STORE_FEATURES, StoreRootModule, StoreFeatureModule, ACTIONS_SUBJECT_PROVIDERS as ɵc, REDUCER_MANAGER_PROVIDERS as ɵd, SCANNED_ACTIONS_SUBJECT_PROVIDERS as ɵe, STATE_PROVIDERS as ɵf, STORE_PROVIDERS as ɵb };
+export { StoreModule, Store, combineReducers, compose, ActionsSubject, INIT, ReducerManager, ReducerObservable, ReducerManagerDispatcher, UPDATE, ScannedActionsSubject, createSelector, createFeatureSelector, State, StateObservable, reduceState, INITIAL_STATE, REDUCER_FACTORY, INITIAL_REDUCERS, STORE_FEATURES, StoreRootModule, StoreFeatureModule, ACTIONS_SUBJECT_PROVIDERS as ɵd, REDUCER_MANAGER_PROVIDERS as ɵe, SCANNED_ACTIONS_SUBJECT_PROVIDERS as ɵf, STATE_PROVIDERS as ɵg, STORE_PROVIDERS as ɵc, _initialStateFactory as ɵb, _INITIAL_STATE as ɵh };
 //# sourceMappingURL=store.js.map
