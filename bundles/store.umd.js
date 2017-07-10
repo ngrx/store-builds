@@ -73,9 +73,6 @@ function compose() {
         return rest.reduceRight(function (composed, fn) { return fn(composed); }, last(arg));
     };
 }
-/**
- * \@internal
- */
 var _INITIAL_STATE = new _angular_core.OpaqueToken('_ngrx/store Initial State');
 var INITIAL_STATE = new _angular_core.OpaqueToken('@ngrx/store Initial State');
 var REDUCER_FACTORY = new _angular_core.OpaqueToken('@ngrx/store Reducer Factory');
@@ -606,7 +603,6 @@ StoreModule.decorators = [
  */
 StoreModule.ctorParameters = function () { return []; };
 /**
- * \@internal
  * @param {?} initialState
  * @return {?}
  */
@@ -637,15 +633,15 @@ exports.INITIAL_STATE = INITIAL_STATE;
 exports.REDUCER_FACTORY = REDUCER_FACTORY;
 exports.INITIAL_REDUCERS = INITIAL_REDUCERS;
 exports.STORE_FEATURES = STORE_FEATURES;
+exports._INITIAL_STATE = _INITIAL_STATE;
 exports.StoreRootModule = StoreRootModule;
 exports.StoreFeatureModule = StoreFeatureModule;
-exports.ɵd = ACTIONS_SUBJECT_PROVIDERS;
-exports.ɵe = REDUCER_MANAGER_PROVIDERS;
-exports.ɵf = SCANNED_ACTIONS_SUBJECT_PROVIDERS;
-exports.ɵg = STATE_PROVIDERS;
-exports.ɵc = STORE_PROVIDERS;
-exports.ɵb = _initialStateFactory;
-exports.ɵh = _INITIAL_STATE;
+exports._initialStateFactory = _initialStateFactory;
+exports.ɵc = ACTIONS_SUBJECT_PROVIDERS;
+exports.ɵd = REDUCER_MANAGER_PROVIDERS;
+exports.ɵe = SCANNED_ACTIONS_SUBJECT_PROVIDERS;
+exports.ɵf = STATE_PROVIDERS;
+exports.ɵb = STORE_PROVIDERS;
 
 Object.defineProperty(exports, '__esModule', { value: true });
 

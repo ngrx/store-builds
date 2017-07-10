@@ -78,9 +78,6 @@ function compose() {
         return rest.reduceRight(function (composed, fn) { return fn(composed); }, last(arg));
     };
 }
-/**
- * \@internal
- */
 var _INITIAL_STATE = new OpaqueToken('_ngrx/store Initial State');
 var INITIAL_STATE = new OpaqueToken('@ngrx/store Initial State');
 var REDUCER_FACTORY = new OpaqueToken('@ngrx/store Reducer Factory');
@@ -611,7 +608,6 @@ StoreModule.decorators = [
  */
 StoreModule.ctorParameters = function () { return []; };
 /**
- * \@internal
  * @param {?} initialState
  * @return {?}
  */
@@ -624,5 +620,5 @@ function _initialStateFactory(initialState) {
 /**
  * Generated bundle index. Do not edit.
  */
-export { StoreModule, Store, combineReducers, compose, ActionsSubject, INIT, ReducerManager, ReducerObservable, ReducerManagerDispatcher, UPDATE, ScannedActionsSubject, createSelector, createFeatureSelector, State, StateObservable, reduceState, INITIAL_STATE, REDUCER_FACTORY, INITIAL_REDUCERS, STORE_FEATURES, StoreRootModule, StoreFeatureModule, ACTIONS_SUBJECT_PROVIDERS as ɵd, REDUCER_MANAGER_PROVIDERS as ɵe, SCANNED_ACTIONS_SUBJECT_PROVIDERS as ɵf, STATE_PROVIDERS as ɵg, STORE_PROVIDERS as ɵc, _initialStateFactory as ɵb, _INITIAL_STATE as ɵh };
+export { StoreModule, Store, combineReducers, compose, ActionsSubject, INIT, ReducerManager, ReducerObservable, ReducerManagerDispatcher, UPDATE, ScannedActionsSubject, createSelector, createFeatureSelector, State, StateObservable, reduceState, INITIAL_STATE, REDUCER_FACTORY, INITIAL_REDUCERS, STORE_FEATURES, _INITIAL_STATE, StoreRootModule, StoreFeatureModule, _initialStateFactory, ACTIONS_SUBJECT_PROVIDERS as ɵc, REDUCER_MANAGER_PROVIDERS as ɵd, SCANNED_ACTIONS_SUBJECT_PROVIDERS as ɵe, STATE_PROVIDERS as ɵf, STORE_PROVIDERS as ɵb };
 //# sourceMappingURL=store.es5.js.map

@@ -1,1 +1,1 @@
-1a166ec feat(Store): Allow initial state function for AoT compatibility (#59)
+4b27b6d fix(Store): Exported initial state tokens (#65)
