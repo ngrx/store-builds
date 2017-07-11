@@ -1,1 +1,1 @@
-4b27b6d fix(Store): Exported initial state tokens (#65)
+84beffe refactor(Build): Parallelize cp.exec and add mangle flag to uglify (#66)
