@@ -6,7 +6,7 @@ import { Action, ActionReducer } from './models';
 import { ActionsSubject } from './actions_subject';
 import { StateObservable } from './state';
 import { ReducerManager } from './reducer_manager';
-export declare class Store<T> extends Observable<Readonly<T>> implements Observer<Action> {
+export declare class Store<T> extends Observable<T> implements Observer<Action> {
     private actionsObserver;
     private reducerManager;
     constructor(state$: StateObservable, actionsObserver: ActionsSubject, reducerManager: ReducerManager);

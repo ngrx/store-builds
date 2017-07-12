@@ -1,1 +1,1 @@
-3982038 fix(omit): Strengthen the type checking of the omit utility function
+68274c9 fix(Store): Removed readonly from type (#72)
