@@ -513,7 +513,12 @@ var STORE_PROVIDERS = [
     Store
 ];
 var StoreRootModule = (function () {
-    function StoreRootModule() {
+    /**
+     * @param {?} actions$
+     * @param {?} reducer$
+     * @param {?} scannedActions$
+     */
+    function StoreRootModule(actions$, reducer$, scannedActions$) {
     }
     return StoreRootModule;
 }());
@@ -523,7 +528,11 @@ StoreRootModule.decorators = [
 /**
  * @nocollapse
  */
-StoreRootModule.ctorParameters = function () { return []; };
+StoreRootModule.ctorParameters = function () { return [
+    { type: ActionsSubject, },
+    { type: ReducerObservable, },
+    { type: ScannedActionsSubject, },
+]; };
 var StoreFeatureModule = (function () {
     /**
      * @param {?} features

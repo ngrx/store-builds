@@ -1,7 +1,7 @@
 (function (global, factory) {
 	typeof exports === 'object' && typeof module !== 'undefined' ? factory(exports, require('@angular/core'), require('rxjs/BehaviorSubject'), require('rxjs/Observable'), require('rxjs/Subject'), require('rxjs/scheduler/queue'), require('rxjs/operator/observeOn'), require('rxjs/operator/withLatestFrom'), require('rxjs/operator/scan'), require('rxjs/operator/map'), require('rxjs/operator/pluck'), require('rxjs/operator/distinctUntilChanged')) :
 	typeof define === 'function' && define.amd ? define(['exports', '@angular/core', 'rxjs/BehaviorSubject', 'rxjs/Observable', 'rxjs/Subject', 'rxjs/scheduler/queue', 'rxjs/operator/observeOn', 'rxjs/operator/withLatestFrom', 'rxjs/operator/scan', 'rxjs/operator/map', 'rxjs/operator/pluck', 'rxjs/operator/distinctUntilChanged'], factory) :
-	(factory((global.ngrx = global.ngrx || {}, global.ngrx.store = {}),global.ng.core,global.Rx,global.Rx,global.Rx,global.Rx.Scheduler,global.Rx.Observable.prototype,global.Rx.Observable,global.Rx.Observable.prototype,global.Rx.Observable.prototype,global.Rx.Observable.prototype,global.Rx.Observable.prototype));
+	(factory((global.ngrx = global.ngrx || {}, global.ngrx.store = global.ngrx.store || {}),global.ng.core,global.Rx,global.Rx,global.Rx,global.Rx.Scheduler,global.Rx.Observable.prototype,global.Rx.Observable,global.Rx.Observable.prototype,global.Rx.Observable.prototype,global.Rx.Observable.prototype,global.Rx.Observable.prototype));
 }(this, (function (exports,_angular_core,rxjs_BehaviorSubject,rxjs_Observable,rxjs_Subject,rxjs_scheduler_queue,rxjs_operator_observeOn,rxjs_operator_withLatestFrom,rxjs_operator_scan,rxjs_operator_map,rxjs_operator_pluck,rxjs_operator_distinctUntilChanged) { 'use strict';
 
 var __extends = (undefined && undefined.__extends) || (function () {
@@ -508,7 +508,12 @@ var STORE_PROVIDERS = [
     Store
 ];
 var StoreRootModule = (function () {
-    function StoreRootModule() {
+    /**
+     * @param {?} actions$
+     * @param {?} reducer$
+     * @param {?} scannedActions$
+     */
+    function StoreRootModule(actions$, reducer$, scannedActions$) {
     }
     return StoreRootModule;
 }());
@@ -518,7 +523,11 @@ StoreRootModule.decorators = [
 /**
  * @nocollapse
  */
-StoreRootModule.ctorParameters = function () { return []; };
+StoreRootModule.ctorParameters = function () { return [
+    { type: ActionsSubject, },
+    { type: ReducerObservable, },
+    { type: ScannedActionsSubject, },
+]; };
 var StoreFeatureModule = (function () {
     /**
      * @param {?} features

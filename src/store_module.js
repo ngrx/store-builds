@@ -1,12 +1,19 @@
 import { NgModule, Inject, InjectionToken } from '@angular/core';
 import { combineReducers } from './utils';
 import { INITIAL_STATE, INITIAL_REDUCERS, REDUCER_FACTORY, STORE_FEATURES, _INITIAL_STATE } from './tokens';
-import { ACTIONS_SUBJECT_PROVIDERS } from './actions_subject';
-import { REDUCER_MANAGER_PROVIDERS, ReducerManager } from './reducer_manager';
-import { SCANNED_ACTIONS_SUBJECT_PROVIDERS } from './scanned_actions_subject';
+import { ACTIONS_SUBJECT_PROVIDERS, ActionsSubject } from './actions_subject';
+import { REDUCER_MANAGER_PROVIDERS, ReducerManager, ReducerObservable } from './reducer_manager';
+import { SCANNED_ACTIONS_SUBJECT_PROVIDERS, ScannedActionsSubject } from './scanned_actions_subject';
 import { STATE_PROVIDERS } from './state';
 import { STORE_PROVIDERS } from './store';
 export class StoreRootModule {
+    /**
+     * @param {?} actions$
+     * @param {?} reducer$
+     * @param {?} scannedActions$
+     */
+    constructor(actions$, reducer$, scannedActions$) {
+    }
 }
 StoreRootModule.decorators = [
     { type: NgModule, args: [{},] },
@@ -14,7 +21,11 @@ StoreRootModule.decorators = [
 /**
  * @nocollapse
  */
-StoreRootModule.ctorParameters = () => [];
+StoreRootModule.ctorParameters = () => [
+    { type: ActionsSubject, },
+    { type: ReducerObservable, },
+    { type: ScannedActionsSubject, },
+];
 function StoreRootModule_tsickle_Closure_declarations() {
     /** @type {?} */
     StoreRootModule.decorators;

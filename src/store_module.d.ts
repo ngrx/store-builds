@@ -1,7 +1,10 @@
 import { ModuleWithProviders, OnDestroy, InjectionToken } from '@angular/core';
 import { Action, ActionReducer, ActionReducerMap, ActionReducerFactory, StoreFeature, InitialState } from './models';
-import { ReducerManager } from './reducer_manager';
+import { ActionsSubject } from './actions_subject';
+import { ReducerManager, ReducerObservable } from './reducer_manager';
+import { ScannedActionsSubject } from './scanned_actions_subject';
 export declare class StoreRootModule {
+    constructor(actions$: ActionsSubject, reducer$: ReducerObservable, scannedActions$: ScannedActionsSubject);
 }
 export declare class StoreFeatureModule implements OnDestroy {
     private features;

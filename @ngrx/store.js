@@ -458,6 +458,13 @@ const STORE_PROVIDERS = [
 ];
 
 class StoreRootModule {
+    /**
+     * @param {?} actions$
+     * @param {?} reducer$
+     * @param {?} scannedActions$
+     */
+    constructor(actions$, reducer$, scannedActions$) {
+    }
 }
 StoreRootModule.decorators = [
     { type: NgModule, args: [{},] },
@@ -465,7 +472,11 @@ StoreRootModule.decorators = [
 /**
  * @nocollapse
  */
-StoreRootModule.ctorParameters = () => [];
+StoreRootModule.ctorParameters = () => [
+    { type: ActionsSubject, },
+    { type: ReducerObservable, },
+    { type: ScannedActionsSubject, },
+];
 class StoreFeatureModule {
     /**
      * @param {?} features
