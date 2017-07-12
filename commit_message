@@ -1,1 +1,1 @@
-d176a11 fix(Effects): Use Actions generic type for the return of the ofType operator
+7dbb571 feat(Effects): Introduce new Effects testing module (#70)

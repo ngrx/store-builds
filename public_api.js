@@ -1,0 +1,2 @@
+export { StoreModule, Store, combineReducers, compose, ActionsSubject, INIT, ReducerManager, ReducerObservable, ReducerManagerDispatcher, UPDATE, ScannedActionsSubject, createSelector, createFeatureSelector, State, StateObservable, reduceState, INITIAL_STATE, REDUCER_FACTORY, INITIAL_REDUCERS, STORE_FEATURES, _INITIAL_STATE, StoreRootModule, StoreFeatureModule, _initialStateFactory } from './src/index';
+//# sourceMappingURL=public_api.js.map
