@@ -1,1 +1,1 @@
-84beffe refactor(Build): Parallelize cp.exec and add mangle flag to uglify (#66)
+d176a11 fix(Effects): Use Actions generic type for the return of the ofType operator
