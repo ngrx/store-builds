@@ -46,6 +46,7 @@ function combineReducers(reducers, initialState) {
     };
 }
 /**
+ * @template T
  * @param {?} object
  * @param {?} keyToRemove
  * @return {?}
@@ -53,7 +54,10 @@ function combineReducers(reducers, initialState) {
 function omit(object, keyToRemove) {
     return Object.keys(object)
         .filter(function (key) { return key !== keyToRemove; })
-        .reduce(function (result, key) { return ((result))[key] = object[key]; }, {});
+        .reduce(function (result, key) {
+        return Object.assign(result, (_a = {}, _a[key] = object[key], _a));
+        var _a;
+    }, {});
 }
 /**
  * @param {...?} functions

@@ -40,6 +40,7 @@ function combineReducers(reducers, initialState = {}) {
     };
 }
 /**
+ * @template T
  * @param {?} object
  * @param {?} keyToRemove
  * @return {?}
@@ -47,7 +48,7 @@ function combineReducers(reducers, initialState = {}) {
 function omit(object, keyToRemove) {
     return Object.keys(object)
         .filter(key => key !== keyToRemove)
-        .reduce((result, key) => ((result))[key] = object[key], {});
+        .reduce((result, key) => Object.assign(result, { [key]: object[key] }), {});
 }
 /**
  * @param {...?} functions
