@@ -109,7 +109,9 @@ var ActionsSubject = (function (_super) {
     /**
      * @return {?}
      */
-    ActionsSubject.prototype.complete = function () { };
+    ActionsSubject.prototype.complete = function () {
+        /* noop */
+    };
     /**
      * @return {?}
      */
@@ -125,9 +127,7 @@ ActionsSubject.decorators = [
  * @nocollapse
  */
 ActionsSubject.ctorParameters = function () { return []; };
-var ACTIONS_SUBJECT_PROVIDERS = [
-    ActionsSubject
-];
+var ACTIONS_SUBJECT_PROVIDERS = [ActionsSubject];
 /**
  * @abstract
  */
@@ -171,7 +171,9 @@ var ReducerManager = (function (_super) {
      */
     ReducerManager.prototype.addFeature = function (_a) {
         var reducers = _a.reducers, reducerFactory = _a.reducerFactory, initialState = _a.initialState, key = _a.key;
-        var /** @type {?} */ reducer = typeof reducers === 'function' ? reducers : reducerFactory(reducers, initialState);
+        var /** @type {?} */ reducer = typeof reducers === 'function'
+            ? reducers
+            : reducerFactory(reducers, initialState);
         this.addReducer(key, reducer);
     };
     /**
@@ -283,7 +285,7 @@ var State = (function (_super) {
                 var state = _a.state, action = _a.action;
                 _this.next(state);
                 scannedActions.next(action);
-            }
+            },
         });
         return _this;
     }
@@ -399,7 +401,7 @@ function createFeatureSelector(featureName) {
  * @return {?}
  */
 function isSelector(v) {
-    return typeof v === 'function' && v.release && typeof v.release === 'function';
+    return (typeof v === 'function' && v.release && typeof v.release === 'function');
 }
 var Store = (function (_super) {
     __extends(Store, _super);
@@ -436,8 +438,8 @@ var Store = (function (_super) {
             mapped$ = map.call(this, createSelector(function (s) { return s; }, pathOrMapFn));
         }
         else {
-            throw new TypeError("Unexpected type '" + typeof pathOrMapFn + "' in select operator,"
-                + " expected 'string' or 'function'");
+            throw new TypeError("Unexpected type '" + typeof pathOrMapFn + "' in select operator," +
+                " expected 'string' or 'function'");
         }
         return distinctUntilChanged.call(mapped$);
     };
@@ -509,9 +511,7 @@ Store.ctorParameters = function () { return [
     { type: ActionsSubject, },
     { type: ReducerManager, },
 ]; };
-var STORE_PROVIDERS = [
-    Store
-];
+var STORE_PROVIDERS = [Store];
 var StoreRootModule = (function () {
     /**
      * @param {?} actions$
@@ -576,15 +576,26 @@ var StoreModule = (function () {
             ngModule: StoreRootModule,
             providers: [
                 { provide: _INITIAL_STATE, useValue: config.initialState },
-                { provide: INITIAL_STATE, useFactory: _initialStateFactory, deps: [_INITIAL_STATE] },
-                reducers instanceof InjectionToken ? { provide: INITIAL_REDUCERS, useExisting: reducers } : { provide: INITIAL_REDUCERS, useValue: reducers },
-                { provide: REDUCER_FACTORY, useValue: config.reducerFactory ? config.reducerFactory : combineReducers },
+                {
+                    provide: INITIAL_STATE,
+                    useFactory: _initialStateFactory,
+                    deps: [_INITIAL_STATE],
+                },
+                reducers instanceof InjectionToken
+                    ? { provide: INITIAL_REDUCERS, useExisting: reducers }
+                    : { provide: INITIAL_REDUCERS, useValue: reducers },
+                {
+                    provide: REDUCER_FACTORY,
+                    useValue: config.reducerFactory
+                        ? config.reducerFactory
+                        : combineReducers,
+                },
                 ACTIONS_SUBJECT_PROVIDERS,
                 REDUCER_MANAGER_PROVIDERS,
                 SCANNED_ACTIONS_SUBJECT_PROVIDERS,
                 STATE_PROVIDERS,
                 STORE_PROVIDERS,
-            ]
+            ],
         };
     };
     /**
@@ -604,11 +615,13 @@ var StoreModule = (function () {
                     useValue: /** @type {?} */ ({
                         key: featureName,
                         reducers: reducers,
-                        reducerFactory: config.reducerFactory ? config.reducerFactory : combineReducers,
-                        initialState: config.initialState
-                    })
-                }
-            ]
+                        reducerFactory: config.reducerFactory
+                            ? config.reducerFactory
+                            : combineReducers,
+                        initialState: config.initialState,
+                    }),
+                },
+            ],
         };
     };
     return StoreModule;

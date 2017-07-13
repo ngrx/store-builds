@@ -30,7 +30,7 @@ export class State extends BehaviorSubject {
             next: ({ state, action }) => {
                 this.next(state);
                 scannedActions.next(action);
-            }
+            },
         });
     }
     /**

@@ -1,9 +1,9 @@
-import { NgModule, Inject, InjectionToken } from '@angular/core';
+import { NgModule, Inject, InjectionToken, } from '@angular/core';
 import { combineReducers } from './utils';
-import { INITIAL_STATE, INITIAL_REDUCERS, REDUCER_FACTORY, STORE_FEATURES, _INITIAL_STATE } from './tokens';
+import { INITIAL_STATE, INITIAL_REDUCERS, REDUCER_FACTORY, STORE_FEATURES, _INITIAL_STATE, } from './tokens';
 import { ACTIONS_SUBJECT_PROVIDERS, ActionsSubject } from './actions_subject';
-import { REDUCER_MANAGER_PROVIDERS, ReducerManager, ReducerObservable } from './reducer_manager';
-import { SCANNED_ACTIONS_SUBJECT_PROVIDERS, ScannedActionsSubject } from './scanned_actions_subject';
+import { REDUCER_MANAGER_PROVIDERS, ReducerManager, ReducerObservable, } from './reducer_manager';
+import { SCANNED_ACTIONS_SUBJECT_PROVIDERS, ScannedActionsSubject, } from './scanned_actions_subject';
 import { STATE_PROVIDERS } from './state';
 import { STORE_PROVIDERS } from './store';
 export class StoreRootModule {
@@ -12,8 +12,7 @@ export class StoreRootModule {
      * @param {?} reducer$
      * @param {?} scannedActions$
      */
-    constructor(actions$, reducer$, scannedActions$) {
-    }
+    constructor(actions$, reducer$, scannedActions$) { }
 }
 StoreRootModule.decorators = [
     { type: NgModule, args: [{},] },
@@ -86,15 +85,26 @@ export class StoreModule {
             ngModule: StoreRootModule,
             providers: [
                 { provide: _INITIAL_STATE, useValue: config.initialState },
-                { provide: INITIAL_STATE, useFactory: _initialStateFactory, deps: [_INITIAL_STATE] },
-                reducers instanceof InjectionToken ? { provide: INITIAL_REDUCERS, useExisting: reducers } : { provide: INITIAL_REDUCERS, useValue: reducers },
-                { provide: REDUCER_FACTORY, useValue: config.reducerFactory ? config.reducerFactory : combineReducers },
+                {
+                    provide: INITIAL_STATE,
+                    useFactory: _initialStateFactory,
+                    deps: [_INITIAL_STATE],
+                },
+                reducers instanceof InjectionToken
+                    ? { provide: INITIAL_REDUCERS, useExisting: reducers }
+                    : { provide: INITIAL_REDUCERS, useValue: reducers },
+                {
+                    provide: REDUCER_FACTORY,
+                    useValue: config.reducerFactory
+                        ? config.reducerFactory
+                        : combineReducers,
+                },
                 ACTIONS_SUBJECT_PROVIDERS,
                 REDUCER_MANAGER_PROVIDERS,
                 SCANNED_ACTIONS_SUBJECT_PROVIDERS,
                 STATE_PROVIDERS,
                 STORE_PROVIDERS,
-            ]
+            ],
         };
     }
     /**
@@ -113,11 +123,13 @@ export class StoreModule {
                     useValue: /** @type {?} */ ({
                         key: featureName,
                         reducers: reducers,
-                        reducerFactory: config.reducerFactory ? config.reducerFactory : combineReducers,
-                        initialState: config.initialState
-                    })
-                }
-            ]
+                        reducerFactory: config.reducerFactory
+                            ? config.reducerFactory
+                            : combineReducers,
+                        initialState: config.initialState,
+                    }),
+                },
+            ],
         };
     }
 }

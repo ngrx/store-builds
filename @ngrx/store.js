@@ -92,7 +92,9 @@ class ActionsSubject extends BehaviorSubject {
     /**
      * @return {?}
      */
-    complete() { }
+    complete() {
+        /* noop */
+    }
     /**
      * @return {?}
      */
@@ -107,9 +109,7 @@ ActionsSubject.decorators = [
  * @nocollapse
  */
 ActionsSubject.ctorParameters = () => [];
-const ACTIONS_SUBJECT_PROVIDERS = [
-    ActionsSubject
-];
+const ACTIONS_SUBJECT_PROVIDERS = [ActionsSubject];
 
 /**
  * @abstract
@@ -140,8 +140,10 @@ class ReducerManager extends BehaviorSubject {
      * @param {?} __0
      * @return {?}
      */
-    addFeature({ reducers, reducerFactory, initialState, key }) {
-        const /** @type {?} */ reducer = typeof reducers === 'function' ? reducers : reducerFactory(reducers, initialState);
+    addFeature({ reducers, reducerFactory, initialState, key, }) {
+        const /** @type {?} */ reducer = typeof reducers === 'function'
+            ? reducers
+            : reducerFactory(reducers, initialState);
         this.addReducer(key, reducer);
     }
     /**
@@ -240,7 +242,7 @@ class State extends BehaviorSubject {
             next: ({ state, action }) => {
                 this.next(state);
                 scannedActions.next(action);
-            }
+            },
         });
     }
     /**
@@ -349,7 +351,7 @@ function createFeatureSelector(featureName) {
  * @return {?}
  */
 function isSelector(v) {
-    return typeof v === 'function' && v.release && typeof v.release === 'function';
+    return (typeof v === 'function' && v.release && typeof v.release === 'function');
 }
 
 class Store extends Observable {
@@ -381,8 +383,8 @@ class Store extends Observable {
             mapped$ = map.call(this, createSelector(s => s, pathOrMapFn));
         }
         else {
-            throw new TypeError(`Unexpected type '${typeof pathOrMapFn}' in select operator,`
-                + ` expected 'string' or 'function'`);
+            throw new TypeError(`Unexpected type '${typeof pathOrMapFn}' in select operator,` +
+                ` expected 'string' or 'function'`);
         }
         return distinctUntilChanged.call(mapped$);
     }
@@ -453,9 +455,7 @@ Store.ctorParameters = () => [
     { type: ActionsSubject, },
     { type: ReducerManager, },
 ];
-const STORE_PROVIDERS = [
-    Store
-];
+const STORE_PROVIDERS = [Store];
 
 class StoreRootModule {
     /**
@@ -463,8 +463,7 @@ class StoreRootModule {
      * @param {?} reducer$
      * @param {?} scannedActions$
      */
-    constructor(actions$, reducer$, scannedActions$) {
-    }
+    constructor(actions$, reducer$, scannedActions$) { }
 }
 StoreRootModule.decorators = [
     { type: NgModule, args: [{},] },
@@ -515,15 +514,26 @@ class StoreModule {
             ngModule: StoreRootModule,
             providers: [
                 { provide: _INITIAL_STATE, useValue: config.initialState },
-                { provide: INITIAL_STATE, useFactory: _initialStateFactory, deps: [_INITIAL_STATE] },
-                reducers instanceof InjectionToken ? { provide: INITIAL_REDUCERS, useExisting: reducers } : { provide: INITIAL_REDUCERS, useValue: reducers },
-                { provide: REDUCER_FACTORY, useValue: config.reducerFactory ? config.reducerFactory : combineReducers },
+                {
+                    provide: INITIAL_STATE,
+                    useFactory: _initialStateFactory,
+                    deps: [_INITIAL_STATE],
+                },
+                reducers instanceof InjectionToken
+                    ? { provide: INITIAL_REDUCERS, useExisting: reducers }
+                    : { provide: INITIAL_REDUCERS, useValue: reducers },
+                {
+                    provide: REDUCER_FACTORY,
+                    useValue: config.reducerFactory
+                        ? config.reducerFactory
+                        : combineReducers,
+                },
                 ACTIONS_SUBJECT_PROVIDERS,
                 REDUCER_MANAGER_PROVIDERS,
                 SCANNED_ACTIONS_SUBJECT_PROVIDERS,
                 STATE_PROVIDERS,
                 STORE_PROVIDERS,
-            ]
+            ],
         };
     }
     /**
@@ -542,11 +552,13 @@ class StoreModule {
                     useValue: /** @type {?} */ ({
                         key: featureName,
                         reducers: reducers,
-                        reducerFactory: config.reducerFactory ? config.reducerFactory : combineReducers,
-                        initialState: config.initialState
-                    })
-                }
-            ]
+                        reducerFactory: config.reducerFactory
+                            ? config.reducerFactory
+                            : combineReducers,
+                        initialState: config.initialState,
+                    }),
+                },
+            ],
         };
     }
 }

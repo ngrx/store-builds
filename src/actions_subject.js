@@ -21,7 +21,9 @@ export class ActionsSubject extends BehaviorSubject {
     /**
      * @return {?}
      */
-    complete() { }
+    complete() {
+        /* noop */
+    }
     /**
      * @return {?}
      */
@@ -45,7 +47,5 @@ function ActionsSubject_tsickle_Closure_declarations() {
      */
     ActionsSubject.ctorParameters;
 }
-export const /** @type {?} */ ACTIONS_SUBJECT_PROVIDERS = [
-    ActionsSubject
-];
+export const /** @type {?} */ ACTIONS_SUBJECT_PROVIDERS = [ActionsSubject];
 //# sourceMappingURL=actions_subject.js.map

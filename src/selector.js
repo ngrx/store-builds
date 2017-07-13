@@ -69,6 +69,6 @@ export function createFeatureSelector(featureName) {
  * @return {?}
  */
 export function isSelector(v) {
-    return typeof v === 'function' && v.release && typeof v.release === 'function';
+    return (typeof v === 'function' && v.release && typeof v.release === 'function');
 }
 //# sourceMappingURL=selector.js.map

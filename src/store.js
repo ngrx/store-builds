@@ -36,8 +36,8 @@ export class Store extends Observable {
             mapped$ = map.call(this, createSelector(s => s, pathOrMapFn));
         }
         else {
-            throw new TypeError(`Unexpected type '${typeof pathOrMapFn}' in select operator,`
-                + ` expected 'string' or 'function'`);
+            throw new TypeError(`Unexpected type '${typeof pathOrMapFn}' in select operator,` +
+                ` expected 'string' or 'function'`);
         }
         return distinctUntilChanged.call(mapped$);
     }
@@ -121,7 +121,5 @@ function Store_tsickle_Closure_declarations() {
     /** @type {?} */
     Store.prototype.reducerManager;
 }
-export const /** @type {?} */ STORE_PROVIDERS = [
-    Store
-];
+export const /** @type {?} */ STORE_PROVIDERS = [Store];
 //# sourceMappingURL=store.js.map
