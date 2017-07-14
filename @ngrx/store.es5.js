@@ -313,13 +313,14 @@ State.ctorParameters = function () { return [
 ]; };
 /**
  * @template T, V
- * @param {?=} __0
+ * @param {?=} stateActionPair
  * @param {?=} __1
  * @return {?}
  */
-function reduceState(_a, _b) {
-    var state = (_a === void 0 ? { state: undefined } : _a).state;
-    var action = _b[0], reducer = _b[1];
+function reduceState(stateActionPair, _a) {
+    if (stateActionPair === void 0) { stateActionPair = { state: undefined }; }
+    var action = _a[0], reducer = _a[1];
+    var state = stateActionPair.state;
     return { state: reducer(state, action), action: action };
 }
 var STATE_PROVIDERS = [

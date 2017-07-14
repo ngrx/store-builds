@@ -268,11 +268,12 @@ State.ctorParameters = () => [
 ];
 /**
  * @template T, V
- * @param {?=} __0
+ * @param {?=} stateActionPair
  * @param {?=} __1
  * @return {?}
  */
-function reduceState({ state } = { state: undefined }, [action, reducer]) {
+function reduceState(stateActionPair = { state: undefined }, [action, reducer]) {
+    const { state } = stateActionPair;
     return { state: reducer(state, action), action };
 }
 const STATE_PROVIDERS = [

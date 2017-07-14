@@ -1,1 +1,1 @@
-48a2381 style: Add auto-format command using Prettier
+c9d6a45 fix(Store): Remove parameter destructuring for strict mode (#33) (#77)

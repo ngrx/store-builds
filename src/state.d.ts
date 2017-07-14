@@ -17,5 +17,5 @@ export declare type StateActionPair<T, V extends Action = Action> = {
     state: T | undefined;
     action?: V;
 };
-export declare function reduceState<T, V extends Action = Action>({state}: StateActionPair<T, V> | undefined, [action, reducer]: [V, ActionReducer<T, V>]): StateActionPair<T, V>;
+export declare function reduceState<T, V extends Action = Action>(stateActionPair: StateActionPair<T, V> | undefined, [action, reducer]: [V, ActionReducer<T, V>]): StateActionPair<T, V>;
 export declare const STATE_PROVIDERS: Provider[];

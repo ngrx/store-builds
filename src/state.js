@@ -69,11 +69,12 @@ function State_tsickle_Closure_declarations() {
 }
 /**
  * @template T, V
- * @param {?=} __0
+ * @param {?=} stateActionPair
  * @param {?=} __1
  * @return {?}
  */
-export function reduceState({ state } = { state: undefined }, [action, reducer]) {
+export function reduceState(stateActionPair = { state: undefined }, [action, reducer]) {
+    const { state } = stateActionPair;
     return { state: reducer(state, action), action };
 }
 export const /** @type {?} */ STATE_PROVIDERS = [
