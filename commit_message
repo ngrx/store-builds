@@ -1,1 +1,1 @@
-a085730 fix(router-store): NavigationCancel and NavigationError creates a cycle when used with routerReducer
+8804156 fix(example-app): Suppress StoreDevtoolsConfig compiler warning
