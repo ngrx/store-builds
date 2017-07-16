@@ -1,1 +1,1 @@
-8804156 fix(example-app): Suppress StoreDevtoolsConfig compiler warning
+b9776ea build(platform): Improve consistency (yarn), and async (#84)
