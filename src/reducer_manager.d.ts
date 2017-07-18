@@ -14,7 +14,7 @@ export declare class ReducerManager extends BehaviorSubject<ActionReducer<any, a
     private reducers;
     private reducerFactory;
     constructor(dispatcher: ReducerManagerDispatcher, initialState: any, reducers: ActionReducerMap<any, any>, reducerFactory: ActionReducerFactory<any, any>);
-    addFeature({reducers, reducerFactory, initialState, key}: StoreFeature<any, any>): void;
+    addFeature({reducers, reducerFactory, metaReducers, initialState, key}: StoreFeature<any, any>): void;
     removeFeature({key}: StoreFeature<any, any>): void;
     addReducer(key: string, reducer: ActionReducer<any, any>): void;
     removeReducer(key: string): void;

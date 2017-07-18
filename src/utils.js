@@ -52,4 +52,15 @@ export function compose(...functions) {
         return rest.reduceRight((composed, fn) => fn(composed), last(arg));
     };
 }
+/**
+ * @param {?} reducerFactory
+ * @param {?=} metaReducers
+ * @return {?}
+ */
+export function createReducerFactory(reducerFactory, metaReducers) {
+    if (Array.isArray(metaReducers) && metaReducers.length > 0) {
+        return compose.apply(null, [...metaReducers, reducerFactory]);
+    }
+    return reducerFactory;
+}
 //# sourceMappingURL=utils.js.map

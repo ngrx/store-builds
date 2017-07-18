@@ -77,10 +77,23 @@ function compose() {
         return rest.reduceRight(function (composed, fn) { return fn(composed); }, last(arg));
     };
 }
+/**
+ * @param {?} reducerFactory
+ * @param {?=} metaReducers
+ * @return {?}
+ */
+function createReducerFactory(reducerFactory, metaReducers) {
+    if (Array.isArray(metaReducers) && metaReducers.length > 0) {
+        return compose.apply(null, metaReducers.concat([reducerFactory]));
+    }
+    return reducerFactory;
+}
 var _INITIAL_STATE = new _angular_core.OpaqueToken('_ngrx/store Initial State');
 var INITIAL_STATE = new _angular_core.OpaqueToken('@ngrx/store Initial State');
 var REDUCER_FACTORY = new _angular_core.OpaqueToken('@ngrx/store Reducer Factory');
+var _REDUCER_FACTORY = new _angular_core.OpaqueToken('@ngrx/store Reducer Factory Provider');
 var INITIAL_REDUCERS = new _angular_core.OpaqueToken('@ngrx/store Initial Reducers');
+var META_REDUCERS = new _angular_core.OpaqueToken('@ngrx/store Meta Reducers');
 var STORE_FEATURES = new _angular_core.OpaqueToken('@ngrx/store Store Features');
 var INIT = '@ngrx/store/init';
 var ActionsSubject = (function (_super) {
@@ -165,10 +178,10 @@ var ReducerManager = (function (_super) {
      * @return {?}
      */
     ReducerManager.prototype.addFeature = function (_a) {
-        var reducers = _a.reducers, reducerFactory = _a.reducerFactory, initialState = _a.initialState, key = _a.key;
+        var reducers = _a.reducers, reducerFactory = _a.reducerFactory, metaReducers = _a.metaReducers, initialState = _a.initialState, key = _a.key;
         var /** @type {?} */ reducer = typeof reducers === 'function'
             ? reducers
-            : reducerFactory(reducers, initialState);
+            : createReducerFactory(reducerFactory, metaReducers)(reducers, initialState);
         this.addReducer(key, reducer);
     };
     /**
@@ -581,10 +594,19 @@ var StoreModule = (function () {
                     ? { provide: INITIAL_REDUCERS, useExisting: reducers }
                     : { provide: INITIAL_REDUCERS, useValue: reducers },
                 {
-                    provide: REDUCER_FACTORY,
+                    provide: META_REDUCERS,
+                    useValue: config.metaReducers ? config.metaReducers : [],
+                },
+                {
+                    provide: _REDUCER_FACTORY,
                     useValue: config.reducerFactory
                         ? config.reducerFactory
                         : combineReducers,
+                },
+                {
+                    provide: REDUCER_FACTORY,
+                    deps: [_REDUCER_FACTORY, META_REDUCERS],
+                    useFactory: createReducerFactory,
                 },
                 ACTIONS_SUBJECT_PROVIDERS,
                 REDUCER_MANAGER_PROVIDERS,
@@ -614,6 +636,7 @@ var StoreModule = (function () {
                         reducerFactory: config.reducerFactory
                             ? config.reducerFactory
                             : combineReducers,
+                        metaReducers: config.metaReducers ? config.metaReducers : [],
                         initialState: config.initialState,
                     }),
                 },
@@ -644,6 +667,7 @@ exports.StoreModule = StoreModule;
 exports.Store = Store;
 exports.combineReducers = combineReducers;
 exports.compose = compose;
+exports.createReducerFactory = createReducerFactory;
 exports.ActionsSubject = ActionsSubject;
 exports.INIT = INIT;
 exports.ReducerManager = ReducerManager;
@@ -657,10 +681,12 @@ exports.State = State;
 exports.StateObservable = StateObservable;
 exports.reduceState = reduceState;
 exports.INITIAL_STATE = INITIAL_STATE;
+exports._REDUCER_FACTORY = _REDUCER_FACTORY;
 exports.REDUCER_FACTORY = REDUCER_FACTORY;
 exports.INITIAL_REDUCERS = INITIAL_REDUCERS;
 exports.STORE_FEATURES = STORE_FEATURES;
 exports._INITIAL_STATE = _INITIAL_STATE;
+exports.META_REDUCERS = META_REDUCERS;
 exports.StoreRootModule = StoreRootModule;
 exports.StoreFeatureModule = StoreFeatureModule;
 exports._initialStateFactory = _initialStateFactory;

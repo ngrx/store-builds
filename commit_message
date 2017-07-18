@@ -1,1 +1,1 @@
-b9776ea build(platform): Improve consistency (yarn), and async (#84)
+d2295c7 feat(Store): Simplify API for adding meta-reducers (#87)

@@ -15,6 +15,7 @@ export declare class StoreFeatureModule implements OnDestroy {
 export declare type StoreConfig<T, V extends Action = Action> = {
     initialState?: InitialState<T>;
     reducerFactory?: ActionReducerFactory<T, V>;
+    metaReducers?: ActionReducer<T, V>[];
 };
 export declare class StoreModule {
     static forRoot<T, V extends Action = Action>(reducers: ActionReducerMap<T, V> | InjectionToken<ActionReducerMap<T, V>>, config?: StoreConfig<T, V>): ModuleWithProviders;

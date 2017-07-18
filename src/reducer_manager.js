@@ -2,7 +2,7 @@ import { Injectable, Inject } from '@angular/core';
 import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 import { Observable } from 'rxjs/Observable';
 import { INITIAL_STATE, INITIAL_REDUCERS, REDUCER_FACTORY } from './tokens';
-import { omit } from './utils';
+import { omit, createReducerFactory } from './utils';
 import { ActionsSubject } from './actions_subject';
 /**
  * @abstract
@@ -33,10 +33,10 @@ export class ReducerManager extends BehaviorSubject {
      * @param {?} __0
      * @return {?}
      */
-    addFeature({ reducers, reducerFactory, initialState, key, }) {
+    addFeature({ reducers, reducerFactory, metaReducers, initialState, key, }) {
         const /** @type {?} */ reducer = typeof reducers === 'function'
             ? reducers
-            : reducerFactory(reducers, initialState);
+            : createReducerFactory(reducerFactory, metaReducers)(reducers, initialState);
         this.addReducer(key, reducer);
     }
     /**

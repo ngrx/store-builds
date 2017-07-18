@@ -1,6 +1,6 @@
 import { NgModule, Inject, InjectionToken, } from '@angular/core';
-import { combineReducers } from './utils';
-import { INITIAL_STATE, INITIAL_REDUCERS, REDUCER_FACTORY, STORE_FEATURES, _INITIAL_STATE, } from './tokens';
+import { combineReducers, createReducerFactory } from './utils';
+import { INITIAL_STATE, INITIAL_REDUCERS, REDUCER_FACTORY, _REDUCER_FACTORY, STORE_FEATURES, _INITIAL_STATE, META_REDUCERS, } from './tokens';
 import { ACTIONS_SUBJECT_PROVIDERS, ActionsSubject } from './actions_subject';
 import { REDUCER_MANAGER_PROVIDERS, ReducerManager, ReducerObservable, } from './reducer_manager';
 import { SCANNED_ACTIONS_SUBJECT_PROVIDERS, ScannedActionsSubject, } from './scanned_actions_subject';
@@ -94,10 +94,19 @@ export class StoreModule {
                     ? { provide: INITIAL_REDUCERS, useExisting: reducers }
                     : { provide: INITIAL_REDUCERS, useValue: reducers },
                 {
-                    provide: REDUCER_FACTORY,
+                    provide: META_REDUCERS,
+                    useValue: config.metaReducers ? config.metaReducers : [],
+                },
+                {
+                    provide: _REDUCER_FACTORY,
                     useValue: config.reducerFactory
                         ? config.reducerFactory
                         : combineReducers,
+                },
+                {
+                    provide: REDUCER_FACTORY,
+                    deps: [_REDUCER_FACTORY, META_REDUCERS],
+                    useFactory: createReducerFactory,
                 },
                 ACTIONS_SUBJECT_PROVIDERS,
                 REDUCER_MANAGER_PROVIDERS,
@@ -126,6 +135,7 @@ export class StoreModule {
                         reducerFactory: config.reducerFactory
                             ? config.reducerFactory
                             : combineReducers,
+                        metaReducers: config.metaReducers ? config.metaReducers : [],
                         initialState: config.initialState,
                     }),
                 },
