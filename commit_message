@@ -1,1 +1,1 @@
-9f4664e docs(Migration): Add node about removing @ngrx/core
+875b326 fix(effects): allow downleveled annotations (#98)
