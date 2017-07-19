@@ -5,7 +5,7 @@ import { queue } from 'rxjs/scheduler/queue';
 import { observeOn } from 'rxjs/operator/observeOn';
 import { withLatestFrom } from 'rxjs/operator/withLatestFrom';
 import { scan } from 'rxjs/operator/scan';
-import { ActionsSubject } from './actions_subject';
+import { ActionsSubject, INIT } from './actions_subject';
 import { INITIAL_STATE } from './tokens';
 import { ReducerObservable } from './reducer_manager';
 import { ScannedActionsSubject } from './scanned_actions_subject';
@@ -41,7 +41,7 @@ export class State extends BehaviorSubject {
         this.complete();
     }
 }
-State.INIT = '@ngrx/store/init';
+State.INIT = INIT;
 State.decorators = [
     { type: Injectable },
 ];

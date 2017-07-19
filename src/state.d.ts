@@ -8,7 +8,7 @@ import { ScannedActionsSubject } from './scanned_actions_subject';
 export declare abstract class StateObservable extends Observable<any> {
 }
 export declare class State<T> extends BehaviorSubject<any> implements OnDestroy {
-    static readonly INIT: string;
+    static readonly INIT: "@ngrx/store/init";
     private stateSubscription;
     constructor(actions$: ActionsSubject, reducer$: ReducerObservable, scannedActions: ScannedActionsSubject, initialState: any);
     ngOnDestroy(): void;

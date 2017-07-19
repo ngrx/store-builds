@@ -8,7 +8,7 @@ var __extends = (this && this.__extends) || (function () {
         d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
     };
 })();
-import { Inject, Injectable, InjectionToken, NgModule, OpaqueToken } from '@angular/core';
+import { Inject, Injectable, InjectionToken, NgModule } from '@angular/core';
 import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 import { Observable } from 'rxjs/Observable';
 import { Subject } from 'rxjs/Subject';
@@ -93,14 +93,14 @@ function createReducerFactory(reducerFactory, metaReducers) {
     }
     return reducerFactory;
 }
-var _INITIAL_STATE = new OpaqueToken('_ngrx/store Initial State');
-var INITIAL_STATE = new OpaqueToken('@ngrx/store Initial State');
-var REDUCER_FACTORY = new OpaqueToken('@ngrx/store Reducer Factory');
-var _REDUCER_FACTORY = new OpaqueToken('@ngrx/store Reducer Factory Provider');
-var INITIAL_REDUCERS = new OpaqueToken('@ngrx/store Initial Reducers');
-var META_REDUCERS = new OpaqueToken('@ngrx/store Meta Reducers');
-var STORE_FEATURES = new OpaqueToken('@ngrx/store Store Features');
-var INIT = '@ngrx/store/init';
+var _INITIAL_STATE = new InjectionToken('_ngrx/store Initial State');
+var INITIAL_STATE = new InjectionToken('@ngrx/store Initial State');
+var REDUCER_FACTORY = new InjectionToken('@ngrx/store Reducer Factory');
+var _REDUCER_FACTORY = new InjectionToken('@ngrx/store Reducer Factory Provider');
+var INITIAL_REDUCERS = new InjectionToken('@ngrx/store Initial Reducers');
+var META_REDUCERS = new InjectionToken('@ngrx/store Meta Reducers');
+var STORE_FEATURES = new InjectionToken('@ngrx/store Store Features');
+var INIT = ('@ngrx/store/init');
 var ActionsSubject = (function (_super) {
     __extends(ActionsSubject, _super);
     function ActionsSubject() {
@@ -112,10 +112,10 @@ var ActionsSubject = (function (_super) {
      */
     ActionsSubject.prototype.next = function (action) {
         if (typeof action === 'undefined') {
-            throw new Error("Actions must be objects");
+            throw new TypeError("Actions must be objects");
         }
         else if (typeof action.type === 'undefined') {
-            throw new Error("Actions must have a type property");
+            throw new TypeError("Actions must have a type property");
         }
         _super.prototype.next.call(this, action);
     };
@@ -161,7 +161,7 @@ var ReducerManagerDispatcher = (function (_super) {
     }
     return ReducerManagerDispatcher;
 }(ActionsSubject));
-var UPDATE = '@ngrx/store/update-reducers';
+var UPDATE = ('@ngrx/store/update-reducers');
 var ReducerManager = (function (_super) {
     __extends(ReducerManager, _super);
     /**
@@ -311,7 +311,7 @@ var State = (function (_super) {
     };
     return State;
 }(BehaviorSubject));
-State.INIT = '@ngrx/store/init';
+State.INIT = INIT;
 State.decorators = [
     { type: Injectable },
 ];
@@ -555,7 +555,12 @@ var StoreFeatureModule = (function () {
     function StoreFeatureModule(features, reducerManager) {
         this.features = features;
         this.reducerManager = reducerManager;
-        features.forEach(function (feature) { return reducerManager.addFeature(feature); });
+        features
+            .map(function (feature) {
+            return typeof feature.initialState === 'function'
+                ? Object.assign({}, feature, { initialState: feature.initialState() }) : feature;
+        })
+            .forEach(function (feature) { return reducerManager.addFeature(feature); });
     }
     /**
      * @return {?}

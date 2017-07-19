@@ -14,7 +14,7 @@ export class ReducerObservable extends Observable {
  */
 export class ReducerManagerDispatcher extends ActionsSubject {
 }
-export const /** @type {?} */ UPDATE = '@ngrx/store/update-reducers';
+export const /** @type {?} */ UPDATE = ('@ngrx/store/update-reducers');
 export class ReducerManager extends BehaviorSubject {
     /**
      * @param {?} dispatcher

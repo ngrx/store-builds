@@ -42,7 +42,12 @@ export class StoreFeatureModule {
     constructor(features, reducerManager) {
         this.features = features;
         this.reducerManager = reducerManager;
-        features.forEach(feature => reducerManager.addFeature(feature));
+        features
+            .map(feature => {
+            return typeof feature.initialState === 'function'
+                ? Object.assign({}, feature, { initialState: feature.initialState() }) : feature;
+        })
+            .forEach(feature => reducerManager.addFeature(feature));
     }
     /**
      * @return {?}

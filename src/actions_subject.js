@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject } from 'rxjs/BehaviorSubject';
-export const /** @type {?} */ INIT = '@ngrx/store/init';
+export const /** @type {?} */ INIT = ('@ngrx/store/init');
 export class ActionsSubject extends BehaviorSubject {
     constructor() {
         super({ type: INIT });
@@ -11,10 +11,10 @@ export class ActionsSubject extends BehaviorSubject {
      */
     next(action) {
         if (typeof action === 'undefined') {
-            throw new Error(`Actions must be objects`);
+            throw new TypeError(`Actions must be objects`);
         }
         else if (typeof action.type === 'undefined') {
-            throw new Error(`Actions must have a type property`);
+            throw new TypeError(`Actions must have a type property`);
         }
         super.next(action);
     }

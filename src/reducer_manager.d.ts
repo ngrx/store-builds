@@ -7,7 +7,7 @@ export declare abstract class ReducerObservable extends Observable<ActionReducer
 }
 export declare abstract class ReducerManagerDispatcher extends ActionsSubject {
 }
-export declare const UPDATE = "@ngrx/store/update-reducers";
+export declare const UPDATE: "@ngrx/store/update-reducers";
 export declare class ReducerManager extends BehaviorSubject<ActionReducer<any, any>> implements OnDestroy {
     private dispatcher;
     private initialState;
