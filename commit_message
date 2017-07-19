@@ -1,1 +1,1 @@
-1bbd5bf docs(migration): Update migration docs and add example of injecting reducers (#100)
+644e606 docs(Store): Remove incorrect generic type overload
