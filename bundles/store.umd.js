@@ -335,83 +335,6 @@ var STATE_PROVIDERS = [
     State,
     { provide: StateObservable, useExisting: State },
 ];
-/**
- * @param {?} t
- * @return {?}
- */
-function memoize(t) {
-    var /** @type {?} */ lastArguments = null;
-    var /** @type {?} */ lastResult = null;
-    /**
-     * @return {?}
-     */
-    function reset() {
-        lastArguments = null;
-        lastResult = null;
-    }
-    /**
-     * @return {?}
-     */
-    function memoized() {
-        if (!lastArguments) {
-            lastResult = t.apply(null, arguments);
-            lastArguments = arguments;
-            return lastResult;
-        }
-        for (var /** @type {?} */ i = 0; i < arguments.length; i++) {
-            if (arguments[i] !== lastArguments[i]) {
-                lastResult = t.apply(null, arguments);
-                lastArguments = arguments;
-                return lastResult;
-            }
-        }
-        return lastResult;
-    }
-    return { memoized: memoized, reset: reset };
-}
-/**
- * @param {...?} args
- * @return {?}
- */
-function createSelector() {
-    var args = [];
-    for (var _i = 0; _i < arguments.length; _i++) {
-        args[_i] = arguments[_i];
-    }
-    var /** @type {?} */ selectors = args.slice(0, args.length - 1);
-    var /** @type {?} */ projector = args[args.length - 1];
-    var /** @type {?} */ memoizedSelectors = selectors.filter(function (selector) { return selector.release && typeof selector.release === 'function'; });
-    var _a = memoize(function (state) {
-        var /** @type {?} */ args = selectors.map(function (fn) { return fn(state); });
-        return projector.apply(null, args);
-    }), memoized = _a.memoized, reset = _a.reset;
-    /**
-     * @return {?}
-     */
-    function release() {
-        reset();
-        memoizedSelectors.forEach(function (selector) { return selector.release(); });
-    }
-    return Object.assign(memoized, { release: release });
-}
-/**
- * @template T
- * @param {?} featureName
- * @return {?}
- */
-function createFeatureSelector(featureName) {
-    var _a = memoize(function (state) {
-        return state[featureName];
-    }), memoized = _a.memoized, reset = _a.reset;
-    return Object.assign(memoized, { release: reset });
-}
-/**
- * @param {?} v
- * @return {?}
- */
-function isSelector(v) {
-    return (typeof v === 'function' && v.release && typeof v.release === 'function');
-}
 var Store = (function (_super) {
     __extends(Store, _super);
     /**
@@ -440,11 +363,8 @@ var Store = (function (_super) {
         if (typeof pathOrMapFn === 'string') {
             mapped$ = rxjs_operator_pluck.pluck.call.apply(rxjs_operator_pluck.pluck, [this, pathOrMapFn].concat(paths));
         }
-        else if (typeof pathOrMapFn === 'function' && isSelector(pathOrMapFn)) {
-            mapped$ = rxjs_operator_map.map.call(this, pathOrMapFn);
-        }
         else if (typeof pathOrMapFn === 'function') {
-            mapped$ = rxjs_operator_map.map.call(this, createSelector(function (s) { return s; }, pathOrMapFn));
+            mapped$ = rxjs_operator_map.map.call(this, pathOrMapFn);
         }
         else {
             throw new TypeError("Unexpected type '" + typeof pathOrMapFn + "' in select operator," +
@@ -666,6 +586,76 @@ function _initialStateFactory(initialState) {
         return initialState();
     }
     return initialState;
+}
+/**
+ * @param {?} t
+ * @return {?}
+ */
+function memoize(t) {
+    var /** @type {?} */ lastArguments = null;
+    var /** @type {?} */ lastResult = null;
+    /**
+     * @return {?}
+     */
+    function reset() {
+        lastArguments = null;
+        lastResult = null;
+    }
+    /**
+     * @return {?}
+     */
+    function memoized() {
+        if (!lastArguments) {
+            lastResult = t.apply(null, arguments);
+            lastArguments = arguments;
+            return lastResult;
+        }
+        for (var /** @type {?} */ i = 0; i < arguments.length; i++) {
+            if (arguments[i] !== lastArguments[i]) {
+                lastResult = t.apply(null, arguments);
+                lastArguments = arguments;
+                return lastResult;
+            }
+        }
+        return lastResult;
+    }
+    return { memoized: memoized, reset: reset };
+}
+/**
+ * @param {...?} args
+ * @return {?}
+ */
+function createSelector() {
+    var args = [];
+    for (var _i = 0; _i < arguments.length; _i++) {
+        args[_i] = arguments[_i];
+    }
+    var /** @type {?} */ selectors = args.slice(0, args.length - 1);
+    var /** @type {?} */ projector = args[args.length - 1];
+    var /** @type {?} */ memoizedSelectors = selectors.filter(function (selector) { return selector.release && typeof selector.release === 'function'; });
+    var _a = memoize(function (state) {
+        var /** @type {?} */ args = selectors.map(function (fn) { return fn(state); });
+        return projector.apply(null, args);
+    }), memoized = _a.memoized, reset = _a.reset;
+    /**
+     * @return {?}
+     */
+    function release() {
+        reset();
+        memoizedSelectors.forEach(function (selector) { return selector.release(); });
+    }
+    return Object.assign(memoized, { release: release });
+}
+/**
+ * @template T
+ * @param {?} featureName
+ * @return {?}
+ */
+function createFeatureSelector(featureName) {
+    var _a = memoize(function (state) {
+        return state[featureName];
+    }), memoized = _a.memoized, reset = _a.reset;
+    return Object.assign(memoized, { release: reset });
 }
 
 exports.StoreModule = StoreModule;

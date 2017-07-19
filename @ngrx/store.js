@@ -294,80 +294,6 @@ const STATE_PROVIDERS = [
     { provide: StateObservable, useExisting: State },
 ];
 
-/**
- * @param {?} t
- * @return {?}
- */
-function memoize(t) {
-    let /** @type {?} */ lastArguments = null;
-    let /** @type {?} */ lastResult = null;
-    /**
-     * @return {?}
-     */
-    function reset() {
-        lastArguments = null;
-        lastResult = null;
-    }
-    /**
-     * @return {?}
-     */
-    function memoized() {
-        if (!lastArguments) {
-            lastResult = t.apply(null, arguments);
-            lastArguments = arguments;
-            return lastResult;
-        }
-        for (let /** @type {?} */ i = 0; i < arguments.length; i++) {
-            if (arguments[i] !== lastArguments[i]) {
-                lastResult = t.apply(null, arguments);
-                lastArguments = arguments;
-                return lastResult;
-            }
-        }
-        return lastResult;
-    }
-    return { memoized, reset };
-}
-/**
- * @param {...?} args
- * @return {?}
- */
-function createSelector(...args) {
-    const /** @type {?} */ selectors = args.slice(0, args.length - 1);
-    const /** @type {?} */ projector = args[args.length - 1];
-    const /** @type {?} */ memoizedSelectors = selectors.filter((selector) => selector.release && typeof selector.release === 'function');
-    const { memoized, reset } = memoize(function (state) {
-        const /** @type {?} */ args = selectors.map(fn => fn(state));
-        return projector.apply(null, args);
-    });
-    /**
-     * @return {?}
-     */
-    function release() {
-        reset();
-        memoizedSelectors.forEach(selector => selector.release());
-    }
-    return Object.assign(memoized, { release });
-}
-/**
- * @template T
- * @param {?} featureName
- * @return {?}
- */
-function createFeatureSelector(featureName) {
-    const { memoized, reset } = memoize(function (state) {
-        return state[featureName];
-    });
-    return Object.assign(memoized, { release: reset });
-}
-/**
- * @param {?} v
- * @return {?}
- */
-function isSelector(v) {
-    return (typeof v === 'function' && v.release && typeof v.release === 'function');
-}
-
 class Store extends Observable {
     /**
      * @param {?} state$
@@ -390,11 +316,8 @@ class Store extends Observable {
         if (typeof pathOrMapFn === 'string') {
             mapped$ = pluck.call(this, pathOrMapFn, ...paths);
         }
-        else if (typeof pathOrMapFn === 'function' && isSelector(pathOrMapFn)) {
-            mapped$ = map.call(this, pathOrMapFn);
-        }
         else if (typeof pathOrMapFn === 'function') {
-            mapped$ = map.call(this, createSelector(s => s, pathOrMapFn));
+            mapped$ = map.call(this, pathOrMapFn);
         }
         else {
             throw new TypeError(`Unexpected type '${typeof pathOrMapFn}' in select operator,` +
@@ -607,6 +530,73 @@ function _initialStateFactory(initialState) {
         return initialState();
     }
     return initialState;
+}
+
+/**
+ * @param {?} t
+ * @return {?}
+ */
+function memoize(t) {
+    let /** @type {?} */ lastArguments = null;
+    let /** @type {?} */ lastResult = null;
+    /**
+     * @return {?}
+     */
+    function reset() {
+        lastArguments = null;
+        lastResult = null;
+    }
+    /**
+     * @return {?}
+     */
+    function memoized() {
+        if (!lastArguments) {
+            lastResult = t.apply(null, arguments);
+            lastArguments = arguments;
+            return lastResult;
+        }
+        for (let /** @type {?} */ i = 0; i < arguments.length; i++) {
+            if (arguments[i] !== lastArguments[i]) {
+                lastResult = t.apply(null, arguments);
+                lastArguments = arguments;
+                return lastResult;
+            }
+        }
+        return lastResult;
+    }
+    return { memoized, reset };
+}
+/**
+ * @param {...?} args
+ * @return {?}
+ */
+function createSelector(...args) {
+    const /** @type {?} */ selectors = args.slice(0, args.length - 1);
+    const /** @type {?} */ projector = args[args.length - 1];
+    const /** @type {?} */ memoizedSelectors = selectors.filter((selector) => selector.release && typeof selector.release === 'function');
+    const { memoized, reset } = memoize(function (state) {
+        const /** @type {?} */ args = selectors.map(fn => fn(state));
+        return projector.apply(null, args);
+    });
+    /**
+     * @return {?}
+     */
+    function release() {
+        reset();
+        memoizedSelectors.forEach(selector => selector.release());
+    }
+    return Object.assign(memoized, { release });
+}
+/**
+ * @template T
+ * @param {?} featureName
+ * @return {?}
+ */
+function createFeatureSelector(featureName) {
+    const { memoized, reset } = memoize(function (state) {
+        return state[featureName];
+    });
+    return Object.assign(memoized, { release: reset });
 }
 
 /**

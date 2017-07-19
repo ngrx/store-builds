@@ -6,7 +6,6 @@ import { distinctUntilChanged } from 'rxjs/operator/distinctUntilChanged';
 import { ActionsSubject } from './actions_subject';
 import { StateObservable } from './state';
 import { ReducerManager } from './reducer_manager';
-import { isSelector, createSelector } from './selector';
 export class Store extends Observable {
     /**
      * @param {?} state$
@@ -29,11 +28,8 @@ export class Store extends Observable {
         if (typeof pathOrMapFn === 'string') {
             mapped$ = pluck.call(this, pathOrMapFn, ...paths);
         }
-        else if (typeof pathOrMapFn === 'function' && isSelector(pathOrMapFn)) {
-            mapped$ = map.call(this, pathOrMapFn);
-        }
         else if (typeof pathOrMapFn === 'function') {
-            mapped$ = map.call(this, createSelector(s => s, pathOrMapFn));
+            mapped$ = map.call(this, pathOrMapFn);
         }
         else {
             throw new TypeError(`Unexpected type '${typeof pathOrMapFn}' in select operator,` +
