@@ -1,1 +1,1 @@
-4b20e3f chore(docs): Added selector function explanation (#108)
+bfdb83b fix(Effects): Wrap testing source in an Actions observable (#121)
