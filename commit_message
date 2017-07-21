@@ -1,1 +1,1 @@
-125dda8 docs(Store): Fix typo in example import
+95d089e fix(effects) : Handle case if no args is defined in annotations (#148)
