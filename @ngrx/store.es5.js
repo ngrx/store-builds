@@ -8,7 +8,7 @@ var __extends = (this && this.__extends) || (function () {
         d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
     };
 })();
-import { Inject, Injectable, InjectionToken, NgModule } from '@angular/core';
+import { Inject, Injectable, InjectionToken, NgModule, Optional } from '@angular/core';
 import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 import { Observable } from 'rxjs/Observable';
 import { Subject } from 'rxjs/Subject';
@@ -93,13 +93,18 @@ function createReducerFactory(reducerFactory, metaReducers) {
     }
     return reducerFactory;
 }
-var _INITIAL_STATE = new InjectionToken('_ngrx/store Initial State');
+var _INITIAL_STATE = new InjectionToken('@ngrx/store Internal Initial State');
 var INITIAL_STATE = new InjectionToken('@ngrx/store Initial State');
 var REDUCER_FACTORY = new InjectionToken('@ngrx/store Reducer Factory');
 var _REDUCER_FACTORY = new InjectionToken('@ngrx/store Reducer Factory Provider');
 var INITIAL_REDUCERS = new InjectionToken('@ngrx/store Initial Reducers');
+var _INITIAL_REDUCERS = new InjectionToken('@ngrx/store Internal Initial Reducers');
 var META_REDUCERS = new InjectionToken('@ngrx/store Meta Reducers');
 var STORE_FEATURES = new InjectionToken('@ngrx/store Store Features');
+var _STORE_REDUCERS = new InjectionToken('@ngrx/store Internal Store Reducers');
+var _FEATURE_REDUCERS = new InjectionToken('@ngrx/store Internal Feature Reducers');
+var _FEATURE_REDUCERS_TOKEN = new InjectionToken('@ngrx/store Internal Feature Reducers Token');
+var FEATURE_REDUCERS = new InjectionToken('@ngrx/store Feature Reducers');
 var INIT = ('@ngrx/store/init');
 var ActionsSubject = (function (_super) {
     __extends(ActionsSubject, _super);
@@ -470,15 +475,18 @@ StoreRootModule.ctorParameters = function () { return [
 var StoreFeatureModule = (function () {
     /**
      * @param {?} features
+     * @param {?} featureReducers
      * @param {?} reducerManager
      */
-    function StoreFeatureModule(features, reducerManager) {
+    function StoreFeatureModule(features, featureReducers, reducerManager) {
         this.features = features;
+        this.featureReducers = featureReducers;
         this.reducerManager = reducerManager;
         features
-            .map(function (feature) {
-            return typeof feature.initialState === 'function'
-                ? Object.assign({}, feature, { initialState: feature.initialState() }) : feature;
+            .map(function (feature, index) {
+            var featureReducerCollection = featureReducers.shift();
+            var reducers = featureReducerCollection[index];
+            return Object.assign({}, feature, { reducers: reducers, initialState: _initialStateFactory(feature.initialState) });
         })
             .forEach(function (feature) { return reducerManager.addFeature(feature); });
     }
@@ -499,6 +507,7 @@ StoreFeatureModule.decorators = [
  */
 StoreFeatureModule.ctorParameters = function () { return [
     { type: Array, decorators: [{ type: Inject, args: [STORE_FEATURES,] },] },
+    { type: Array, decorators: [{ type: Inject, args: [FEATURE_REDUCERS,] },] },
     { type: ReducerManager, },
 ]; };
 var StoreModule = (function () {
@@ -520,9 +529,18 @@ var StoreModule = (function () {
                     useFactory: _initialStateFactory,
                     deps: [_INITIAL_STATE],
                 },
+                { provide: _INITIAL_REDUCERS, useValue: reducers },
                 reducers instanceof InjectionToken
-                    ? { provide: INITIAL_REDUCERS, useExisting: reducers }
-                    : { provide: INITIAL_REDUCERS, useValue: reducers },
+                    ? [{ provide: _STORE_REDUCERS, useExisting: reducers }]
+                    : [],
+                {
+                    provide: INITIAL_REDUCERS,
+                    deps: [
+                        _INITIAL_REDUCERS,
+                        [new Optional(), new Inject(_STORE_REDUCERS)],
+                    ],
+                    useFactory: _createStoreReducers,
+                },
                 {
                     provide: META_REDUCERS,
                     useValue: config.metaReducers ? config.metaReducers : [],
@@ -562,13 +580,27 @@ var StoreModule = (function () {
                     multi: true,
                     useValue: /** @type {?} */ ({
                         key: featureName,
-                        reducers: reducers,
                         reducerFactory: config.reducerFactory
                             ? config.reducerFactory
                             : combineReducers,
                         metaReducers: config.metaReducers ? config.metaReducers : [],
                         initialState: config.initialState,
                     }),
+                },
+                { provide: _FEATURE_REDUCERS, multi: true, useValue: reducers },
+                {
+                    provide: _FEATURE_REDUCERS_TOKEN,
+                    multi: true,
+                    useExisting: reducers instanceof InjectionToken ? reducers : _FEATURE_REDUCERS,
+                },
+                {
+                    provide: FEATURE_REDUCERS,
+                    multi: true,
+                    deps: [
+                        _FEATURE_REDUCERS,
+                        [new Optional(), new Inject(_FEATURE_REDUCERS_TOKEN)],
+                    ],
+                    useFactory: _createFeatureReducers,
                 },
             ],
         };
@@ -582,6 +614,26 @@ StoreModule.decorators = [
  * @nocollapse
  */
 StoreModule.ctorParameters = function () { return []; };
+/**
+ * @param {?} reducers
+ * @param {?} tokenReducers
+ * @return {?}
+ */
+function _createStoreReducers(reducers, tokenReducers) {
+    return reducers instanceof InjectionToken ? tokenReducers : reducers;
+}
+/**
+ * @param {?} reducerCollection
+ * @param {?} tokenReducerCollection
+ * @return {?}
+ */
+function _createFeatureReducers(reducerCollection, tokenReducerCollection) {
+    return reducerCollection.map(function (reducer, index) {
+        return reducer instanceof InjectionToken
+            ? tokenReducerCollection[index]
+            : reducer;
+    });
+}
 /**
  * @param {?} initialState
  * @return {?}
@@ -665,5 +717,5 @@ function createFeatureSelector(featureName) {
 /**
  * Generated bundle index. Do not edit.
  */
-export { StoreModule, Store, combineReducers, compose, createReducerFactory, ActionsSubject, INIT, ReducerManager, ReducerObservable, ReducerManagerDispatcher, UPDATE, ScannedActionsSubject, createSelector, createFeatureSelector, State, StateObservable, reduceState, INITIAL_STATE, _REDUCER_FACTORY, REDUCER_FACTORY, INITIAL_REDUCERS, STORE_FEATURES, _INITIAL_STATE, META_REDUCERS, StoreRootModule, StoreFeatureModule, _initialStateFactory, ACTIONS_SUBJECT_PROVIDERS as ɵc, REDUCER_MANAGER_PROVIDERS as ɵd, SCANNED_ACTIONS_SUBJECT_PROVIDERS as ɵe, STATE_PROVIDERS as ɵf, STORE_PROVIDERS as ɵb };
+export { StoreModule, Store, combineReducers, compose, createReducerFactory, ActionsSubject, INIT, ReducerManager, ReducerObservable, ReducerManagerDispatcher, UPDATE, ScannedActionsSubject, createSelector, createFeatureSelector, State, StateObservable, reduceState, INITIAL_STATE, _REDUCER_FACTORY, REDUCER_FACTORY, _INITIAL_REDUCERS, INITIAL_REDUCERS, STORE_FEATURES, _INITIAL_STATE, META_REDUCERS, _STORE_REDUCERS, _FEATURE_REDUCERS, FEATURE_REDUCERS, _FEATURE_REDUCERS_TOKEN, StoreRootModule, StoreFeatureModule, _initialStateFactory, _createStoreReducers, _createFeatureReducers, ACTIONS_SUBJECT_PROVIDERS as ɵc, REDUCER_MANAGER_PROVIDERS as ɵd, SCANNED_ACTIONS_SUBJECT_PROVIDERS as ɵe, STATE_PROVIDERS as ɵf, STORE_PROVIDERS as ɵb };
 //# sourceMappingURL=store.es5.js.map

@@ -8,8 +8,9 @@ export declare class StoreRootModule {
 }
 export declare class StoreFeatureModule implements OnDestroy {
     private features;
+    private featureReducers;
     private reducerManager;
-    constructor(features: StoreFeature<any, any>[], reducerManager: ReducerManager);
+    constructor(features: StoreFeature<any, any>[], featureReducers: ActionReducerMap<any>[], reducerManager: ReducerManager);
     ngOnDestroy(): void;
 }
 export declare type StoreConfig<T, V extends Action = Action> = {
@@ -22,4 +23,6 @@ export declare class StoreModule {
     static forFeature<T, V extends Action = Action>(featureName: string, reducers: ActionReducerMap<T, V>, config?: StoreConfig<T, V>): ModuleWithProviders;
     static forFeature<T, V extends Action = Action>(featureName: string, reducer: ActionReducer<T, V>, config?: StoreConfig<T, V>): ModuleWithProviders;
 }
+export declare function _createStoreReducers(reducers: ActionReducerMap<any, any>, tokenReducers: ActionReducerMap<any, any>): any;
+export declare function _createFeatureReducers(reducerCollection: ActionReducerMap<any, any>[], tokenReducerCollection: ActionReducerMap<any, any>[]): any[];
 export declare function _initialStateFactory(initialState: any): any;
