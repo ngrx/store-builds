@@ -1,1 +1,1 @@
-e2f1e57 fix(createSelector): memoize projector function (#228)
+2c006e8 fix(RouterStore): Add support for cancellation with CanLoad guard (#223)
