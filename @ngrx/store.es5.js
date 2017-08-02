@@ -690,18 +690,26 @@ function createSelector() {
     var /** @type {?} */ selectors = args.slice(0, args.length - 1);
     var /** @type {?} */ projector = args[args.length - 1];
     var /** @type {?} */ memoizedSelectors = selectors.filter(function (selector) { return selector.release && typeof selector.release === 'function'; });
-    var _a = memoize(function (state) {
+    var /** @type {?} */ memoizedProjector = memoize(function () {
+        var selectors = [];
+        for (var _i = 0; _i < arguments.length; _i++) {
+            selectors[_i] = arguments[_i];
+        }
+        return projector.apply(null, selectors);
+    });
+    var /** @type {?} */ memoizedState = memoize(function (state) {
         var /** @type {?} */ args = selectors.map(function (fn) { return fn(state); });
-        return projector.apply(null, args);
-    }), memoized = _a.memoized, reset = _a.reset;
+        return memoizedProjector.memoized.apply(null, args);
+    });
     /**
      * @return {?}
      */
     function release() {
-        reset();
+        memoizedState.reset();
+        memoizedProjector.reset();
         memoizedSelectors.forEach(function (selector) { return selector.release(); });
     }
-    return Object.assign(memoized, { release: release });
+    return Object.assign(memoizedState.memoized, { release: release });
 }
 /**
  * @template T

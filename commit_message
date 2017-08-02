@@ -1,1 +1,1 @@
-c79853b build: fix type def files search path (#225)
+e2f1e57 fix(createSelector): memoize projector function (#228)

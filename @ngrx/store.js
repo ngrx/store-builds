@@ -626,18 +626,22 @@ function createSelector(...args) {
     const /** @type {?} */ selectors = args.slice(0, args.length - 1);
     const /** @type {?} */ projector = args[args.length - 1];
     const /** @type {?} */ memoizedSelectors = selectors.filter((selector) => selector.release && typeof selector.release === 'function');
-    const { memoized, reset } = memoize(function (state) {
+    const /** @type {?} */ memoizedProjector = memoize(function (...selectors) {
+        return projector.apply(null, selectors);
+    });
+    const /** @type {?} */ memoizedState = memoize(function (state) {
         const /** @type {?} */ args = selectors.map(fn => fn(state));
-        return projector.apply(null, args);
+        return memoizedProjector.memoized.apply(null, args);
     });
     /**
      * @return {?}
      */
     function release() {
-        reset();
+        memoizedState.reset();
+        memoizedProjector.reset();
         memoizedSelectors.forEach(selector => selector.release());
     }
-    return Object.assign(memoized, { release });
+    return Object.assign(memoizedState.memoized, { release });
 }
 /**
  * @template T
