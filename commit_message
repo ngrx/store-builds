@@ -1,1 +1,1 @@
-f969676 docs(CHANGELOG): Update Changelog for 4.0.2
+065d33e fix(Effects): Ensure StoreModule is loaded before effects (#230)
