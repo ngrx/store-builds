@@ -1,1 +1,1 @@
-065d33e fix(Effects): Ensure StoreModule is loaded before effects (#230)
+2b1a076 fix(Effects): Export EffectsNotification interface (#231)
