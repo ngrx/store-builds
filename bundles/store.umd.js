@@ -185,7 +185,10 @@ var ReducerManager = (function (_super) {
     ReducerManager.prototype.addFeature = function (_a) {
         var reducers = _a.reducers, reducerFactory = _a.reducerFactory, metaReducers = _a.metaReducers, initialState = _a.initialState, key = _a.key;
         var /** @type {?} */ reducer = typeof reducers === 'function'
-            ? reducers
+            ? function (state, action) {
+                if (state === void 0) { state = initialState; }
+                return reducers(state, action);
+            }
             : createReducerFactory(reducerFactory, metaReducers)(reducers, initialState);
         this.addReducer(key, reducer);
     };

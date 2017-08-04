@@ -160,7 +160,7 @@ class ReducerManager extends BehaviorSubject {
      */
     addFeature({ reducers, reducerFactory, metaReducers, initialState, key, }) {
         const /** @type {?} */ reducer = typeof reducers === 'function'
-            ? reducers
+            ? (state = initialState, action) => reducers(state, action)
             : createReducerFactory(reducerFactory, metaReducers)(reducers, initialState);
         this.addReducer(key, reducer);
     }

@@ -1,1 +1,1 @@
-2b1a076 fix(Effects): Export EffectsNotification interface (#231)
+4aec80c fix(Store): Set initial state for feature modules (#235)
