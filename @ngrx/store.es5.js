@@ -533,9 +533,10 @@ var StoreModule = (function () {
                     deps: [_INITIAL_STATE],
                 },
                 { provide: _INITIAL_REDUCERS, useValue: reducers },
-                reducers instanceof InjectionToken
-                    ? [{ provide: _STORE_REDUCERS, useExisting: reducers }]
-                    : [],
+                {
+                    provide: _STORE_REDUCERS,
+                    useExisting: reducers instanceof InjectionToken ? reducers : _INITIAL_REDUCERS,
+                },
                 {
                     provide: INITIAL_REDUCERS,
                     deps: [

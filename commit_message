@@ -1,1 +1,1 @@
-0fc1bcc feat(RouterStore): Add serializer for router state snapshot (#188)
+c409252 fix(Store): Use existing reducers when providing reducers without an InjectionToken (#254)
