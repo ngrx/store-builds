@@ -8,7 +8,7 @@ var __extends = (this && this.__extends) || (function () {
         d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
     };
 })();
-import { Inject, Injectable, InjectionToken, NgModule, Optional } from '@angular/core';
+import { Inject, Injectable, InjectionToken, Injector, NgModule } from '@angular/core';
 import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 import { Observable } from 'rxjs/Observable';
 import { Subject } from 'rxjs/Subject';
@@ -539,10 +539,7 @@ var StoreModule = (function () {
                 },
                 {
                     provide: INITIAL_REDUCERS,
-                    deps: [
-                        _INITIAL_REDUCERS,
-                        [new Optional(), new Inject(_STORE_REDUCERS)],
-                    ],
+                    deps: [Injector, _INITIAL_REDUCERS, [new Inject(_STORE_REDUCERS)]],
                     useFactory: _createStoreReducers,
                 },
                 {
@@ -601,8 +598,9 @@ var StoreModule = (function () {
                     provide: FEATURE_REDUCERS,
                     multi: true,
                     deps: [
+                        Injector,
                         _FEATURE_REDUCERS,
-                        [new Optional(), new Inject(_FEATURE_REDUCERS_TOKEN)],
+                        [new Inject(_FEATURE_REDUCERS_TOKEN)],
                     ],
                     useFactory: _createFeatureReducers,
                 },
@@ -619,23 +617,23 @@ StoreModule.decorators = [
  */
 StoreModule.ctorParameters = function () { return []; };
 /**
+ * @param {?} injector
  * @param {?} reducers
  * @param {?} tokenReducers
  * @return {?}
  */
-function _createStoreReducers(reducers, tokenReducers) {
-    return reducers instanceof InjectionToken ? tokenReducers : reducers;
+function _createStoreReducers(injector, reducers, tokenReducers) {
+    return reducers instanceof InjectionToken ? injector.get(reducers) : reducers;
 }
 /**
+ * @param {?} injector
  * @param {?} reducerCollection
  * @param {?} tokenReducerCollection
  * @return {?}
  */
-function _createFeatureReducers(reducerCollection, tokenReducerCollection) {
+function _createFeatureReducers(injector, reducerCollection, tokenReducerCollection) {
     return reducerCollection.map(function (reducer, index) {
-        return reducer instanceof InjectionToken
-            ? tokenReducerCollection[index]
-            : reducer;
+        return reducer instanceof InjectionToken ? injector.get(reducer) : reducer;
     });
 }
 /**

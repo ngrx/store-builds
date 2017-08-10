@@ -1,1 +1,1 @@
-c409252 fix(Store): Use existing reducers when providing reducers without an InjectionToken (#254)
+bd968fa fix(Store): Use injector to get reducers provided via InjectionTokens (#259)

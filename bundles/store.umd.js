@@ -534,10 +534,7 @@ var StoreModule = (function () {
                 },
                 {
                     provide: INITIAL_REDUCERS,
-                    deps: [
-                        _INITIAL_REDUCERS,
-                        [new _angular_core.Optional(), new _angular_core.Inject(_STORE_REDUCERS)],
-                    ],
+                    deps: [_angular_core.Injector, _INITIAL_REDUCERS, [new _angular_core.Inject(_STORE_REDUCERS)]],
                     useFactory: _createStoreReducers,
                 },
                 {
@@ -596,8 +593,9 @@ var StoreModule = (function () {
                     provide: FEATURE_REDUCERS,
                     multi: true,
                     deps: [
+                        _angular_core.Injector,
                         _FEATURE_REDUCERS,
-                        [new _angular_core.Optional(), new _angular_core.Inject(_FEATURE_REDUCERS_TOKEN)],
+                        [new _angular_core.Inject(_FEATURE_REDUCERS_TOKEN)],
                     ],
                     useFactory: _createFeatureReducers,
                 },
@@ -614,23 +612,23 @@ StoreModule.decorators = [
  */
 StoreModule.ctorParameters = function () { return []; };
 /**
+ * @param {?} injector
  * @param {?} reducers
  * @param {?} tokenReducers
  * @return {?}
  */
-function _createStoreReducers(reducers, tokenReducers) {
-    return reducers instanceof _angular_core.InjectionToken ? tokenReducers : reducers;
+function _createStoreReducers(injector, reducers, tokenReducers) {
+    return reducers instanceof _angular_core.InjectionToken ? injector.get(reducers) : reducers;
 }
 /**
+ * @param {?} injector
  * @param {?} reducerCollection
  * @param {?} tokenReducerCollection
  * @return {?}
  */
-function _createFeatureReducers(reducerCollection, tokenReducerCollection) {
+function _createFeatureReducers(injector, reducerCollection, tokenReducerCollection) {
     return reducerCollection.map(function (reducer, index) {
-        return reducer instanceof _angular_core.InjectionToken
-            ? tokenReducerCollection[index]
-            : reducer;
+        return reducer instanceof _angular_core.InjectionToken ? injector.get(reducer) : reducer;
     });
 }
 /**

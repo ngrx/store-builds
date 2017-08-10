@@ -1,4 +1,4 @@
-import { NgModule, Inject, InjectionToken, Optional, } from '@angular/core';
+import { NgModule, Inject, InjectionToken, Injector, } from '@angular/core';
 import { combineReducers, createReducerFactory } from './utils';
 import { INITIAL_STATE, INITIAL_REDUCERS, _INITIAL_REDUCERS, REDUCER_FACTORY, _REDUCER_FACTORY, STORE_FEATURES, _INITIAL_STATE, META_REDUCERS, _STORE_REDUCERS, FEATURE_REDUCERS, _FEATURE_REDUCERS, _FEATURE_REDUCERS_TOKEN, } from './tokens';
 import { ACTIONS_SUBJECT_PROVIDERS, ActionsSubject } from './actions_subject';
@@ -108,10 +108,7 @@ export class StoreModule {
                 },
                 {
                     provide: INITIAL_REDUCERS,
-                    deps: [
-                        _INITIAL_REDUCERS,
-                        [new Optional(), new Inject(_STORE_REDUCERS)],
-                    ],
+                    deps: [Injector, _INITIAL_REDUCERS, [new Inject(_STORE_REDUCERS)]],
                     useFactory: _createStoreReducers,
                 },
                 {
@@ -169,8 +166,9 @@ export class StoreModule {
                     provide: FEATURE_REDUCERS,
                     multi: true,
                     deps: [
+                        Injector,
                         _FEATURE_REDUCERS,
-                        [new Optional(), new Inject(_FEATURE_REDUCERS_TOKEN)],
+                        [new Inject(_FEATURE_REDUCERS_TOKEN)],
                     ],
                     useFactory: _createFeatureReducers,
                 },
@@ -195,23 +193,23 @@ function StoreModule_tsickle_Closure_declarations() {
     StoreModule.ctorParameters;
 }
 /**
+ * @param {?} injector
  * @param {?} reducers
  * @param {?} tokenReducers
  * @return {?}
  */
-export function _createStoreReducers(reducers, tokenReducers) {
-    return reducers instanceof InjectionToken ? tokenReducers : reducers;
+export function _createStoreReducers(injector, reducers, tokenReducers) {
+    return reducers instanceof InjectionToken ? injector.get(reducers) : reducers;
 }
 /**
+ * @param {?} injector
  * @param {?} reducerCollection
  * @param {?} tokenReducerCollection
  * @return {?}
  */
-export function _createFeatureReducers(reducerCollection, tokenReducerCollection) {
+export function _createFeatureReducers(injector, reducerCollection, tokenReducerCollection) {
     return reducerCollection.map((reducer, index) => {
-        return reducer instanceof InjectionToken
-            ? tokenReducerCollection[index]
-            : reducer;
+        return reducer instanceof InjectionToken ? injector.get(reducer) : reducer;
     });
 }
 /**
