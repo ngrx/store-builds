@@ -1,1 +1,1 @@
-683013c fix(Store): Update usage of compose for reducer factory (#252)
+ca544dd chore(docs): Fix selection of state using string selector (#261)
