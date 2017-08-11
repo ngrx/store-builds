@@ -59,7 +59,7 @@ export function compose(...functions) {
  */
 export function createReducerFactory(reducerFactory, metaReducers) {
     if (Array.isArray(metaReducers) && metaReducers.length > 0) {
-        return compose.apply(null, [...metaReducers, reducerFactory]);
+        return (compose(...metaReducers)(reducerFactory));
     }
     return reducerFactory;
 }

@@ -1,1 +1,1 @@
-bd968fa fix(Store): Use injector to get reducers provided via InjectionTokens (#259)
+683013c fix(Store): Update usage of compose for reducer factory (#252)
