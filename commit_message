@@ -1,1 +1,1 @@
-ca544dd chore(docs): Fix selection of state using string selector (#261)
+1cbb2c9 fix(Effects): Deprecate toPayload utility function (#266)
