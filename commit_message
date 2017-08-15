@@ -1,1 +1,1 @@
-9e33a5d docs(Migration): Fix typo in Router Store migration example
+57633d2 fix(Store): Add type signature for metareducer (#270)

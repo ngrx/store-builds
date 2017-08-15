@@ -1,5 +1,5 @@
 import { ModuleWithProviders, OnDestroy, InjectionToken, Injector } from '@angular/core';
-import { Action, ActionReducer, ActionReducerMap, ActionReducerFactory, StoreFeature, InitialState } from './models';
+import { Action, ActionReducer, ActionReducerMap, ActionReducerFactory, StoreFeature, InitialState, MetaReducer } from './models';
 import { ActionsSubject } from './actions_subject';
 import { ReducerManager, ReducerObservable } from './reducer_manager';
 import { ScannedActionsSubject } from './scanned_actions_subject';
@@ -16,7 +16,7 @@ export declare class StoreFeatureModule implements OnDestroy {
 export declare type StoreConfig<T, V extends Action = Action> = {
     initialState?: InitialState<T>;
     reducerFactory?: ActionReducerFactory<T, V>;
-    metaReducers?: ActionReducer<T, V>[];
+    metaReducers?: MetaReducer<T, V>[];
 };
 export declare class StoreModule {
     static forRoot<T, V extends Action = Action>(reducers: ActionReducerMap<T, V> | InjectionToken<ActionReducerMap<T, V>>, config?: StoreConfig<T, V>): ModuleWithProviders;

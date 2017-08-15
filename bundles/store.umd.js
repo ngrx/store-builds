@@ -78,6 +78,7 @@ function compose() {
     };
 }
 /**
+ * @template T, V
  * @param {?} reducerFactory
  * @param {?=} metaReducers
  * @return {?}

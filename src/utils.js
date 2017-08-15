@@ -53,6 +53,7 @@ export function compose(...functions) {
     };
 }
 /**
+ * @template T, V
  * @param {?} reducerFactory
  * @param {?=} metaReducers
  * @return {?}
