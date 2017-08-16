@@ -90,7 +90,7 @@ function compose() {
  */
 function createReducerFactory(reducerFactory, metaReducers) {
     if (Array.isArray(metaReducers) && metaReducers.length > 0) {
-        return (compose.apply(void 0, metaReducers)(reducerFactory));
+        return compose.apply(null, metaReducers.concat([reducerFactory]));
     }
     return reducerFactory;
 }

@@ -1,1 +1,1 @@
-71690fb chore(docs): Fix typo in router store readme (#271)
+dff9509 Revert "fix(Store): Update usage of compose for reducer factory (#252)" (#277)
