@@ -1,1 +1,1 @@
-78772b5 chore(docs): Add missing Store import (#285)
+bbb7c99 fix(RouterStore): Only serialize snapshot in preactivation hook (#287)
