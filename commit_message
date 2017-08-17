@@ -1,1 +1,1 @@
-bf7f70c fix(Effects): Use factory provide for console (#288)
+6da3ec5 fix(RouterStore): Add generic type to RouterReducerState (#292)
