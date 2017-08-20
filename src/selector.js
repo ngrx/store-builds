@@ -55,7 +55,10 @@ export function createSelector(...args) {
         memoizedProjector.reset();
         memoizedSelectors.forEach(selector => selector.release());
     }
-    return Object.assign(memoizedState.memoized, { release });
+    return Object.assign(memoizedState.memoized, {
+        release,
+        projector: memoizedProjector.memoized,
+    });
 }
 /**
  * @template T
@@ -66,6 +69,6 @@ export function createFeatureSelector(featureName) {
     const { memoized, reset } = memoize(function (state) {
         return state[featureName];
     });
-    return Object.assign(memoized, { release: reset });
+    return Object.assign(memoized, { release: reset, projector: memoized });
 }
 //# sourceMappingURL=selector.js.map

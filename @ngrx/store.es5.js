@@ -712,7 +712,10 @@ function createSelector() {
         memoizedProjector.reset();
         memoizedSelectors.forEach(function (selector) { return selector.release(); });
     }
-    return Object.assign(memoizedState.memoized, { release: release });
+    return Object.assign(memoizedState.memoized, {
+        release: release,
+        projector: memoizedProjector.memoized,
+    });
 }
 /**
  * @template T
@@ -723,7 +726,7 @@ function createFeatureSelector(featureName) {
     var _a = memoize(function (state) {
         return state[featureName];
     }), memoized = _a.memoized, reset = _a.reset;
-    return Object.assign(memoized, { release: reset });
+    return Object.assign(memoized, { release: reset, projector: memoized });
 }
 /**
  * Generated bundle index. Do not edit.

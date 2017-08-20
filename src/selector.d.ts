@@ -1,8 +1,9 @@
 import { Selector } from './models';
+export declare type AnyFn = (...args: any[]) => any;
 export interface MemoizedSelector<State, Result> extends Selector<State, Result> {
     release(): void;
+    projector: AnyFn;
 }
-export declare type AnyFn = (...args: any[]) => any;
 export declare function memoize(t: AnyFn): {
     memoized: AnyFn;
     reset: () => void;
