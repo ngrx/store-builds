@@ -1,1 +1,1 @@
-56cb21f feat(createSelector): Expose projector function on selectors to improve testability
+bf14d67 chore(precommit): Fix precommit hook to git add after changing files (#319)
