@@ -1,1 +1,1 @@
-bf14d67 chore(precommit): Fix precommit hook to git add after changing files (#319)
+ae7d5e1 fix(combineSelectors): Remove default parameter from function signature for Closure

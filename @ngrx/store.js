@@ -25,7 +25,8 @@ function combineReducers(reducers, initialState = {}) {
         }
     }
     const /** @type {?} */ finalReducerKeys = Object.keys(finalReducers);
-    return function combination(state = initialState, action) {
+    return function combination(state, action) {
+        state = state || initialState;
         let /** @type {?} */ hasChanged = false;
         const /** @type {?} */ nextState = {};
         for (let /** @type {?} */ i = 0; i < finalReducerKeys.length; i++) {

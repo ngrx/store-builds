@@ -36,7 +36,7 @@ function combineReducers(reducers, initialState) {
     }
     var /** @type {?} */ finalReducerKeys = Object.keys(finalReducers);
     return function combination(state, action) {
-        if (state === void 0) { state = initialState; }
+        state = state || initialState;
         var /** @type {?} */ hasChanged = false;
         var /** @type {?} */ nextState = {};
         for (var /** @type {?} */ i = 0; i < finalReducerKeys.length; i++) {
