@@ -1,1 +1,1 @@
-ae7d5e1 fix(combineSelectors): Remove default parameter from function signature for Closure
+e4133a4 docs(api): Fix imports typo to show imports from correct package (#322)
