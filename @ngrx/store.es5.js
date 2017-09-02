@@ -682,13 +682,18 @@ function memoize(t) {
     return { memoized: memoized, reset: reset };
 }
 /**
- * @param {...?} args
+ * @param {...?} input
  * @return {?}
  */
 function createSelector() {
-    var args = [];
+    var input = [];
     for (var _i = 0; _i < arguments.length; _i++) {
-        args[_i] = arguments[_i];
+        input[_i] = arguments[_i];
+    }
+    var /** @type {?} */ args = input;
+    if (Array.isArray(args[0])) {
+        var head = args[0], tail = args.slice(1);
+        args = head.concat(tail);
     }
     var /** @type {?} */ selectors = args.slice(0, args.length - 1);
     var /** @type {?} */ projector = args[args.length - 1];

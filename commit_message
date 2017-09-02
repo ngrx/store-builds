@@ -1,1 +1,1 @@
-a82f675 chore(docs): Add meta reducers injection in the Store docs (#341)
+2f6a035 feat(Store): createSelector with an array of selectors (#340)

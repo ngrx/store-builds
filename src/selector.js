@@ -33,10 +33,15 @@ export function memoize(t) {
     return { memoized, reset };
 }
 /**
- * @param {...?} args
+ * @param {...?} input
  * @return {?}
  */
-export function createSelector(...args) {
+export function createSelector(...input) {
+    let /** @type {?} */ args = input;
+    if (Array.isArray(args[0])) {
+        const [head, ...tail] = args;
+        args = [...head, ...tail];
+    }
     const /** @type {?} */ selectors = args.slice(0, args.length - 1);
     const /** @type {?} */ projector = args[args.length - 1];
     const /** @type {?} */ memoizedSelectors = selectors.filter((selector) => selector.release && typeof selector.release === 'function');
