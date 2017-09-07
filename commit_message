@@ -1,1 +1,1 @@
-28e1983 docs(RouterStore): Fix type signature of ROUTER_NAVIGATION action (#344)
+920c0ba fix(RouterStore): Fix cancelled navigation with async guard (fixes #354) (#355)
