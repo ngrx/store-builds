@@ -1,1 +1,1 @@
-920c0ba fix(RouterStore): Fix cancelled navigation with async guard (fixes #354) (#355)
+127ccc9 chore(Example): Added ngrx-store-freeze meta-reducer to example application (#343)
