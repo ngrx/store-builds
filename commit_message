@@ -1,1 +1,1 @@
-0528d2d fix(RouterStore): Stringify error from navigation error event (#357)
+0f00779 chore(Example): Documented @ngrx/entity and added to example app (#328)
