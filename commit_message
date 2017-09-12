@@ -1,1 +1,1 @@
-669b2f4 chore(docs): Update @ngrx/entity documentation examples and usage (#369)
+38b2f95 fix(Store): Fix typing for feature to accept InjectionToken (#375)
