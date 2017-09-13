@@ -1,1 +1,1 @@
-38b2f95 fix(Store): Fix typing for feature to accept InjectionToken (#375)
+a07c05e chore(docs): Change providing injected reducers by factory instead of value (#387)
