@@ -1,1 +1,1 @@
-5c60cba fix(Store): Refactor parameter initialization in combineReducers for Closure
+c31573f chore(Example): Add Jest as test runner for example tests (#371)
