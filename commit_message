@@ -1,1 +1,1 @@
-9e1375d chore(docs): Minor fixes to entity interfaces documentation (#390)
+274554b feat(Entity): Rename 'sort' to 'sortComparer'
