@@ -1,1 +1,1 @@
-274554b feat(Entity): Rename 'sort' to 'sortComparer'
+5c60cba fix(Store): Refactor parameter initialization in combineReducers for Closure
