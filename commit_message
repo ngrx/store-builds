@@ -1,1 +1,1 @@
-c31573f chore(Example): Add Jest as test runner for example tests (#371)
+1ced35a docs(effects): Remove usage of deprecated `toPayload` util in example (#407)
