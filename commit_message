@@ -1,1 +1,1 @@
-1ced35a docs(effects): Remove usage of deprecated `toPayload` util in example (#407)
+193e8b3 fix(Example): Add missing import for catch operator (#409)
