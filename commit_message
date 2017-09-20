@@ -1,1 +1,1 @@
-193e8b3 fix(Example): Add missing import for catch operator (#409)
+2afb792 feat(Entity): Add default selectId function for EntityAdapter (#405)
