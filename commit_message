@@ -1,1 +1,1 @@
-e63720e chore(Example): Add login info to example app. Fix sidenav issue with IE (#436)
+7fa0cf2 refactor(Entity): Rewrite entity adapters for better performance
