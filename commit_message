@@ -1,1 +1,1 @@
-7fa0cf2 refactor(Entity): Rewrite entity adapters for better performance
+ad30d40 fix(Effects): Simplify decorator handling for Closure compatibility
