@@ -1,1 +1,1 @@
-b80aa6e chore(deps): Update rollup to version 0.50.0 (#434)
+46d6f2f feat(Entity): Add support for string or number type for ID (#441)
