@@ -1,1 +1,1 @@
-46d6f2f feat(Entity): Add support for string or number type for ID (#441)
+2b0e0cf fix(decorator): add ExportDecoratedItems jsdoc for g3 (#456)
