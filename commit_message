@@ -1,1 +1,1 @@
-ad30d40 fix(Effects): Simplify decorator handling for Closure compatibility
+b80aa6e chore(deps): Update rollup to version 0.50.0 (#434)

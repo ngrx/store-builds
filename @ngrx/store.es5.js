@@ -9,16 +9,16 @@ var __extends = (this && this.__extends) || (function () {
     };
 })();
 import { Inject, Injectable, InjectionToken, Injector, NgModule } from '@angular/core';
-import { BehaviorSubject } from 'rxjs/BehaviorSubject';
-import { Observable } from 'rxjs/Observable';
-import { Subject } from 'rxjs/Subject';
-import { queue } from 'rxjs/scheduler/queue';
-import { observeOn } from 'rxjs/operator/observeOn';
-import { withLatestFrom } from 'rxjs/operator/withLatestFrom';
-import { scan } from 'rxjs/operator/scan';
-import { map } from 'rxjs/operator/map';
-import { pluck } from 'rxjs/operator/pluck';
-import { distinctUntilChanged } from 'rxjs/operator/distinctUntilChanged';
+import { BehaviorSubject as BehaviorSubject$1 } from 'rxjs/BehaviorSubject';
+import { Observable as Observable$1 } from 'rxjs/Observable';
+import { Subject as Subject$1 } from 'rxjs/Subject';
+import { queue as queue$1 } from 'rxjs/scheduler/queue';
+import { observeOn as observeOn$1 } from 'rxjs/operator/observeOn';
+import { withLatestFrom as withLatestFrom$1 } from 'rxjs/operator/withLatestFrom';
+import { scan as scan$1 } from 'rxjs/operator/scan';
+import { map as map$1 } from 'rxjs/operator/map';
+import { pluck as pluck$1 } from 'rxjs/operator/pluck';
+import { distinctUntilChanged as distinctUntilChanged$1 } from 'rxjs/operator/distinctUntilChanged';
 /**
  * @param {?} reducers
  * @param {?=} initialState
@@ -138,7 +138,7 @@ var ActionsSubject = (function (_super) {
         _super.prototype.complete.call(this);
     };
     return ActionsSubject;
-}(BehaviorSubject));
+}(BehaviorSubject$1));
 ActionsSubject.decorators = [
     { type: Injectable },
 ];
@@ -156,7 +156,7 @@ var ReducerObservable = (function (_super) {
         return _super !== null && _super.apply(this, arguments) || this;
     }
     return ReducerObservable;
-}(Observable));
+}(Observable$1));
 /**
  * @abstract
  */
@@ -235,7 +235,7 @@ var ReducerManager = (function (_super) {
         this.complete();
     };
     return ReducerManager;
-}(BehaviorSubject));
+}(BehaviorSubject$1));
 ReducerManager.decorators = [
     { type: Injectable },
 ];
@@ -265,7 +265,7 @@ var ScannedActionsSubject = (function (_super) {
         this.complete();
     };
     return ScannedActionsSubject;
-}(Subject));
+}(Subject$1));
 ScannedActionsSubject.decorators = [
     { type: Injectable },
 ];
@@ -285,7 +285,7 @@ var StateObservable = (function (_super) {
         return _super !== null && _super.apply(this, arguments) || this;
     }
     return StateObservable;
-}(Observable));
+}(Observable$1));
 var State = (function (_super) {
     __extends(State, _super);
     /**
@@ -296,9 +296,9 @@ var State = (function (_super) {
      */
     function State(actions$, reducer$, scannedActions, initialState) {
         var _this = _super.call(this, initialState) || this;
-        var actionsOnQueue$ = observeOn.call(actions$, queue);
-        var withLatestReducer$ = withLatestFrom.call(actionsOnQueue$, reducer$);
-        var stateAndAction$ = scan.call(withLatestReducer$, reduceState, initialState);
+        var actionsOnQueue$ = observeOn$1.call(actions$, queue$1);
+        var withLatestReducer$ = withLatestFrom$1.call(actionsOnQueue$, reducer$);
+        var stateAndAction$ = scan$1.call(withLatestReducer$, reduceState, initialState);
         _this.stateSubscription = stateAndAction$.subscribe({
             next: function (_a) {
                 var state = _a.state, action = _a.action;
@@ -316,7 +316,7 @@ var State = (function (_super) {
         this.complete();
     };
     return State;
-}(BehaviorSubject));
+}(BehaviorSubject$1));
 State.INIT = INIT;
 State.decorators = [
     { type: Injectable },
@@ -372,16 +372,16 @@ var Store = (function (_super) {
         }
         var /** @type {?} */ mapped$;
         if (typeof pathOrMapFn === 'string') {
-            mapped$ = pluck.call.apply(pluck, [this, pathOrMapFn].concat(paths));
+            mapped$ = pluck$1.call.apply(pluck$1, [this, pathOrMapFn].concat(paths));
         }
         else if (typeof pathOrMapFn === 'function') {
-            mapped$ = map.call(this, pathOrMapFn);
+            mapped$ = map$1.call(this, pathOrMapFn);
         }
         else {
             throw new TypeError("Unexpected type '" + typeof pathOrMapFn + "' in select operator," +
                 " expected 'string' or 'function'");
         }
-        return distinctUntilChanged.call(mapped$);
+        return distinctUntilChanged$1.call(mapped$);
     };
     /**
      * @template R
@@ -439,7 +439,7 @@ var Store = (function (_super) {
         this.reducerManager.removeReducer(key);
     };
     return Store;
-}(Observable));
+}(Observable$1));
 Store.decorators = [
     { type: Injectable },
 ];

@@ -1,8 +1,8 @@
 (function (global, factory) {
 	typeof exports === 'object' && typeof module !== 'undefined' ? factory(exports, require('@angular/core'), require('rxjs/BehaviorSubject'), require('rxjs/Observable'), require('rxjs/Subject'), require('rxjs/scheduler/queue'), require('rxjs/operator/observeOn'), require('rxjs/operator/withLatestFrom'), require('rxjs/operator/scan'), require('rxjs/operator/map'), require('rxjs/operator/pluck'), require('rxjs/operator/distinctUntilChanged')) :
 	typeof define === 'function' && define.amd ? define(['exports', '@angular/core', 'rxjs/BehaviorSubject', 'rxjs/Observable', 'rxjs/Subject', 'rxjs/scheduler/queue', 'rxjs/operator/observeOn', 'rxjs/operator/withLatestFrom', 'rxjs/operator/scan', 'rxjs/operator/map', 'rxjs/operator/pluck', 'rxjs/operator/distinctUntilChanged'], factory) :
-	(factory((global.ngrx = global.ngrx || {}, global.ngrx.store = global.ngrx.store || {}),global.ng.core,global.Rx,global.Rx,global.Rx,global.Rx.Scheduler,global.Rx.Observable.prototype,global.Rx.Observable,global.Rx.Observable.prototype,global.Rx.Observable.prototype,global.Rx.Observable.prototype,global.Rx.Observable.prototype));
-}(this, (function (exports,_angular_core,rxjs_BehaviorSubject,rxjs_Observable,rxjs_Subject,rxjs_scheduler_queue,rxjs_operator_observeOn,rxjs_operator_withLatestFrom,rxjs_operator_scan,rxjs_operator_map,rxjs_operator_pluck,rxjs_operator_distinctUntilChanged) { 'use strict';
+	(factory((global.ngrx = global.ngrx || {}, global.ngrx.store = {}),global.ng.core,global.Rx,global.Rx,global.Rx,global.Rx.Scheduler,global.Rx.Observable.prototype,global.Rx.Observable,global.Rx.Observable.prototype,global.Rx.Observable.prototype,global.Rx.Observable.prototype,global.Rx.Observable.prototype));
+}(this, (function (exports,core,BehaviorSubject,Observable,Subject,queue,observeOn,withLatestFrom,scan,map,pluck,distinctUntilChanged) { 'use strict';
 
 var __extends = (undefined && undefined.__extends) || (function () {
     var extendStatics = Object.setPrototypeOf ||
@@ -89,18 +89,18 @@ function createReducerFactory(reducerFactory, metaReducers) {
     }
     return reducerFactory;
 }
-var _INITIAL_STATE = new _angular_core.InjectionToken('@ngrx/store Internal Initial State');
-var INITIAL_STATE = new _angular_core.InjectionToken('@ngrx/store Initial State');
-var REDUCER_FACTORY = new _angular_core.InjectionToken('@ngrx/store Reducer Factory');
-var _REDUCER_FACTORY = new _angular_core.InjectionToken('@ngrx/store Reducer Factory Provider');
-var INITIAL_REDUCERS = new _angular_core.InjectionToken('@ngrx/store Initial Reducers');
-var _INITIAL_REDUCERS = new _angular_core.InjectionToken('@ngrx/store Internal Initial Reducers');
-var META_REDUCERS = new _angular_core.InjectionToken('@ngrx/store Meta Reducers');
-var STORE_FEATURES = new _angular_core.InjectionToken('@ngrx/store Store Features');
-var _STORE_REDUCERS = new _angular_core.InjectionToken('@ngrx/store Internal Store Reducers');
-var _FEATURE_REDUCERS = new _angular_core.InjectionToken('@ngrx/store Internal Feature Reducers');
-var _FEATURE_REDUCERS_TOKEN = new _angular_core.InjectionToken('@ngrx/store Internal Feature Reducers Token');
-var FEATURE_REDUCERS = new _angular_core.InjectionToken('@ngrx/store Feature Reducers');
+var _INITIAL_STATE = new core.InjectionToken('@ngrx/store Internal Initial State');
+var INITIAL_STATE = new core.InjectionToken('@ngrx/store Initial State');
+var REDUCER_FACTORY = new core.InjectionToken('@ngrx/store Reducer Factory');
+var _REDUCER_FACTORY = new core.InjectionToken('@ngrx/store Reducer Factory Provider');
+var INITIAL_REDUCERS = new core.InjectionToken('@ngrx/store Initial Reducers');
+var _INITIAL_REDUCERS = new core.InjectionToken('@ngrx/store Internal Initial Reducers');
+var META_REDUCERS = new core.InjectionToken('@ngrx/store Meta Reducers');
+var STORE_FEATURES = new core.InjectionToken('@ngrx/store Store Features');
+var _STORE_REDUCERS = new core.InjectionToken('@ngrx/store Internal Store Reducers');
+var _FEATURE_REDUCERS = new core.InjectionToken('@ngrx/store Internal Feature Reducers');
+var _FEATURE_REDUCERS_TOKEN = new core.InjectionToken('@ngrx/store Internal Feature Reducers Token');
+var FEATURE_REDUCERS = new core.InjectionToken('@ngrx/store Feature Reducers');
 var INIT = ('@ngrx/store/init');
 var ActionsSubject = (function (_super) {
     __extends(ActionsSubject, _super);
@@ -133,9 +133,9 @@ var ActionsSubject = (function (_super) {
         _super.prototype.complete.call(this);
     };
     return ActionsSubject;
-}(rxjs_BehaviorSubject.BehaviorSubject));
+}(BehaviorSubject.BehaviorSubject));
 ActionsSubject.decorators = [
-    { type: _angular_core.Injectable },
+    { type: core.Injectable },
 ];
 /**
  * @nocollapse
@@ -151,7 +151,7 @@ var ReducerObservable = (function (_super) {
         return _super !== null && _super.apply(this, arguments) || this;
     }
     return ReducerObservable;
-}(rxjs_Observable.Observable));
+}(Observable.Observable));
 /**
  * @abstract
  */
@@ -230,18 +230,18 @@ var ReducerManager = (function (_super) {
         this.complete();
     };
     return ReducerManager;
-}(rxjs_BehaviorSubject.BehaviorSubject));
+}(BehaviorSubject.BehaviorSubject));
 ReducerManager.decorators = [
-    { type: _angular_core.Injectable },
+    { type: core.Injectable },
 ];
 /**
  * @nocollapse
  */
 ReducerManager.ctorParameters = function () { return [
     { type: ReducerManagerDispatcher, },
-    { type: undefined, decorators: [{ type: _angular_core.Inject, args: [INITIAL_STATE,] },] },
-    { type: undefined, decorators: [{ type: _angular_core.Inject, args: [INITIAL_REDUCERS,] },] },
-    { type: undefined, decorators: [{ type: _angular_core.Inject, args: [REDUCER_FACTORY,] },] },
+    { type: undefined, decorators: [{ type: core.Inject, args: [INITIAL_STATE,] },] },
+    { type: undefined, decorators: [{ type: core.Inject, args: [INITIAL_REDUCERS,] },] },
+    { type: undefined, decorators: [{ type: core.Inject, args: [REDUCER_FACTORY,] },] },
 ]; };
 var REDUCER_MANAGER_PROVIDERS = [
     ReducerManager,
@@ -260,9 +260,9 @@ var ScannedActionsSubject = (function (_super) {
         this.complete();
     };
     return ScannedActionsSubject;
-}(rxjs_Subject.Subject));
+}(Subject.Subject));
 ScannedActionsSubject.decorators = [
-    { type: _angular_core.Injectable },
+    { type: core.Injectable },
 ];
 /**
  * @nocollapse
@@ -280,7 +280,7 @@ var StateObservable = (function (_super) {
         return _super !== null && _super.apply(this, arguments) || this;
     }
     return StateObservable;
-}(rxjs_Observable.Observable));
+}(Observable.Observable));
 var State = (function (_super) {
     __extends(State, _super);
     /**
@@ -291,9 +291,9 @@ var State = (function (_super) {
      */
     function State(actions$, reducer$, scannedActions, initialState) {
         var _this = _super.call(this, initialState) || this;
-        var actionsOnQueue$ = rxjs_operator_observeOn.observeOn.call(actions$, rxjs_scheduler_queue.queue);
-        var withLatestReducer$ = rxjs_operator_withLatestFrom.withLatestFrom.call(actionsOnQueue$, reducer$);
-        var stateAndAction$ = rxjs_operator_scan.scan.call(withLatestReducer$, reduceState, initialState);
+        var actionsOnQueue$ = observeOn.observeOn.call(actions$, queue.queue);
+        var withLatestReducer$ = withLatestFrom.withLatestFrom.call(actionsOnQueue$, reducer$);
+        var stateAndAction$ = scan.scan.call(withLatestReducer$, reduceState, initialState);
         _this.stateSubscription = stateAndAction$.subscribe({
             next: function (_a) {
                 var state = _a.state, action = _a.action;
@@ -311,10 +311,10 @@ var State = (function (_super) {
         this.complete();
     };
     return State;
-}(rxjs_BehaviorSubject.BehaviorSubject));
+}(BehaviorSubject.BehaviorSubject));
 State.INIT = INIT;
 State.decorators = [
-    { type: _angular_core.Injectable },
+    { type: core.Injectable },
 ];
 /**
  * @nocollapse
@@ -323,7 +323,7 @@ State.ctorParameters = function () { return [
     { type: ActionsSubject, },
     { type: ReducerObservable, },
     { type: ScannedActionsSubject, },
-    { type: undefined, decorators: [{ type: _angular_core.Inject, args: [INITIAL_STATE,] },] },
+    { type: undefined, decorators: [{ type: core.Inject, args: [INITIAL_STATE,] },] },
 ]; };
 /**
  * @template T, V
@@ -367,16 +367,16 @@ var Store = (function (_super) {
         }
         var /** @type {?} */ mapped$;
         if (typeof pathOrMapFn === 'string') {
-            mapped$ = rxjs_operator_pluck.pluck.call.apply(rxjs_operator_pluck.pluck, [this, pathOrMapFn].concat(paths));
+            mapped$ = pluck.pluck.call.apply(pluck.pluck, [this, pathOrMapFn].concat(paths));
         }
         else if (typeof pathOrMapFn === 'function') {
-            mapped$ = rxjs_operator_map.map.call(this, pathOrMapFn);
+            mapped$ = map.map.call(this, pathOrMapFn);
         }
         else {
             throw new TypeError("Unexpected type '" + typeof pathOrMapFn + "' in select operator," +
                 " expected 'string' or 'function'");
         }
-        return rxjs_operator_distinctUntilChanged.distinctUntilChanged.call(mapped$);
+        return distinctUntilChanged.distinctUntilChanged.call(mapped$);
     };
     /**
      * @template R
@@ -434,9 +434,9 @@ var Store = (function (_super) {
         this.reducerManager.removeReducer(key);
     };
     return Store;
-}(rxjs_Observable.Observable));
+}(Observable.Observable));
 Store.decorators = [
-    { type: _angular_core.Injectable },
+    { type: core.Injectable },
 ];
 /**
  * @nocollapse
@@ -458,7 +458,7 @@ var StoreRootModule = (function () {
     return StoreRootModule;
 }());
 StoreRootModule.decorators = [
-    { type: _angular_core.NgModule, args: [{},] },
+    { type: core.NgModule, args: [{},] },
 ];
 /**
  * @nocollapse
@@ -496,14 +496,14 @@ var StoreFeatureModule = (function () {
     return StoreFeatureModule;
 }());
 StoreFeatureModule.decorators = [
-    { type: _angular_core.NgModule, args: [{},] },
+    { type: core.NgModule, args: [{},] },
 ];
 /**
  * @nocollapse
  */
 StoreFeatureModule.ctorParameters = function () { return [
-    { type: Array, decorators: [{ type: _angular_core.Inject, args: [STORE_FEATURES,] },] },
-    { type: Array, decorators: [{ type: _angular_core.Inject, args: [FEATURE_REDUCERS,] },] },
+    { type: Array, decorators: [{ type: core.Inject, args: [STORE_FEATURES,] },] },
+    { type: Array, decorators: [{ type: core.Inject, args: [FEATURE_REDUCERS,] },] },
     { type: ReducerManager, },
 ]; };
 var StoreModule = (function () {
@@ -528,11 +528,11 @@ var StoreModule = (function () {
                 { provide: _INITIAL_REDUCERS, useValue: reducers },
                 {
                     provide: _STORE_REDUCERS,
-                    useExisting: reducers instanceof _angular_core.InjectionToken ? reducers : _INITIAL_REDUCERS,
+                    useExisting: reducers instanceof core.InjectionToken ? reducers : _INITIAL_REDUCERS,
                 },
                 {
                     provide: INITIAL_REDUCERS,
-                    deps: [_angular_core.Injector, _INITIAL_REDUCERS, [new _angular_core.Inject(_STORE_REDUCERS)]],
+                    deps: [core.Injector, _INITIAL_REDUCERS, [new core.Inject(_STORE_REDUCERS)]],
                     useFactory: _createStoreReducers,
                 },
                 {
@@ -585,15 +585,15 @@ var StoreModule = (function () {
                 {
                     provide: _FEATURE_REDUCERS_TOKEN,
                     multi: true,
-                    useExisting: reducers instanceof _angular_core.InjectionToken ? reducers : _FEATURE_REDUCERS,
+                    useExisting: reducers instanceof core.InjectionToken ? reducers : _FEATURE_REDUCERS,
                 },
                 {
                     provide: FEATURE_REDUCERS,
                     multi: true,
                     deps: [
-                        _angular_core.Injector,
+                        core.Injector,
                         _FEATURE_REDUCERS,
-                        [new _angular_core.Inject(_FEATURE_REDUCERS_TOKEN)],
+                        [new core.Inject(_FEATURE_REDUCERS_TOKEN)],
                     ],
                     useFactory: _createFeatureReducers,
                 },
@@ -603,7 +603,7 @@ var StoreModule = (function () {
     return StoreModule;
 }());
 StoreModule.decorators = [
-    { type: _angular_core.NgModule, args: [{},] },
+    { type: core.NgModule, args: [{},] },
 ];
 /**
  * @nocollapse
@@ -616,7 +616,7 @@ StoreModule.ctorParameters = function () { return []; };
  * @return {?}
  */
 function _createStoreReducers(injector, reducers, tokenReducers) {
-    return reducers instanceof _angular_core.InjectionToken ? injector.get(reducers) : reducers;
+    return reducers instanceof core.InjectionToken ? injector.get(reducers) : reducers;
 }
 /**
  * @param {?} injector
@@ -626,7 +626,7 @@ function _createStoreReducers(injector, reducers, tokenReducers) {
  */
 function _createFeatureReducers(injector, reducerCollection, tokenReducerCollection) {
     return reducerCollection.map(function (reducer, index) {
-        return reducer instanceof _angular_core.InjectionToken ? injector.get(reducer) : reducer;
+        return reducer instanceof core.InjectionToken ? injector.get(reducer) : reducer;
     });
 }
 /**
