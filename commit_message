@@ -1,1 +1,1 @@
-d4f80d7 chore(Example): Update import path for book model (#458)
+d5640ec fix(Entity): Change type for EntityState to interface (#454)
