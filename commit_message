@@ -1,1 +1,1 @@
-d5640ec fix(Entity): Change type for EntityState to interface (#454)
+838ba17 feat(Effects): Add root effects init action (#473)
