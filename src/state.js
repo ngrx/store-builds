@@ -25,7 +25,7 @@ export class State extends BehaviorSubject {
         super(initialState);
         const actionsOnQueue$ = observeOn.call(actions$, queue);
         const withLatestReducer$ = withLatestFrom.call(actionsOnQueue$, reducer$);
-        const stateAndAction$ = scan.call(withLatestReducer$, reduceState, initialState);
+        const stateAndAction$ = scan.call(withLatestReducer$, reduceState, { state: initialState });
         this.stateSubscription = stateAndAction$.subscribe({
             next: ({ state, action }) => {
                 this.next(state);

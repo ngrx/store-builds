@@ -1,1 +1,1 @@
-838ba17 feat(Effects): Add root effects init action (#473)
+100a8ef fix(Store): Set initial value for state action pair to object (#480)

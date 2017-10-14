@@ -298,7 +298,7 @@ var State = (function (_super) {
         var _this = _super.call(this, initialState) || this;
         var actionsOnQueue$ = observeOn$1.call(actions$, queue$1);
         var withLatestReducer$ = withLatestFrom$1.call(actionsOnQueue$, reducer$);
-        var stateAndAction$ = scan$1.call(withLatestReducer$, reduceState, initialState);
+        var stateAndAction$ = scan$1.call(withLatestReducer$, reduceState, { state: initialState });
         _this.stateSubscription = stateAndAction$.subscribe({
             next: function (_a) {
                 var state = _a.state, action = _a.action;
