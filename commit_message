@@ -1,1 +1,1 @@
-100a8ef fix(Store): Set initial value for state action pair to object (#480)
+8728bc1 chore(Effects): Remove Export Decorator (#492)
