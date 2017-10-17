@@ -1,1 +1,1 @@
-8728bc1 chore(Effects): Remove Export Decorator (#492)
+aae4064 feat(Entity): Enable creating entity selectors without composing a state selector (#490)
