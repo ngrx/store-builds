@@ -1,1 +1,1 @@
-aae4064 feat(Entity): Enable creating entity selectors without composing a state selector (#490)
+628b865 feat(Effects): Add getEffectsMetadata() helper for verifying metadata
