@@ -1,1 +1,1 @@
-f4e905d chore(docs): Made example code of using a selector more inclusive (#504)
+565389a chore(Example): Pin @angular/cli to 1.2.x to fix paths usage (#514)
