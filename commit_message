@@ -1,1 +1,1 @@
-4db7d61 chore(deps): Add Angular 5 RC support (#522)
+ab7de5c feat(RouterStore): Add configurable option for router reducer name (#417)
