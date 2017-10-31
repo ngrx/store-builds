@@ -1,1 +1,1 @@
-88f672c fix(Entity): Fix type error for id selectors (#533)
+2a22211 feat(Codegen): Add base code and build for @ngrx/codegen (#534)
