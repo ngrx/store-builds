@@ -1,1 +1,1 @@
-814ecfb chore(docs): Improve provideMockActions example for @ngrx/effects testing (#546)
+d1dba9f chore(docs): Add example for createSelector with multiple selector functions (#507)
