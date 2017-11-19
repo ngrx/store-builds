@@ -15,6 +15,10 @@ var __extends = (undefined && undefined.__extends) || (function () {
     };
 })();
 /**
+ * @fileoverview added by tsickle
+ * @suppress {checkTypes} checked by tsc
+ */
+/**
  * @param {?} reducers
  * @param {?=} initialState
  * @return {?}
@@ -89,6 +93,10 @@ function createReducerFactory(reducerFactory, metaReducers) {
     }
     return reducerFactory;
 }
+/**
+ * @fileoverview added by tsickle
+ * @suppress {checkTypes} checked by tsc
+ */
 var _INITIAL_STATE = new core.InjectionToken('@ngrx/store Internal Initial State');
 var INITIAL_STATE = new core.InjectionToken('@ngrx/store Initial State');
 var REDUCER_FACTORY = new core.InjectionToken('@ngrx/store Reducer Factory');
@@ -101,6 +109,10 @@ var _STORE_REDUCERS = new core.InjectionToken('@ngrx/store Internal Store Reduce
 var _FEATURE_REDUCERS = new core.InjectionToken('@ngrx/store Internal Feature Reducers');
 var _FEATURE_REDUCERS_TOKEN = new core.InjectionToken('@ngrx/store Internal Feature Reducers Token');
 var FEATURE_REDUCERS = new core.InjectionToken('@ngrx/store Feature Reducers');
+/**
+ * @fileoverview added by tsickle
+ * @suppress {checkTypes} checked by tsc
+ */
 var INIT = ('@ngrx/store/init');
 var ActionsSubject = (function (_super) {
     __extends(ActionsSubject, _super);
@@ -137,11 +149,13 @@ var ActionsSubject = (function (_super) {
 ActionsSubject.decorators = [
     { type: core.Injectable },
 ];
-/**
- * @nocollapse
- */
+/** @nocollapse */
 ActionsSubject.ctorParameters = function () { return []; };
 var ACTIONS_SUBJECT_PROVIDERS = [ActionsSubject];
+/**
+ * @fileoverview added by tsickle
+ * @suppress {checkTypes} checked by tsc
+ */
 /**
  * @abstract
  */
@@ -234,9 +248,7 @@ var ReducerManager = (function (_super) {
 ReducerManager.decorators = [
     { type: core.Injectable },
 ];
-/**
- * @nocollapse
- */
+/** @nocollapse */
 ReducerManager.ctorParameters = function () { return [
     { type: ReducerManagerDispatcher, },
     { type: undefined, decorators: [{ type: core.Inject, args: [INITIAL_STATE,] },] },
@@ -248,6 +260,10 @@ var REDUCER_MANAGER_PROVIDERS = [
     { provide: ReducerObservable, useExisting: ReducerManager },
     { provide: ReducerManagerDispatcher, useExisting: ActionsSubject },
 ];
+/**
+ * @fileoverview added by tsickle
+ * @suppress {checkTypes} checked by tsc
+ */
 var ScannedActionsSubject = (function (_super) {
     __extends(ScannedActionsSubject, _super);
     function ScannedActionsSubject() {
@@ -264,13 +280,15 @@ var ScannedActionsSubject = (function (_super) {
 ScannedActionsSubject.decorators = [
     { type: core.Injectable },
 ];
-/**
- * @nocollapse
- */
+/** @nocollapse */
 ScannedActionsSubject.ctorParameters = function () { return []; };
 var SCANNED_ACTIONS_SUBJECT_PROVIDERS = [
     ScannedActionsSubject,
 ];
+/**
+ * @fileoverview added by tsickle
+ * @suppress {checkTypes} checked by tsc
+ */
 /**
  * @abstract
  */
@@ -291,9 +309,9 @@ var State = (function (_super) {
      */
     function State(actions$, reducer$, scannedActions, initialState) {
         var _this = _super.call(this, initialState) || this;
-        var actionsOnQueue$ = observeOn.observeOn.call(actions$, queue.queue);
-        var withLatestReducer$ = withLatestFrom.withLatestFrom.call(actionsOnQueue$, reducer$);
-        var stateAndAction$ = scan.scan.call(withLatestReducer$, reduceState, { state: initialState });
+        var /** @type {?} */ actionsOnQueue$ = observeOn.observeOn.call(actions$, queue.queue);
+        var /** @type {?} */ withLatestReducer$ = withLatestFrom.withLatestFrom.call(actionsOnQueue$, reducer$);
+        var /** @type {?} */ stateAndAction$ = scan.scan.call(withLatestReducer$, reduceState, { state: initialState });
         _this.stateSubscription = stateAndAction$.subscribe({
             next: function (_a) {
                 var state = _a.state, action = _a.action;
@@ -316,9 +334,7 @@ State.INIT = INIT;
 State.decorators = [
     { type: core.Injectable },
 ];
-/**
- * @nocollapse
- */
+/** @nocollapse */
 State.ctorParameters = function () { return [
     { type: ActionsSubject, },
     { type: ReducerObservable, },
@@ -341,6 +357,10 @@ var STATE_PROVIDERS = [
     State,
     { provide: StateObservable, useExisting: State },
 ];
+/**
+ * @fileoverview added by tsickle
+ * @suppress {checkTypes} checked by tsc
+ */
 var Store = (function (_super) {
     __extends(Store, _super);
     /**
@@ -438,15 +458,17 @@ var Store = (function (_super) {
 Store.decorators = [
     { type: core.Injectable },
 ];
-/**
- * @nocollapse
- */
+/** @nocollapse */
 Store.ctorParameters = function () { return [
     { type: StateObservable, },
     { type: ActionsSubject, },
     { type: ReducerManager, },
 ]; };
 var STORE_PROVIDERS = [Store];
+/**
+ * @fileoverview added by tsickle
+ * @suppress {checkTypes} checked by tsc
+ */
 var StoreRootModule = (function () {
     /**
      * @param {?} actions$
@@ -460,9 +482,7 @@ var StoreRootModule = (function () {
 StoreRootModule.decorators = [
     { type: core.NgModule, args: [{},] },
 ];
-/**
- * @nocollapse
- */
+/** @nocollapse */
 StoreRootModule.ctorParameters = function () { return [
     { type: ActionsSubject, },
     { type: ReducerObservable, },
@@ -480,8 +500,8 @@ var StoreFeatureModule = (function () {
         this.reducerManager = reducerManager;
         features
             .map(function (feature, index) {
-            var featureReducerCollection = featureReducers.shift();
-            var reducers = featureReducerCollection[index];
+            var /** @type {?} */ featureReducerCollection = featureReducers.shift();
+            var /** @type {?} */ reducers = featureReducerCollection[index];
             return Object.assign({}, feature, { reducers: reducers, initialState: _initialStateFactory(feature.initialState) });
         })
             .forEach(function (feature) { return reducerManager.addFeature(feature); });
@@ -498,9 +518,7 @@ var StoreFeatureModule = (function () {
 StoreFeatureModule.decorators = [
     { type: core.NgModule, args: [{},] },
 ];
-/**
- * @nocollapse
- */
+/** @nocollapse */
 StoreFeatureModule.ctorParameters = function () { return [
     { type: Array, decorators: [{ type: core.Inject, args: [STORE_FEATURES,] },] },
     { type: Array, decorators: [{ type: core.Inject, args: [FEATURE_REDUCERS,] },] },
@@ -605,9 +623,7 @@ var StoreModule = (function () {
 StoreModule.decorators = [
     { type: core.NgModule, args: [{},] },
 ];
-/**
- * @nocollapse
- */
+/** @nocollapse */
 StoreModule.ctorParameters = function () { return []; };
 /**
  * @param {?} injector
@@ -625,9 +641,10 @@ function _createStoreReducers(injector, reducers, tokenReducers) {
  * @return {?}
  */
 function _createFeatureReducers(injector, reducerCollection, tokenReducerCollection) {
-    return reducerCollection.map(function (reducer, index) {
+    var /** @type {?} */ reducers = reducerCollection.map(function (reducer, index) {
         return reducer instanceof core.InjectionToken ? injector.get(reducer) : reducer;
     });
+    return reducers;
 }
 /**
  * @param {?} initialState
@@ -639,6 +656,13 @@ function _initialStateFactory(initialState) {
     }
     return initialState;
 }
+/**
+ * @fileoverview added by tsickle
+ * @suppress {checkTypes} checked by tsc
+ */
+/**
+ * @record
+ */
 /**
  * @param {?} t
  * @return {?}

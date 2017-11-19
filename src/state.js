@@ -1,14 +1,18 @@
-import { Injectable, Inject } from '@angular/core';
-import { BehaviorSubject } from 'rxjs/BehaviorSubject';
-import { Observable } from 'rxjs/Observable';
-import { queue } from 'rxjs/scheduler/queue';
-import { observeOn } from 'rxjs/operator/observeOn';
-import { withLatestFrom } from 'rxjs/operator/withLatestFrom';
-import { scan } from 'rxjs/operator/scan';
-import { ActionsSubject, INIT } from './actions_subject';
-import { INITIAL_STATE } from './tokens';
-import { ReducerObservable } from './reducer_manager';
-import { ScannedActionsSubject } from './scanned_actions_subject';
+/**
+ * @fileoverview added by tsickle
+ * @suppress {checkTypes} checked by tsc
+ */
+import { Injectable, Inject } from "@angular/core";
+import { BehaviorSubject } from "rxjs/BehaviorSubject";
+import { Observable } from "rxjs/Observable";
+import { queue } from "rxjs/scheduler/queue";
+import { observeOn } from "rxjs/operator/observeOn";
+import { withLatestFrom } from "rxjs/operator/withLatestFrom";
+import { scan } from "rxjs/operator/scan";
+import { ActionsSubject, INIT } from "./actions_subject";
+import { INITIAL_STATE } from "./tokens";
+import { ReducerObservable } from "./reducer_manager";
+import { ScannedActionsSubject } from "./scanned_actions_subject";
 /**
  * @abstract
  */
@@ -23,9 +27,9 @@ export class State extends BehaviorSubject {
      */
     constructor(actions$, reducer$, scannedActions, initialState) {
         super(initialState);
-        const actionsOnQueue$ = observeOn.call(actions$, queue);
-        const withLatestReducer$ = withLatestFrom.call(actionsOnQueue$, reducer$);
-        const stateAndAction$ = scan.call(withLatestReducer$, reduceState, { state: initialState });
+        const /** @type {?} */ actionsOnQueue$ = observeOn.call(actions$, queue);
+        const /** @type {?} */ withLatestReducer$ = withLatestFrom.call(actionsOnQueue$, reducer$);
+        const /** @type {?} */ stateAndAction$ = scan.call(withLatestReducer$, reduceState, { state: initialState });
         this.stateSubscription = stateAndAction$.subscribe({
             next: ({ state, action }) => {
                 this.next(state);
@@ -45,9 +49,7 @@ State.INIT = INIT;
 State.decorators = [
     { type: Injectable },
 ];
-/**
- * @nocollapse
- */
+/** @nocollapse */
 State.ctorParameters = () => [
     { type: ActionsSubject, },
     { type: ReducerObservable, },
@@ -55,15 +57,15 @@ State.ctorParameters = () => [
     { type: undefined, decorators: [{ type: Inject, args: [INITIAL_STATE,] },] },
 ];
 function State_tsickle_Closure_declarations() {
-    /** @type {?} */
-    State.INIT;
-    /** @type {?} */
+    /** @type {!Array<{type: !Function, args: (undefined|!Array<?>)}>} */
     State.decorators;
     /**
      * @nocollapse
-     * @type {?}
+     * @type {function(): !Array<(null|{type: ?, decorators: (undefined|!Array<{type: !Function, args: (undefined|!Array<?>)}>)})>}
      */
     State.ctorParameters;
+    /** @type {?} */
+    State.INIT;
     /** @type {?} */
     State.prototype.stateSubscription;
 }

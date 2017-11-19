@@ -1,11 +1,15 @@
-import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs/Observable';
-import { map } from 'rxjs/operator/map';
-import { pluck } from 'rxjs/operator/pluck';
-import { distinctUntilChanged } from 'rxjs/operator/distinctUntilChanged';
-import { ActionsSubject } from './actions_subject';
-import { StateObservable } from './state';
-import { ReducerManager } from './reducer_manager';
+/**
+ * @fileoverview added by tsickle
+ * @suppress {checkTypes} checked by tsc
+ */
+import { Injectable } from "@angular/core";
+import { Observable } from "rxjs/Observable";
+import { map } from "rxjs/operator/map";
+import { pluck } from "rxjs/operator/pluck";
+import { distinctUntilChanged } from "rxjs/operator/distinctUntilChanged";
+import { ActionsSubject } from "./actions_subject";
+import { StateObservable } from "./state";
+import { ReducerManager } from "./reducer_manager";
 export class Store extends Observable {
     /**
      * @param {?} state$
@@ -96,20 +100,18 @@ export class Store extends Observable {
 Store.decorators = [
     { type: Injectable },
 ];
-/**
- * @nocollapse
- */
+/** @nocollapse */
 Store.ctorParameters = () => [
     { type: StateObservable, },
     { type: ActionsSubject, },
     { type: ReducerManager, },
 ];
 function Store_tsickle_Closure_declarations() {
-    /** @type {?} */
+    /** @type {!Array<{type: !Function, args: (undefined|!Array<?>)}>} */
     Store.decorators;
     /**
      * @nocollapse
-     * @type {?}
+     * @type {function(): !Array<(null|{type: ?, decorators: (undefined|!Array<{type: !Function, args: (undefined|!Array<?>)}>)})>}
      */
     Store.ctorParameters;
     /** @type {?} */

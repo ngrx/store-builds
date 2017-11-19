@@ -1,4 +1,18 @@
 /**
+ * @fileoverview added by tsickle
+ * @suppress {checkTypes} checked by tsc
+ */
+/**
+ * @record
+ */
+export function MemoizedSelector() { }
+function MemoizedSelector_tsickle_Closure_declarations() {
+    /** @type {?} */
+    MemoizedSelector.prototype.release;
+    /** @type {?} */
+    MemoizedSelector.prototype.projector;
+}
+/**
  * @param {?} t
  * @return {?}
  */

@@ -1,11 +1,15 @@
-import { NgModule, Inject, InjectionToken, Injector, } from '@angular/core';
-import { combineReducers, createReducerFactory } from './utils';
-import { INITIAL_STATE, INITIAL_REDUCERS, _INITIAL_REDUCERS, REDUCER_FACTORY, _REDUCER_FACTORY, STORE_FEATURES, _INITIAL_STATE, META_REDUCERS, _STORE_REDUCERS, FEATURE_REDUCERS, _FEATURE_REDUCERS, _FEATURE_REDUCERS_TOKEN, } from './tokens';
-import { ACTIONS_SUBJECT_PROVIDERS, ActionsSubject } from './actions_subject';
-import { REDUCER_MANAGER_PROVIDERS, ReducerManager, ReducerObservable, } from './reducer_manager';
-import { SCANNED_ACTIONS_SUBJECT_PROVIDERS, ScannedActionsSubject, } from './scanned_actions_subject';
-import { STATE_PROVIDERS } from './state';
-import { STORE_PROVIDERS } from './store';
+/**
+ * @fileoverview added by tsickle
+ * @suppress {checkTypes} checked by tsc
+ */
+import { NgModule, Inject, InjectionToken, Injector, } from "@angular/core";
+import { combineReducers, createReducerFactory } from "./utils";
+import { INITIAL_STATE, INITIAL_REDUCERS, _INITIAL_REDUCERS, REDUCER_FACTORY, _REDUCER_FACTORY, STORE_FEATURES, _INITIAL_STATE, META_REDUCERS, _STORE_REDUCERS, FEATURE_REDUCERS, _FEATURE_REDUCERS, _FEATURE_REDUCERS_TOKEN, } from "./tokens";
+import { ACTIONS_SUBJECT_PROVIDERS, ActionsSubject } from "./actions_subject";
+import { REDUCER_MANAGER_PROVIDERS, ReducerManager, ReducerObservable, } from "./reducer_manager";
+import { SCANNED_ACTIONS_SUBJECT_PROVIDERS, ScannedActionsSubject, } from "./scanned_actions_subject";
+import { STATE_PROVIDERS } from "./state";
+import { STORE_PROVIDERS } from "./store";
 export class StoreRootModule {
     /**
      * @param {?} actions$
@@ -17,20 +21,18 @@ export class StoreRootModule {
 StoreRootModule.decorators = [
     { type: NgModule, args: [{},] },
 ];
-/**
- * @nocollapse
- */
+/** @nocollapse */
 StoreRootModule.ctorParameters = () => [
     { type: ActionsSubject, },
     { type: ReducerObservable, },
     { type: ScannedActionsSubject, },
 ];
 function StoreRootModule_tsickle_Closure_declarations() {
-    /** @type {?} */
+    /** @type {!Array<{type: !Function, args: (undefined|!Array<?>)}>} */
     StoreRootModule.decorators;
     /**
      * @nocollapse
-     * @type {?}
+     * @type {function(): !Array<(null|{type: ?, decorators: (undefined|!Array<{type: !Function, args: (undefined|!Array<?>)}>)})>}
      */
     StoreRootModule.ctorParameters;
 }
@@ -46,8 +48,8 @@ export class StoreFeatureModule {
         this.reducerManager = reducerManager;
         features
             .map((feature, index) => {
-            const featureReducerCollection = featureReducers.shift();
-            const reducers = featureReducerCollection[index];
+            const /** @type {?} */ featureReducerCollection = featureReducers.shift();
+            const /** @type {?} */ reducers = featureReducerCollection[index];
             return Object.assign({}, feature, { reducers, initialState: _initialStateFactory(feature.initialState) });
         })
             .forEach(feature => reducerManager.addFeature(feature));
@@ -62,20 +64,18 @@ export class StoreFeatureModule {
 StoreFeatureModule.decorators = [
     { type: NgModule, args: [{},] },
 ];
-/**
- * @nocollapse
- */
+/** @nocollapse */
 StoreFeatureModule.ctorParameters = () => [
     { type: Array, decorators: [{ type: Inject, args: [STORE_FEATURES,] },] },
     { type: Array, decorators: [{ type: Inject, args: [FEATURE_REDUCERS,] },] },
     { type: ReducerManager, },
 ];
 function StoreFeatureModule_tsickle_Closure_declarations() {
-    /** @type {?} */
+    /** @type {!Array<{type: !Function, args: (undefined|!Array<?>)}>} */
     StoreFeatureModule.decorators;
     /**
      * @nocollapse
-     * @type {?}
+     * @type {function(): !Array<(null|{type: ?, decorators: (undefined|!Array<{type: !Function, args: (undefined|!Array<?>)}>)})>}
      */
     StoreFeatureModule.ctorParameters;
     /** @type {?} */
@@ -179,16 +179,14 @@ export class StoreModule {
 StoreModule.decorators = [
     { type: NgModule, args: [{},] },
 ];
-/**
- * @nocollapse
- */
+/** @nocollapse */
 StoreModule.ctorParameters = () => [];
 function StoreModule_tsickle_Closure_declarations() {
-    /** @type {?} */
+    /** @type {!Array<{type: !Function, args: (undefined|!Array<?>)}>} */
     StoreModule.decorators;
     /**
      * @nocollapse
-     * @type {?}
+     * @type {function(): !Array<(null|{type: ?, decorators: (undefined|!Array<{type: !Function, args: (undefined|!Array<?>)}>)})>}
      */
     StoreModule.ctorParameters;
 }
@@ -208,9 +206,10 @@ export function _createStoreReducers(injector, reducers, tokenReducers) {
  * @return {?}
  */
 export function _createFeatureReducers(injector, reducerCollection, tokenReducerCollection) {
-    return reducerCollection.map((reducer, index) => {
+    const /** @type {?} */ reducers = reducerCollection.map((reducer, index) => {
         return reducer instanceof InjectionToken ? injector.get(reducer) : reducer;
     });
+    return reducers;
 }
 /**
  * @param {?} initialState

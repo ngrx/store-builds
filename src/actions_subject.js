@@ -1,6 +1,10 @@
-import { Injectable } from '@angular/core';
-import { BehaviorSubject } from 'rxjs/BehaviorSubject';
-export const /** @type {?} */ INIT = ('@ngrx/store/init');
+/**
+ * @fileoverview added by tsickle
+ * @suppress {checkTypes} checked by tsc
+ */
+import { Injectable } from "@angular/core";
+import { BehaviorSubject } from "rxjs/BehaviorSubject";
+export const /** @type {?} */ INIT = /** @type {?} */ ('@ngrx/store/init');
 export class ActionsSubject extends BehaviorSubject {
     constructor() {
         super({ type: INIT });
@@ -34,16 +38,14 @@ export class ActionsSubject extends BehaviorSubject {
 ActionsSubject.decorators = [
     { type: Injectable },
 ];
-/**
- * @nocollapse
- */
+/** @nocollapse */
 ActionsSubject.ctorParameters = () => [];
 function ActionsSubject_tsickle_Closure_declarations() {
-    /** @type {?} */
+    /** @type {!Array<{type: !Function, args: (undefined|!Array<?>)}>} */
     ActionsSubject.decorators;
     /**
      * @nocollapse
-     * @type {?}
+     * @type {function(): !Array<(null|{type: ?, decorators: (undefined|!Array<{type: !Function, args: (undefined|!Array<?>)}>)})>}
      */
     ActionsSubject.ctorParameters;
 }

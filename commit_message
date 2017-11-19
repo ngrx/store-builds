@@ -1,1 +1,1 @@
-4125914 fix(RouterStore): Fix usage of config object if provided (#575)
+5a998ba chore(build): Update dependencies to Angular 5 (#580)

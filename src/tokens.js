@@ -1,4 +1,8 @@
-import { InjectionToken } from '@angular/core';
+/**
+ * @fileoverview added by tsickle
+ * @suppress {checkTypes} checked by tsc
+ */
+import { InjectionToken } from "@angular/core";
 export const /** @type {?} */ _INITIAL_STATE = new InjectionToken('@ngrx/store Internal Initial State');
 export const /** @type {?} */ INITIAL_STATE = new InjectionToken('@ngrx/store Initial State');
 export const /** @type {?} */ REDUCER_FACTORY = new InjectionToken('@ngrx/store Reducer Factory');

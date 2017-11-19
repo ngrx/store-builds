@@ -1,5 +1,9 @@
-import { Injectable } from '@angular/core';
-import { Subject } from 'rxjs/Subject';
+/**
+ * @fileoverview added by tsickle
+ * @suppress {checkTypes} checked by tsc
+ */
+import { Injectable } from "@angular/core";
+import { Subject } from "rxjs/Subject";
 export class ScannedActionsSubject extends Subject {
     /**
      * @return {?}
@@ -11,16 +15,14 @@ export class ScannedActionsSubject extends Subject {
 ScannedActionsSubject.decorators = [
     { type: Injectable },
 ];
-/**
- * @nocollapse
- */
+/** @nocollapse */
 ScannedActionsSubject.ctorParameters = () => [];
 function ScannedActionsSubject_tsickle_Closure_declarations() {
-    /** @type {?} */
+    /** @type {!Array<{type: !Function, args: (undefined|!Array<?>)}>} */
     ScannedActionsSubject.decorators;
     /**
      * @nocollapse
-     * @type {?}
+     * @type {function(): !Array<(null|{type: ?, decorators: (undefined|!Array<{type: !Function, args: (undefined|!Array<?>)}>)})>}
      */
     ScannedActionsSubject.ctorParameters;
 }

@@ -1,9 +1,13 @@
-import { Injectable, Inject } from '@angular/core';
-import { BehaviorSubject } from 'rxjs/BehaviorSubject';
-import { Observable } from 'rxjs/Observable';
-import { INITIAL_STATE, INITIAL_REDUCERS, REDUCER_FACTORY } from './tokens';
-import { omit, createReducerFactory } from './utils';
-import { ActionsSubject } from './actions_subject';
+/**
+ * @fileoverview added by tsickle
+ * @suppress {checkTypes} checked by tsc
+ */
+import { Injectable, Inject } from "@angular/core";
+import { BehaviorSubject } from "rxjs/BehaviorSubject";
+import { Observable } from "rxjs/Observable";
+import { INITIAL_STATE, INITIAL_REDUCERS, REDUCER_FACTORY } from "./tokens";
+import { omit, createReducerFactory } from "./utils";
+import { ActionsSubject } from "./actions_subject";
 /**
  * @abstract
  */
@@ -14,7 +18,7 @@ export class ReducerObservable extends Observable {
  */
 export class ReducerManagerDispatcher extends ActionsSubject {
 }
-export const /** @type {?} */ UPDATE = ('@ngrx/store/update-reducers');
+export const /** @type {?} */ UPDATE = /** @type {?} */ ('@ngrx/store/update-reducers');
 export class ReducerManager extends BehaviorSubject {
     /**
      * @param {?} dispatcher
@@ -80,9 +84,7 @@ export class ReducerManager extends BehaviorSubject {
 ReducerManager.decorators = [
     { type: Injectable },
 ];
-/**
- * @nocollapse
- */
+/** @nocollapse */
 ReducerManager.ctorParameters = () => [
     { type: ReducerManagerDispatcher, },
     { type: undefined, decorators: [{ type: Inject, args: [INITIAL_STATE,] },] },
@@ -90,11 +92,11 @@ ReducerManager.ctorParameters = () => [
     { type: undefined, decorators: [{ type: Inject, args: [REDUCER_FACTORY,] },] },
 ];
 function ReducerManager_tsickle_Closure_declarations() {
-    /** @type {?} */
+    /** @type {!Array<{type: !Function, args: (undefined|!Array<?>)}>} */
     ReducerManager.decorators;
     /**
      * @nocollapse
-     * @type {?}
+     * @type {function(): !Array<(null|{type: ?, decorators: (undefined|!Array<{type: !Function, args: (undefined|!Array<?>)}>)})>}
      */
     ReducerManager.ctorParameters;
     /** @type {?} */

@@ -11,6 +11,10 @@ import { pluck as pluck$1 } from 'rxjs/operator/pluck';
 import { distinctUntilChanged as distinctUntilChanged$1 } from 'rxjs/operator/distinctUntilChanged';
 
 /**
+ * @fileoverview added by tsickle
+ * @suppress {checkTypes} checked by tsc
+ */
+/**
  * @param {?} reducers
  * @param {?=} initialState
  * @return {?}
@@ -78,6 +82,10 @@ function createReducerFactory(reducerFactory, metaReducers) {
     return reducerFactory;
 }
 
+/**
+ * @fileoverview added by tsickle
+ * @suppress {checkTypes} checked by tsc
+ */
 const _INITIAL_STATE = new InjectionToken('@ngrx/store Internal Initial State');
 const INITIAL_STATE = new InjectionToken('@ngrx/store Initial State');
 const REDUCER_FACTORY = new InjectionToken('@ngrx/store Reducer Factory');
@@ -91,7 +99,11 @@ const _FEATURE_REDUCERS = new InjectionToken('@ngrx/store Internal Feature Reduc
 const _FEATURE_REDUCERS_TOKEN = new InjectionToken('@ngrx/store Internal Feature Reducers Token');
 const FEATURE_REDUCERS = new InjectionToken('@ngrx/store Feature Reducers');
 
-const INIT = ('@ngrx/store/init');
+/**
+ * @fileoverview added by tsickle
+ * @suppress {checkTypes} checked by tsc
+ */
+const INIT = /** @type {?} */ ('@ngrx/store/init');
 class ActionsSubject extends BehaviorSubject$1 {
     constructor() {
         super({ type: INIT });
@@ -125,12 +137,14 @@ class ActionsSubject extends BehaviorSubject$1 {
 ActionsSubject.decorators = [
     { type: Injectable },
 ];
-/**
- * @nocollapse
- */
+/** @nocollapse */
 ActionsSubject.ctorParameters = () => [];
 const ACTIONS_SUBJECT_PROVIDERS = [ActionsSubject];
 
+/**
+ * @fileoverview added by tsickle
+ * @suppress {checkTypes} checked by tsc
+ */
 /**
  * @abstract
  */
@@ -141,7 +155,7 @@ class ReducerObservable extends Observable$1 {
  */
 class ReducerManagerDispatcher extends ActionsSubject {
 }
-const UPDATE = ('@ngrx/store/update-reducers');
+const UPDATE = /** @type {?} */ ('@ngrx/store/update-reducers');
 class ReducerManager extends BehaviorSubject$1 {
     /**
      * @param {?} dispatcher
@@ -207,9 +221,7 @@ class ReducerManager extends BehaviorSubject$1 {
 ReducerManager.decorators = [
     { type: Injectable },
 ];
-/**
- * @nocollapse
- */
+/** @nocollapse */
 ReducerManager.ctorParameters = () => [
     { type: ReducerManagerDispatcher, },
     { type: undefined, decorators: [{ type: Inject, args: [INITIAL_STATE,] },] },
@@ -222,6 +234,10 @@ const REDUCER_MANAGER_PROVIDERS = [
     { provide: ReducerManagerDispatcher, useExisting: ActionsSubject },
 ];
 
+/**
+ * @fileoverview added by tsickle
+ * @suppress {checkTypes} checked by tsc
+ */
 class ScannedActionsSubject extends Subject$1 {
     /**
      * @return {?}
@@ -233,14 +249,16 @@ class ScannedActionsSubject extends Subject$1 {
 ScannedActionsSubject.decorators = [
     { type: Injectable },
 ];
-/**
- * @nocollapse
- */
+/** @nocollapse */
 ScannedActionsSubject.ctorParameters = () => [];
 const SCANNED_ACTIONS_SUBJECT_PROVIDERS = [
     ScannedActionsSubject,
 ];
 
+/**
+ * @fileoverview added by tsickle
+ * @suppress {checkTypes} checked by tsc
+ */
 /**
  * @abstract
  */
@@ -255,9 +273,9 @@ class State extends BehaviorSubject$1 {
      */
     constructor(actions$, reducer$, scannedActions, initialState) {
         super(initialState);
-        const actionsOnQueue$ = observeOn$1.call(actions$, queue$1);
-        const withLatestReducer$ = withLatestFrom$1.call(actionsOnQueue$, reducer$);
-        const stateAndAction$ = scan$1.call(withLatestReducer$, reduceState, { state: initialState });
+        const /** @type {?} */ actionsOnQueue$ = observeOn$1.call(actions$, queue$1);
+        const /** @type {?} */ withLatestReducer$ = withLatestFrom$1.call(actionsOnQueue$, reducer$);
+        const /** @type {?} */ stateAndAction$ = scan$1.call(withLatestReducer$, reduceState, { state: initialState });
         this.stateSubscription = stateAndAction$.subscribe({
             next: ({ state, action }) => {
                 this.next(state);
@@ -277,9 +295,7 @@ State.INIT = INIT;
 State.decorators = [
     { type: Injectable },
 ];
-/**
- * @nocollapse
- */
+/** @nocollapse */
 State.ctorParameters = () => [
     { type: ActionsSubject, },
     { type: ReducerObservable, },
@@ -301,6 +317,10 @@ const STATE_PROVIDERS = [
     { provide: StateObservable, useExisting: State },
 ];
 
+/**
+ * @fileoverview added by tsickle
+ * @suppress {checkTypes} checked by tsc
+ */
 class Store extends Observable$1 {
     /**
      * @param {?} state$
@@ -391,9 +411,7 @@ class Store extends Observable$1 {
 Store.decorators = [
     { type: Injectable },
 ];
-/**
- * @nocollapse
- */
+/** @nocollapse */
 Store.ctorParameters = () => [
     { type: StateObservable, },
     { type: ActionsSubject, },
@@ -401,6 +419,10 @@ Store.ctorParameters = () => [
 ];
 const STORE_PROVIDERS = [Store];
 
+/**
+ * @fileoverview added by tsickle
+ * @suppress {checkTypes} checked by tsc
+ */
 class StoreRootModule {
     /**
      * @param {?} actions$
@@ -412,9 +434,7 @@ class StoreRootModule {
 StoreRootModule.decorators = [
     { type: NgModule, args: [{},] },
 ];
-/**
- * @nocollapse
- */
+/** @nocollapse */
 StoreRootModule.ctorParameters = () => [
     { type: ActionsSubject, },
     { type: ReducerObservable, },
@@ -432,8 +452,8 @@ class StoreFeatureModule {
         this.reducerManager = reducerManager;
         features
             .map((feature, index) => {
-            const featureReducerCollection = featureReducers.shift();
-            const reducers = featureReducerCollection[index];
+            const /** @type {?} */ featureReducerCollection = featureReducers.shift();
+            const /** @type {?} */ reducers = featureReducerCollection[index];
             return Object.assign({}, feature, { reducers, initialState: _initialStateFactory(feature.initialState) });
         })
             .forEach(feature => reducerManager.addFeature(feature));
@@ -448,9 +468,7 @@ class StoreFeatureModule {
 StoreFeatureModule.decorators = [
     { type: NgModule, args: [{},] },
 ];
-/**
- * @nocollapse
- */
+/** @nocollapse */
 StoreFeatureModule.ctorParameters = () => [
     { type: Array, decorators: [{ type: Inject, args: [STORE_FEATURES,] },] },
     { type: Array, decorators: [{ type: Inject, args: [FEATURE_REDUCERS,] },] },
@@ -550,9 +568,7 @@ class StoreModule {
 StoreModule.decorators = [
     { type: NgModule, args: [{},] },
 ];
-/**
- * @nocollapse
- */
+/** @nocollapse */
 StoreModule.ctorParameters = () => [];
 /**
  * @param {?} injector
@@ -570,9 +586,10 @@ function _createStoreReducers(injector, reducers, tokenReducers) {
  * @return {?}
  */
 function _createFeatureReducers(injector, reducerCollection, tokenReducerCollection) {
-    return reducerCollection.map((reducer, index) => {
+    const /** @type {?} */ reducers = reducerCollection.map((reducer, index) => {
         return reducer instanceof InjectionToken ? injector.get(reducer) : reducer;
     });
+    return reducers;
 }
 /**
  * @param {?} initialState
@@ -584,6 +601,14 @@ function _initialStateFactory(initialState) {
     }
     return initialState;
 }
+
+/**
+ * @fileoverview added by tsickle
+ * @suppress {checkTypes} checked by tsc
+ */
+/**
+ * @record
+ */
 
 /**
  * @param {?} t
@@ -664,6 +689,20 @@ function createFeatureSelector(featureName) {
     return Object.assign(memoized, { release: reset, projector: memoized });
 }
 
+/**
+ * @fileoverview added by tsickle
+ * @suppress {checkTypes} checked by tsc
+ */
+
+/**
+ * @fileoverview added by tsickle
+ * @suppress {checkTypes} checked by tsc
+ */
+
+/**
+ * @fileoverview added by tsickle
+ * @suppress {checkTypes} checked by tsc
+ */
 /**
  * Generated bundle index. Do not edit.
  */
