@@ -1,1 +1,1 @@
-5a998ba chore(build): Update dependencies to Angular 5 (#580)
+247ae1a fix(StoreDevtools): Only recompute current state when reducers are updated (#570)
