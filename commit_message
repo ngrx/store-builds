@@ -1,1 +1,1 @@
-247ae1a fix(StoreDevtools): Only recompute current state when reducers are updated (#570)
+a467bd6 chore(docs): Add params to custom RouterStateSerializer example (#589)
