@@ -85,9 +85,6 @@ export function createSelector(...input) {
  * @return {?}
  */
 export function createFeatureSelector(featureName) {
-    const { memoized, reset } = memoize(function (state) {
-        return state[featureName];
-    });
-    return Object.assign(memoized, { release: reset, projector: memoized });
+    return createSelector((state) => state[featureName], (featureState) => featureState);
 }
 //# sourceMappingURL=selector.js.map

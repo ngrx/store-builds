@@ -317,12 +317,10 @@ var State = (function (_super) {
         var /** @type {?} */ actionsOnQueue$ = observeOn$1.call(actions$, queue$1);
         var /** @type {?} */ withLatestReducer$ = withLatestFrom$1.call(actionsOnQueue$, reducer$);
         var /** @type {?} */ stateAndAction$ = scan$1.call(withLatestReducer$, reduceState, { state: initialState });
-        _this.stateSubscription = stateAndAction$.subscribe({
-            next: function (_a) {
-                var state = _a.state, action = _a.action;
-                _this.next(state);
-                scannedActions.next(action);
-            },
+        _this.stateSubscription = stateAndAction$.subscribe(function (_a) {
+            var state = _a.state, action = _a.action;
+            _this.next(state);
+            scannedActions.next(action);
         });
         return _this;
     }
@@ -749,10 +747,7 @@ function createSelector() {
  * @return {?}
  */
 function createFeatureSelector(featureName) {
-    var _a = memoize(function (state) {
-        return state[featureName];
-    }), memoized = _a.memoized, reset = _a.reset;
-    return Object.assign(memoized, { release: reset, projector: memoized });
+    return createSelector(function (state) { return state[featureName]; }, function (featureState) { return featureState; });
 }
 /**
  * @fileoverview added by tsickle

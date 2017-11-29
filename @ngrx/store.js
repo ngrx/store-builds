@@ -276,11 +276,9 @@ class State extends BehaviorSubject$1 {
         const /** @type {?} */ actionsOnQueue$ = observeOn$1.call(actions$, queue$1);
         const /** @type {?} */ withLatestReducer$ = withLatestFrom$1.call(actionsOnQueue$, reducer$);
         const /** @type {?} */ stateAndAction$ = scan$1.call(withLatestReducer$, reduceState, { state: initialState });
-        this.stateSubscription = stateAndAction$.subscribe({
-            next: ({ state, action }) => {
-                this.next(state);
-                scannedActions.next(action);
-            },
+        this.stateSubscription = stateAndAction$.subscribe(({ state, action }) => {
+            this.next(state);
+            scannedActions.next(action);
         });
     }
     /**
@@ -683,10 +681,7 @@ function createSelector(...input) {
  * @return {?}
  */
 function createFeatureSelector(featureName) {
-    const { memoized, reset } = memoize(function (state) {
-        return state[featureName];
-    });
-    return Object.assign(memoized, { release: reset, projector: memoized });
+    return createSelector((state) => state[featureName], (featureState) => featureState);
 }
 
 /**
