@@ -1,1 +1,1 @@
-c642a62 chore(Example): Update actions types to use enum instead of const (#598)
+c3d46a8 refactor(Effects): Implement ErrorReporter as an ErrorHandler (#635)
