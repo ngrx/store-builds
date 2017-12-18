@@ -1,1 +1,1 @@
-cb84a4d refactor(Store): Combine store module export statements (#654)
+0a3398d fix(Effects): Ensure Store modules are loaded eagerly (#658)
