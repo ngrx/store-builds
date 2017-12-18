@@ -337,18 +337,7 @@ class Store extends Observable$1 {
      * @return {?}
      */
     select(pathOrMapFn, ...paths) {
-        let /** @type {?} */ mapped$;
-        if (typeof pathOrMapFn === 'string') {
-            mapped$ = pluck$1.call(this, pathOrMapFn, ...paths);
-        }
-        else if (typeof pathOrMapFn === 'function') {
-            mapped$ = map$1.call(this, pathOrMapFn);
-        }
-        else {
-            throw new TypeError(`Unexpected type '${typeof pathOrMapFn}' in select operator,` +
-                ` expected 'string' or 'function'`);
-        }
-        return distinctUntilChanged$1.call(mapped$);
+        return select(pathOrMapFn, ...paths)(this);
     }
     /**
      * @template R
@@ -416,6 +405,28 @@ Store.ctorParameters = () => [
     { type: ReducerManager, },
 ];
 const STORE_PROVIDERS = [Store];
+/**
+ * @template T, K
+ * @param {?} pathOrMapFn
+ * @param {...?} paths
+ * @return {?}
+ */
+function select(pathOrMapFn, ...paths) {
+    return function selectOperator(source$) {
+        let /** @type {?} */ mapped$;
+        if (typeof pathOrMapFn === 'string') {
+            mapped$ = pluck$1.call(source$, pathOrMapFn, ...paths);
+        }
+        else if (typeof pathOrMapFn === 'function') {
+            mapped$ = map$1.call(source$, pathOrMapFn);
+        }
+        else {
+            throw new TypeError(`Unexpected type '${typeof pathOrMapFn}' in select operator,` +
+                ` expected 'string' or 'function'`);
+        }
+        return distinctUntilChanged$1.call(mapped$);
+    };
+}
 
 /**
  * @fileoverview added by tsickle
@@ -702,5 +713,5 @@ function createFeatureSelector(featureName) {
  * Generated bundle index. Do not edit.
  */
 
-export { StoreModule, Store, combineReducers, compose, createReducerFactory, ActionsSubject, INIT, ReducerManager, ReducerObservable, ReducerManagerDispatcher, UPDATE, ScannedActionsSubject, createSelector, createFeatureSelector, State, StateObservable, reduceState, INITIAL_STATE, _REDUCER_FACTORY, REDUCER_FACTORY, _INITIAL_REDUCERS, INITIAL_REDUCERS, STORE_FEATURES, _INITIAL_STATE, META_REDUCERS, _STORE_REDUCERS, _FEATURE_REDUCERS, FEATURE_REDUCERS, _FEATURE_REDUCERS_TOKEN, StoreRootModule, StoreFeatureModule, _initialStateFactory, _createStoreReducers, _createFeatureReducers, ACTIONS_SUBJECT_PROVIDERS as ɵc, REDUCER_MANAGER_PROVIDERS as ɵd, SCANNED_ACTIONS_SUBJECT_PROVIDERS as ɵe, STATE_PROVIDERS as ɵf, STORE_PROVIDERS as ɵb };
+export { StoreModule, Store, select, combineReducers, compose, createReducerFactory, ActionsSubject, INIT, ReducerManager, ReducerObservable, ReducerManagerDispatcher, UPDATE, ScannedActionsSubject, createSelector, createFeatureSelector, State, StateObservable, reduceState, INITIAL_STATE, _REDUCER_FACTORY, REDUCER_FACTORY, _INITIAL_REDUCERS, INITIAL_REDUCERS, STORE_FEATURES, _INITIAL_STATE, META_REDUCERS, _STORE_REDUCERS, _FEATURE_REDUCERS, FEATURE_REDUCERS, _FEATURE_REDUCERS_TOKEN, StoreRootModule, StoreFeatureModule, _initialStateFactory, _createStoreReducers, _createFeatureReducers, ACTIONS_SUBJECT_PROVIDERS as ɵc, REDUCER_MANAGER_PROVIDERS as ɵd, SCANNED_ACTIONS_SUBJECT_PROVIDERS as ɵe, STATE_PROVIDERS as ɵf, STORE_PROVIDERS as ɵb };
 //# sourceMappingURL=store.js.map

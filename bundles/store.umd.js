@@ -383,18 +383,7 @@ var Store = (function (_super) {
         for (var _i = 1; _i < arguments.length; _i++) {
             paths[_i - 1] = arguments[_i];
         }
-        var /** @type {?} */ mapped$;
-        if (typeof pathOrMapFn === 'string') {
-            mapped$ = pluck.pluck.call.apply(pluck.pluck, [this, pathOrMapFn].concat(paths));
-        }
-        else if (typeof pathOrMapFn === 'function') {
-            mapped$ = map.map.call(this, pathOrMapFn);
-        }
-        else {
-            throw new TypeError("Unexpected type '" + typeof pathOrMapFn + "' in select operator," +
-                " expected 'string' or 'function'");
-        }
-        return distinctUntilChanged.distinctUntilChanged.call(mapped$);
+        return select.apply(void 0, [pathOrMapFn].concat(paths))(this);
     };
     /**
      * @template R
@@ -463,6 +452,32 @@ Store.ctorParameters = function () { return [
     { type: ReducerManager, },
 ]; };
 var STORE_PROVIDERS = [Store];
+/**
+ * @template T, K
+ * @param {?} pathOrMapFn
+ * @param {...?} paths
+ * @return {?}
+ */
+function select(pathOrMapFn) {
+    var paths = [];
+    for (var _i = 1; _i < arguments.length; _i++) {
+        paths[_i - 1] = arguments[_i];
+    }
+    return function selectOperator(source$) {
+        var /** @type {?} */ mapped$;
+        if (typeof pathOrMapFn === 'string') {
+            mapped$ = pluck.pluck.call.apply(pluck.pluck, [source$, pathOrMapFn].concat(paths));
+        }
+        else if (typeof pathOrMapFn === 'function') {
+            mapped$ = map.map.call(source$, pathOrMapFn);
+        }
+        else {
+            throw new TypeError("Unexpected type '" + typeof pathOrMapFn + "' in select operator," +
+                " expected 'string' or 'function'");
+        }
+        return distinctUntilChanged.distinctUntilChanged.call(mapped$);
+    };
+}
 /**
  * @fileoverview added by tsickle
  * @suppress {checkTypes} checked by tsc
@@ -747,6 +762,7 @@ function createFeatureSelector(featureName) {
 
 exports.StoreModule = StoreModule;
 exports.Store = Store;
+exports.select = select;
 exports.combineReducers = combineReducers;
 exports.compose = compose;
 exports.createReducerFactory = createReducerFactory;

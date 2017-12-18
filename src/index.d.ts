@@ -1,6 +1,6 @@
 export { Action, ActionReducer, ActionReducerMap, ActionReducerFactory, MetaReducer, Selector } from './models';
 export { StoreModule } from './store_module';
-export { Store } from './store';
+export { Store, select } from './store';
 export { combineReducers, compose, createReducerFactory } from './utils';
 export { ActionsSubject, INIT } from './actions_subject';
 export { ReducerManager, ReducerObservable, ReducerManagerDispatcher, UPDATE } from './reducer_manager';

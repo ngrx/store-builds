@@ -26,3 +26,10 @@ export declare class Store<T> extends Observable<T> implements Observer<Action> 
     removeReducer<Key extends keyof T>(key: Key): void;
 }
 export declare const STORE_PROVIDERS: Provider[];
+export declare function select<T, K>(mapFn: ((state: T) => K) | string): (source$: Observable<T>) => Store<K>;
+export declare function select<T, a extends keyof T>(key: a): (source$: Store<a>) => Store<T[a]>;
+export declare function select<T, a extends keyof T, b extends keyof T[a]>(key1: a, key2: b): (source$: Store<T>) => Store<T[a][b]>;
+export declare function select<T, a extends keyof T, b extends keyof T[a], c extends keyof T[a][b]>(key1: a, key2: b, key3: c): (source$: Store<a>) => Store<T[a][b][c]>;
+export declare function select<T, a extends keyof T, b extends keyof T[a], c extends keyof T[a][b], d extends keyof T[a][b][c]>(key1: a, key2: b, key3: c, key4: d): (source$: Store<a>) => Store<T[a][b][c][d]>;
+export declare function select<T, a extends keyof T, b extends keyof T[a], c extends keyof T[a][b], d extends keyof T[a][b][c], e extends keyof T[a][b][c][d]>(key1: a, key2: b, key3: c, key4: d, key5: e): (source$: Store<a>) => Store<T[a][b][c][d][e]>;
+export declare function select<T, a extends keyof T, b extends keyof T[a], c extends keyof T[a][b], d extends keyof T[a][b][c], e extends keyof T[a][b][c][d], f extends keyof T[a][b][c][d][e]>(key1: a, key2: b, key3: c, key4: d, key5: e, key6: f): (source$: Store<a>) => Store<T[a][b][c][d][e][f]>;
