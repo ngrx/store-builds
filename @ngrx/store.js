@@ -1,14 +1,73 @@
 import { Inject, Injectable, InjectionToken, Injector, NgModule } from '@angular/core';
-import { BehaviorSubject as BehaviorSubject$1 } from 'rxjs/BehaviorSubject';
 import { Observable as Observable$1 } from 'rxjs/Observable';
-import { Subject as Subject$1 } from 'rxjs/Subject';
+import { map as map$1 } from 'rxjs/operator/map';
+import { pluck as pluck$1 } from 'rxjs/operator/pluck';
+import { distinctUntilChanged as distinctUntilChanged$1 } from 'rxjs/operator/distinctUntilChanged';
+import { BehaviorSubject as BehaviorSubject$1 } from 'rxjs/BehaviorSubject';
 import { queue as queue$1 } from 'rxjs/scheduler/queue';
 import { observeOn as observeOn$1 } from 'rxjs/operator/observeOn';
 import { withLatestFrom as withLatestFrom$1 } from 'rxjs/operator/withLatestFrom';
 import { scan as scan$1 } from 'rxjs/operator/scan';
-import { map as map$1 } from 'rxjs/operator/map';
-import { pluck as pluck$1 } from 'rxjs/operator/pluck';
-import { distinctUntilChanged as distinctUntilChanged$1 } from 'rxjs/operator/distinctUntilChanged';
+import { Subject as Subject$1 } from 'rxjs/Subject';
+
+/**
+ * @fileoverview added by tsickle
+ * @suppress {checkTypes} checked by tsc
+ */
+const INIT = /** @type {?} */ ('@ngrx/store/init');
+class ActionsSubject extends BehaviorSubject$1 {
+    constructor() {
+        super({ type: INIT });
+    }
+    /**
+     * @param {?} action
+     * @return {?}
+     */
+    next(action) {
+        if (typeof action === 'undefined') {
+            throw new TypeError(`Actions must be objects`);
+        }
+        else if (typeof action.type === 'undefined') {
+            throw new TypeError(`Actions must have a type property`);
+        }
+        super.next(action);
+    }
+    /**
+     * @return {?}
+     */
+    complete() {
+        /* noop */
+    }
+    /**
+     * @return {?}
+     */
+    ngOnDestroy() {
+        super.complete();
+    }
+}
+ActionsSubject.decorators = [
+    { type: Injectable },
+];
+/** @nocollapse */
+ActionsSubject.ctorParameters = () => [];
+const ACTIONS_SUBJECT_PROVIDERS = [ActionsSubject];
+
+/**
+ * @fileoverview added by tsickle
+ * @suppress {checkTypes} checked by tsc
+ */
+const _INITIAL_STATE = new InjectionToken('@ngrx/store Internal Initial State');
+const INITIAL_STATE = new InjectionToken('@ngrx/store Initial State');
+const REDUCER_FACTORY = new InjectionToken('@ngrx/store Reducer Factory');
+const _REDUCER_FACTORY = new InjectionToken('@ngrx/store Reducer Factory Provider');
+const INITIAL_REDUCERS = new InjectionToken('@ngrx/store Initial Reducers');
+const _INITIAL_REDUCERS = new InjectionToken('@ngrx/store Internal Initial Reducers');
+const META_REDUCERS = new InjectionToken('@ngrx/store Meta Reducers');
+const STORE_FEATURES = new InjectionToken('@ngrx/store Store Features');
+const _STORE_REDUCERS = new InjectionToken('@ngrx/store Internal Store Reducers');
+const _FEATURE_REDUCERS = new InjectionToken('@ngrx/store Internal Feature Reducers');
+const _FEATURE_REDUCERS_TOKEN = new InjectionToken('@ngrx/store Internal Feature Reducers Token');
+const FEATURE_REDUCERS = new InjectionToken('@ngrx/store Feature Reducers');
 
 /**
  * @fileoverview added by tsickle
@@ -81,65 +140,6 @@ function createReducerFactory(reducerFactory, metaReducers) {
     }
     return reducerFactory;
 }
-
-/**
- * @fileoverview added by tsickle
- * @suppress {checkTypes} checked by tsc
- */
-const _INITIAL_STATE = new InjectionToken('@ngrx/store Internal Initial State');
-const INITIAL_STATE = new InjectionToken('@ngrx/store Initial State');
-const REDUCER_FACTORY = new InjectionToken('@ngrx/store Reducer Factory');
-const _REDUCER_FACTORY = new InjectionToken('@ngrx/store Reducer Factory Provider');
-const INITIAL_REDUCERS = new InjectionToken('@ngrx/store Initial Reducers');
-const _INITIAL_REDUCERS = new InjectionToken('@ngrx/store Internal Initial Reducers');
-const META_REDUCERS = new InjectionToken('@ngrx/store Meta Reducers');
-const STORE_FEATURES = new InjectionToken('@ngrx/store Store Features');
-const _STORE_REDUCERS = new InjectionToken('@ngrx/store Internal Store Reducers');
-const _FEATURE_REDUCERS = new InjectionToken('@ngrx/store Internal Feature Reducers');
-const _FEATURE_REDUCERS_TOKEN = new InjectionToken('@ngrx/store Internal Feature Reducers Token');
-const FEATURE_REDUCERS = new InjectionToken('@ngrx/store Feature Reducers');
-
-/**
- * @fileoverview added by tsickle
- * @suppress {checkTypes} checked by tsc
- */
-const INIT = /** @type {?} */ ('@ngrx/store/init');
-class ActionsSubject extends BehaviorSubject$1 {
-    constructor() {
-        super({ type: INIT });
-    }
-    /**
-     * @param {?} action
-     * @return {?}
-     */
-    next(action) {
-        if (typeof action === 'undefined') {
-            throw new TypeError(`Actions must be objects`);
-        }
-        else if (typeof action.type === 'undefined') {
-            throw new TypeError(`Actions must have a type property`);
-        }
-        super.next(action);
-    }
-    /**
-     * @return {?}
-     */
-    complete() {
-        /* noop */
-    }
-    /**
-     * @return {?}
-     */
-    ngOnDestroy() {
-        super.complete();
-    }
-}
-ActionsSubject.decorators = [
-    { type: Injectable },
-];
-/** @nocollapse */
-ActionsSubject.ctorParameters = () => [];
-const ACTIONS_SUBJECT_PROVIDERS = [ActionsSubject];
 
 /**
  * @fileoverview added by tsickle
@@ -432,6 +432,90 @@ function select(pathOrMapFn, ...paths) {
  * @fileoverview added by tsickle
  * @suppress {checkTypes} checked by tsc
  */
+/**
+ * @record
+ */
+
+/**
+ * @param {?} t
+ * @return {?}
+ */
+function memoize(t) {
+    let /** @type {?} */ lastArguments = null;
+    let /** @type {?} */ lastResult = null;
+    /**
+     * @return {?}
+     */
+    function reset() {
+        lastArguments = null;
+        lastResult = null;
+    }
+    /**
+     * @return {?}
+     */
+    function memoized() {
+        if (!lastArguments) {
+            lastResult = t.apply(null, arguments);
+            lastArguments = arguments;
+            return lastResult;
+        }
+        for (let /** @type {?} */ i = 0; i < arguments.length; i++) {
+            if (arguments[i] !== lastArguments[i]) {
+                lastResult = t.apply(null, arguments);
+                lastArguments = arguments;
+                return lastResult;
+            }
+        }
+        return lastResult;
+    }
+    return { memoized, reset };
+}
+/**
+ * @param {...?} input
+ * @return {?}
+ */
+function createSelector(...input) {
+    let /** @type {?} */ args = input;
+    if (Array.isArray(args[0])) {
+        const [head, ...tail] = args;
+        args = [...head, ...tail];
+    }
+    const /** @type {?} */ selectors = args.slice(0, args.length - 1);
+    const /** @type {?} */ projector = args[args.length - 1];
+    const /** @type {?} */ memoizedSelectors = selectors.filter((selector) => selector.release && typeof selector.release === 'function');
+    const /** @type {?} */ memoizedProjector = memoize(function (...selectors) {
+        return projector.apply(null, selectors);
+    });
+    const /** @type {?} */ memoizedState = memoize(function (state) {
+        const /** @type {?} */ args = selectors.map(fn => fn(state));
+        return memoizedProjector.memoized.apply(null, args);
+    });
+    /**
+     * @return {?}
+     */
+    function release() {
+        memoizedState.reset();
+        memoizedProjector.reset();
+        memoizedSelectors.forEach(selector => selector.release());
+    }
+    return Object.assign(memoizedState.memoized, {
+        release,
+        projector: memoizedProjector.memoized,
+    });
+}
+/**
+ * @template T
+ * @param {?} featureName
+ * @return {?}
+ */
+function createFeatureSelector(featureName) {
+    return createSelector((state) => state[featureName], (featureState) => featureState);
+}
+
+/**
+ * @fileoverview added by tsickle
+ * @suppress {checkTypes} checked by tsc
+ */
 class StoreRootModule {
     /**
      * @param {?} actions$
@@ -615,90 +699,6 @@ function _initialStateFactory(initialState) {
  * @fileoverview added by tsickle
  * @suppress {checkTypes} checked by tsc
  */
-/**
- * @record
- */
-
-/**
- * @param {?} t
- * @return {?}
- */
-function memoize(t) {
-    let /** @type {?} */ lastArguments = null;
-    let /** @type {?} */ lastResult = null;
-    /**
-     * @return {?}
-     */
-    function reset() {
-        lastArguments = null;
-        lastResult = null;
-    }
-    /**
-     * @return {?}
-     */
-    function memoized() {
-        if (!lastArguments) {
-            lastResult = t.apply(null, arguments);
-            lastArguments = arguments;
-            return lastResult;
-        }
-        for (let /** @type {?} */ i = 0; i < arguments.length; i++) {
-            if (arguments[i] !== lastArguments[i]) {
-                lastResult = t.apply(null, arguments);
-                lastArguments = arguments;
-                return lastResult;
-            }
-        }
-        return lastResult;
-    }
-    return { memoized, reset };
-}
-/**
- * @param {...?} input
- * @return {?}
- */
-function createSelector(...input) {
-    let /** @type {?} */ args = input;
-    if (Array.isArray(args[0])) {
-        const [head, ...tail] = args;
-        args = [...head, ...tail];
-    }
-    const /** @type {?} */ selectors = args.slice(0, args.length - 1);
-    const /** @type {?} */ projector = args[args.length - 1];
-    const /** @type {?} */ memoizedSelectors = selectors.filter((selector) => selector.release && typeof selector.release === 'function');
-    const /** @type {?} */ memoizedProjector = memoize(function (...selectors) {
-        return projector.apply(null, selectors);
-    });
-    const /** @type {?} */ memoizedState = memoize(function (state) {
-        const /** @type {?} */ args = selectors.map(fn => fn(state));
-        return memoizedProjector.memoized.apply(null, args);
-    });
-    /**
-     * @return {?}
-     */
-    function release() {
-        memoizedState.reset();
-        memoizedProjector.reset();
-        memoizedSelectors.forEach(selector => selector.release());
-    }
-    return Object.assign(memoizedState.memoized, {
-        release,
-        projector: memoizedProjector.memoized,
-    });
-}
-/**
- * @template T
- * @param {?} featureName
- * @return {?}
- */
-function createFeatureSelector(featureName) {
-    return createSelector((state) => state[featureName], (featureState) => featureState);
-}
-
-/**
- * @fileoverview added by tsickle
- * @suppress {checkTypes} checked by tsc
- */
 
 /**
  * @fileoverview added by tsickle
@@ -713,5 +713,5 @@ function createFeatureSelector(featureName) {
  * Generated bundle index. Do not edit.
  */
 
-export { StoreModule, Store, select, combineReducers, compose, createReducerFactory, ActionsSubject, INIT, ReducerManager, ReducerObservable, ReducerManagerDispatcher, UPDATE, ScannedActionsSubject, createSelector, createFeatureSelector, State, StateObservable, reduceState, INITIAL_STATE, _REDUCER_FACTORY, REDUCER_FACTORY, _INITIAL_REDUCERS, INITIAL_REDUCERS, STORE_FEATURES, _INITIAL_STATE, META_REDUCERS, _STORE_REDUCERS, _FEATURE_REDUCERS, FEATURE_REDUCERS, _FEATURE_REDUCERS_TOKEN, StoreRootModule, StoreFeatureModule, _initialStateFactory, _createStoreReducers, _createFeatureReducers, ACTIONS_SUBJECT_PROVIDERS as ɵc, REDUCER_MANAGER_PROVIDERS as ɵd, SCANNED_ACTIONS_SUBJECT_PROVIDERS as ɵe, STATE_PROVIDERS as ɵf, STORE_PROVIDERS as ɵb };
+export { Store, select, combineReducers, compose, createReducerFactory, ActionsSubject, INIT, ReducerManager, ReducerObservable, ReducerManagerDispatcher, UPDATE, ScannedActionsSubject, createSelector, createFeatureSelector, State, StateObservable, reduceState, INITIAL_STATE, _REDUCER_FACTORY, REDUCER_FACTORY, _INITIAL_REDUCERS, INITIAL_REDUCERS, STORE_FEATURES, _INITIAL_STATE, META_REDUCERS, _STORE_REDUCERS, _FEATURE_REDUCERS, FEATURE_REDUCERS, _FEATURE_REDUCERS_TOKEN, StoreModule, StoreRootModule, StoreFeatureModule, _initialStateFactory, _createStoreReducers, _createFeatureReducers, ACTIONS_SUBJECT_PROVIDERS as ɵc, REDUCER_MANAGER_PROVIDERS as ɵd, SCANNED_ACTIONS_SUBJECT_PROVIDERS as ɵe, STATE_PROVIDERS as ɵf, STORE_PROVIDERS as ɵb };
 //# sourceMappingURL=store.js.map

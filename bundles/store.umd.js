@@ -1,8 +1,8 @@
 (function (global, factory) {
-	typeof exports === 'object' && typeof module !== 'undefined' ? factory(exports, require('@angular/core'), require('rxjs/BehaviorSubject'), require('rxjs/Observable'), require('rxjs/Subject'), require('rxjs/scheduler/queue'), require('rxjs/operator/observeOn'), require('rxjs/operator/withLatestFrom'), require('rxjs/operator/scan'), require('rxjs/operator/map'), require('rxjs/operator/pluck'), require('rxjs/operator/distinctUntilChanged')) :
-	typeof define === 'function' && define.amd ? define(['exports', '@angular/core', 'rxjs/BehaviorSubject', 'rxjs/Observable', 'rxjs/Subject', 'rxjs/scheduler/queue', 'rxjs/operator/observeOn', 'rxjs/operator/withLatestFrom', 'rxjs/operator/scan', 'rxjs/operator/map', 'rxjs/operator/pluck', 'rxjs/operator/distinctUntilChanged'], factory) :
-	(factory((global.ngrx = global.ngrx || {}, global.ngrx.store = {}),global.ng.core,global.Rx,global.Rx,global.Rx,global.Rx.Scheduler,global.Rx.Observable.prototype,global.Rx.Observable,global.Rx.Observable.prototype,global.Rx.Observable.prototype,global.Rx.Observable.prototype,global.Rx.Observable.prototype));
-}(this, (function (exports,core,BehaviorSubject,Observable,Subject,queue,observeOn,withLatestFrom,scan,map,pluck,distinctUntilChanged) { 'use strict';
+	typeof exports === 'object' && typeof module !== 'undefined' ? factory(exports, require('@angular/core'), require('rxjs/Observable'), require('rxjs/operator/map'), require('rxjs/operator/pluck'), require('rxjs/operator/distinctUntilChanged'), require('rxjs/BehaviorSubject'), require('rxjs/scheduler/queue'), require('rxjs/operator/observeOn'), require('rxjs/operator/withLatestFrom'), require('rxjs/operator/scan'), require('rxjs/Subject')) :
+	typeof define === 'function' && define.amd ? define(['exports', '@angular/core', 'rxjs/Observable', 'rxjs/operator/map', 'rxjs/operator/pluck', 'rxjs/operator/distinctUntilChanged', 'rxjs/BehaviorSubject', 'rxjs/scheduler/queue', 'rxjs/operator/observeOn', 'rxjs/operator/withLatestFrom', 'rxjs/operator/scan', 'rxjs/Subject'], factory) :
+	(factory((global.ngrx = global.ngrx || {}, global.ngrx.store = {}),global.ng.core,global.Rx,global.Rx.Observable.prototype,global.Rx.Observable.prototype,global.Rx.Observable.prototype,global.Rx,global.Rx.Scheduler,global.Rx.Observable.prototype,global.Rx.Observable,global.Rx.Observable.prototype,global.Rx));
+}(this, (function (exports,core,Observable,map,pluck,distinctUntilChanged,BehaviorSubject,queue,observeOn,withLatestFrom,scan,Subject) { 'use strict';
 
 var __extends = (undefined && undefined.__extends) || (function () {
     var extendStatics = Object.setPrototypeOf ||
@@ -14,6 +14,65 @@ var __extends = (undefined && undefined.__extends) || (function () {
         d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
     };
 })();
+/**
+ * @fileoverview added by tsickle
+ * @suppress {checkTypes} checked by tsc
+ */
+var INIT = ('@ngrx/store/init');
+var ActionsSubject = (function (_super) {
+    __extends(ActionsSubject, _super);
+    function ActionsSubject() {
+        return _super.call(this, { type: INIT }) || this;
+    }
+    /**
+     * @param {?} action
+     * @return {?}
+     */
+    ActionsSubject.prototype.next = function (action) {
+        if (typeof action === 'undefined') {
+            throw new TypeError("Actions must be objects");
+        }
+        else if (typeof action.type === 'undefined') {
+            throw new TypeError("Actions must have a type property");
+        }
+        _super.prototype.next.call(this, action);
+    };
+    /**
+     * @return {?}
+     */
+    ActionsSubject.prototype.complete = function () {
+        /* noop */
+    };
+    /**
+     * @return {?}
+     */
+    ActionsSubject.prototype.ngOnDestroy = function () {
+        _super.prototype.complete.call(this);
+    };
+    return ActionsSubject;
+}(BehaviorSubject.BehaviorSubject));
+ActionsSubject.decorators = [
+    { type: core.Injectable },
+];
+/** @nocollapse */
+ActionsSubject.ctorParameters = function () { return []; };
+var ACTIONS_SUBJECT_PROVIDERS = [ActionsSubject];
+/**
+ * @fileoverview added by tsickle
+ * @suppress {checkTypes} checked by tsc
+ */
+var _INITIAL_STATE = new core.InjectionToken('@ngrx/store Internal Initial State');
+var INITIAL_STATE = new core.InjectionToken('@ngrx/store Initial State');
+var REDUCER_FACTORY = new core.InjectionToken('@ngrx/store Reducer Factory');
+var _REDUCER_FACTORY = new core.InjectionToken('@ngrx/store Reducer Factory Provider');
+var INITIAL_REDUCERS = new core.InjectionToken('@ngrx/store Initial Reducers');
+var _INITIAL_REDUCERS = new core.InjectionToken('@ngrx/store Internal Initial Reducers');
+var META_REDUCERS = new core.InjectionToken('@ngrx/store Meta Reducers');
+var STORE_FEATURES = new core.InjectionToken('@ngrx/store Store Features');
+var _STORE_REDUCERS = new core.InjectionToken('@ngrx/store Internal Store Reducers');
+var _FEATURE_REDUCERS = new core.InjectionToken('@ngrx/store Internal Feature Reducers');
+var _FEATURE_REDUCERS_TOKEN = new core.InjectionToken('@ngrx/store Internal Feature Reducers Token');
+var FEATURE_REDUCERS = new core.InjectionToken('@ngrx/store Feature Reducers');
 /**
  * @fileoverview added by tsickle
  * @suppress {checkTypes} checked by tsc
@@ -93,65 +152,6 @@ function createReducerFactory(reducerFactory, metaReducers) {
     }
     return reducerFactory;
 }
-/**
- * @fileoverview added by tsickle
- * @suppress {checkTypes} checked by tsc
- */
-var _INITIAL_STATE = new core.InjectionToken('@ngrx/store Internal Initial State');
-var INITIAL_STATE = new core.InjectionToken('@ngrx/store Initial State');
-var REDUCER_FACTORY = new core.InjectionToken('@ngrx/store Reducer Factory');
-var _REDUCER_FACTORY = new core.InjectionToken('@ngrx/store Reducer Factory Provider');
-var INITIAL_REDUCERS = new core.InjectionToken('@ngrx/store Initial Reducers');
-var _INITIAL_REDUCERS = new core.InjectionToken('@ngrx/store Internal Initial Reducers');
-var META_REDUCERS = new core.InjectionToken('@ngrx/store Meta Reducers');
-var STORE_FEATURES = new core.InjectionToken('@ngrx/store Store Features');
-var _STORE_REDUCERS = new core.InjectionToken('@ngrx/store Internal Store Reducers');
-var _FEATURE_REDUCERS = new core.InjectionToken('@ngrx/store Internal Feature Reducers');
-var _FEATURE_REDUCERS_TOKEN = new core.InjectionToken('@ngrx/store Internal Feature Reducers Token');
-var FEATURE_REDUCERS = new core.InjectionToken('@ngrx/store Feature Reducers');
-/**
- * @fileoverview added by tsickle
- * @suppress {checkTypes} checked by tsc
- */
-var INIT = ('@ngrx/store/init');
-var ActionsSubject = (function (_super) {
-    __extends(ActionsSubject, _super);
-    function ActionsSubject() {
-        return _super.call(this, { type: INIT }) || this;
-    }
-    /**
-     * @param {?} action
-     * @return {?}
-     */
-    ActionsSubject.prototype.next = function (action) {
-        if (typeof action === 'undefined') {
-            throw new TypeError("Actions must be objects");
-        }
-        else if (typeof action.type === 'undefined') {
-            throw new TypeError("Actions must have a type property");
-        }
-        _super.prototype.next.call(this, action);
-    };
-    /**
-     * @return {?}
-     */
-    ActionsSubject.prototype.complete = function () {
-        /* noop */
-    };
-    /**
-     * @return {?}
-     */
-    ActionsSubject.prototype.ngOnDestroy = function () {
-        _super.prototype.complete.call(this);
-    };
-    return ActionsSubject;
-}(BehaviorSubject.BehaviorSubject));
-ActionsSubject.decorators = [
-    { type: core.Injectable },
-];
-/** @nocollapse */
-ActionsSubject.ctorParameters = function () { return []; };
-var ACTIONS_SUBJECT_PROVIDERS = [ActionsSubject];
 /**
  * @fileoverview added by tsickle
  * @suppress {checkTypes} checked by tsc
@@ -482,6 +482,96 @@ function select(pathOrMapFn) {
  * @fileoverview added by tsickle
  * @suppress {checkTypes} checked by tsc
  */
+/**
+ * @record
+ */
+/**
+ * @param {?} t
+ * @return {?}
+ */
+function memoize(t) {
+    var /** @type {?} */ lastArguments = null;
+    var /** @type {?} */ lastResult = null;
+    /**
+     * @return {?}
+     */
+    function reset() {
+        lastArguments = null;
+        lastResult = null;
+    }
+    /**
+     * @return {?}
+     */
+    function memoized() {
+        if (!lastArguments) {
+            lastResult = t.apply(null, arguments);
+            lastArguments = arguments;
+            return lastResult;
+        }
+        for (var /** @type {?} */ i = 0; i < arguments.length; i++) {
+            if (arguments[i] !== lastArguments[i]) {
+                lastResult = t.apply(null, arguments);
+                lastArguments = arguments;
+                return lastResult;
+            }
+        }
+        return lastResult;
+    }
+    return { memoized: memoized, reset: reset };
+}
+/**
+ * @param {...?} input
+ * @return {?}
+ */
+function createSelector() {
+    var input = [];
+    for (var _i = 0; _i < arguments.length; _i++) {
+        input[_i] = arguments[_i];
+    }
+    var /** @type {?} */ args = input;
+    if (Array.isArray(args[0])) {
+        var head = args[0], tail = args.slice(1);
+        args = head.concat(tail);
+    }
+    var /** @type {?} */ selectors = args.slice(0, args.length - 1);
+    var /** @type {?} */ projector = args[args.length - 1];
+    var /** @type {?} */ memoizedSelectors = selectors.filter(function (selector) { return selector.release && typeof selector.release === 'function'; });
+    var /** @type {?} */ memoizedProjector = memoize(function () {
+        var selectors = [];
+        for (var _i = 0; _i < arguments.length; _i++) {
+            selectors[_i] = arguments[_i];
+        }
+        return projector.apply(null, selectors);
+    });
+    var /** @type {?} */ memoizedState = memoize(function (state) {
+        var /** @type {?} */ args = selectors.map(function (fn) { return fn(state); });
+        return memoizedProjector.memoized.apply(null, args);
+    });
+    /**
+     * @return {?}
+     */
+    function release() {
+        memoizedState.reset();
+        memoizedProjector.reset();
+        memoizedSelectors.forEach(function (selector) { return selector.release(); });
+    }
+    return Object.assign(memoizedState.memoized, {
+        release: release,
+        projector: memoizedProjector.memoized,
+    });
+}
+/**
+ * @template T
+ * @param {?} featureName
+ * @return {?}
+ */
+function createFeatureSelector(featureName) {
+    return createSelector(function (state) { return state[featureName]; }, function (featureState) { return featureState; });
+}
+/**
+ * @fileoverview added by tsickle
+ * @suppress {checkTypes} checked by tsc
+ */
 var StoreRootModule = (function () {
     /**
      * @param {?} actions$
@@ -669,98 +759,7 @@ function _initialStateFactory(initialState) {
     }
     return initialState;
 }
-/**
- * @fileoverview added by tsickle
- * @suppress {checkTypes} checked by tsc
- */
-/**
- * @record
- */
-/**
- * @param {?} t
- * @return {?}
- */
-function memoize(t) {
-    var /** @type {?} */ lastArguments = null;
-    var /** @type {?} */ lastResult = null;
-    /**
-     * @return {?}
-     */
-    function reset() {
-        lastArguments = null;
-        lastResult = null;
-    }
-    /**
-     * @return {?}
-     */
-    function memoized() {
-        if (!lastArguments) {
-            lastResult = t.apply(null, arguments);
-            lastArguments = arguments;
-            return lastResult;
-        }
-        for (var /** @type {?} */ i = 0; i < arguments.length; i++) {
-            if (arguments[i] !== lastArguments[i]) {
-                lastResult = t.apply(null, arguments);
-                lastArguments = arguments;
-                return lastResult;
-            }
-        }
-        return lastResult;
-    }
-    return { memoized: memoized, reset: reset };
-}
-/**
- * @param {...?} input
- * @return {?}
- */
-function createSelector() {
-    var input = [];
-    for (var _i = 0; _i < arguments.length; _i++) {
-        input[_i] = arguments[_i];
-    }
-    var /** @type {?} */ args = input;
-    if (Array.isArray(args[0])) {
-        var head = args[0], tail = args.slice(1);
-        args = head.concat(tail);
-    }
-    var /** @type {?} */ selectors = args.slice(0, args.length - 1);
-    var /** @type {?} */ projector = args[args.length - 1];
-    var /** @type {?} */ memoizedSelectors = selectors.filter(function (selector) { return selector.release && typeof selector.release === 'function'; });
-    var /** @type {?} */ memoizedProjector = memoize(function () {
-        var selectors = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            selectors[_i] = arguments[_i];
-        }
-        return projector.apply(null, selectors);
-    });
-    var /** @type {?} */ memoizedState = memoize(function (state) {
-        var /** @type {?} */ args = selectors.map(function (fn) { return fn(state); });
-        return memoizedProjector.memoized.apply(null, args);
-    });
-    /**
-     * @return {?}
-     */
-    function release() {
-        memoizedState.reset();
-        memoizedProjector.reset();
-        memoizedSelectors.forEach(function (selector) { return selector.release(); });
-    }
-    return Object.assign(memoizedState.memoized, {
-        release: release,
-        projector: memoizedProjector.memoized,
-    });
-}
-/**
- * @template T
- * @param {?} featureName
- * @return {?}
- */
-function createFeatureSelector(featureName) {
-    return createSelector(function (state) { return state[featureName]; }, function (featureState) { return featureState; });
-}
 
-exports.StoreModule = StoreModule;
 exports.Store = Store;
 exports.select = select;
 exports.combineReducers = combineReducers;
@@ -790,6 +789,7 @@ exports._STORE_REDUCERS = _STORE_REDUCERS;
 exports._FEATURE_REDUCERS = _FEATURE_REDUCERS;
 exports.FEATURE_REDUCERS = FEATURE_REDUCERS;
 exports._FEATURE_REDUCERS_TOKEN = _FEATURE_REDUCERS_TOKEN;
+exports.StoreModule = StoreModule;
 exports.StoreRootModule = StoreRootModule;
 exports.StoreFeatureModule = StoreFeatureModule;
 exports._initialStateFactory = _initialStateFactory;
