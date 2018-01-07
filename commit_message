@@ -1,1 +1,1 @@
-8e93328 docs(RouterStore): Document forRoot method and configuration options (#702)
+b9f6442 feat(StoreDevtools): Add support for jumping to a specific action (#703)
