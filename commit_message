@@ -1,1 +1,1 @@
-b9f6442 feat(StoreDevtools): Add support for jumping to a specific action (#703)
+1454620 fix(Store): Compose provided metareducers for a feature reducer (#704)

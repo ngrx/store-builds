@@ -158,6 +158,18 @@ function createReducerFactory(reducerFactory, metaReducers) {
     return reducerFactory;
 }
 /**
+ * @template T, V
+ * @param {?} reducer
+ * @param {?=} metaReducers
+ * @return {?}
+ */
+function createFeatureReducer(reducer, metaReducers) {
+    if (Array.isArray(metaReducers) && metaReducers.length > 0) {
+        return compose.apply(void 0, metaReducers)(reducer);
+    }
+    return reducer;
+}
+/**
  * @fileoverview added by tsickle
  * @suppress {checkTypes} checked by tsc
  */
@@ -205,7 +217,7 @@ var ReducerManager = (function (_super) {
     ReducerManager.prototype.addFeature = function (_a) {
         var reducers = _a.reducers, reducerFactory = _a.reducerFactory, metaReducers = _a.metaReducers, initialState = _a.initialState, key = _a.key;
         var /** @type {?} */ reducer = typeof reducers === 'function'
-            ? function (state, action) { return reducers(state || initialState, action); }
+            ? function (state, action) { return createFeatureReducer(reducers, metaReducers)(state || initialState, action); }
             : createReducerFactory(reducerFactory, metaReducers)(reducers, initialState);
         this.addReducer(key, reducer);
     };

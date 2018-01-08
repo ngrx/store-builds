@@ -140,6 +140,18 @@ function createReducerFactory(reducerFactory, metaReducers) {
     }
     return reducerFactory;
 }
+/**
+ * @template T, V
+ * @param {?} reducer
+ * @param {?=} metaReducers
+ * @return {?}
+ */
+function createFeatureReducer(reducer, metaReducers) {
+    if (Array.isArray(metaReducers) && metaReducers.length > 0) {
+        return compose(...metaReducers)(reducer);
+    }
+    return reducer;
+}
 
 /**
  * @fileoverview added by tsickle
@@ -176,7 +188,7 @@ class ReducerManager extends BehaviorSubject$1 {
      */
     addFeature({ reducers, reducerFactory, metaReducers, initialState, key, }) {
         const /** @type {?} */ reducer = typeof reducers === 'function'
-            ? (state, action) => reducers(state || initialState, action)
+            ? (state, action) => createFeatureReducer(reducers, metaReducers)(state || initialState, action)
             : createReducerFactory(reducerFactory, metaReducers)(reducers, initialState);
         this.addReducer(key, reducer);
     }

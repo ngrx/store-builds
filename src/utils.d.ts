@@ -10,3 +10,4 @@ export declare function compose<A, B, C, D>(d: (i: C) => D, c: (i: B) => C, b: (
 export declare function compose<A, B, C, D, E>(e: (i: D) => E, d: (i: C) => D, c: (i: B) => C, b: (i: A) => B): (i: A) => E;
 export declare function compose<A, B, C, D, E, F>(f: (i: E) => F, e: (i: D) => E, d: (i: C) => D, c: (i: B) => C, b: (i: A) => B): (i: A) => F;
 export declare function createReducerFactory<T, V extends Action = Action>(reducerFactory: ActionReducerFactory<T, V>, metaReducers?: MetaReducer<T, V>[]): ActionReducerFactory<T, V>;
+export declare function createFeatureReducer<T, V extends Action = Action>(reducer: ActionReducer<T, V>, metaReducers?: MetaReducer<T, V>[]): ActionReducer<T, V>;
