@@ -1,1 +1,1 @@
-8f297d1 feat(ErrorHandler): Use the Angular ErrorHandler for reporting errors (#667)
+fb8d2c6 fix(Schematics): Add handling of flat option to entity blueprint
