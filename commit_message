@@ -1,1 +1,1 @@
-f1082fe feat(Schematics): Add effect to registered effects array (#717)
+95ff6c8 fix(Schematics): Distinguish between root and feature effect arrays when registering (#718)
