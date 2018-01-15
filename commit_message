@@ -1,1 +1,1 @@
-95ff6c8 fix(Schematics): Distinguish between root and feature effect arrays when registering (#718)
+b597172 refactor(Schematics): Use wildcard for feature store imports (#719)
