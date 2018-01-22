@@ -1,1 +1,1 @@
-cb0d185 feat(Store): Add support for generating custom createSelector functions (#734)
+317fb94 fix(Schematics): Add group folder after feature name folder (#737)
