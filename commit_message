@@ -1,1 +1,1 @@
-b82c35d feat(Schematics): Add option to group feature blueprints in respective folders (#736)
+cb0d185 feat(Store): Add support for generating custom createSelector functions (#734)

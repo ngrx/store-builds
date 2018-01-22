@@ -498,10 +498,20 @@ function select(pathOrMapFn) {
  * @record
  */
 /**
- * @param {?} t
+ * @param {?} a
+ * @param {?} b
  * @return {?}
  */
-function memoize(t) {
+function isEqualCheck(a, b) {
+    return a === b;
+}
+/**
+ * @param {?} t
+ * @param {?=} isEqual
+ * @return {?}
+ */
+function defaultMemoize(t, isEqual) {
+    if (isEqual === void 0) { isEqual = isEqualCheck; }
     var /** @type {?} */ lastArguments = null;
     var /** @type {?} */ lastResult = null;
     /**
@@ -521,7 +531,7 @@ function memoize(t) {
             return lastResult;
         }
         for (var /** @type {?} */ i = 0; i < arguments.length; i++) {
-            if (arguments[i] !== lastArguments[i]) {
+            if (!isEqual(arguments[i], lastArguments[i])) {
                 lastResult = t.apply(null, arguments);
                 lastArguments = arguments;
                 return lastResult;
@@ -540,37 +550,63 @@ function createSelector() {
     for (var _i = 0; _i < arguments.length; _i++) {
         input[_i] = arguments[_i];
     }
-    var /** @type {?} */ args = input;
-    if (Array.isArray(args[0])) {
-        var head = args[0], tail = args.slice(1);
-        args = head.concat(tail);
-    }
-    var /** @type {?} */ selectors = args.slice(0, args.length - 1);
-    var /** @type {?} */ projector = args[args.length - 1];
-    var /** @type {?} */ memoizedSelectors = selectors.filter(function (selector) { return selector.release && typeof selector.release === 'function'; });
-    var /** @type {?} */ memoizedProjector = memoize(function () {
-        var selectors = [];
+    return createSelectorFactory(defaultMemoize).apply(void 0, input);
+}
+/**
+ * @param {?} state
+ * @param {?} selectors
+ * @param {?} memoizedProjector
+ * @return {?}
+ */
+function defaultStateFn(state, selectors, memoizedProjector) {
+    var /** @type {?} */ args = selectors.map(function (fn) { return fn(state); });
+    return memoizedProjector.memoized.apply(null, args);
+}
+/**
+ * @param {?} memoize
+ * @param {?=} options
+ * @return {?}
+ */
+function createSelectorFactory(memoize, options) {
+    if (options === void 0) { options = {
+        stateFn: defaultStateFn,
+    }; }
+    return function () {
+        var input = [];
         for (var _i = 0; _i < arguments.length; _i++) {
-            selectors[_i] = arguments[_i];
+            input[_i] = arguments[_i];
         }
-        return projector.apply(null, selectors);
-    });
-    var /** @type {?} */ memoizedState = memoize(function (state) {
-        var /** @type {?} */ args = selectors.map(function (fn) { return fn(state); });
-        return memoizedProjector.memoized.apply(null, args);
-    });
-    /**
-     * @return {?}
-     */
-    function release() {
-        memoizedState.reset();
-        memoizedProjector.reset();
-        memoizedSelectors.forEach(function (selector) { return selector.release(); });
-    }
-    return Object.assign(memoizedState.memoized, {
-        release: release,
-        projector: memoizedProjector.memoized,
-    });
+        var /** @type {?} */ args = input;
+        if (Array.isArray(args[0])) {
+            var head = args[0], tail = args.slice(1);
+            args = head.concat(tail);
+        }
+        var /** @type {?} */ selectors = args.slice(0, args.length - 1);
+        var /** @type {?} */ projector = args[args.length - 1];
+        var /** @type {?} */ memoizedSelectors = selectors.filter(function (selector) { return selector.release && typeof selector.release === 'function'; });
+        var /** @type {?} */ memoizedProjector = memoize(function () {
+            var selectors = [];
+            for (var _i = 0; _i < arguments.length; _i++) {
+                selectors[_i] = arguments[_i];
+            }
+            return projector.apply(null, selectors);
+        });
+        var /** @type {?} */ memoizedState = defaultMemoize(function (state) {
+            return options.stateFn.apply(null, [state, selectors, memoizedProjector]);
+        });
+        /**
+         * @return {?}
+         */
+        function release() {
+            memoizedState.reset();
+            memoizedProjector.reset();
+            memoizedSelectors.forEach(function (selector) { return selector.release(); });
+        }
+        return Object.assign(memoizedState.memoized, {
+            release: release,
+            projector: memoizedProjector.memoized,
+        });
+    };
 }
 /**
  * @template T
@@ -785,7 +821,10 @@ exports.ReducerManagerDispatcher = ReducerManagerDispatcher;
 exports.UPDATE = UPDATE;
 exports.ScannedActionsSubject = ScannedActionsSubject;
 exports.createSelector = createSelector;
+exports.createSelectorFactory = createSelectorFactory;
 exports.createFeatureSelector = createFeatureSelector;
+exports.defaultMemoize = defaultMemoize;
+exports.defaultStateFn = defaultStateFn;
 exports.State = State;
 exports.StateObservable = StateObservable;
 exports.reduceState = reduceState;
