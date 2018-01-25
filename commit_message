@@ -1,1 +1,1 @@
-e45e64d build: Update peer dependencies to ^5.0.0 (#750)
+33d48e7 fix(Effects): Provide instance from actions to ofType lettable operator (#751)
