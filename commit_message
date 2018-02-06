@@ -1,1 +1,1 @@
-c8560e4 fix(Effects): Make ofType operator strictFunctionTypes safe (#789)
+c11504f fix(StoreDevtools): Do not send full liftedState for application actions (#790)
