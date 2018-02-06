@@ -1,1 +1,1 @@
-945bf40 fix(Schematics): Remove extra braces from constructor for container blueprint (#791)
+0429276 feat(Schematics): Add group option to entity blueprint (#792)
