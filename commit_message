@@ -1,1 +1,1 @@
-c11504f fix(StoreDevtools): Do not send full liftedState for application actions (#790)
+f871540 feat(Entity): Add upsertOne and upsertMany functions to entity adapters (#780)
