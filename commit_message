@@ -1,1 +1,1 @@
-f871540 feat(Entity): Add upsertOne and upsertMany functions to entity adapters (#780)
+0a4457e docs(schematics): Update example for generating admin store (#783)
