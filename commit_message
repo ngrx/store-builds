@@ -1,1 +1,1 @@
-107a213 docs(Schematics): Removed group flag from example (#771)
+945bf40 fix(Schematics): Remove extra braces from constructor for container blueprint (#791)
