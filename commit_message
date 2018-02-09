@@ -1,1 +1,1 @@
-ecf1ebf fix(Devtools): Ensure Store is loaded eagerly (#801)
+779d689 fix(Entity): Properly iterate over array in upsert (#802)
