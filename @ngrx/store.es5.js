@@ -630,8 +630,9 @@ var StoreRootModule = (function () {
      * @param {?} actions$
      * @param {?} reducer$
      * @param {?} scannedActions$
+     * @param {?} store
      */
-    function StoreRootModule(actions$, reducer$, scannedActions$) {
+    function StoreRootModule(actions$, reducer$, scannedActions$, store) {
     }
     return StoreRootModule;
 }());
@@ -643,14 +644,16 @@ StoreRootModule.ctorParameters = function () { return [
     { type: ActionsSubject, },
     { type: ReducerObservable, },
     { type: ScannedActionsSubject, },
+    { type: Store, },
 ]; };
 var StoreFeatureModule = (function () {
     /**
      * @param {?} features
      * @param {?} featureReducers
      * @param {?} reducerManager
+     * @param {?} root
      */
-    function StoreFeatureModule(features, featureReducers, reducerManager) {
+    function StoreFeatureModule(features, featureReducers, reducerManager, root) {
         this.features = features;
         this.featureReducers = featureReducers;
         this.reducerManager = reducerManager;
@@ -679,6 +682,7 @@ StoreFeatureModule.ctorParameters = function () { return [
     { type: Array, decorators: [{ type: Inject, args: [STORE_FEATURES,] },] },
     { type: Array, decorators: [{ type: Inject, args: [FEATURE_REDUCERS,] },] },
     { type: ReducerManager, },
+    { type: StoreRootModule, },
 ]; };
 var StoreModule = (function () {
     function StoreModule() {

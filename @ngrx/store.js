@@ -563,8 +563,9 @@ class StoreRootModule {
      * @param {?} actions$
      * @param {?} reducer$
      * @param {?} scannedActions$
+     * @param {?} store
      */
-    constructor(actions$, reducer$, scannedActions$) { }
+    constructor(actions$, reducer$, scannedActions$, store) { }
 }
 StoreRootModule.decorators = [
     { type: NgModule, args: [{},] },
@@ -574,14 +575,16 @@ StoreRootModule.ctorParameters = () => [
     { type: ActionsSubject, },
     { type: ReducerObservable, },
     { type: ScannedActionsSubject, },
+    { type: Store, },
 ];
 class StoreFeatureModule {
     /**
      * @param {?} features
      * @param {?} featureReducers
      * @param {?} reducerManager
+     * @param {?} root
      */
-    constructor(features, featureReducers, reducerManager) {
+    constructor(features, featureReducers, reducerManager, root) {
         this.features = features;
         this.featureReducers = featureReducers;
         this.reducerManager = reducerManager;
@@ -608,6 +611,7 @@ StoreFeatureModule.ctorParameters = () => [
     { type: Array, decorators: [{ type: Inject, args: [STORE_FEATURES,] },] },
     { type: Array, decorators: [{ type: Inject, args: [FEATURE_REDUCERS,] },] },
     { type: ReducerManager, },
+    { type: StoreRootModule, },
 ];
 class StoreModule {
     /**

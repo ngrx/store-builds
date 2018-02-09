@@ -1,1 +1,1 @@
-0e5d209 docs(Effects): Add example on initializing effects (#749)
+ecf1ebf fix(Devtools): Ensure Store is loaded eagerly (#801)
