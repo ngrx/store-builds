@@ -1,1 +1,1 @@
-779d689 fix(Entity): Properly iterate over array in upsert (#802)
+4192645 fix(Entity): Avoid for..in iteration in sorted state adapter (#805)
