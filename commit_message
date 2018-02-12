@@ -1,1 +1,1 @@
-4192645 fix(Entity): Avoid for..in iteration in sorted state adapter (#805)
+a7de2a6 fix(StoreDevtools): Add internal support for ActionSanitizer and StateSanitizer (#795)
