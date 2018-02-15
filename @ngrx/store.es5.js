@@ -244,7 +244,7 @@ var ReducerManager = (function (_super) {
      * @return {?}
      */
     ReducerManager.prototype.removeReducer = function (key) {
-        this.reducers = omit(this.reducers, key);
+        this.reducers = (omit(this.reducers, key) /*TODO(#823)*/);
         this.updateReducers();
     };
     /**
@@ -660,7 +660,7 @@ var StoreFeatureModule = (function () {
         features
             .map(function (feature, index) {
             var /** @type {?} */ featureReducerCollection = featureReducers.shift();
-            var /** @type {?} */ reducers = featureReducerCollection[index];
+            var /** @type {?} */ reducers = ((featureReducerCollection))[index];
             return Object.assign({}, feature, { reducers: reducers, initialState: _initialStateFactory(feature.initialState) });
         })
             .forEach(function (feature) { return reducerManager.addFeature(feature); });

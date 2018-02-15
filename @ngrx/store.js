@@ -213,7 +213,7 @@ class ReducerManager extends BehaviorSubject$1 {
      * @return {?}
      */
     removeReducer(key) {
-        this.reducers = omit(this.reducers, key);
+        this.reducers = /** @type {?} */ (omit(this.reducers, key) /*TODO(#823)*/);
         this.updateReducers();
     }
     /**
@@ -591,7 +591,7 @@ class StoreFeatureModule {
         features
             .map((feature, index) => {
             const /** @type {?} */ featureReducerCollection = featureReducers.shift();
-            const /** @type {?} */ reducers = featureReducerCollection[index];
+            const /** @type {?} */ reducers = /** @type {?} */ ((featureReducerCollection))[index];
             return Object.assign({}, feature, { reducers, initialState: _initialStateFactory(feature.initialState) });
         })
             .forEach(feature => reducerManager.addFeature(feature));
