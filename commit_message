@@ -1,1 +1,1 @@
-f6d816a chore(build): Add Store unit tests to Bazel (#836)
+2befd4d chore(deps): Organize dependencies for better stackblitz support (#839)
