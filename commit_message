@@ -1,1 +1,1 @@
-3e25543 build: Fix config for deploying builds (#831)
+f6d816a chore(build): Add Store unit tests to Bazel (#836)
