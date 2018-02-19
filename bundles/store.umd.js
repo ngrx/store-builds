@@ -19,7 +19,7 @@ var __extends = (undefined && undefined.__extends) || (function () {
  * @suppress {checkTypes} checked by tsc
  */
 var INIT = ('@ngrx/store/init');
-var ActionsSubject = (function (_super) {
+var ActionsSubject = /** @class */ (function (_super) {
     __extends(ActionsSubject, _super);
     function ActionsSubject() {
         return _super.call(this, { type: INIT }) || this;
@@ -171,7 +171,7 @@ function createFeatureReducer(reducer, metaReducers) {
 /**
  * @abstract
  */
-var ReducerObservable = (function (_super) {
+var ReducerObservable = /** @class */ (function (_super) {
     __extends(ReducerObservable, _super);
     function ReducerObservable() {
         return _super !== null && _super.apply(this, arguments) || this;
@@ -181,7 +181,7 @@ var ReducerObservable = (function (_super) {
 /**
  * @abstract
  */
-var ReducerManagerDispatcher = (function (_super) {
+var ReducerManagerDispatcher = /** @class */ (function (_super) {
     __extends(ReducerManagerDispatcher, _super);
     function ReducerManagerDispatcher() {
         return _super !== null && _super.apply(this, arguments) || this;
@@ -189,7 +189,7 @@ var ReducerManagerDispatcher = (function (_super) {
     return ReducerManagerDispatcher;
 }(ActionsSubject));
 var UPDATE = ('@ngrx/store/update-reducers');
-var ReducerManager = (function (_super) {
+var ReducerManager = /** @class */ (function (_super) {
     __extends(ReducerManager, _super);
     /**
      * @param {?} dispatcher
@@ -239,7 +239,7 @@ var ReducerManager = (function (_super) {
      * @return {?}
      */
     ReducerManager.prototype.removeReducer = function (key) {
-        this.reducers = (omit(this.reducers, key) /*TODO(#823)*/);
+        this.reducers = /** @type {?} */ (omit(this.reducers, key) /*TODO(#823)*/);
         this.updateReducers();
     };
     /**
@@ -276,7 +276,7 @@ var REDUCER_MANAGER_PROVIDERS = [
  * @fileoverview added by tsickle
  * @suppress {checkTypes} checked by tsc
  */
-var ScannedActionsSubject = (function (_super) {
+var ScannedActionsSubject = /** @class */ (function (_super) {
     __extends(ScannedActionsSubject, _super);
     function ScannedActionsSubject() {
         return _super !== null && _super.apply(this, arguments) || this;
@@ -304,14 +304,14 @@ var SCANNED_ACTIONS_SUBJECT_PROVIDERS = [
 /**
  * @abstract
  */
-var StateObservable = (function (_super) {
+var StateObservable = /** @class */ (function (_super) {
     __extends(StateObservable, _super);
     function StateObservable() {
         return _super !== null && _super.apply(this, arguments) || this;
     }
     return StateObservable;
 }(Observable.Observable));
-var State = (function (_super) {
+var State = /** @class */ (function (_super) {
     __extends(State, _super);
     /**
      * @param {?} actions$
@@ -371,7 +371,7 @@ var STATE_PROVIDERS = [
  * @fileoverview added by tsickle
  * @suppress {checkTypes} checked by tsc
  */
-var Store = (function (_super) {
+var Store = /** @class */ (function (_super) {
     __extends(Store, _super);
     /**
      * @param {?} state$
@@ -620,7 +620,7 @@ function createFeatureSelector(featureName) {
  * @fileoverview added by tsickle
  * @suppress {checkTypes} checked by tsc
  */
-var StoreRootModule = (function () {
+var StoreRootModule = /** @class */ (function () {
     /**
      * @param {?} actions$
      * @param {?} reducer$
@@ -641,7 +641,7 @@ StoreRootModule.ctorParameters = function () { return [
     { type: ScannedActionsSubject, },
     { type: Store, },
 ]; };
-var StoreFeatureModule = (function () {
+var StoreFeatureModule = /** @class */ (function () {
     /**
      * @param {?} features
      * @param {?} featureReducers
@@ -679,7 +679,7 @@ StoreFeatureModule.ctorParameters = function () { return [
     { type: ReducerManager, },
     { type: StoreRootModule, },
 ]; };
-var StoreModule = (function () {
+var StoreModule = /** @class */ (function () {
     function StoreModule() {
     }
     /**

@@ -1,1 +1,1 @@
-2befd4d chore(deps): Organize dependencies for better stackblitz support (#839)
+2e4bea2 chore(deps): Build against TypeScript 2.6 and Angular 5.2 (#841)
