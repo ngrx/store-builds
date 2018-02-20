@@ -1,1 +1,1 @@
-2e4bea2 chore(deps): Build against TypeScript 2.6 and Angular 5.2 (#841)
+10debcc fix(StoreDevtools): Recompute state history when reducers are updated (#844)
