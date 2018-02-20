@@ -1,1 +1,1 @@
-10debcc fix(StoreDevtools): Recompute state history when reducers are updated (#844)
+9558ff6 build: Add remaining unit tests to Bazel (#845)
