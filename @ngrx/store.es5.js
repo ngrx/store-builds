@@ -99,7 +99,7 @@ function combineReducers(reducers, initialState) {
     }
     var /** @type {?} */ finalReducerKeys = Object.keys(finalReducers);
     return function combination(state, action) {
-        state = state || initialState;
+        state = state === undefined ? initialState : state;
         var /** @type {?} */ hasChanged = false;
         var /** @type {?} */ nextState = {};
         for (var /** @type {?} */ i = 0; i < finalReducerKeys.length; i++) {
@@ -217,7 +217,7 @@ var ReducerManager = /** @class */ (function (_super) {
     ReducerManager.prototype.addFeature = function (_a) {
         var reducers = _a.reducers, reducerFactory = _a.reducerFactory, metaReducers = _a.metaReducers, initialState = _a.initialState, key = _a.key;
         var /** @type {?} */ reducer = typeof reducers === 'function'
-            ? function (state, action) { return createFeatureReducer(reducers, metaReducers)(state || initialState, action); }
+            ? function (state, action) { return createFeatureReducer(reducers, metaReducers)(state === undefined ? initialState : state, action); }
             : createReducerFactory(reducerFactory, metaReducers)(reducers, initialState);
         this.addReducer(key, reducer);
     };

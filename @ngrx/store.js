@@ -89,7 +89,7 @@ function combineReducers(reducers, initialState = {}) {
     }
     const /** @type {?} */ finalReducerKeys = Object.keys(finalReducers);
     return function combination(state, action) {
-        state = state || initialState;
+        state = state === undefined ? initialState : state;
         let /** @type {?} */ hasChanged = false;
         const /** @type {?} */ nextState = {};
         for (let /** @type {?} */ i = 0; i < finalReducerKeys.length; i++) {
@@ -188,7 +188,7 @@ class ReducerManager extends BehaviorSubject$1 {
      */
     addFeature({ reducers, reducerFactory, metaReducers, initialState, key, }) {
         const /** @type {?} */ reducer = typeof reducers === 'function'
-            ? (state, action) => createFeatureReducer(reducers, metaReducers)(state || initialState, action)
+            ? (state, action) => createFeatureReducer(reducers, metaReducers)(state === undefined ? initialState : state, action)
             : createReducerFactory(reducerFactory, metaReducers)(reducers, initialState);
         this.addReducer(key, reducer);
     }
