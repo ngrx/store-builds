@@ -1,1 +1,1 @@
-51a1547 fix(Store): only default to initialValue when store value is undefined (#886)
+69a62f2 feat(Entity): Add 'selectId' and 'sortComparer' to state adapter (#889)
