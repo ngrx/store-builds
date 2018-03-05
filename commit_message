@@ -1,1 +1,1 @@
-69a62f2 feat(Entity): Add 'selectId' and 'sortComparer' to state adapter (#889)
+a5dcdb1 fix(StoreDevtools): Fix bug when exporting/importing state history (#855)
