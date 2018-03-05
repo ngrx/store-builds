@@ -142,15 +142,20 @@ function createReducerFactory(reducerFactory, metaReducers) {
 }
 /**
  * @template T, V
- * @param {?} reducer
  * @param {?=} metaReducers
  * @return {?}
  */
-function createFeatureReducer(reducer, metaReducers) {
-    if (Array.isArray(metaReducers) && metaReducers.length > 0) {
-        return compose(...metaReducers)(reducer);
-    }
-    return reducer;
+function createFeatureReducerFactory(metaReducers) {
+    const /** @type {?} */ reducerFactory = Array.isArray(metaReducers) && metaReducers.length > 0
+        ? compose(...metaReducers)
+        : (r) => r;
+    return (reducer, initialState) => {
+        reducer = reducerFactory(reducer);
+        return (state, action) => {
+            state = state === undefined ? initialState : state;
+            return reducer(state, action);
+        };
+    };
 }
 
 /**
@@ -188,7 +193,7 @@ class ReducerManager extends BehaviorSubject$1 {
      */
     addFeature({ reducers, reducerFactory, metaReducers, initialState, key, }) {
         const /** @type {?} */ reducer = typeof reducers === 'function'
-            ? (state, action) => createFeatureReducer(reducers, metaReducers)(state === undefined ? initialState : state, action)
+            ? createFeatureReducerFactory(metaReducers)(reducers, initialState)
             : createReducerFactory(reducerFactory, metaReducers)(reducers, initialState);
         this.addReducer(key, reducer);
     }

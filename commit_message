@@ -1,1 +1,1 @@
-a5dcdb1 fix(StoreDevtools): Fix bug when exporting/importing state history (#855)
+9b02f79 refactor(Store): Only call createFeatureReducer when feature is registered (#887)
