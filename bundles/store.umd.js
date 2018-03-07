@@ -235,7 +235,7 @@ var ReducerManager = /** @class */ (function (_super) {
      */
     ReducerManager.prototype.addReducer = function (key, reducer) {
         this.reducers = Object.assign({}, this.reducers, (_a = {}, _a[key] = reducer, _a));
-        this.updateReducers();
+        this.updateReducers(key);
         var _a;
     };
     /**
@@ -244,14 +244,15 @@ var ReducerManager = /** @class */ (function (_super) {
      */
     ReducerManager.prototype.removeReducer = function (key) {
         this.reducers = /** @type {?} */ (omit(this.reducers, key) /*TODO(#823)*/);
-        this.updateReducers();
+        this.updateReducers(key);
     };
     /**
+     * @param {?} key
      * @return {?}
      */
-    ReducerManager.prototype.updateReducers = function () {
+    ReducerManager.prototype.updateReducers = function (key) {
         this.next(this.reducerFactory(this.reducers, this.initialState));
-        this.dispatcher.next({ type: UPDATE });
+        this.dispatcher.next(/** @type {?} */ ({ type: UPDATE, feature: key }));
     };
     /**
      * @return {?}

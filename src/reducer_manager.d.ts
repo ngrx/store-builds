@@ -18,7 +18,7 @@ export declare class ReducerManager extends BehaviorSubject<ActionReducer<any, a
     removeFeature({key}: StoreFeature<any, any>): void;
     addReducer(key: string, reducer: ActionReducer<any, any>): void;
     removeReducer(key: string): void;
-    private updateReducers();
+    private updateReducers(key);
     ngOnDestroy(): void;
 }
 export declare const REDUCER_MANAGER_PROVIDERS: Provider[];

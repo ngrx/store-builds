@@ -211,7 +211,7 @@ class ReducerManager extends BehaviorSubject$1 {
      */
     addReducer(key, reducer) {
         this.reducers = Object.assign({}, this.reducers, { [key]: reducer });
-        this.updateReducers();
+        this.updateReducers(key);
     }
     /**
      * @param {?} key
@@ -219,14 +219,15 @@ class ReducerManager extends BehaviorSubject$1 {
      */
     removeReducer(key) {
         this.reducers = /** @type {?} */ (omit(this.reducers, key) /*TODO(#823)*/);
-        this.updateReducers();
+        this.updateReducers(key);
     }
     /**
+     * @param {?} key
      * @return {?}
      */
-    updateReducers() {
+    updateReducers(key) {
         this.next(this.reducerFactory(this.reducers, this.initialState));
-        this.dispatcher.next({ type: UPDATE });
+        this.dispatcher.next(/** @type {?} */ ({ type: UPDATE, feature: key }));
     }
     /**
      * @return {?}
