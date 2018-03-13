@@ -1,1 +1,1 @@
-839b42a chore(docs): Add link to Stackblitz version of example-app (#902)
+f17a032 fix(RouterStore): Allow strict mode with router reducer (#903)
