@@ -257,7 +257,10 @@ var ReducerManager = /** @class */ (function (_super) {
      */
     ReducerManager.prototype.updateReducers = function (key) {
         this.next(this.reducerFactory(this.reducers, this.initialState));
-        this.dispatcher.next(/** @type {?} */ ({ type: UPDATE, feature: key }));
+        this.dispatcher.next(/** @type {?} */ ({
+            type: UPDATE,
+            feature: key,
+        }));
     };
     /**
      * @return {?}
