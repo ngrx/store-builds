@@ -1,6 +1,5 @@
 import { OnDestroy, Provider } from '@angular/core';
-import { BehaviorSubject } from 'rxjs/BehaviorSubject';
-import { Observable } from 'rxjs/Observable';
+import { BehaviorSubject, Observable } from 'rxjs';
 import { ActionsSubject } from './actions_subject';
 import { Action, ActionReducer } from './models';
 import { ReducerObservable } from './reducer_manager';

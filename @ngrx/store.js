@@ -1,21 +1,13 @@
 import { Inject, Injectable, InjectionToken, Injector, NgModule } from '@angular/core';
-import { Observable as Observable$1 } from 'rxjs/Observable';
-import { map as map$1 } from 'rxjs/operator/map';
-import { pluck as pluck$1 } from 'rxjs/operator/pluck';
-import { distinctUntilChanged as distinctUntilChanged$1 } from 'rxjs/operator/distinctUntilChanged';
-import { BehaviorSubject as BehaviorSubject$1 } from 'rxjs/BehaviorSubject';
-import { queue as queue$1 } from 'rxjs/scheduler/queue';
-import { observeOn as observeOn$1 } from 'rxjs/operator/observeOn';
-import { withLatestFrom as withLatestFrom$1 } from 'rxjs/operator/withLatestFrom';
-import { scan as scan$1 } from 'rxjs/operator/scan';
-import { Subject as Subject$1 } from 'rxjs/Subject';
+import { BehaviorSubject, Observable, Subject, queueScheduler } from 'rxjs';
+import { distinctUntilChanged, map, observeOn, pluck, scan, withLatestFrom } from 'rxjs/operators';
 
 /**
  * @fileoverview added by tsickle
  * @suppress {checkTypes} checked by tsc
  */
 const INIT = /** @type {?} */ ('@ngrx/store/init');
-class ActionsSubject extends BehaviorSubject$1 {
+class ActionsSubject extends BehaviorSubject {
     constructor() {
         super({ type: INIT });
     }
@@ -165,7 +157,7 @@ function createFeatureReducerFactory(metaReducers) {
 /**
  * @abstract
  */
-class ReducerObservable extends Observable$1 {
+class ReducerObservable extends Observable {
 }
 /**
  * @abstract
@@ -173,7 +165,7 @@ class ReducerObservable extends Observable$1 {
 class ReducerManagerDispatcher extends ActionsSubject {
 }
 const UPDATE = /** @type {?} */ ('@ngrx/store/update-reducers');
-class ReducerManager extends BehaviorSubject$1 {
+class ReducerManager extends BehaviorSubject {
     /**
      * @param {?} dispatcher
      * @param {?} initialState
@@ -259,7 +251,7 @@ const REDUCER_MANAGER_PROVIDERS = [
  * @fileoverview added by tsickle
  * @suppress {checkTypes} checked by tsc
  */
-class ScannedActionsSubject extends Subject$1 {
+class ScannedActionsSubject extends Subject {
     /**
      * @return {?}
      */
@@ -283,9 +275,12 @@ const SCANNED_ACTIONS_SUBJECT_PROVIDERS = [
 /**
  * @abstract
  */
-class StateObservable extends Observable$1 {
+class StateObservable extends Observable {
 }
-class State extends BehaviorSubject$1 {
+/**
+ * @template T
+ */
+class State extends BehaviorSubject {
     /**
      * @param {?} actions$
      * @param {?} reducer$
@@ -294,9 +289,10 @@ class State extends BehaviorSubject$1 {
      */
     constructor(actions$, reducer$, scannedActions, initialState) {
         super(initialState);
-        const /** @type {?} */ actionsOnQueue$ = observeOn$1.call(actions$, queue$1);
-        const /** @type {?} */ withLatestReducer$ = withLatestFrom$1.call(actionsOnQueue$, reducer$);
-        const /** @type {?} */ stateAndAction$ = scan$1.call(withLatestReducer$, reduceState, { state: initialState });
+        const /** @type {?} */ actionsOnQueue$ = actions$.pipe(observeOn(queueScheduler));
+        const /** @type {?} */ withLatestReducer$ = actionsOnQueue$.pipe(withLatestFrom(reducer$));
+        const /** @type {?} */ seed = { state: initialState };
+        const /** @type {?} */ stateAndAction$ = withLatestReducer$.pipe(scan(reduceState, seed));
         this.stateSubscription = stateAndAction$.subscribe(({ state, action }) => {
             this.next(state);
             scannedActions.next(action);
@@ -340,7 +336,10 @@ const STATE_PROVIDERS = [
  * @fileoverview added by tsickle
  * @suppress {checkTypes} checked by tsc
  */
-class Store extends Observable$1 {
+/**
+ * @template T
+ */
+class Store extends Observable {
     /**
      * @param {?} state$
      * @param {?} actionsObserver
@@ -436,16 +435,16 @@ function select(pathOrMapFn, ...paths) {
     return function selectOperator(source$) {
         let /** @type {?} */ mapped$;
         if (typeof pathOrMapFn === 'string') {
-            mapped$ = pluck$1.call(source$, pathOrMapFn, ...paths);
+            mapped$ = source$.pipe(pluck(pathOrMapFn, ...paths));
         }
         else if (typeof pathOrMapFn === 'function') {
-            mapped$ = map$1.call(source$, pathOrMapFn);
+            mapped$ = source$.pipe(map(pathOrMapFn));
         }
         else {
             throw new TypeError(`Unexpected type '${typeof pathOrMapFn}' in select operator,` +
                 ` expected 'string' or 'function'`);
         }
-        return distinctUntilChanged$1.call(mapped$);
+        return mapped$.pipe(distinctUntilChanged());
     };
 }
 
@@ -455,6 +454,7 @@ function select(pathOrMapFn, ...paths) {
  */
 /**
  * @record
+ * @template State, Result
  */
 
 /**
@@ -523,8 +523,8 @@ function defaultStateFn(state, selectors, memoizedProjector) {
  * @return {?}
  */
 function createSelectorFactory(memoize, options = {
-        stateFn: defaultStateFn,
-    }) {
+    stateFn: defaultStateFn,
+}) {
     return function (...input) {
         let /** @type {?} */ args = input;
         if (Array.isArray(args[0])) {

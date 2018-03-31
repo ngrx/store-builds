@@ -1,5 +1,5 @@
 import { OnDestroy, Provider } from '@angular/core';
-import { BehaviorSubject } from 'rxjs/BehaviorSubject';
+import { BehaviorSubject } from 'rxjs';
 import { Action } from './models';
 export declare const INIT: "@ngrx/store/init";
 export declare class ActionsSubject extends BehaviorSubject<Action> implements OnDestroy {

@@ -9,16 +9,8 @@ var __extends = (this && this.__extends) || (function () {
     };
 })();
 import { Inject, Injectable, InjectionToken, Injector, NgModule } from '@angular/core';
-import { Observable as Observable$1 } from 'rxjs/Observable';
-import { map as map$1 } from 'rxjs/operator/map';
-import { pluck as pluck$1 } from 'rxjs/operator/pluck';
-import { distinctUntilChanged as distinctUntilChanged$1 } from 'rxjs/operator/distinctUntilChanged';
-import { BehaviorSubject as BehaviorSubject$1 } from 'rxjs/BehaviorSubject';
-import { queue as queue$1 } from 'rxjs/scheduler/queue';
-import { observeOn as observeOn$1 } from 'rxjs/operator/observeOn';
-import { withLatestFrom as withLatestFrom$1 } from 'rxjs/operator/withLatestFrom';
-import { scan as scan$1 } from 'rxjs/operator/scan';
-import { Subject as Subject$1 } from 'rxjs/Subject';
+import { BehaviorSubject, Observable, Subject, queueScheduler } from 'rxjs';
+import { distinctUntilChanged, map, observeOn, pluck, scan, withLatestFrom } from 'rxjs/operators';
 /**
  * @fileoverview added by tsickle
  * @suppress {checkTypes} checked by tsc
@@ -55,7 +47,7 @@ var ActionsSubject = /** @class */ (function (_super) {
         _super.prototype.complete.call(this);
     };
     return ActionsSubject;
-}(BehaviorSubject$1));
+}(BehaviorSubject));
 ActionsSubject.decorators = [
     { type: Injectable },
 ];
@@ -186,7 +178,7 @@ var ReducerObservable = /** @class */ (function (_super) {
         return _super !== null && _super.apply(this, arguments) || this;
     }
     return ReducerObservable;
-}(Observable$1));
+}(Observable));
 /**
  * @abstract
  */
@@ -269,7 +261,7 @@ var ReducerManager = /** @class */ (function (_super) {
         this.complete();
     };
     return ReducerManager;
-}(BehaviorSubject$1));
+}(BehaviorSubject));
 ReducerManager.decorators = [
     { type: Injectable },
 ];
@@ -301,7 +293,7 @@ var ScannedActionsSubject = /** @class */ (function (_super) {
         this.complete();
     };
     return ScannedActionsSubject;
-}(Subject$1));
+}(Subject));
 ScannedActionsSubject.decorators = [
     { type: Injectable },
 ];
@@ -323,7 +315,10 @@ var StateObservable = /** @class */ (function (_super) {
         return _super !== null && _super.apply(this, arguments) || this;
     }
     return StateObservable;
-}(Observable$1));
+}(Observable));
+/**
+ * @template T
+ */
 var State = /** @class */ (function (_super) {
     __extends(State, _super);
     /**
@@ -334,9 +329,10 @@ var State = /** @class */ (function (_super) {
      */
     function State(actions$, reducer$, scannedActions, initialState) {
         var _this = _super.call(this, initialState) || this;
-        var /** @type {?} */ actionsOnQueue$ = observeOn$1.call(actions$, queue$1);
-        var /** @type {?} */ withLatestReducer$ = withLatestFrom$1.call(actionsOnQueue$, reducer$);
-        var /** @type {?} */ stateAndAction$ = scan$1.call(withLatestReducer$, reduceState, { state: initialState });
+        var /** @type {?} */ actionsOnQueue$ = actions$.pipe(observeOn(queueScheduler));
+        var /** @type {?} */ withLatestReducer$ = actionsOnQueue$.pipe(withLatestFrom(reducer$));
+        var /** @type {?} */ seed = { state: initialState };
+        var /** @type {?} */ stateAndAction$ = withLatestReducer$.pipe(scan(reduceState, seed));
         _this.stateSubscription = stateAndAction$.subscribe(function (_a) {
             var state = _a.state, action = _a.action;
             _this.next(state);
@@ -352,7 +348,7 @@ var State = /** @class */ (function (_super) {
         this.complete();
     };
     return State;
-}(BehaviorSubject$1));
+}(BehaviorSubject));
 State.INIT = INIT;
 State.decorators = [
     { type: Injectable },
@@ -383,6 +379,9 @@ var STATE_PROVIDERS = [
 /**
  * @fileoverview added by tsickle
  * @suppress {checkTypes} checked by tsc
+ */
+/**
+ * @template T
  */
 var Store = /** @class */ (function (_super) {
     __extends(Store, _super);
@@ -466,7 +465,7 @@ var Store = /** @class */ (function (_super) {
         this.reducerManager.removeReducer(key);
     };
     return Store;
-}(Observable$1));
+}(Observable));
 Store.decorators = [
     { type: Injectable },
 ];
@@ -491,16 +490,16 @@ function select(pathOrMapFn) {
     return function selectOperator(source$) {
         var /** @type {?} */ mapped$;
         if (typeof pathOrMapFn === 'string') {
-            mapped$ = pluck$1.call.apply(pluck$1, [source$, pathOrMapFn].concat(paths));
+            mapped$ = source$.pipe(pluck.apply(void 0, [pathOrMapFn].concat(paths)));
         }
         else if (typeof pathOrMapFn === 'function') {
-            mapped$ = map$1.call(source$, pathOrMapFn);
+            mapped$ = source$.pipe(map(pathOrMapFn));
         }
         else {
             throw new TypeError("Unexpected type '" + typeof pathOrMapFn + "' in select operator," +
                 " expected 'string' or 'function'");
         }
-        return distinctUntilChanged$1.call(mapped$);
+        return mapped$.pipe(distinctUntilChanged());
     };
 }
 /**
@@ -509,6 +508,7 @@ function select(pathOrMapFn) {
  */
 /**
  * @record
+ * @template State, Result
  */
 /**
  * @param {?} a

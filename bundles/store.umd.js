@@ -1,8 +1,8 @@
 (function (global, factory) {
-	typeof exports === 'object' && typeof module !== 'undefined' ? factory(exports, require('@angular/core'), require('rxjs/Observable'), require('rxjs/operator/map'), require('rxjs/operator/pluck'), require('rxjs/operator/distinctUntilChanged'), require('rxjs/BehaviorSubject'), require('rxjs/scheduler/queue'), require('rxjs/operator/observeOn'), require('rxjs/operator/withLatestFrom'), require('rxjs/operator/scan'), require('rxjs/Subject')) :
-	typeof define === 'function' && define.amd ? define('@ngrx/store', ['exports', '@angular/core', 'rxjs/Observable', 'rxjs/operator/map', 'rxjs/operator/pluck', 'rxjs/operator/distinctUntilChanged', 'rxjs/BehaviorSubject', 'rxjs/scheduler/queue', 'rxjs/operator/observeOn', 'rxjs/operator/withLatestFrom', 'rxjs/operator/scan', 'rxjs/Subject'], factory) :
-	(factory((global.ngrx = global.ngrx || {}, global.ngrx.store = {}),global.ng.core,global.Rx,global.Rx.Observable.prototype,global.Rx.Observable.prototype,global.Rx.Observable.prototype,global.Rx,global.Rx.Scheduler,global.Rx.Observable.prototype,global.Rx.Observable,global.Rx.Observable.prototype,global.Rx));
-}(this, (function (exports,core,Observable,map,pluck,distinctUntilChanged,BehaviorSubject,queue,observeOn,withLatestFrom,scan,Subject) { 'use strict';
+	typeof exports === 'object' && typeof module !== 'undefined' ? factory(exports, require('@angular/core'), require('rxjs'), require('rxjs/operators')) :
+	typeof define === 'function' && define.amd ? define('@ngrx/store', ['exports', '@angular/core', 'rxjs', 'rxjs/operators'], factory) :
+	(factory((global.ngrx = global.ngrx || {}, global.ngrx.store = {}),global.ng.core,global.Rx,global.operators));
+}(this, (function (exports,core,rxjs,operators) { 'use strict';
 
 var __extends = (undefined && undefined.__extends) || (function () {
     var extendStatics = Object.setPrototypeOf ||
@@ -50,7 +50,7 @@ var ActionsSubject = /** @class */ (function (_super) {
         _super.prototype.complete.call(this);
     };
     return ActionsSubject;
-}(BehaviorSubject.BehaviorSubject));
+}(rxjs.BehaviorSubject));
 ActionsSubject.decorators = [
     { type: core.Injectable },
 ];
@@ -181,7 +181,7 @@ var ReducerObservable = /** @class */ (function (_super) {
         return _super !== null && _super.apply(this, arguments) || this;
     }
     return ReducerObservable;
-}(Observable.Observable));
+}(rxjs.Observable));
 /**
  * @abstract
  */
@@ -264,7 +264,7 @@ var ReducerManager = /** @class */ (function (_super) {
         this.complete();
     };
     return ReducerManager;
-}(BehaviorSubject.BehaviorSubject));
+}(rxjs.BehaviorSubject));
 ReducerManager.decorators = [
     { type: core.Injectable },
 ];
@@ -296,7 +296,7 @@ var ScannedActionsSubject = /** @class */ (function (_super) {
         this.complete();
     };
     return ScannedActionsSubject;
-}(Subject.Subject));
+}(rxjs.Subject));
 ScannedActionsSubject.decorators = [
     { type: core.Injectable },
 ];
@@ -318,7 +318,10 @@ var StateObservable = /** @class */ (function (_super) {
         return _super !== null && _super.apply(this, arguments) || this;
     }
     return StateObservable;
-}(Observable.Observable));
+}(rxjs.Observable));
+/**
+ * @template T
+ */
 var State = /** @class */ (function (_super) {
     __extends(State, _super);
     /**
@@ -329,9 +332,10 @@ var State = /** @class */ (function (_super) {
      */
     function State(actions$, reducer$, scannedActions, initialState) {
         var _this = _super.call(this, initialState) || this;
-        var /** @type {?} */ actionsOnQueue$ = observeOn.observeOn.call(actions$, queue.queue);
-        var /** @type {?} */ withLatestReducer$ = withLatestFrom.withLatestFrom.call(actionsOnQueue$, reducer$);
-        var /** @type {?} */ stateAndAction$ = scan.scan.call(withLatestReducer$, reduceState, { state: initialState });
+        var /** @type {?} */ actionsOnQueue$ = actions$.pipe(operators.observeOn(rxjs.queueScheduler));
+        var /** @type {?} */ withLatestReducer$ = actionsOnQueue$.pipe(operators.withLatestFrom(reducer$));
+        var /** @type {?} */ seed = { state: initialState };
+        var /** @type {?} */ stateAndAction$ = withLatestReducer$.pipe(operators.scan(reduceState, seed));
         _this.stateSubscription = stateAndAction$.subscribe(function (_a) {
             var state = _a.state, action = _a.action;
             _this.next(state);
@@ -347,7 +351,7 @@ var State = /** @class */ (function (_super) {
         this.complete();
     };
     return State;
-}(BehaviorSubject.BehaviorSubject));
+}(rxjs.BehaviorSubject));
 State.INIT = INIT;
 State.decorators = [
     { type: core.Injectable },
@@ -378,6 +382,9 @@ var STATE_PROVIDERS = [
 /**
  * @fileoverview added by tsickle
  * @suppress {checkTypes} checked by tsc
+ */
+/**
+ * @template T
  */
 var Store = /** @class */ (function (_super) {
     __extends(Store, _super);
@@ -461,7 +468,7 @@ var Store = /** @class */ (function (_super) {
         this.reducerManager.removeReducer(key);
     };
     return Store;
-}(Observable.Observable));
+}(rxjs.Observable));
 Store.decorators = [
     { type: core.Injectable },
 ];
@@ -486,16 +493,16 @@ function select(pathOrMapFn) {
     return function selectOperator(source$) {
         var /** @type {?} */ mapped$;
         if (typeof pathOrMapFn === 'string') {
-            mapped$ = pluck.pluck.call.apply(pluck.pluck, [source$, pathOrMapFn].concat(paths));
+            mapped$ = source$.pipe(operators.pluck.apply(void 0, [pathOrMapFn].concat(paths)));
         }
         else if (typeof pathOrMapFn === 'function') {
-            mapped$ = map.map.call(source$, pathOrMapFn);
+            mapped$ = source$.pipe(operators.map(pathOrMapFn));
         }
         else {
             throw new TypeError("Unexpected type '" + typeof pathOrMapFn + "' in select operator," +
                 " expected 'string' or 'function'");
         }
-        return distinctUntilChanged.distinctUntilChanged.call(mapped$);
+        return mapped$.pipe(operators.distinctUntilChanged());
     };
 }
 /**
@@ -504,6 +511,7 @@ function select(pathOrMapFn) {
  */
 /**
  * @record
+ * @template State, Result
  */
 /**
  * @param {?} a

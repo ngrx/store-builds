@@ -1,8 +1,7 @@
 import { OnDestroy, Provider } from '@angular/core';
-import { BehaviorSubject } from 'rxjs/BehaviorSubject';
-import { Observable } from 'rxjs/Observable';
-import { ActionReducer, ActionReducerMap, ActionReducerFactory, StoreFeature } from './models';
+import { BehaviorSubject, Observable } from 'rxjs';
 import { ActionsSubject } from './actions_subject';
+import { ActionReducer, ActionReducerFactory, ActionReducerMap, StoreFeature } from './models';
 export declare abstract class ReducerObservable extends Observable<ActionReducer<any, any>> {
 }
 export declare abstract class ReducerManagerDispatcher extends ActionsSubject {
