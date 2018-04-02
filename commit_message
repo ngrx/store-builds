@@ -1,1 +1,1 @@
-f1751fa docs(README): Add upcoming conferences (#945)
+ba2139d fix: Declare global NgRx packages for UMD bundles (#952)
