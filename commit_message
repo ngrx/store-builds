@@ -1,1 +1,1 @@
-a5ebe98 docs(CHANGELOG): Prepare CHANGELOG for v6.0.0-beta.1
+4d74bd2 fix(Store): Fix type annotations for select methods (#953)

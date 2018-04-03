@@ -357,7 +357,7 @@ class Store extends Observable {
      * @return {?}
      */
     select(pathOrMapFn, ...paths) {
-        return select(pathOrMapFn, ...paths)(this);
+        return select.call(null, pathOrMapFn, ...paths)(this);
     }
     /**
      * @template R

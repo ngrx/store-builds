@@ -410,7 +410,7 @@ var Store = /** @class */ (function (_super) {
         for (var _i = 1; _i < arguments.length; _i++) {
             paths[_i - 1] = arguments[_i];
         }
-        return select.apply(void 0, [pathOrMapFn].concat(paths))(this);
+        return select.call.apply(select, [null, pathOrMapFn].concat(paths))(this);
     };
     /**
      * @template R
