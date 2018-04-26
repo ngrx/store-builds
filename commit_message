@@ -1,1 +1,1 @@
-4219884 docs: Fix 'ofType' example in migration doc (#991)
+dade577 docs(devtools): Specify that you need to inject the store for devtools to work (#992)
