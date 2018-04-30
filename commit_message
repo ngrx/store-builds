@@ -1,1 +1,1 @@
-7e50187 chore(Example): Renamed files to be consistent with Angular CLI (#997)
+413efd4 fix(build): Fix UMD global names (#1005)
