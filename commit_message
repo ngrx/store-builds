@@ -1,1 +1,1 @@
-413efd4 fix(build): Fix UMD global names (#1005)
+5942885 fix(Schematics): Add check for app/lib to project helper function
