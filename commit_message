@@ -1,1 +1,1 @@
-5942885 fix(Schematics): Add check for app/lib to project helper function
+51eb9d4 docs(Schematics): Fix example for creating a new store in a sub module (#1012)
