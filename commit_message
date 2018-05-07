@@ -1,1 +1,1 @@
-e0e1d35 docs(Store): Describe composition of selectors in pipeable operators (#1008)
+f4520a2 fix(Schematics): Remove aliases for state and stateInterface options
