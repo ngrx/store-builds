@@ -262,8 +262,6 @@ class ScannedActionsSubject extends Subject {
 ScannedActionsSubject.decorators = [
     { type: Injectable },
 ];
-/** @nocollapse */
-ScannedActionsSubject.ctorParameters = () => [];
 const SCANNED_ACTIONS_SUBJECT_PROVIDERS = [
     ScannedActionsSubject,
 ];
@@ -716,8 +714,6 @@ class StoreModule {
 StoreModule.decorators = [
     { type: NgModule, args: [{},] },
 ];
-/** @nocollapse */
-StoreModule.ctorParameters = () => [];
 /**
  * @param {?} injector
  * @param {?} reducers

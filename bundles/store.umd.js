@@ -300,8 +300,6 @@ var ScannedActionsSubject = /** @class */ (function (_super) {
 ScannedActionsSubject.decorators = [
     { type: core.Injectable },
 ];
-/** @nocollapse */
-ScannedActionsSubject.ctorParameters = function () { return []; };
 var SCANNED_ACTIONS_SUBJECT_PROVIDERS = [
     ScannedActionsSubject,
 ];
@@ -794,8 +792,6 @@ var StoreModule = /** @class */ (function () {
 StoreModule.decorators = [
     { type: core.NgModule, args: [{},] },
 ];
-/** @nocollapse */
-StoreModule.ctorParameters = function () { return []; };
 /**
  * @param {?} injector
  * @param {?} reducers
