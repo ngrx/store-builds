@@ -1,1 +1,1 @@
-290cbf7 docs(Entity): update upsert code sample to match new signature (#1048)
+b329aa1 docs(Effects): improve documentation for non-dispatching effects (#1050)
