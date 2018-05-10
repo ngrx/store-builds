@@ -1,1 +1,1 @@
-0d1d309 fix(Schematics): Update upsert actions for entity blueprint (#1042)
+e711c28 build: Remove custom build scripts in favor of Bazel builds (#1046)
