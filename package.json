@@ -1,6 +1,6 @@
 {
   "name": "@ngrx/store",
-  "version": "v6.0.0-beta.1+37.sha-b329aa1",
+  "version": "v6.0.0-beta.1+39.sha-5b4f067",
   "description": "RxJS powered Redux for Angular apps",
   "repository": {
     "type": "git",
@@ -29,7 +29,8 @@
       "@ngrx/schematics",
       "@ngrx/store",
       "@ngrx/store-devtools"
-    ]
+    ],
+    "migrations": "./migrations/migration.json"
   },
   "sideEffects": false,
   "main": "./bundles/store.umd.js",
