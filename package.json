@@ -1,6 +1,6 @@
 {
   "name": "@ngrx/store",
-  "version": "v6.0.0-beta.1+41.sha-92c13fd",
+  "version": "v6.0.0-beta.2+1.sha-355b12f",
   "description": "RxJS powered Redux for Angular apps",
   "repository": {
     "type": "git",
@@ -23,11 +23,11 @@
   },
   "ng-update": {
     "packageGroup": [
+      "@ngrx/store",
       "@ngrx/effects",
       "@ngrx/entity",
       "@ngrx/router-store",
       "@ngrx/schematics",
-      "@ngrx/store",
       "@ngrx/store-devtools"
     ],
     "migrations": "./migrations/migration.json"

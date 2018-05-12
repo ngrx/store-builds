@@ -1,1 +1,1 @@
-92c13fd Revert "build: Add script to copy schematics-core to supported packages (#1052)" (#1055)
+355b12f fix(build): Use default build for schematics (#1057)
