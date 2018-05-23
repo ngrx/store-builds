@@ -1,1 +1,1 @@
-a478c0d refactor(SchematicsCore): remove npm install task during ng update (#1080)
+8db0eaf refactor(Schematics): remove extra path from store schematic (#1085)
