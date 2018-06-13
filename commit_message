@@ -1,1 +1,1 @@
-fb9b172 docs(Store): add description for supporting feature modules using combineReducers and AoT (#1113)
+55a0488 feat(StoreDevtools): Allow custom serializer options (#1121)
