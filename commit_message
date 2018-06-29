@@ -1,1 +1,1 @@
-221020a refactor(Example): use provideMockActions for effects tests (#1153)
+cb58ff1 feat(schematics): use ofType operator function instead of Actions#ofType (#1154)
