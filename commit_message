@@ -1,1 +1,1 @@
-3ba463f perf(StoreDevtools): remove path filters in ng-add
+221020a refactor(Example): use provideMockActions for effects tests (#1153)
