@@ -1,1 +1,1 @@
-be28d8d feat(StoreDevtools): Add ng-add support
+3ba463f perf(StoreDevtools): remove path filters in ng-add
