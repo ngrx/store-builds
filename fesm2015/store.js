@@ -1,5 +1,5 @@
 /**
- * @license NgRx 6.0.1+36.sha-e7ae8a2
+ * @license NgRx 6.0.1+37.sha-03db76f
  * (c) 2015-2018 Brandon Roberts, Mike Ryan, Rob Wormald, Victor Savkin
  * License: MIT
  */
@@ -559,7 +559,6 @@ function createSelectorFactory(memoize, options = {
     };
 }
 /**
- * @template T
  * @param {?} featureName
  * @return {?}
  */

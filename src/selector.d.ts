@@ -34,3 +34,4 @@ export declare type SelectorFactoryConfig<T = any, V = any> = {
 export declare function createSelectorFactory<T = any, V = any>(memoize: MemoizeFn): (...input: any[]) => Selector<T, V>;
 export declare function createSelectorFactory<T = any, V = any>(memoize: MemoizeFn, options: SelectorFactoryConfig<T, V>): (...input: any[]) => Selector<T, V>;
 export declare function createFeatureSelector<T>(featureName: string): MemoizedSelector<object, T>;
+export declare function createFeatureSelector<T, V>(featureName: keyof T): MemoizedSelector<T, V>;

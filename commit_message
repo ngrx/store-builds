@@ -1,1 +1,1 @@
-e7ae8a2 refactor(effects): cleanup metadata and add types (#1131)
+03db76f feat(store): add an overload to createFeatureSelector to provide better type checking (#1171)
