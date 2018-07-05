@@ -1,5 +1,5 @@
 /**
- * @license NgRx 6.0.1+32.sha-6eea193
+ * @license NgRx 6.0.1+34.sha-a17cfee
  * (c) 2015-2018 Brandon Roberts, Mike Ryan, Rob Wormald, Victor Savkin
  * License: MIT
  */
@@ -408,7 +408,12 @@ var Store = /** @class */ (function (_super) {
     Store.prototype.addReducer = function (key, reducer) {
         this.reducerManager.addReducer(key, reducer);
     };
-    Store.prototype.removeReducer = function (key) {
+    // Once TS is >= 2.8 replace with <Key extends Extract<keyof T, string>>
+    // Once TS is >= 2.8 replace with <Key extends Extract<keyof T, string>>
+    Store.prototype.removeReducer = 
+    // Once TS is >= 2.8 replace with <Key extends Extract<keyof T, string>>
+    function (key) {
+        // TS2.9: keyof T is string|number|symbol, explicitly cast to string to fix.
         this.reducerManager.removeReducer(key);
     };
     Store.decorators = [

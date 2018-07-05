@@ -1,5 +1,5 @@
 /**
- * @license NgRx 6.0.1+32.sha-6eea193
+ * @license NgRx 6.0.1+34.sha-a17cfee
  * (c) 2015-2018 Brandon Roberts, Mike Ryan, Rob Wormald, Victor Savkin
  * License: MIT
  */
@@ -415,7 +415,8 @@ class Store extends Observable {
      * @return {?}
      */
     removeReducer(key) {
-        this.reducerManager.removeReducer(key);
+        // TS2.9: keyof T is string|number|symbol, explicitly cast to string to fix.
+        this.reducerManager.removeReducer(/** @type {?} */ (key));
     }
 }
 Store.decorators = [
