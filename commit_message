@@ -1,1 +1,1 @@
-03db76f feat(store): add an overload to createFeatureSelector to provide better type checking (#1171)
+de78141 docs(effects): add documentation for ROOT_EFFECTS_INIT (#1181)
