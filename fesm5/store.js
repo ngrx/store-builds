@@ -1,5 +1,5 @@
 /**
- * @license NgRx 6.0.1+39.sha-de78141
+ * @license NgRx 6.0.1+41.sha-28e2cc9
  * (c) 2015-2018 Brandon Roberts, Mike Ryan, Rob Wormald, Victor Savkin
  * License: MIT
  */
@@ -189,31 +189,52 @@ var ReducerManager = /** @class */ (function (_super) {
         _this.reducerFactory = reducerFactory;
         return _this;
     }
-    ReducerManager.prototype.addFeature = function (_a) {
-        var reducers = _a.reducers, reducerFactory = _a.reducerFactory, metaReducers = _a.metaReducers, initialState = _a.initialState, key = _a.key;
-        var reducer = typeof reducers === 'function'
-            ? createFeatureReducerFactory(metaReducers)(reducers, initialState)
-            : createReducerFactory(reducerFactory, metaReducers)(reducers, initialState);
-        this.addReducer(key, reducer);
+    ReducerManager.prototype.addFeature = function (feature) {
+        this.addFeatures([feature]);
     };
-    ReducerManager.prototype.removeFeature = function (_a) {
-        var key = _a.key;
-        this.removeReducer(key);
+    ReducerManager.prototype.addFeatures = function (features) {
+        var reducers = features.reduce(function (reducerDict, _a) {
+            var reducers = _a.reducers, reducerFactory = _a.reducerFactory, metaReducers = _a.metaReducers, initialState = _a.initialState, key = _a.key;
+            var reducer = typeof reducers === 'function'
+                ? createFeatureReducerFactory(metaReducers)(reducers, initialState)
+                : createReducerFactory(reducerFactory, metaReducers)(reducers, initialState);
+            reducerDict[key] = reducer;
+            return reducerDict;
+        }, {});
+        this.addReducers(reducers);
+    };
+    ReducerManager.prototype.removeFeature = function (feature) {
+        this.removeFeatures([feature]);
+    };
+    ReducerManager.prototype.removeFeatures = function (features) {
+        this.removeReducers(features.map(function (p) { return p.key; }));
     };
     ReducerManager.prototype.addReducer = function (key, reducer) {
-        this.reducers = __assign({}, this.reducers, (_a = {}, _a[key] = reducer, _a));
-        this.updateReducers(key);
+        this.addReducers((_a = {}, _a[key] = reducer, _a));
         var _a;
     };
-    ReducerManager.prototype.removeReducer = function (key) {
-        this.reducers = omit(this.reducers, key) /*TODO(#823)*/;
-        this.updateReducers(key);
+    ReducerManager.prototype.addReducers = function (reducers) {
+        this.reducers = __assign({}, this.reducers, reducers);
+        this.updateReducers(Object.keys(reducers));
     };
-    ReducerManager.prototype.updateReducers = function (key) {
+    ReducerManager.prototype.removeReducer = function (featureKey) {
+        this.removeReducers([featureKey]);
+    };
+    ReducerManager.prototype.removeReducers = function (featureKeys) {
+        var _this = this;
+        featureKeys.forEach(function (key) {
+            _this.reducers = omit(_this.reducers, key) /*TODO(#823)*/;
+        });
+        this.updateReducers(featureKeys);
+    };
+    ReducerManager.prototype.updateReducers = function (featureKeys) {
+        var _this = this;
         this.next(this.reducerFactory(this.reducers, this.initialState));
-        this.dispatcher.next({
-            type: UPDATE,
-            feature: key,
+        featureKeys.forEach(function (feature) {
+            _this.dispatcher.next({
+                type: UPDATE,
+                feature: feature,
+            });
         });
     };
     ReducerManager.prototype.ngOnDestroy = function () {
@@ -578,19 +599,15 @@ var StoreFeatureModule = /** @class */ (function () {
         this.features = features;
         this.featureReducers = featureReducers;
         this.reducerManager = reducerManager;
-        features
-            .map(function (feature, index) {
+        var feats = features.map(function (feature, index) {
             var featureReducerCollection = featureReducers.shift();
             var reducers = featureReducerCollection[index];
             return __assign$1({}, feature, { reducers: reducers, initialState: _initialStateFactory(feature.initialState) });
-        })
-            .forEach(function (feature) { return reducerManager.addFeature(feature); });
+        });
+        reducerManager.addFeatures(feats);
     }
     StoreFeatureModule.prototype.ngOnDestroy = function () {
-        var _this = this;
-        this.features.forEach(function (feature) {
-            return _this.reducerManager.removeFeature(feature);
-        });
+        this.reducerManager.removeFeatures(this.features);
     };
     StoreFeatureModule.decorators = [
         { type: NgModule, args: [{},] }

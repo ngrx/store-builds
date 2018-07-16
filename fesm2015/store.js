@@ -1,5 +1,5 @@
 /**
- * @license NgRx 6.0.1+39.sha-de78141
+ * @license NgRx 6.0.1+41.sha-28e2cc9
  * (c) 2015-2018 Brandon Roberts, Mike Ryan, Rob Wormald, Victor Savkin
  * License: MIT
  */
@@ -185,21 +185,39 @@ class ReducerManager extends BehaviorSubject {
         this.reducerFactory = reducerFactory;
     }
     /**
-     * @param {?} __0
+     * @param {?} feature
      * @return {?}
      */
-    addFeature({ reducers, reducerFactory, metaReducers, initialState, key, }) {
-        const /** @type {?} */ reducer = typeof reducers === 'function'
-            ? createFeatureReducerFactory(metaReducers)(reducers, initialState)
-            : createReducerFactory(reducerFactory, metaReducers)(reducers, initialState);
-        this.addReducer(key, reducer);
+    addFeature(feature) {
+        this.addFeatures([feature]);
     }
     /**
-     * @param {?} __0
+     * @param {?} features
      * @return {?}
      */
-    removeFeature({ key }) {
-        this.removeReducer(key);
+    addFeatures(features) {
+        const /** @type {?} */ reducers = features.reduce((reducerDict, { reducers, reducerFactory, metaReducers, initialState, key }) => {
+            const /** @type {?} */ reducer = typeof reducers === 'function'
+                ? createFeatureReducerFactory(metaReducers)(reducers, initialState)
+                : createReducerFactory(reducerFactory, metaReducers)(reducers, initialState);
+            reducerDict[key] = reducer;
+            return reducerDict;
+        }, /** @type {?} */ ({}));
+        this.addReducers(reducers);
+    }
+    /**
+     * @param {?} feature
+     * @return {?}
+     */
+    removeFeature(feature) {
+        this.removeFeatures([feature]);
+    }
+    /**
+     * @param {?} features
+     * @return {?}
+     */
+    removeFeatures(features) {
+        this.removeReducers(features.map(p => p.key));
     }
     /**
      * @param {?} key
@@ -207,27 +225,45 @@ class ReducerManager extends BehaviorSubject {
      * @return {?}
      */
     addReducer(key, reducer) {
-        this.reducers = Object.assign({}, this.reducers, { [key]: reducer });
-        this.updateReducers(key);
+        this.addReducers({ [key]: reducer });
     }
     /**
-     * @param {?} key
+     * @param {?} reducers
      * @return {?}
      */
-    removeReducer(key) {
-        this.reducers = /** @type {?} */ (omit(this.reducers, key) /*TODO(#823)*/);
-        this.updateReducers(key);
+    addReducers(reducers) {
+        this.reducers = Object.assign({}, this.reducers, reducers);
+        this.updateReducers(Object.keys(reducers));
     }
     /**
-     * @param {?} key
+     * @param {?} featureKey
      * @return {?}
      */
-    updateReducers(key) {
+    removeReducer(featureKey) {
+        this.removeReducers([featureKey]);
+    }
+    /**
+     * @param {?} featureKeys
+     * @return {?}
+     */
+    removeReducers(featureKeys) {
+        featureKeys.forEach(key => {
+            this.reducers = /** @type {?} */ (omit(this.reducers, key) /*TODO(#823)*/);
+        });
+        this.updateReducers(featureKeys);
+    }
+    /**
+     * @param {?} featureKeys
+     * @return {?}
+     */
+    updateReducers(featureKeys) {
         this.next(this.reducerFactory(this.reducers, this.initialState));
-        this.dispatcher.next(/** @type {?} */ ({
-            type: UPDATE,
-            feature: key,
-        }));
+        featureKeys.forEach(feature => {
+            this.dispatcher.next(/** @type {?} */ ({
+                type: UPDATE,
+                feature,
+            }));
+        });
     }
     /**
      * @return {?}
@@ -600,19 +636,18 @@ class StoreFeatureModule {
         this.features = features;
         this.featureReducers = featureReducers;
         this.reducerManager = reducerManager;
-        features
-            .map((feature, index) => {
+        const /** @type {?} */ feats = features.map((feature, index) => {
             const /** @type {?} */ featureReducerCollection = featureReducers.shift();
             const /** @type {?} */ reducers = /** @type {?} */ ((featureReducerCollection))[index];
             return Object.assign({}, feature, { reducers, initialState: _initialStateFactory(feature.initialState) });
-        })
-            .forEach(feature => reducerManager.addFeature(feature));
+        });
+        reducerManager.addFeatures(feats);
     }
     /**
      * @return {?}
      */
     ngOnDestroy() {
-        this.features.forEach(feature => this.reducerManager.removeFeature(feature));
+        this.reducerManager.removeFeatures(this.features);
     }
 }
 StoreFeatureModule.decorators = [

@@ -13,11 +13,17 @@ export declare class ReducerManager extends BehaviorSubject<ActionReducer<any, a
     private reducers;
     private reducerFactory;
     constructor(dispatcher: ReducerManagerDispatcher, initialState: any, reducers: ActionReducerMap<any, any>, reducerFactory: ActionReducerFactory<any, any>);
-    addFeature({reducers, reducerFactory, metaReducers, initialState, key}: StoreFeature<any, any>): void;
-    removeFeature({key}: StoreFeature<any, any>): void;
+    addFeature(feature: StoreFeature<any, any>): void;
+    addFeatures(features: StoreFeature<any, any>[]): void;
+    removeFeature(feature: StoreFeature<any, any>): void;
+    removeFeatures(features: StoreFeature<any, any>[]): void;
     addReducer(key: string, reducer: ActionReducer<any, any>): void;
-    removeReducer(key: string): void;
-    private updateReducers(key);
+    addReducers(reducers: {
+        [key: string]: ActionReducer<any, any>;
+    }): void;
+    removeReducer(featureKey: string): void;
+    removeReducers(featureKeys: string[]): void;
+    private updateReducers(featureKeys);
     ngOnDestroy(): void;
 }
 export declare const REDUCER_MANAGER_PROVIDERS: Provider[];
