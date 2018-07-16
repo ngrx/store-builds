@@ -1,1 +1,1 @@
-28e2cc9 docs(store): fix example for downgrading Store (#1184)
+8f05f1f feat(entity): log a warning message when selectId returns undefined in dev mode (#1169)
