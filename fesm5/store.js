@@ -1,13 +1,13 @@
 /**
- * @license NgRx 6.0.1+42.sha-8f05f1f
+ * @license NgRx 6.0.1+104.sha-de1198f
  * (c) 2015-2018 Brandon Roberts, Mike Ryan, Rob Wormald, Victor Savkin
  * License: MIT
  */
-import { Inject, Injectable, InjectionToken, Injector, NgModule } from '@angular/core';
+import { Injectable, InjectionToken, Inject, NgModule, Injector } from '@angular/core';
 import { BehaviorSubject, Observable, Subject, queueScheduler } from 'rxjs';
-import { distinctUntilChanged, map, observeOn, pluck, scan, withLatestFrom } from 'rxjs/operators';
+import { observeOn, scan, withLatestFrom, distinctUntilChanged, map, pluck } from 'rxjs/operators';
 
-var __extends$1 = (undefined && undefined.__extends) || (function () {
+var __extends = (undefined && undefined.__extends) || (function () {
     var extendStatics = Object.setPrototypeOf ||
         ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
         function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
@@ -19,7 +19,7 @@ var __extends$1 = (undefined && undefined.__extends) || (function () {
 })();
 var INIT = '@ngrx/store/init';
 var ActionsSubject = /** @class */ (function (_super) {
-    __extends$1(ActionsSubject, _super);
+    __extends(ActionsSubject, _super);
     function ActionsSubject() {
         return _super.call(this, { type: INIT }) || this;
     }
@@ -60,7 +60,7 @@ var _FEATURE_REDUCERS = new InjectionToken('@ngrx/store Internal Feature Reducer
 var _FEATURE_REDUCERS_TOKEN = new InjectionToken('@ngrx/store Internal Feature Reducers Token');
 var FEATURE_REDUCERS = new InjectionToken('@ngrx/store Feature Reducers');
 
-var __read$1 = (undefined && undefined.__read) || function (o, n) {
+var __read = (undefined && undefined.__read) || function (o, n) {
     var m = typeof Symbol === "function" && o[Symbol.iterator];
     if (!m) return o;
     var i = m.call(o), r, ar = [], e;
@@ -76,8 +76,8 @@ var __read$1 = (undefined && undefined.__read) || function (o, n) {
     }
     return ar;
 };
-var __spread$1 = (undefined && undefined.__spread) || function () {
-    for (var ar = [], i = 0; i < arguments.length; i++) ar = ar.concat(__read$1(arguments[i]));
+var __spread = (undefined && undefined.__spread) || function () {
+    for (var ar = [], i = 0; i < arguments.length; i++) ar = ar.concat(__read(arguments[i]));
     return ar;
 };
 function combineReducers(reducers, initialState) {
@@ -130,13 +130,13 @@ function compose() {
 }
 function createReducerFactory(reducerFactory, metaReducers) {
     if (Array.isArray(metaReducers) && metaReducers.length > 0) {
-        return compose.apply(null, __spread$1(metaReducers, [reducerFactory]));
+        return compose.apply(null, __spread(metaReducers, [reducerFactory]));
     }
     return reducerFactory;
 }
 function createFeatureReducerFactory(metaReducers) {
     var reducerFactory = Array.isArray(metaReducers) && metaReducers.length > 0
-        ? compose.apply(void 0, __spread$1(metaReducers)) : function (r) { return r; };
+        ? compose.apply(void 0, __spread(metaReducers)) : function (r) { return r; };
     return function (reducer, initialState) {
         reducer = reducerFactory(reducer);
         return function (state, action) {
@@ -146,7 +146,7 @@ function createFeatureReducerFactory(metaReducers) {
     };
 }
 
-var __extends$2 = (undefined && undefined.__extends) || (function () {
+var __extends$1 = (undefined && undefined.__extends) || (function () {
     var extendStatics = Object.setPrototypeOf ||
         ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
         function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
@@ -165,14 +165,14 @@ var __assign = (undefined && undefined.__assign) || Object.assign || function(t)
     return t;
 };
 var ReducerObservable = /** @class */ (function (_super) {
-    __extends$2(ReducerObservable, _super);
+    __extends$1(ReducerObservable, _super);
     function ReducerObservable() {
         return _super !== null && _super.apply(this, arguments) || this;
     }
     return ReducerObservable;
 }(Observable));
 var ReducerManagerDispatcher = /** @class */ (function (_super) {
-    __extends$2(ReducerManagerDispatcher, _super);
+    __extends$1(ReducerManagerDispatcher, _super);
     function ReducerManagerDispatcher() {
         return _super !== null && _super.apply(this, arguments) || this;
     }
@@ -180,7 +180,7 @@ var ReducerManagerDispatcher = /** @class */ (function (_super) {
 }(ActionsSubject));
 var UPDATE = '@ngrx/store/update-reducers';
 var ReducerManager = /** @class */ (function (_super) {
-    __extends$2(ReducerManager, _super);
+    __extends$1(ReducerManager, _super);
     function ReducerManager(dispatcher, initialState, reducers, reducerFactory) {
         var _this = _super.call(this, reducerFactory(reducers, initialState)) || this;
         _this.dispatcher = dispatcher;
@@ -228,13 +228,10 @@ var ReducerManager = /** @class */ (function (_super) {
         this.updateReducers(featureKeys);
     };
     ReducerManager.prototype.updateReducers = function (featureKeys) {
-        var _this = this;
         this.next(this.reducerFactory(this.reducers, this.initialState));
-        featureKeys.forEach(function (feature) {
-            _this.dispatcher.next({
-                type: UPDATE,
-                feature: feature,
-            });
+        this.dispatcher.next({
+            type: UPDATE,
+            features: featureKeys,
         });
     };
     ReducerManager.prototype.ngOnDestroy = function () {
@@ -245,10 +242,10 @@ var ReducerManager = /** @class */ (function (_super) {
     ];
     /** @nocollapse */
     ReducerManager.ctorParameters = function () { return [
-        { type: ReducerManagerDispatcher, },
-        { type: undefined, decorators: [{ type: Inject, args: [INITIAL_STATE,] },] },
-        { type: undefined, decorators: [{ type: Inject, args: [INITIAL_REDUCERS,] },] },
-        { type: undefined, decorators: [{ type: Inject, args: [REDUCER_FACTORY,] },] },
+        { type: ReducerManagerDispatcher },
+        { type: undefined, decorators: [{ type: Inject, args: [INITIAL_STATE,] }] },
+        { type: undefined, decorators: [{ type: Inject, args: [INITIAL_REDUCERS,] }] },
+        { type: undefined, decorators: [{ type: Inject, args: [REDUCER_FACTORY,] }] }
     ]; };
     return ReducerManager;
 }(BehaviorSubject));
@@ -258,7 +255,7 @@ var REDUCER_MANAGER_PROVIDERS = [
     { provide: ReducerManagerDispatcher, useExisting: ActionsSubject },
 ];
 
-var __extends$4 = (undefined && undefined.__extends) || (function () {
+var __extends$2 = (undefined && undefined.__extends) || (function () {
     var extendStatics = Object.setPrototypeOf ||
         ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
         function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
@@ -269,7 +266,7 @@ var __extends$4 = (undefined && undefined.__extends) || (function () {
     };
 })();
 var ScannedActionsSubject = /** @class */ (function (_super) {
-    __extends$4(ScannedActionsSubject, _super);
+    __extends$2(ScannedActionsSubject, _super);
     function ScannedActionsSubject() {
         return _super !== null && _super.apply(this, arguments) || this;
     }
@@ -295,7 +292,7 @@ var __extends$3 = (undefined && undefined.__extends) || (function () {
         d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
     };
 })();
-var __read$2 = (undefined && undefined.__read) || function (o, n) {
+var __read$1 = (undefined && undefined.__read) || function (o, n) {
     var m = typeof Symbol === "function" && o[Symbol.iterator];
     if (!m) return o;
     var i = m.call(o), r, ar = [], e;
@@ -343,16 +340,16 @@ var State = /** @class */ (function (_super) {
     ];
     /** @nocollapse */
     State.ctorParameters = function () { return [
-        { type: ActionsSubject, },
-        { type: ReducerObservable, },
-        { type: ScannedActionsSubject, },
-        { type: undefined, decorators: [{ type: Inject, args: [INITIAL_STATE,] },] },
+        { type: ActionsSubject },
+        { type: ReducerObservable },
+        { type: ScannedActionsSubject },
+        { type: undefined, decorators: [{ type: Inject, args: [INITIAL_STATE,] }] }
     ]; };
     return State;
 }(BehaviorSubject));
 function reduceState(stateActionPair, _a) {
     if (stateActionPair === void 0) { stateActionPair = { state: undefined }; }
-    var _b = __read$2(_a, 2), action = _b[0], reducer = _b[1];
+    var _b = __read$1(_a, 2), action = _b[0], reducer = _b[1];
     var state = stateActionPair.state;
     return { state: reducer(state, action), action: action };
 }
@@ -361,7 +358,7 @@ var STATE_PROVIDERS = [
     { provide: StateObservable, useExisting: State },
 ];
 
-var __extends = (undefined && undefined.__extends) || (function () {
+var __extends$4 = (undefined && undefined.__extends) || (function () {
     var extendStatics = Object.setPrototypeOf ||
         ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
         function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
@@ -371,7 +368,7 @@ var __extends = (undefined && undefined.__extends) || (function () {
         d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
     };
 })();
-var __read = (undefined && undefined.__read) || function (o, n) {
+var __read$2 = (undefined && undefined.__read) || function (o, n) {
     var m = typeof Symbol === "function" && o[Symbol.iterator];
     if (!m) return o;
     var i = m.call(o), r, ar = [], e;
@@ -387,12 +384,12 @@ var __read = (undefined && undefined.__read) || function (o, n) {
     }
     return ar;
 };
-var __spread = (undefined && undefined.__spread) || function () {
-    for (var ar = [], i = 0; i < arguments.length; i++) ar = ar.concat(__read(arguments[i]));
+var __spread$1 = (undefined && undefined.__spread) || function () {
+    for (var ar = [], i = 0; i < arguments.length; i++) ar = ar.concat(__read$2(arguments[i]));
     return ar;
 };
 var Store = /** @class */ (function (_super) {
-    __extends(Store, _super);
+    __extends$4(Store, _super);
     function Store(state$, actionsObserver, reducerManager) {
         var _this = _super.call(this) || this;
         _this.actionsObserver = actionsObserver;
@@ -405,7 +402,7 @@ var Store = /** @class */ (function (_super) {
         for (var _i = 1; _i < arguments.length; _i++) {
             paths[_i - 1] = arguments[_i];
         }
-        return select.call.apply(select, __spread([null, pathOrMapFn], paths))(this);
+        return select.call.apply(select, __spread$1([null, pathOrMapFn], paths))(this);
     };
     Store.prototype.lift = function (operator) {
         var store = new Store(this, this.actionsObserver, this.reducerManager);
@@ -428,10 +425,7 @@ var Store = /** @class */ (function (_super) {
         this.reducerManager.addReducer(key, reducer);
     };
     // Once TS is >= 2.8 replace with <Key extends Extract<keyof T, string>>
-    // Once TS is >= 2.8 replace with <Key extends Extract<keyof T, string>>
-    Store.prototype.removeReducer = 
-    // Once TS is >= 2.8 replace with <Key extends Extract<keyof T, string>>
-    function (key) {
+    Store.prototype.removeReducer = function (key) {
         // TS2.9: keyof T is string|number|symbol, explicitly cast to string to fix.
         this.reducerManager.removeReducer(key);
     };
@@ -440,25 +434,26 @@ var Store = /** @class */ (function (_super) {
     ];
     /** @nocollapse */
     Store.ctorParameters = function () { return [
-        { type: StateObservable, },
-        { type: ActionsSubject, },
-        { type: ReducerManager, },
+        { type: StateObservable },
+        { type: ActionsSubject },
+        { type: ReducerManager }
     ]; };
     return Store;
 }(Observable));
 var STORE_PROVIDERS = [Store];
-function select(pathOrMapFn) {
+function select(pathOrMapFn, propsOrPath) {
     var paths = [];
-    for (var _i = 1; _i < arguments.length; _i++) {
-        paths[_i - 1] = arguments[_i];
+    for (var _i = 2; _i < arguments.length; _i++) {
+        paths[_i - 2] = arguments[_i];
     }
     return function selectOperator(source$) {
         var mapped$;
         if (typeof pathOrMapFn === 'string') {
-            mapped$ = source$.pipe(pluck.apply(void 0, __spread([pathOrMapFn], paths)));
+            var pathSlices = __spread$1([propsOrPath], paths).filter(Boolean);
+            mapped$ = source$.pipe(pluck.apply(void 0, __spread$1([pathOrMapFn], pathSlices)));
         }
         else if (typeof pathOrMapFn === 'function') {
-            mapped$ = source$.pipe(map(pathOrMapFn));
+            mapped$ = source$.pipe(map(function (source) { return pathOrMapFn(source, propsOrPath); }));
         }
         else {
             throw new TypeError("Unexpected type '" + typeof pathOrMapFn + "' in select operator," +
@@ -491,28 +486,44 @@ var __spread$2 = (undefined && undefined.__spread) || function () {
 function isEqualCheck(a, b) {
     return a === b;
 }
-function defaultMemoize(t, isEqual) {
-    if (isEqual === void 0) { isEqual = isEqualCheck; }
+function isArgumentsChanged(args, lastArguments, comparator) {
+    for (var i = 0; i < args.length; i++) {
+        if (!comparator(args[i], lastArguments[i])) {
+            return true;
+        }
+    }
+    return false;
+}
+function resultMemoize(projectionFn, isResultEqual) {
+    return defaultMemoize(projectionFn, isEqualCheck, isResultEqual);
+}
+function defaultMemoize(projectionFn, isArgumentsEqual, isResultEqual) {
+    if (isArgumentsEqual === void 0) { isArgumentsEqual = isEqualCheck; }
+    if (isResultEqual === void 0) { isResultEqual = isEqualCheck; }
     var lastArguments = null;
+    // tslint:disable-next-line:no-any anything could be the result.
     var lastResult = null;
     function reset() {
         lastArguments = null;
         lastResult = null;
     }
+    // tslint:disable-next-line:no-any anything could be the result.
     function memoized() {
         if (!lastArguments) {
-            lastResult = t.apply(null, arguments);
+            lastResult = projectionFn.apply(null, arguments);
             lastArguments = arguments;
             return lastResult;
         }
-        for (var i = 0; i < arguments.length; i++) {
-            if (!isEqual(arguments[i], lastArguments[i])) {
-                lastResult = t.apply(null, arguments);
-                lastArguments = arguments;
-                return lastResult;
-            }
+        if (!isArgumentsChanged(arguments, lastArguments, isArgumentsEqual)) {
+            return lastResult;
         }
-        return lastResult;
+        var newResult = projectionFn.apply(null, arguments);
+        if (isResultEqual(lastResult, newResult)) {
+            return lastResult;
+        }
+        lastResult = newResult;
+        lastArguments = arguments;
+        return newResult;
     }
     return { memoized: memoized, reset: reset };
 }
@@ -523,9 +534,15 @@ function createSelector() {
     }
     return createSelectorFactory(defaultMemoize).apply(void 0, __spread$2(input));
 }
-function defaultStateFn(state, selectors, memoizedProjector) {
-    var args = selectors.map(function (fn) { return fn(state); });
-    return memoizedProjector.memoized.apply(null, args);
+function defaultStateFn(state, selectors, props, memoizedProjector) {
+    if (props === undefined) {
+        var args_1 = selectors.map(function (fn) { return fn(state); });
+        return memoizedProjector.memoized.apply(null, args_1);
+    }
+    var args = selectors.map(function (fn) {
+        return fn(state, props);
+    });
+    return memoizedProjector.memoized.apply(null, __spread$2(args, [props]));
 }
 function createSelectorFactory(memoize, options) {
     if (options === void 0) { options = {
@@ -553,8 +570,18 @@ function createSelectorFactory(memoize, options) {
             }
             return projector.apply(null, selectors);
         });
-        var memoizedState = defaultMemoize(function (state) {
-            return options.stateFn.apply(null, [state, selectors, memoizedProjector]);
+        var memoizedState = defaultMemoize(function (state, props) {
+            // createSelector works directly on state
+            // e.g. createSelector((state, props) => ...)
+            if (selectors.length === 0) {
+                return projector.apply(null, [state, props]);
+            }
+            return options.stateFn.apply(null, [
+                state,
+                selectors,
+                props,
+                memoizedProjector,
+            ]);
         });
         function release() {
             memoizedState.reset();
@@ -587,10 +614,10 @@ var StoreRootModule = /** @class */ (function () {
     ];
     /** @nocollapse */
     StoreRootModule.ctorParameters = function () { return [
-        { type: ActionsSubject, },
-        { type: ReducerObservable, },
-        { type: ScannedActionsSubject, },
-        { type: Store, },
+        { type: ActionsSubject },
+        { type: ReducerObservable },
+        { type: ScannedActionsSubject },
+        { type: Store }
     ]; };
     return StoreRootModule;
 }());
@@ -601,7 +628,7 @@ var StoreFeatureModule = /** @class */ (function () {
         this.reducerManager = reducerManager;
         var feats = features.map(function (feature, index) {
             var featureReducerCollection = featureReducers.shift();
-            var reducers = featureReducerCollection[index];
+            var reducers = featureReducerCollection /*TODO(#823)*/[index];
             return __assign$1({}, feature, { reducers: reducers, initialState: _initialStateFactory(feature.initialState) });
         });
         reducerManager.addFeatures(feats);
@@ -614,10 +641,10 @@ var StoreFeatureModule = /** @class */ (function () {
     ];
     /** @nocollapse */
     StoreFeatureModule.ctorParameters = function () { return [
-        { type: Array, decorators: [{ type: Inject, args: [STORE_FEATURES,] },] },
-        { type: Array, decorators: [{ type: Inject, args: [FEATURE_REDUCERS,] },] },
-        { type: ReducerManager, },
-        { type: StoreRootModule, },
+        { type: Array, decorators: [{ type: Inject, args: [STORE_FEATURES,] }] },
+        { type: Array, decorators: [{ type: Inject, args: [FEATURE_REDUCERS,] }] },
+        { type: ReducerManager },
+        { type: StoreRootModule }
     ]; };
     return StoreFeatureModule;
 }());
@@ -735,5 +762,5 @@ function _initialStateFactory(initialState) {
  * Generated bundle index. Do not edit.
  */
 
-export { ACTIONS_SUBJECT_PROVIDERS as ɵngrx_modules_store_store_c, REDUCER_MANAGER_PROVIDERS as ɵngrx_modules_store_store_d, SCANNED_ACTIONS_SUBJECT_PROVIDERS as ɵngrx_modules_store_store_e, STATE_PROVIDERS as ɵngrx_modules_store_store_f, STORE_PROVIDERS as ɵngrx_modules_store_store_b, Store, select, combineReducers, compose, createReducerFactory, ActionsSubject, INIT, ReducerManager, ReducerObservable, ReducerManagerDispatcher, UPDATE, ScannedActionsSubject, createSelector, createSelectorFactory, createFeatureSelector, defaultMemoize, defaultStateFn, State, StateObservable, reduceState, INITIAL_STATE, _REDUCER_FACTORY, REDUCER_FACTORY, _INITIAL_REDUCERS, INITIAL_REDUCERS, STORE_FEATURES, _INITIAL_STATE, META_REDUCERS, _STORE_REDUCERS, _FEATURE_REDUCERS, FEATURE_REDUCERS, _FEATURE_REDUCERS_TOKEN, StoreModule, StoreRootModule, StoreFeatureModule, _initialStateFactory, _createStoreReducers, _createFeatureReducers };
+export { ACTIONS_SUBJECT_PROVIDERS as ɵngrx_modules_store_store_c, REDUCER_MANAGER_PROVIDERS as ɵngrx_modules_store_store_d, SCANNED_ACTIONS_SUBJECT_PROVIDERS as ɵngrx_modules_store_store_e, isEqualCheck as ɵngrx_modules_store_store_f, STATE_PROVIDERS as ɵngrx_modules_store_store_g, STORE_PROVIDERS as ɵngrx_modules_store_store_b, Store, select, combineReducers, compose, createReducerFactory, ActionsSubject, INIT, ReducerManager, ReducerObservable, ReducerManagerDispatcher, UPDATE, ScannedActionsSubject, createSelector, createSelectorFactory, createFeatureSelector, defaultMemoize, defaultStateFn, resultMemoize, State, StateObservable, reduceState, INITIAL_STATE, _REDUCER_FACTORY, REDUCER_FACTORY, _INITIAL_REDUCERS, INITIAL_REDUCERS, STORE_FEATURES, _INITIAL_STATE, META_REDUCERS, _STORE_REDUCERS, _FEATURE_REDUCERS, FEATURE_REDUCERS, _FEATURE_REDUCERS_TOKEN, StoreModule, StoreRootModule, StoreFeatureModule, _initialStateFactory, _createStoreReducers, _createFeatureReducers };
 //# sourceMappingURL=store.js.map

@@ -1,16 +1,17 @@
 /**
- * @license NgRx 6.0.1+42.sha-8f05f1f
+ * @license NgRx 6.0.1+104.sha-de1198f
  * (c) 2015-2018 Brandon Roberts, Mike Ryan, Rob Wormald, Victor Savkin
  * License: MIT
  */
-import { Inject, Injectable, InjectionToken, Injector, NgModule } from '@angular/core';
+import { Injectable, InjectionToken, Inject, NgModule, Injector } from '@angular/core';
 import { BehaviorSubject, Observable, Subject, queueScheduler } from 'rxjs';
-import { distinctUntilChanged, map, observeOn, pluck, scan, withLatestFrom } from 'rxjs/operators';
+import { observeOn, scan, withLatestFrom, distinctUntilChanged, map, pluck } from 'rxjs/operators';
 
 /**
  * @fileoverview added by tsickle
- * @suppress {checkTypes} checked by tsc
+ * @suppress {checkTypes,extraRequire,uselessCode} checked by tsc
  */
+/** @type {?} */
 const INIT = /** @type {?} */ ('@ngrx/store/init');
 class ActionsSubject extends BehaviorSubject {
     constructor() {
@@ -47,28 +48,41 @@ ActionsSubject.decorators = [
 ];
 /** @nocollapse */
 ActionsSubject.ctorParameters = () => [];
+/** @type {?} */
 const ACTIONS_SUBJECT_PROVIDERS = [ActionsSubject];
 
 /**
  * @fileoverview added by tsickle
- * @suppress {checkTypes} checked by tsc
+ * @suppress {checkTypes,extraRequire,uselessCode} checked by tsc
  */
+/** @type {?} */
 const _INITIAL_STATE = new InjectionToken('@ngrx/store Internal Initial State');
+/** @type {?} */
 const INITIAL_STATE = new InjectionToken('@ngrx/store Initial State');
+/** @type {?} */
 const REDUCER_FACTORY = new InjectionToken('@ngrx/store Reducer Factory');
+/** @type {?} */
 const _REDUCER_FACTORY = new InjectionToken('@ngrx/store Reducer Factory Provider');
+/** @type {?} */
 const INITIAL_REDUCERS = new InjectionToken('@ngrx/store Initial Reducers');
+/** @type {?} */
 const _INITIAL_REDUCERS = new InjectionToken('@ngrx/store Internal Initial Reducers');
+/** @type {?} */
 const META_REDUCERS = new InjectionToken('@ngrx/store Meta Reducers');
+/** @type {?} */
 const STORE_FEATURES = new InjectionToken('@ngrx/store Store Features');
+/** @type {?} */
 const _STORE_REDUCERS = new InjectionToken('@ngrx/store Internal Store Reducers');
+/** @type {?} */
 const _FEATURE_REDUCERS = new InjectionToken('@ngrx/store Internal Feature Reducers');
+/** @type {?} */
 const _FEATURE_REDUCERS_TOKEN = new InjectionToken('@ngrx/store Internal Feature Reducers Token');
+/** @type {?} */
 const FEATURE_REDUCERS = new InjectionToken('@ngrx/store Feature Reducers');
 
 /**
  * @fileoverview added by tsickle
- * @suppress {checkTypes} checked by tsc
+ * @suppress {checkTypes,extraRequire,uselessCode} checked by tsc
  */
 /**
  * @param {?} reducers
@@ -76,24 +90,34 @@ const FEATURE_REDUCERS = new InjectionToken('@ngrx/store Feature Reducers');
  * @return {?}
  */
 function combineReducers(reducers, initialState = {}) {
-    const /** @type {?} */ reducerKeys = Object.keys(reducers);
-    const /** @type {?} */ finalReducers = {};
-    for (let /** @type {?} */ i = 0; i < reducerKeys.length; i++) {
-        const /** @type {?} */ key = reducerKeys[i];
+    /** @type {?} */
+    const reducerKeys = Object.keys(reducers);
+    /** @type {?} */
+    const finalReducers = {};
+    for (let i = 0; i < reducerKeys.length; i++) {
+        /** @type {?} */
+        const key = reducerKeys[i];
         if (typeof reducers[key] === 'function') {
             finalReducers[key] = reducers[key];
         }
     }
-    const /** @type {?} */ finalReducerKeys = Object.keys(finalReducers);
+    /** @type {?} */
+    const finalReducerKeys = Object.keys(finalReducers);
     return function combination(state, action) {
         state = state === undefined ? initialState : state;
-        let /** @type {?} */ hasChanged = false;
-        const /** @type {?} */ nextState = {};
-        for (let /** @type {?} */ i = 0; i < finalReducerKeys.length; i++) {
-            const /** @type {?} */ key = finalReducerKeys[i];
-            const /** @type {?} */ reducer = finalReducers[key];
-            const /** @type {?} */ previousStateForKey = state[key];
-            const /** @type {?} */ nextStateForKey = reducer(previousStateForKey, action);
+        /** @type {?} */
+        let hasChanged = false;
+        /** @type {?} */
+        const nextState = {};
+        for (let i = 0; i < finalReducerKeys.length; i++) {
+            /** @type {?} */
+            const key = finalReducerKeys[i];
+            /** @type {?} */
+            const reducer = finalReducers[key];
+            /** @type {?} */
+            const previousStateForKey = state[key];
+            /** @type {?} */
+            const nextStateForKey = reducer(previousStateForKey, action);
             nextState[key] = nextStateForKey;
             hasChanged = hasChanged || nextStateForKey !== previousStateForKey;
         }
@@ -120,8 +144,10 @@ function compose(...functions) {
         if (functions.length === 0) {
             return arg;
         }
-        const /** @type {?} */ last = functions[functions.length - 1];
-        const /** @type {?} */ rest = functions.slice(0, -1);
+        /** @type {?} */
+        const last = functions[functions.length - 1];
+        /** @type {?} */
+        const rest = functions.slice(0, -1);
         return rest.reduceRight((composed, fn) => fn(composed), last(arg));
     };
 }
@@ -143,7 +169,8 @@ function createReducerFactory(reducerFactory, metaReducers) {
  * @return {?}
  */
 function createFeatureReducerFactory(metaReducers) {
-    const /** @type {?} */ reducerFactory = Array.isArray(metaReducers) && metaReducers.length > 0
+    /** @type {?} */
+    const reducerFactory = Array.isArray(metaReducers) && metaReducers.length > 0
         ? compose(...metaReducers)
         : (r) => r;
     return (reducer, initialState) => {
@@ -157,7 +184,7 @@ function createFeatureReducerFactory(metaReducers) {
 
 /**
  * @fileoverview added by tsickle
- * @suppress {checkTypes} checked by tsc
+ * @suppress {checkTypes,extraRequire,uselessCode} checked by tsc
  */
 /**
  * @abstract
@@ -169,6 +196,7 @@ class ReducerObservable extends Observable {
  */
 class ReducerManagerDispatcher extends ActionsSubject {
 }
+/** @type {?} */
 const UPDATE = /** @type {?} */ ('@ngrx/store/update-reducers');
 class ReducerManager extends BehaviorSubject {
     /**
@@ -196,8 +224,10 @@ class ReducerManager extends BehaviorSubject {
      * @return {?}
      */
     addFeatures(features) {
-        const /** @type {?} */ reducers = features.reduce((reducerDict, { reducers, reducerFactory, metaReducers, initialState, key }) => {
-            const /** @type {?} */ reducer = typeof reducers === 'function'
+        /** @type {?} */
+        const reducers = features.reduce((reducerDict, { reducers, reducerFactory, metaReducers, initialState, key }) => {
+            /** @type {?} */
+            const reducer = typeof reducers === 'function'
                 ? createFeatureReducerFactory(metaReducers)(reducers, initialState)
                 : createReducerFactory(reducerFactory, metaReducers)(reducers, initialState);
             reducerDict[key] = reducer;
@@ -258,12 +288,10 @@ class ReducerManager extends BehaviorSubject {
      */
     updateReducers(featureKeys) {
         this.next(this.reducerFactory(this.reducers, this.initialState));
-        featureKeys.forEach(feature => {
-            this.dispatcher.next(/** @type {?} */ ({
-                type: UPDATE,
-                feature,
-            }));
-        });
+        this.dispatcher.next(/** @type {?} */ ({
+            type: UPDATE,
+            features: featureKeys,
+        }));
     }
     /**
      * @return {?}
@@ -277,11 +305,12 @@ ReducerManager.decorators = [
 ];
 /** @nocollapse */
 ReducerManager.ctorParameters = () => [
-    { type: ReducerManagerDispatcher, },
-    { type: undefined, decorators: [{ type: Inject, args: [INITIAL_STATE,] },] },
-    { type: undefined, decorators: [{ type: Inject, args: [INITIAL_REDUCERS,] },] },
-    { type: undefined, decorators: [{ type: Inject, args: [REDUCER_FACTORY,] },] },
+    { type: ReducerManagerDispatcher },
+    { type: undefined, decorators: [{ type: Inject, args: [INITIAL_STATE,] }] },
+    { type: undefined, decorators: [{ type: Inject, args: [INITIAL_REDUCERS,] }] },
+    { type: undefined, decorators: [{ type: Inject, args: [REDUCER_FACTORY,] }] }
 ];
+/** @type {?} */
 const REDUCER_MANAGER_PROVIDERS = [
     ReducerManager,
     { provide: ReducerObservable, useExisting: ReducerManager },
@@ -290,7 +319,7 @@ const REDUCER_MANAGER_PROVIDERS = [
 
 /**
  * @fileoverview added by tsickle
- * @suppress {checkTypes} checked by tsc
+ * @suppress {checkTypes,extraRequire,uselessCode} checked by tsc
  */
 class ScannedActionsSubject extends Subject {
     /**
@@ -303,13 +332,14 @@ class ScannedActionsSubject extends Subject {
 ScannedActionsSubject.decorators = [
     { type: Injectable }
 ];
+/** @type {?} */
 const SCANNED_ACTIONS_SUBJECT_PROVIDERS = [
     ScannedActionsSubject,
 ];
 
 /**
  * @fileoverview added by tsickle
- * @suppress {checkTypes} checked by tsc
+ * @suppress {checkTypes,extraRequire,uselessCode} checked by tsc
  */
 /**
  * @abstract
@@ -328,10 +358,14 @@ class State extends BehaviorSubject {
      */
     constructor(actions$, reducer$, scannedActions, initialState) {
         super(initialState);
-        const /** @type {?} */ actionsOnQueue$ = actions$.pipe(observeOn(queueScheduler));
-        const /** @type {?} */ withLatestReducer$ = actionsOnQueue$.pipe(withLatestFrom(reducer$));
-        const /** @type {?} */ seed = { state: initialState };
-        const /** @type {?} */ stateAndAction$ = withLatestReducer$.pipe(scan(reduceState, seed));
+        /** @type {?} */
+        const actionsOnQueue$ = actions$.pipe(observeOn(queueScheduler));
+        /** @type {?} */
+        const withLatestReducer$ = actionsOnQueue$.pipe(withLatestFrom(reducer$));
+        /** @type {?} */
+        const seed = { state: initialState };
+        /** @type {?} */
+        const stateAndAction$ = withLatestReducer$.pipe(scan(reduceState, seed));
         this.stateSubscription = stateAndAction$.subscribe(({ state, action }) => {
             this.next(state);
             scannedActions.next(action);
@@ -351,10 +385,10 @@ State.decorators = [
 ];
 /** @nocollapse */
 State.ctorParameters = () => [
-    { type: ActionsSubject, },
-    { type: ReducerObservable, },
-    { type: ScannedActionsSubject, },
-    { type: undefined, decorators: [{ type: Inject, args: [INITIAL_STATE,] },] },
+    { type: ActionsSubject },
+    { type: ReducerObservable },
+    { type: ScannedActionsSubject },
+    { type: undefined, decorators: [{ type: Inject, args: [INITIAL_STATE,] }] }
 ];
 /**
  * @template T, V
@@ -366,6 +400,7 @@ function reduceState(stateActionPair = { state: undefined }, [action, reducer]) 
     const { state } = stateActionPair;
     return { state: reducer(state, action), action };
 }
+/** @type {?} */
 const STATE_PROVIDERS = [
     State,
     { provide: StateObservable, useExisting: State },
@@ -373,7 +408,7 @@ const STATE_PROVIDERS = [
 
 /**
  * @fileoverview added by tsickle
- * @suppress {checkTypes} checked by tsc
+ * @suppress {checkTypes,extraRequire,uselessCode} checked by tsc
  */
 /**
  * @template T
@@ -404,7 +439,8 @@ class Store extends Observable {
      * @return {?}
      */
     lift(operator) {
-        const /** @type {?} */ store = new Store(this, this.actionsObserver, this.reducerManager);
+        /** @type {?} */
+        const store = new Store(this, this.actionsObserver, this.reducerManager);
         store.operator = operator;
         return store;
     }
@@ -460,25 +496,30 @@ Store.decorators = [
 ];
 /** @nocollapse */
 Store.ctorParameters = () => [
-    { type: StateObservable, },
-    { type: ActionsSubject, },
-    { type: ReducerManager, },
+    { type: StateObservable },
+    { type: ActionsSubject },
+    { type: ReducerManager }
 ];
+/** @type {?} */
 const STORE_PROVIDERS = [Store];
 /**
- * @template T, K
+ * @template T, Props, K
  * @param {?} pathOrMapFn
+ * @param {?} propsOrPath
  * @param {...?} paths
  * @return {?}
  */
-function select(pathOrMapFn, ...paths) {
+function select(pathOrMapFn, propsOrPath, ...paths) {
     return function selectOperator(source$) {
-        let /** @type {?} */ mapped$;
+        /** @type {?} */
+        let mapped$;
         if (typeof pathOrMapFn === 'string') {
-            mapped$ = source$.pipe(pluck(pathOrMapFn, ...paths));
+            /** @type {?} */
+            const pathSlices = [/** @type {?} */ (propsOrPath), ...paths].filter(Boolean);
+            mapped$ = source$.pipe(pluck(pathOrMapFn, ...pathSlices));
         }
         else if (typeof pathOrMapFn === 'function') {
-            mapped$ = source$.pipe(map(pathOrMapFn));
+            mapped$ = source$.pipe(map(source => pathOrMapFn(source, /** @type {?} */ (propsOrPath))));
         }
         else {
             throw new TypeError(`Unexpected type '${typeof pathOrMapFn}' in select operator,` +
@@ -490,13 +531,8 @@ function select(pathOrMapFn, ...paths) {
 
 /**
  * @fileoverview added by tsickle
- * @suppress {checkTypes} checked by tsc
+ * @suppress {checkTypes,extraRequire,uselessCode} checked by tsc
  */
-/**
- * @record
- * @template State, Result
- */
-
 /**
  * @param {?} a
  * @param {?} b
@@ -506,13 +542,38 @@ function isEqualCheck(a, b) {
     return a === b;
 }
 /**
- * @param {?} t
- * @param {?=} isEqual
+ * @param {?} args
+ * @param {?} lastArguments
+ * @param {?} comparator
  * @return {?}
  */
-function defaultMemoize(t, isEqual = isEqualCheck) {
-    let /** @type {?} */ lastArguments = null;
-    let /** @type {?} */ lastResult = null;
+function isArgumentsChanged(args, lastArguments, comparator) {
+    for (let i = 0; i < args.length; i++) {
+        if (!comparator(args[i], lastArguments[i])) {
+            return true;
+        }
+    }
+    return false;
+}
+/**
+ * @param {?} projectionFn
+ * @param {?} isResultEqual
+ * @return {?}
+ */
+function resultMemoize(projectionFn, isResultEqual) {
+    return defaultMemoize(projectionFn, isEqualCheck, isResultEqual);
+}
+/**
+ * @param {?} projectionFn
+ * @param {?=} isArgumentsEqual
+ * @param {?=} isResultEqual
+ * @return {?}
+ */
+function defaultMemoize(projectionFn, isArgumentsEqual = isEqualCheck, isResultEqual = isEqualCheck) {
+    /** @type {?} */
+    let lastArguments = null;
+    /** @type {?} */
+    let lastResult = null;
     /**
      * @return {?}
      */
@@ -525,18 +586,21 @@ function defaultMemoize(t, isEqual = isEqualCheck) {
      */
     function memoized() {
         if (!lastArguments) {
-            lastResult = t.apply(null, arguments);
+            lastResult = projectionFn.apply(null, arguments);
             lastArguments = arguments;
             return lastResult;
         }
-        for (let /** @type {?} */ i = 0; i < arguments.length; i++) {
-            if (!isEqual(arguments[i], lastArguments[i])) {
-                lastResult = t.apply(null, arguments);
-                lastArguments = arguments;
-                return lastResult;
-            }
+        if (!isArgumentsChanged(arguments, lastArguments, isArgumentsEqual)) {
+            return lastResult;
         }
-        return lastResult;
+        /** @type {?} */
+        const newResult = projectionFn.apply(null, arguments);
+        if (isResultEqual(lastResult, newResult)) {
+            return lastResult;
+        }
+        lastResult = newResult;
+        lastArguments = arguments;
+        return newResult;
     }
     return { memoized, reset };
 }
@@ -550,12 +614,19 @@ function createSelector(...input) {
 /**
  * @param {?} state
  * @param {?} selectors
+ * @param {?} props
  * @param {?} memoizedProjector
  * @return {?}
  */
-function defaultStateFn(state, selectors, memoizedProjector) {
-    const /** @type {?} */ args = selectors.map(fn => fn(state));
-    return memoizedProjector.memoized.apply(null, args);
+function defaultStateFn(state, selectors, props, memoizedProjector) {
+    if (props === undefined) {
+        /** @type {?} */
+        const args = (/** @type {?} */ (selectors)).map(fn => fn(state));
+        return memoizedProjector.memoized.apply(null, args);
+    }
+    /** @type {?} */
+    const args = (/** @type {?} */ (selectors)).map(fn => fn(state, props));
+    return memoizedProjector.memoized.apply(null, [...args, props]);
 }
 /**
  * @param {?} memoize
@@ -566,19 +637,35 @@ function createSelectorFactory(memoize, options = {
     stateFn: defaultStateFn,
 }) {
     return function (...input) {
-        let /** @type {?} */ args = input;
+        /** @type {?} */
+        let args = input;
         if (Array.isArray(args[0])) {
             const [head, ...tail] = args;
             args = [...head, ...tail];
         }
-        const /** @type {?} */ selectors = args.slice(0, args.length - 1);
-        const /** @type {?} */ projector = args[args.length - 1];
-        const /** @type {?} */ memoizedSelectors = selectors.filter((selector) => selector.release && typeof selector.release === 'function');
-        const /** @type {?} */ memoizedProjector = memoize(function (...selectors) {
+        /** @type {?} */
+        const selectors = args.slice(0, args.length - 1);
+        /** @type {?} */
+        const projector = args[args.length - 1];
+        /** @type {?} */
+        const memoizedSelectors = selectors.filter((selector) => selector.release && typeof selector.release === 'function');
+        /** @type {?} */
+        const memoizedProjector = memoize(function (...selectors) {
             return projector.apply(null, selectors);
         });
-        const /** @type {?} */ memoizedState = defaultMemoize(function (state) {
-            return options.stateFn.apply(null, [state, selectors, memoizedProjector]);
+        /** @type {?} */
+        const memoizedState = defaultMemoize(function (state, props) {
+            // createSelector works directly on state
+            // e.g. createSelector((state, props) => ...)
+            if (selectors.length === 0) {
+                return projector.apply(null, [state, props]);
+            }
+            return options.stateFn.apply(null, [
+                state,
+                selectors,
+                props,
+                memoizedProjector,
+            ]);
         });
         /**
          * @return {?}
@@ -604,7 +691,7 @@ function createFeatureSelector(featureName) {
 
 /**
  * @fileoverview added by tsickle
- * @suppress {checkTypes} checked by tsc
+ * @suppress {checkTypes,extraRequire,uselessCode} checked by tsc
  */
 class StoreRootModule {
     /**
@@ -620,10 +707,10 @@ StoreRootModule.decorators = [
 ];
 /** @nocollapse */
 StoreRootModule.ctorParameters = () => [
-    { type: ActionsSubject, },
-    { type: ReducerObservable, },
-    { type: ScannedActionsSubject, },
-    { type: Store, },
+    { type: ActionsSubject },
+    { type: ReducerObservable },
+    { type: ScannedActionsSubject },
+    { type: Store }
 ];
 class StoreFeatureModule {
     /**
@@ -636,9 +723,12 @@ class StoreFeatureModule {
         this.features = features;
         this.featureReducers = featureReducers;
         this.reducerManager = reducerManager;
-        const /** @type {?} */ feats = features.map((feature, index) => {
-            const /** @type {?} */ featureReducerCollection = featureReducers.shift();
-            const /** @type {?} */ reducers = /** @type {?} */ ((featureReducerCollection))[index];
+        /** @type {?} */
+        const feats = features.map((feature, index) => {
+            /** @type {?} */
+            const featureReducerCollection = featureReducers.shift();
+            /** @type {?} */
+            const reducers = /** @type {?} */ ((featureReducerCollection))[index];
             return Object.assign({}, feature, { reducers, initialState: _initialStateFactory(feature.initialState) });
         });
         reducerManager.addFeatures(feats);
@@ -655,10 +745,10 @@ StoreFeatureModule.decorators = [
 ];
 /** @nocollapse */
 StoreFeatureModule.ctorParameters = () => [
-    { type: Array, decorators: [{ type: Inject, args: [STORE_FEATURES,] },] },
-    { type: Array, decorators: [{ type: Inject, args: [FEATURE_REDUCERS,] },] },
-    { type: ReducerManager, },
-    { type: StoreRootModule, },
+    { type: Array, decorators: [{ type: Inject, args: [STORE_FEATURES,] }] },
+    { type: Array, decorators: [{ type: Inject, args: [FEATURE_REDUCERS,] }] },
+    { type: ReducerManager },
+    { type: StoreRootModule }
 ];
 class StoreModule {
     /**
@@ -770,7 +860,8 @@ function _createStoreReducers(injector, reducers, tokenReducers) {
  * @return {?}
  */
 function _createFeatureReducers(injector, reducerCollection, tokenReducerCollection) {
-    const /** @type {?} */ reducers = reducerCollection.map((reducer, index) => {
+    /** @type {?} */
+    const reducers = reducerCollection.map((reducer, index) => {
         return reducer instanceof InjectionToken ? injector.get(reducer) : reducer;
     });
     return reducers;
@@ -788,27 +879,22 @@ function _initialStateFactory(initialState) {
 
 /**
  * @fileoverview added by tsickle
- * @suppress {checkTypes} checked by tsc
+ * @suppress {checkTypes,extraRequire,uselessCode} checked by tsc
  */
 
 /**
  * @fileoverview added by tsickle
- * @suppress {checkTypes} checked by tsc
+ * @suppress {checkTypes,extraRequire,uselessCode} checked by tsc
  */
 
 /**
  * @fileoverview added by tsickle
- * @suppress {checkTypes} checked by tsc
- */
-/**
- * DO NOT EDIT
- *
- * This file is automatically generated at build
+ * @suppress {checkTypes,extraRequire,uselessCode} checked by tsc
  */
 
 /**
  * Generated bundle index. Do not edit.
  */
 
-export { ACTIONS_SUBJECT_PROVIDERS as ɵngrx_modules_store_store_c, REDUCER_MANAGER_PROVIDERS as ɵngrx_modules_store_store_d, SCANNED_ACTIONS_SUBJECT_PROVIDERS as ɵngrx_modules_store_store_e, STATE_PROVIDERS as ɵngrx_modules_store_store_f, STORE_PROVIDERS as ɵngrx_modules_store_store_b, Store, select, combineReducers, compose, createReducerFactory, ActionsSubject, INIT, ReducerManager, ReducerObservable, ReducerManagerDispatcher, UPDATE, ScannedActionsSubject, createSelector, createSelectorFactory, createFeatureSelector, defaultMemoize, defaultStateFn, State, StateObservable, reduceState, INITIAL_STATE, _REDUCER_FACTORY, REDUCER_FACTORY, _INITIAL_REDUCERS, INITIAL_REDUCERS, STORE_FEATURES, _INITIAL_STATE, META_REDUCERS, _STORE_REDUCERS, _FEATURE_REDUCERS, FEATURE_REDUCERS, _FEATURE_REDUCERS_TOKEN, StoreModule, StoreRootModule, StoreFeatureModule, _initialStateFactory, _createStoreReducers, _createFeatureReducers };
+export { ACTIONS_SUBJECT_PROVIDERS as ɵngrx_modules_store_store_c, REDUCER_MANAGER_PROVIDERS as ɵngrx_modules_store_store_d, SCANNED_ACTIONS_SUBJECT_PROVIDERS as ɵngrx_modules_store_store_e, isEqualCheck as ɵngrx_modules_store_store_f, STATE_PROVIDERS as ɵngrx_modules_store_store_g, STORE_PROVIDERS as ɵngrx_modules_store_store_b, Store, select, combineReducers, compose, createReducerFactory, ActionsSubject, INIT, ReducerManager, ReducerObservable, ReducerManagerDispatcher, UPDATE, ScannedActionsSubject, createSelector, createSelectorFactory, createFeatureSelector, defaultMemoize, defaultStateFn, resultMemoize, State, StateObservable, reduceState, INITIAL_STATE, _REDUCER_FACTORY, REDUCER_FACTORY, _INITIAL_REDUCERS, INITIAL_REDUCERS, STORE_FEATURES, _INITIAL_STATE, META_REDUCERS, _STORE_REDUCERS, _FEATURE_REDUCERS, FEATURE_REDUCERS, _FEATURE_REDUCERS_TOKEN, StoreModule, StoreRootModule, StoreFeatureModule, _initialStateFactory, _createStoreReducers, _createFeatureReducers };
 //# sourceMappingURL=store.js.map

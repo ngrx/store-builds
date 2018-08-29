@@ -6,7 +6,7 @@ export declare function addReducerToState(options: any): Rule;
 /**
  * Insert the reducer into the first defined top level interface
  */
-export declare function addReducerToStateInferface(source: ts.SourceFile, reducersPath: string, options: {
+export declare function addReducerToStateInterface(source: ts.SourceFile, reducersPath: string, options: {
     name: string;
 }): Change;
 /**

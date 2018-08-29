@@ -20,6 +20,5 @@ export interface StoreFeature<T, V extends Action = Action> {
     initialState?: InitialState<T>;
     metaReducers?: MetaReducer<T, V>[];
 }
-export interface Selector<T, V> {
-    (state: T): V;
-}
+export declare type Selector<T, V> = (state: T) => V;
+export declare type SelectorWithProps<State, Props, Result> = (state: State, props: Props) => Result;

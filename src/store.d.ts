@@ -8,6 +8,9 @@ export declare class Store<T> extends Observable<T> implements Observer<Action> 
     private actionsObserver;
     private reducerManager;
     constructor(state$: StateObservable, actionsObserver: ActionsSubject, reducerManager: ReducerManager);
+    /**
+     * @deprecated from 6.1.0. Use the pipeable `select` operator instead.
+     */
     select<K>(mapFn: (state: T) => K): Observable<K>;
     select<a extends keyof T>(key: a): Observable<T[a]>;
     select<a extends keyof T, b extends keyof T[a]>(key1: a, key2: b): Observable<T[a][b]>;
@@ -29,8 +32,8 @@ export declare class Store<T> extends Observable<T> implements Observer<Action> 
     removeReducer<Key extends keyof T>(key: Key): void;
 }
 export declare const STORE_PROVIDERS: Provider[];
-export declare function select<T, K>(mapFn: (state: T) => K): (source$: Observable<T>) => Observable<K>;
-export declare function select<T, a extends keyof T>(key: a): (source$: Observable<T>) => Observable<T[a]>;
+export declare function select<T, Props, K>(mapFn: (state: T, props: Props) => K, props?: Props): (source$: Observable<T>) => Observable<K>;
+export declare function select<T, a extends keyof T>(key: a, props: null): (source$: Observable<T>) => Observable<T[a]>;
 export declare function select<T, a extends keyof T, b extends keyof T[a]>(key1: a, key2: b): (source$: Observable<T>) => Observable<T[a][b]>;
 export declare function select<T, a extends keyof T, b extends keyof T[a], c extends keyof T[a][b]>(key1: a, key2: b, key3: c): (source$: Observable<T>) => Observable<T[a][b][c]>;
 export declare function select<T, a extends keyof T, b extends keyof T[a], c extends keyof T[a][b], d extends keyof T[a][b][c]>(key1: a, key2: b, key3: c, key4: d): (source$: Observable<T>) => Observable<T[a][b][c][d]>;
@@ -40,4 +43,4 @@ export declare function select<T, a extends keyof T, b extends keyof T[a], c ext
  * This overload is used to support spread operator with
  * fixed length tuples type in typescript 2.7
  */
-export declare function select<T, K = any>(...paths: string[]): (source$: Observable<T>) => Observable<K>;
+export declare function select<T, Props = any, K = any>(propsOrPath: Props, ...paths: string[]): (source$: Observable<T>) => Observable<K>;
