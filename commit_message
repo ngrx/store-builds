@@ -1,1 +1,1 @@
-9706879 docs(store): remove deprecated store.select() (#1315)
+fdc6e93 refactor(example-app): use barrels for actions (#1317)
