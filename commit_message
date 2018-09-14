@@ -1,1 +1,1 @@
-0cd7460 docs(effects): Change type for testing observable (#1324)
+7ee46d2 feat(StoreDevtools): implement actionsBlacklist/Whitelist & predicate (#970)
