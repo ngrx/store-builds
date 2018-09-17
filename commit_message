@@ -1,1 +1,1 @@
-ec38181 docs: initial check-in for ngrx.io project (#1320)
+c5dfaef fix(docs-infra): elements must have sufficient color contrast this does not fix the issue but makes it more readable
