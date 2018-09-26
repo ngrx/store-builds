@@ -1,1 +1,1 @@
-df8fc60 feat(Store): export SelectorWithProps and MemoizedSelectorWithProps (#1341)
+4ad9a94 feat(router-store): update stateKey definition to take a string or selector
