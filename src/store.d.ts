@@ -29,7 +29,7 @@ export declare class Store<T> extends Observable<T> implements Observer<Action> 
     error(err: any): void;
     complete(): void;
     addReducer<State, Actions extends Action = Action>(key: string, reducer: ActionReducer<State, Actions>): void;
-    removeReducer<Key extends keyof T>(key: Key): void;
+    removeReducer<Key extends Extract<keyof T, string>>(key: Key): void;
 }
 export declare const STORE_PROVIDERS: Provider[];
 export declare function select<T, Props, K>(mapFn: (state: T, props: Props) => K, props?: Props): (source$: Observable<T>) => Observable<K>;

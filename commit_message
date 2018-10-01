@@ -1,1 +1,1 @@
-4ad9a94 feat(router-store): update stateKey definition to take a string or selector
+40bfcf5 refactor: update types for TypeScript 2.8+ support (#1347)
