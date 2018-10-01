@@ -1,1 +1,1 @@
-40bfcf5 refactor: update types for TypeScript 2.8+ support (#1347)
+41a0d45 refactor: add type parameter to ModuleWithProviders for Ivy (#1346)
