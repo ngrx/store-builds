@@ -1,1 +1,1 @@
-1448a0e feat(store-devtools): use different action when recomputing state history (#1353)
+8d56a6f feat(effects): add smarter type inference for ofType operator. (#1183)
