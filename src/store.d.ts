@@ -8,9 +8,6 @@ export declare class Store<T> extends Observable<T> implements Observer<Action> 
     private actionsObserver;
     private reducerManager;
     constructor(state$: StateObservable, actionsObserver: ActionsSubject, reducerManager: ReducerManager);
-    /**
-     * @deprecated from 6.1.0. Use the pipeable `select` operator instead.
-     */
     select<K>(mapFn: (state: T) => K): Observable<K>;
     select<a extends keyof T>(key: a): Observable<T[a]>;
     select<a extends keyof T, b extends keyof T[a]>(key1: a, key2: b): Observable<T[a][b]>;
