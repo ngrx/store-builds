@@ -1,1 +1,1 @@
-626784e fix(store): remove deprecation from Store.select (#1382)
+0e38673 fix(router-store): allow compilation with strictFunctionTypes (#1385)
