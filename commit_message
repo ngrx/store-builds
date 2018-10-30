@@ -1,1 +1,1 @@
-0e38673 fix(router-store): allow compilation with strictFunctionTypes (#1385)
+18a16d4 feat(router-store): serialize routeConfig inside the default serializer (#1384)
