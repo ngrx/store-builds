@@ -1,1 +1,1 @@
-18a16d4 feat(router-store): serialize routeConfig inside the default serializer (#1384)
+a9e7cbd fix(store): add typing to allow props with store.select (#1387)

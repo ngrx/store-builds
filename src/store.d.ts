@@ -9,6 +9,7 @@ export declare class Store<T> extends Observable<T> implements Observer<Action> 
     private reducerManager;
     constructor(state$: StateObservable, actionsObserver: ActionsSubject, reducerManager: ReducerManager);
     select<K>(mapFn: (state: T) => K): Observable<K>;
+    select<K, Props = any>(mapFn: (state: T, props: Props) => K, props: Props): Observable<K>;
     select<a extends keyof T>(key: a): Observable<T[a]>;
     select<a extends keyof T, b extends keyof T[a]>(key1: a, key2: b): Observable<T[a][b]>;
     select<a extends keyof T, b extends keyof T[a], c extends keyof T[a][b]>(key1: a, key2: b, key3: c): Observable<T[a][b][c]>;
