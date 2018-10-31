@@ -1,5 +1,5 @@
 /**
- * @license NgRx 6.1.0+85.sha-a9e7cbd
+ * @license NgRx 0.0.0-PLACEHOLDER
  * (c) 2015-2018 Brandon Roberts, Mike Ryan, Rob Wormald, Victor Savkin
  * License: MIT
  */
@@ -8,15 +8,27 @@ import { BehaviorSubject, Observable, Subject, queueScheduler } from 'rxjs';
 import { observeOn, scan, withLatestFrom, distinctUntilChanged, map, pluck } from 'rxjs/operators';
 
 var __extends = (undefined && undefined.__extends) || (function () {
-    var extendStatics = Object.setPrototypeOf ||
-        ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
-        function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
+    var extendStatics = function (d, b) {
+        extendStatics = Object.setPrototypeOf ||
+            ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
+            function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
+        return extendStatics(d, b);
+    };
     return function (d, b) {
         extendStatics(d, b);
         function __() { this.constructor = d; }
         d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
     };
 })();
+var __decorate = (undefined && undefined.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+var __metadata = (undefined && undefined.__metadata) || function (k, v) {
+    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+};
 var INIT = '@ngrx/store/init';
 var ActionsSubject = /** @class */ (function (_super) {
     __extends(ActionsSubject, _super);
@@ -38,11 +50,10 @@ var ActionsSubject = /** @class */ (function (_super) {
     ActionsSubject.prototype.ngOnDestroy = function () {
         _super.prototype.complete.call(this);
     };
-    ActionsSubject.decorators = [
-        { type: Injectable }
-    ];
-    /** @nocollapse */
-    ActionsSubject.ctorParameters = function () { return []; };
+    ActionsSubject = __decorate([
+        Injectable(),
+        __metadata("design:paramtypes", [])
+    ], ActionsSubject);
     return ActionsSubject;
 }(BehaviorSubject));
 var ACTIONS_SUBJECT_PROVIDERS = [ActionsSubject];
@@ -110,8 +121,8 @@ function omit(object, keyToRemove) {
     return Object.keys(object)
         .filter(function (key) { return key !== keyToRemove; })
         .reduce(function (result, key) {
-        return Object.assign(result, (_a = {}, _a[key] = object[key], _a));
         var _a;
+        return Object.assign(result, (_a = {}, _a[key] = object[key], _a));
     }, {});
 }
 function compose() {
@@ -147,22 +158,40 @@ function createFeatureReducerFactory(metaReducers) {
 }
 
 var __extends$1 = (undefined && undefined.__extends) || (function () {
-    var extendStatics = Object.setPrototypeOf ||
-        ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
-        function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
+    var extendStatics = function (d, b) {
+        extendStatics = Object.setPrototypeOf ||
+            ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
+            function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
+        return extendStatics(d, b);
+    };
     return function (d, b) {
         extendStatics(d, b);
         function __() { this.constructor = d; }
         d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
     };
 })();
-var __assign = (undefined && undefined.__assign) || Object.assign || function(t) {
-    for (var s, i = 1, n = arguments.length; i < n; i++) {
-        s = arguments[i];
-        for (var p in s) if (Object.prototype.hasOwnProperty.call(s, p))
-            t[p] = s[p];
-    }
-    return t;
+var __assign = (undefined && undefined.__assign) || function () {
+    __assign = Object.assign || function(t) {
+        for (var s, i = 1, n = arguments.length; i < n; i++) {
+            s = arguments[i];
+            for (var p in s) if (Object.prototype.hasOwnProperty.call(s, p))
+                t[p] = s[p];
+        }
+        return t;
+    };
+    return __assign.apply(this, arguments);
+};
+var __decorate$1 = (undefined && undefined.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+var __metadata$1 = (undefined && undefined.__metadata) || function (k, v) {
+    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+};
+var __param = (undefined && undefined.__param) || function (paramIndex, decorator) {
+    return function (target, key) { decorator(target, key, paramIndex); }
 };
 var ReducerObservable = /** @class */ (function (_super) {
     __extends$1(ReducerObservable, _super);
@@ -210,8 +239,8 @@ var ReducerManager = /** @class */ (function (_super) {
         this.removeReducers(features.map(function (p) { return p.key; }));
     };
     ReducerManager.prototype.addReducer = function (key, reducer) {
-        this.addReducers((_a = {}, _a[key] = reducer, _a));
         var _a;
+        this.addReducers((_a = {}, _a[key] = reducer, _a));
     };
     ReducerManager.prototype.addReducers = function (reducers) {
         this.reducers = __assign({}, this.reducers, reducers);
@@ -237,16 +266,13 @@ var ReducerManager = /** @class */ (function (_super) {
     ReducerManager.prototype.ngOnDestroy = function () {
         this.complete();
     };
-    ReducerManager.decorators = [
-        { type: Injectable }
-    ];
-    /** @nocollapse */
-    ReducerManager.ctorParameters = function () { return [
-        { type: ReducerManagerDispatcher },
-        { type: undefined, decorators: [{ type: Inject, args: [INITIAL_STATE,] }] },
-        { type: undefined, decorators: [{ type: Inject, args: [INITIAL_REDUCERS,] }] },
-        { type: undefined, decorators: [{ type: Inject, args: [REDUCER_FACTORY,] }] }
-    ]; };
+    ReducerManager = __decorate$1([
+        Injectable(),
+        __param(1, Inject(INITIAL_STATE)),
+        __param(2, Inject(INITIAL_REDUCERS)),
+        __param(3, Inject(REDUCER_FACTORY)),
+        __metadata$1("design:paramtypes", [ReducerManagerDispatcher, Object, Object, Function])
+    ], ReducerManager);
     return ReducerManager;
 }(BehaviorSubject));
 var REDUCER_MANAGER_PROVIDERS = [
@@ -256,15 +282,24 @@ var REDUCER_MANAGER_PROVIDERS = [
 ];
 
 var __extends$2 = (undefined && undefined.__extends) || (function () {
-    var extendStatics = Object.setPrototypeOf ||
-        ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
-        function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
+    var extendStatics = function (d, b) {
+        extendStatics = Object.setPrototypeOf ||
+            ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
+            function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
+        return extendStatics(d, b);
+    };
     return function (d, b) {
         extendStatics(d, b);
         function __() { this.constructor = d; }
         d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
     };
 })();
+var __decorate$2 = (undefined && undefined.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
 var ScannedActionsSubject = /** @class */ (function (_super) {
     __extends$2(ScannedActionsSubject, _super);
     function ScannedActionsSubject() {
@@ -273,9 +308,9 @@ var ScannedActionsSubject = /** @class */ (function (_super) {
     ScannedActionsSubject.prototype.ngOnDestroy = function () {
         this.complete();
     };
-    ScannedActionsSubject.decorators = [
-        { type: Injectable }
-    ];
+    ScannedActionsSubject = __decorate$2([
+        Injectable()
+    ], ScannedActionsSubject);
     return ScannedActionsSubject;
 }(Subject));
 var SCANNED_ACTIONS_SUBJECT_PROVIDERS = [
@@ -283,15 +318,30 @@ var SCANNED_ACTIONS_SUBJECT_PROVIDERS = [
 ];
 
 var __extends$3 = (undefined && undefined.__extends) || (function () {
-    var extendStatics = Object.setPrototypeOf ||
-        ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
-        function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
+    var extendStatics = function (d, b) {
+        extendStatics = Object.setPrototypeOf ||
+            ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
+            function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
+        return extendStatics(d, b);
+    };
     return function (d, b) {
         extendStatics(d, b);
         function __() { this.constructor = d; }
         d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
     };
 })();
+var __decorate$3 = (undefined && undefined.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+var __metadata$2 = (undefined && undefined.__metadata) || function (k, v) {
+    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+};
+var __param$1 = (undefined && undefined.__param) || function (paramIndex, decorator) {
+    return function (target, key) { decorator(target, key, paramIndex); }
+};
 var __read$1 = (undefined && undefined.__read) || function (o, n) {
     var m = typeof Symbol === "function" && o[Symbol.iterator];
     if (!m) return o;
@@ -335,16 +385,13 @@ var State = /** @class */ (function (_super) {
         this.complete();
     };
     State.INIT = INIT;
-    State.decorators = [
-        { type: Injectable }
-    ];
-    /** @nocollapse */
-    State.ctorParameters = function () { return [
-        { type: ActionsSubject },
-        { type: ReducerObservable },
-        { type: ScannedActionsSubject },
-        { type: undefined, decorators: [{ type: Inject, args: [INITIAL_STATE,] }] }
-    ]; };
+    State = __decorate$3([
+        Injectable(),
+        __param$1(3, Inject(INITIAL_STATE)),
+        __metadata$2("design:paramtypes", [ActionsSubject,
+            ReducerObservable,
+            ScannedActionsSubject, Object])
+    ], State);
     return State;
 }(BehaviorSubject));
 function reduceState(stateActionPair, _a) {
@@ -359,15 +406,27 @@ var STATE_PROVIDERS = [
 ];
 
 var __extends$4 = (undefined && undefined.__extends) || (function () {
-    var extendStatics = Object.setPrototypeOf ||
-        ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
-        function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
+    var extendStatics = function (d, b) {
+        extendStatics = Object.setPrototypeOf ||
+            ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
+            function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
+        return extendStatics(d, b);
+    };
     return function (d, b) {
         extendStatics(d, b);
         function __() { this.constructor = d; }
         d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
     };
 })();
+var __decorate$4 = (undefined && undefined.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+var __metadata$3 = (undefined && undefined.__metadata) || function (k, v) {
+    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+};
 var __read$2 = (undefined && undefined.__read) || function (o, n) {
     var m = typeof Symbol === "function" && o[Symbol.iterator];
     if (!m) return o;
@@ -397,6 +456,7 @@ var Store = /** @class */ (function (_super) {
         _this.source = state$;
         return _this;
     }
+    Store_1 = Store;
     Store.prototype.select = function (pathOrMapFn) {
         var paths = [];
         for (var _i = 1; _i < arguments.length; _i++) {
@@ -405,7 +465,7 @@ var Store = /** @class */ (function (_super) {
         return select.call.apply(select, __spread$1([null, pathOrMapFn], paths))(this);
     };
     Store.prototype.lift = function (operator) {
-        var store = new Store(this, this.actionsObserver, this.reducerManager);
+        var store = new Store_1(this, this.actionsObserver, this.reducerManager);
         store.operator = operator;
         return store;
     };
@@ -427,15 +487,13 @@ var Store = /** @class */ (function (_super) {
     Store.prototype.removeReducer = function (key) {
         this.reducerManager.removeReducer(key);
     };
-    Store.decorators = [
-        { type: Injectable }
-    ];
-    /** @nocollapse */
-    Store.ctorParameters = function () { return [
-        { type: StateObservable },
-        { type: ActionsSubject },
-        { type: ReducerManager }
-    ]; };
+    var Store_1;
+    Store = Store_1 = __decorate$4([
+        Injectable(),
+        __metadata$3("design:paramtypes", [StateObservable,
+            ActionsSubject,
+            ReducerManager])
+    ], Store);
     return Store;
 }(Observable));
 var STORE_PROVIDERS = [Store];
@@ -596,27 +654,39 @@ function createFeatureSelector(featureName) {
     return createSelector(function (state) { return state[featureName]; }, function (featureState) { return featureState; });
 }
 
-var __assign$1 = (undefined && undefined.__assign) || Object.assign || function(t) {
-    for (var s, i = 1, n = arguments.length; i < n; i++) {
-        s = arguments[i];
-        for (var p in s) if (Object.prototype.hasOwnProperty.call(s, p))
-            t[p] = s[p];
-    }
-    return t;
+var __assign$1 = (undefined && undefined.__assign) || function () {
+    __assign$1 = Object.assign || function(t) {
+        for (var s, i = 1, n = arguments.length; i < n; i++) {
+            s = arguments[i];
+            for (var p in s) if (Object.prototype.hasOwnProperty.call(s, p))
+                t[p] = s[p];
+        }
+        return t;
+    };
+    return __assign$1.apply(this, arguments);
+};
+var __decorate$5 = (undefined && undefined.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+var __metadata$4 = (undefined && undefined.__metadata) || function (k, v) {
+    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+};
+var __param$2 = (undefined && undefined.__param) || function (paramIndex, decorator) {
+    return function (target, key) { decorator(target, key, paramIndex); }
 };
 var StoreRootModule = /** @class */ (function () {
     function StoreRootModule(actions$, reducer$, scannedActions$, store) {
     }
-    StoreRootModule.decorators = [
-        { type: NgModule, args: [{},] }
-    ];
-    /** @nocollapse */
-    StoreRootModule.ctorParameters = function () { return [
-        { type: ActionsSubject },
-        { type: ReducerObservable },
-        { type: ScannedActionsSubject },
-        { type: Store }
-    ]; };
+    StoreRootModule = __decorate$5([
+        NgModule({}),
+        __metadata$4("design:paramtypes", [ActionsSubject,
+            ReducerObservable,
+            ScannedActionsSubject,
+            Store])
+    ], StoreRootModule);
     return StoreRootModule;
 }());
 var StoreFeatureModule = /** @class */ (function () {
@@ -634,16 +704,13 @@ var StoreFeatureModule = /** @class */ (function () {
     StoreFeatureModule.prototype.ngOnDestroy = function () {
         this.reducerManager.removeFeatures(this.features);
     };
-    StoreFeatureModule.decorators = [
-        { type: NgModule, args: [{},] }
-    ];
-    /** @nocollapse */
-    StoreFeatureModule.ctorParameters = function () { return [
-        { type: Array, decorators: [{ type: Inject, args: [STORE_FEATURES,] }] },
-        { type: Array, decorators: [{ type: Inject, args: [FEATURE_REDUCERS,] }] },
-        { type: ReducerManager },
-        { type: StoreRootModule }
-    ]; };
+    StoreFeatureModule = __decorate$5([
+        NgModule({}),
+        __param$2(0, Inject(STORE_FEATURES)),
+        __param$2(1, Inject(FEATURE_REDUCERS)),
+        __metadata$4("design:paramtypes", [Array, Array, ReducerManager,
+            StoreRootModule])
+    ], StoreFeatureModule);
     return StoreFeatureModule;
 }());
 var StoreModule = /** @class */ (function () {
@@ -729,9 +796,9 @@ var StoreModule = /** @class */ (function () {
             ],
         };
     };
-    StoreModule.decorators = [
-        { type: NgModule, args: [{},] }
-    ];
+    StoreModule = __decorate$5([
+        NgModule({})
+    ], StoreModule);
     return StoreModule;
 }());
 function _createStoreReducers(injector, reducers, tokenReducers) {
