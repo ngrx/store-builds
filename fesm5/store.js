@@ -573,12 +573,12 @@ function defaultMemoize(projectionFn, isArgumentsEqual, isResultEqual) {
         if (!isArgumentsChanged(arguments, lastArguments, isArgumentsEqual)) {
             return lastResult;
         }
+        lastArguments = arguments;
         var newResult = projectionFn.apply(null, arguments);
         if (isResultEqual(lastResult, newResult)) {
             return lastResult;
         }
         lastResult = newResult;
-        lastArguments = arguments;
         return newResult;
     }
     return { memoized: memoized, reset: reset };

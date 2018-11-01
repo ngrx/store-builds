@@ -1,1 +1,1 @@
-009c3bc docs: add changelog for 6.1.1, 6.1.2 releases (#1395)
+7cc9702 fix(store): memoize selector arguments (#1393)
