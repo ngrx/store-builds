@@ -1,1 +1,1 @@
-7cc9702 fix(store): memoize selector arguments (#1393)
+bcf12b6 build: fix version stamping and bump to 7.x beta.0 (#1399)
