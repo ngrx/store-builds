@@ -1,1 +1,1 @@
-7b70c60 build: use Bazel installed from npm (#1436)
+ccd163d  build(example): add script to create a local build
