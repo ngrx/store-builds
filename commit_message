@@ -1,1 +1,1 @@
-80e3338 docs: update npm-run-all dependency (#1446)
+4ed16cd feat(store-devtools): catch and log redux devtools errors (#1450)
