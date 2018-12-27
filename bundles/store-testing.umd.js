@@ -1,5 +1,5 @@
 /**
- * @license NgRx 7.0.0+3.sha-f067060.with-local-changes
+ * @license NgRx 7.0.0+4.sha-7f57f11.with-local-changes
  * (c) 2015-2018 Brandon Roberts, Mike Ryan, Rob Wormald, Victor Savkin
  * License: MIT
  */
