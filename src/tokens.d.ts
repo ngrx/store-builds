@@ -9,5 +9,7 @@ export declare const META_REDUCERS: InjectionToken<{}>;
 export declare const STORE_FEATURES: InjectionToken<{}>;
 export declare const _STORE_REDUCERS: InjectionToken<{}>;
 export declare const _FEATURE_REDUCERS: InjectionToken<{}>;
+export declare const _FEATURE_CONFIGS: InjectionToken<{}>;
+export declare const _STORE_FEATURES: InjectionToken<{}>;
 export declare const _FEATURE_REDUCERS_TOKEN: InjectionToken<{}>;
 export declare const FEATURE_REDUCERS: InjectionToken<{}>;

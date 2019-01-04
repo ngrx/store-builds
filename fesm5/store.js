@@ -1,5 +1,5 @@
 /**
- * @license NgRx 7.0.0+7.sha-089126e.with-local-changes
+ * @license NgRx 7.0.0+8.sha-6aa5645.with-local-changes
  * (c) 2015-2018 Brandon Roberts, Mike Ryan, Rob Wormald, Victor Savkin
  * License: MIT
  */
@@ -68,6 +68,8 @@ var META_REDUCERS = new InjectionToken('@ngrx/store Meta Reducers');
 var STORE_FEATURES = new InjectionToken('@ngrx/store Store Features');
 var _STORE_REDUCERS = new InjectionToken('@ngrx/store Internal Store Reducers');
 var _FEATURE_REDUCERS = new InjectionToken('@ngrx/store Internal Feature Reducers');
+var _FEATURE_CONFIGS = new InjectionToken('@ngrx/store Internal Feature Configs');
+var _STORE_FEATURES = new InjectionToken('@ngrx/store Internal Store Features');
 var _FEATURE_REDUCERS_TOKEN = new InjectionToken('@ngrx/store Internal Feature Reducers Token');
 var FEATURE_REDUCERS = new InjectionToken('@ngrx/store Feature Reducers');
 
@@ -706,7 +708,7 @@ var StoreFeatureModule = /** @class */ (function () {
     };
     StoreFeatureModule = __decorate$5([
         NgModule({}),
-        __param$2(0, Inject(STORE_FEATURES)),
+        __param$2(0, Inject(_STORE_FEATURES)),
         __param$2(1, Inject(FEATURE_REDUCERS)),
         __metadata$4("design:paramtypes", [Array, Array, ReducerManager,
             StoreRootModule])
@@ -766,16 +768,30 @@ var StoreModule = /** @class */ (function () {
             ngModule: StoreFeatureModule,
             providers: [
                 {
+                    provide: _FEATURE_CONFIGS,
+                    multi: true,
+                    useValue: config,
+                },
+                {
                     provide: STORE_FEATURES,
                     multi: true,
                     useValue: {
                         key: featureName,
-                        reducerFactory: config.reducerFactory
+                        reducerFactory: !(config instanceof InjectionToken) && config.reducerFactory
                             ? config.reducerFactory
                             : combineReducers,
-                        metaReducers: config.metaReducers ? config.metaReducers : [],
-                        initialState: config.initialState,
+                        metaReducers: !(config instanceof InjectionToken) && config.metaReducers
+                            ? config.metaReducers
+                            : [],
+                        initialState: !(config instanceof InjectionToken) && config.initialState
+                            ? config.initialState
+                            : undefined,
                     },
+                },
+                {
+                    provide: _STORE_FEATURES,
+                    deps: [Injector, _FEATURE_CONFIGS, STORE_FEATURES],
+                    useFactory: _createFeatureStore,
                 },
                 { provide: _FEATURE_REDUCERS, multi: true, useValue: reducers },
                 {
@@ -804,6 +820,22 @@ var StoreModule = /** @class */ (function () {
 function _createStoreReducers(injector, reducers, tokenReducers) {
     return reducers instanceof InjectionToken ? injector.get(reducers) : reducers;
 }
+function _createFeatureStore(injector, configs, featureStores) {
+    return featureStores.map(function (feat, index) {
+        if (configs[index] instanceof InjectionToken) {
+            var conf = injector.get(configs[index]);
+            return {
+                key: feat.key,
+                reducerFactory: conf.reducerFactory
+                    ? conf.reducerFactory
+                    : combineReducers,
+                metaReducers: conf.metaReducers ? conf.metaReducers : [],
+                initialState: conf.initialState,
+            };
+        }
+        return feat;
+    });
+}
 function _createFeatureReducers(injector, reducerCollection, tokenReducerCollection) {
     var reducers = reducerCollection.map(function (reducer, index) {
         return reducer instanceof InjectionToken ? injector.get(reducer) : reducer;
@@ -827,5 +859,5 @@ function _initialStateFactory(initialState) {
  * Generated bundle index. Do not edit.
  */
 
-export { ACTIONS_SUBJECT_PROVIDERS as ɵngrx_modules_store_store_c, REDUCER_MANAGER_PROVIDERS as ɵngrx_modules_store_store_d, SCANNED_ACTIONS_SUBJECT_PROVIDERS as ɵngrx_modules_store_store_e, isEqualCheck as ɵngrx_modules_store_store_f, STATE_PROVIDERS as ɵngrx_modules_store_store_g, STORE_PROVIDERS as ɵngrx_modules_store_store_b, Store, select, combineReducers, compose, createReducerFactory, ActionsSubject, INIT, ReducerManager, ReducerObservable, ReducerManagerDispatcher, UPDATE, ScannedActionsSubject, createSelector, createSelectorFactory, createFeatureSelector, defaultMemoize, defaultStateFn, resultMemoize, State, StateObservable, reduceState, INITIAL_STATE, _REDUCER_FACTORY, REDUCER_FACTORY, _INITIAL_REDUCERS, INITIAL_REDUCERS, STORE_FEATURES, _INITIAL_STATE, META_REDUCERS, _STORE_REDUCERS, _FEATURE_REDUCERS, FEATURE_REDUCERS, _FEATURE_REDUCERS_TOKEN, StoreModule, StoreRootModule, StoreFeatureModule, _initialStateFactory, _createStoreReducers, _createFeatureReducers };
+export { ACTIONS_SUBJECT_PROVIDERS as ɵngrx_modules_store_store_c, REDUCER_MANAGER_PROVIDERS as ɵngrx_modules_store_store_d, SCANNED_ACTIONS_SUBJECT_PROVIDERS as ɵngrx_modules_store_store_e, isEqualCheck as ɵngrx_modules_store_store_f, STATE_PROVIDERS as ɵngrx_modules_store_store_g, STORE_PROVIDERS as ɵngrx_modules_store_store_b, _createFeatureStore as ɵngrx_modules_store_store_j, _FEATURE_CONFIGS as ɵngrx_modules_store_store_h, _STORE_FEATURES as ɵngrx_modules_store_store_i, Store, select, combineReducers, compose, createReducerFactory, ActionsSubject, INIT, ReducerManager, ReducerObservable, ReducerManagerDispatcher, UPDATE, ScannedActionsSubject, createSelector, createSelectorFactory, createFeatureSelector, defaultMemoize, defaultStateFn, resultMemoize, State, StateObservable, reduceState, INITIAL_STATE, _REDUCER_FACTORY, REDUCER_FACTORY, _INITIAL_REDUCERS, INITIAL_REDUCERS, STORE_FEATURES, _INITIAL_STATE, META_REDUCERS, _STORE_REDUCERS, _FEATURE_REDUCERS, FEATURE_REDUCERS, _FEATURE_REDUCERS_TOKEN, StoreModule, StoreRootModule, StoreFeatureModule, _initialStateFactory, _createStoreReducers, _createFeatureReducers };
 //# sourceMappingURL=store.js.map

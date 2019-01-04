@@ -9,3 +9,5 @@ export { SCANNED_ACTIONS_SUBJECT_PROVIDERS as ɵngrx_modules_store_store_e } fro
 export { isEqualCheck as ɵngrx_modules_store_store_f } from './src/selector';
 export { STATE_PROVIDERS as ɵngrx_modules_store_store_g } from './src/state';
 export { STORE_PROVIDERS as ɵngrx_modules_store_store_b } from './src/store';
+export { _createFeatureStore as ɵngrx_modules_store_store_j } from './src/store_module';
+export { _FEATURE_CONFIGS as ɵngrx_modules_store_store_h, _STORE_FEATURES as ɵngrx_modules_store_store_i } from './src/tokens';
