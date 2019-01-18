@@ -1,1 +1,1 @@
-ac4fb88 feat(example): make the example app more user friendly (#1508)
+2aabe0f fix(store): call metareducer with the user's config initial state (#1498)

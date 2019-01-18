@@ -1,5 +1,5 @@
 /**
- * @license NgRx 7.0.0+11.sha-ac4fb88.with-local-changes
+ * @license NgRx 7.0.0+12.sha-2aabe0f.with-local-changes
  * (c) 2015-2018 Brandon Roberts, Mike Ryan, Rob Wormald, Victor Savkin
  * License: MIT
  */
@@ -163,9 +163,16 @@ function compose(...functions) {
  */
 function createReducerFactory(reducerFactory, metaReducers) {
     if (Array.isArray(metaReducers) && metaReducers.length > 0) {
-        return compose.apply(null, [...metaReducers, reducerFactory]);
+        reducerFactory = compose.apply(null, [...metaReducers, reducerFactory]);
     }
-    return reducerFactory;
+    return (reducers, initialState) => {
+        /** @type {?} */
+        const reducer = reducerFactory(reducers);
+        return (state, action) => {
+            state = state === undefined ? (/** @type {?} */ (initialState)) : state;
+            return reducer(state, action);
+        };
+    };
 }
 /**
  * @template T, V
