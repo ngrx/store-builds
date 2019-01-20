@@ -1,5 +1,5 @@
 /**
- * @license NgRx 7.0.0+13.sha-7bba0f4.with-local-changes
+ * @license NgRx 7.0.0+14.sha-e0ad3c3.with-local-changes
  * (c) 2015-2018 Brandon Roberts, Mike Ryan, Rob Wormald, Victor Savkin
  * License: MIT
  */
@@ -668,7 +668,7 @@ function createSelectorFactory(memoize, options = {
         const memoizedState = defaultMemoize(function (state, props) {
             // createSelector works directly on state
             // e.g. createSelector((state, props) => ...)
-            if (selectors.length === 0) {
+            if (selectors.length === 0 && props !== undefined) {
                 return projector.apply(null, [state, props]);
             }
             return options.stateFn.apply(null, [

@@ -1,1 +1,1 @@
-7bba0f4 refactor(schematics): make project option visible (#1518)
+e0ad3c3 fix(store): don't call the projector function if there are no selectors and props (#1515)
