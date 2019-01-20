@@ -1,1 +1,1 @@
-e0ad3c3 fix(store): don't call the projector function if there are no selectors and props (#1515)
+07b8dcd docs: add feature config injection token (#1517)
