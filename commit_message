@@ -1,1 +1,1 @@
-7465af9 fix(RouterStore): add schematics to bazel build
+a71aa71 feat(schematics): bump platformVersion to ^7.0.0 per issue #1489 (#1527)
