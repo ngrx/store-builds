@@ -1,1 +1,1 @@
-14fcb8c build: re-enable code coverage (#1520)
+7465af9 fix(RouterStore): add schematics to bazel build
