@@ -1,1 +1,1 @@
-1bba710 docs(schematics): adding docs for api flag added to effect schematic (#1577)
+5fbcb3c fix(schematics): type actions and avoid endless loop in effect schematic (#1576)
