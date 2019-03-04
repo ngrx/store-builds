@@ -1,1 +1,1 @@
-5cb9a46 docs(store): add section for provideMockStore to testing guide (#1591)
+063fbe6 test(schematics): add @ngrx/schematics to Bazel tests and tweak CI config (#1593)
