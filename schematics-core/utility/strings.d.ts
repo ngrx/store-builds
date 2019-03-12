@@ -67,5 +67,17 @@ export declare function underscore(str: string): string;
  ```
  */
 export declare function capitalize(str: string): string;
+/**
+ Returns the plural form of a string
+
+ ```javascript
+ 'innerHTML'.pluralize()         // 'InnerHTMLs'
+ 'action_name'.pluralize()       // 'actionNames'
+ 'css-class-name'.pluralize()    // 'cssClassNames'
+ 'regex'.pluralize()            // 'regexes'
+ 'user'.pluralize()             // 'users'
+ ```
+ */
+export declare function pluralize(str: string): string;
 export declare function group(name: string, group: string | undefined): string;
 export declare function featurePath(group: boolean | undefined, flat: boolean | undefined, path: string, name: string): string;

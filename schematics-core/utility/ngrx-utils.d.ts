@@ -8,12 +8,14 @@ export declare function addReducerToState(options: any): Rule;
  */
 export declare function addReducerToStateInterface(source: ts.SourceFile, reducersPath: string, options: {
     name: string;
+    plural: boolean;
 }): Change;
 /**
  * Insert the reducer into the ActionReducerMap
  */
 export declare function addReducerToActionReducerMap(source: ts.SourceFile, reducersPath: string, options: {
     name: string;
+    plural: boolean;
 }): Change;
 /**
  * Add reducer feature to NgModule
