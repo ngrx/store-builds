@@ -1,1 +1,1 @@
-1e49530 feat(schematics): use plural for entity schematics reducer key (#1596)
+dac04bd refactor(example): use MockStore in Auth Guard test (#1616)
