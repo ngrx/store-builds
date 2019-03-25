@@ -60,3 +60,13 @@ export declare function addExportToModule(source: ts.SourceFile, modulePath: str
  * Custom function to insert an export into NgModule. It also imports it.
  */
 export declare function addBootstrapToModule(source: ts.SourceFile, modulePath: string, classifiedName: string, importPath: string): Change[];
+/**
+ * Add Import `import { symbolName } from fileName` if the import doesn't exit
+ * already. Assumes fileToEdit can be resolved and accessed.
+ * @param fileToEdit (file we want to add import to)
+ * @param symbolName (item to import)
+ * @param fileName (path to the file)
+ * @param isDefault (if true, import follows style for importing default exports)
+ * @return Change
+ */
+export declare function insertImport(source: ts.SourceFile, fileToEdit: string, symbolName: string, fileName: string, isDefault?: boolean): Change;
