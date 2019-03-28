@@ -1,23 +1,22 @@
 /**
- * @license NgRx 7.2.0+36.sha-a7e6303
+ * @license NgRx 7.2.0+37.sha-4bdb66e
  * (c) 2015-2018 Brandon Roberts, Mike Ryan, Rob Wormald, Victor Savkin
  * License: MIT
  */
 import { Injectable, Inject } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
-import { ActionsSubject, INITIAL_STATE, ReducerManager, Store, StateObservable } from '@ngrx/store';
+import { Store, ActionsSubject, ReducerManager, INITIAL_STATE, StateObservable } from '@ngrx/store';
 
 /**
  * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,uselessCode} checked by tsc
+ * @suppress {checkTypes,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
  */
-// unsupported: template constraints.
 /**
  * @template T
  */
 class MockState extends BehaviorSubject {
     constructor() {
-        super(/** @type {?} */ ({}));
+        super((/** @type {?} */ ({})));
     }
 }
 MockState.decorators = [
@@ -28,7 +27,7 @@ MockState.ctorParameters = () => [];
 
 /**
  * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,uselessCode} checked by tsc
+ * @suppress {checkTypes,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
  */
 /**
  * @template T
@@ -80,11 +79,14 @@ MockStore.ctorParameters = () => [
 
 /**
  * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,uselessCode} checked by tsc
+ * @suppress {checkTypes,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
  */
 class MockReducerManager extends BehaviorSubject {
     constructor() {
-        super(() => undefined);
+        super((/**
+         * @return {?}
+         */
+        () => undefined));
     }
 }
 MockReducerManager.decorators = [
@@ -95,7 +97,7 @@ MockReducerManager.ctorParameters = () => [];
 
 /**
  * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,uselessCode} checked by tsc
+ * @suppress {checkTypes,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
  */
 /**
  * @template T
@@ -115,7 +117,7 @@ function provideMockStore(config = {}) {
 
 /**
  * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,uselessCode} checked by tsc
+ * @suppress {checkTypes,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
  */
 
 /**

@@ -1,13 +1,13 @@
 /**
- * @license NgRx 7.2.0+36.sha-a7e6303
+ * @license NgRx 7.2.0+37.sha-4bdb66e
  * (c) 2015-2018 Brandon Roberts, Mike Ryan, Rob Wormald, Victor Savkin
  * License: MIT
  */
 (function (global, factory) {
     typeof exports === 'object' && typeof module !== 'undefined' ? factory(exports, require('@angular/core'), require('rxjs'), require('@ngrx/store')) :
     typeof define === 'function' && define.amd ? define('@ngrx/store/testing', ['exports', '@angular/core', 'rxjs', '@ngrx/store'], factory) :
-    (factory((global.ngrx = global.ngrx || {}, global.ngrx.store = global.ngrx.store || {}, global.ngrx.store.testing = {}),global.ng.core,global.rxjs,global['@ngrx/store']));
-}(this, (function (exports,core,rxjs,store) { 'use strict';
+    (global = global || self, factory((global.ngrx = global.ngrx || {}, global.ngrx.store = global.ngrx.store || {}, global.ngrx.store.testing = {}), global.ng.core, global.rxjs, global['@ngrx/store']));
+}(this, function (exports, core, rxjs, store) { 'use strict';
 
     var __extends = (undefined && undefined.__extends) || (function () {
         var extendStatics = function (d, b) {
@@ -154,5 +154,5 @@
 
     Object.defineProperty(exports, '__esModule', { value: true });
 
-})));
+}));
 //# sourceMappingURL=store-testing.umd.js.map

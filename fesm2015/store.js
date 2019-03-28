@@ -1,18 +1,18 @@
 /**
- * @license NgRx 7.2.0+36.sha-a7e6303
+ * @license NgRx 7.2.0+37.sha-4bdb66e
  * (c) 2015-2018 Brandon Roberts, Mike Ryan, Rob Wormald, Victor Savkin
  * License: MIT
  */
 import { Injectable, InjectionToken, Inject, NgModule, Injector } from '@angular/core';
 import { BehaviorSubject, Observable, Subject, queueScheduler } from 'rxjs';
-import { observeOn, scan, withLatestFrom, distinctUntilChanged, map, pluck } from 'rxjs/operators';
+import { observeOn, withLatestFrom, scan, pluck, map, distinctUntilChanged } from 'rxjs/operators';
 
 /**
  * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,uselessCode} checked by tsc
+ * @suppress {checkTypes,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
  */
 /** @type {?} */
-const INIT = /** @type {?} */ ('@ngrx/store/init');
+const INIT = (/** @type {?} */ ('@ngrx/store/init'));
 class ActionsSubject extends BehaviorSubject {
     constructor() {
         super({ type: INIT });
@@ -53,7 +53,7 @@ const ACTIONS_SUBJECT_PROVIDERS = [ActionsSubject];
 
 /**
  * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,uselessCode} checked by tsc
+ * @suppress {checkTypes,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
  */
 /** @type {?} */
 const _INITIAL_STATE = new InjectionToken('@ngrx/store Internal Initial State');
@@ -86,7 +86,7 @@ const FEATURE_REDUCERS = new InjectionToken('@ngrx/store Feature Reducers');
 
 /**
  * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,uselessCode} checked by tsc
+ * @suppress {checkTypes,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
  */
 /**
  * @param {?} reducers
@@ -107,7 +107,12 @@ function combineReducers(reducers, initialState = {}) {
     }
     /** @type {?} */
     const finalReducerKeys = Object.keys(finalReducers);
-    return function combination(state, action) {
+    return (/**
+     * @param {?} state
+     * @param {?} action
+     * @return {?}
+     */
+    function combination(state, action) {
         state = state === undefined ? initialState : state;
         /** @type {?} */
         let hasChanged = false;
@@ -126,7 +131,7 @@ function combineReducers(reducers, initialState = {}) {
             hasChanged = hasChanged || nextStateForKey !== previousStateForKey;
         }
         return hasChanged ? nextState : state;
-    };
+    });
 }
 /**
  * @template T
@@ -136,15 +141,28 @@ function combineReducers(reducers, initialState = {}) {
  */
 function omit(object, keyToRemove) {
     return Object.keys(object)
-        .filter(key => key !== keyToRemove)
-        .reduce((result, key) => Object.assign(result, { [key]: object[key] }), {});
+        .filter((/**
+     * @param {?} key
+     * @return {?}
+     */
+    key => key !== keyToRemove))
+        .reduce((/**
+     * @param {?} result
+     * @param {?} key
+     * @return {?}
+     */
+    (result, key) => Object.assign(result, { [key]: object[key] })), {});
 }
 /**
  * @param {...?} functions
  * @return {?}
  */
 function compose(...functions) {
-    return function (arg) {
+    return (/**
+     * @param {?} arg
+     * @return {?}
+     */
+    function (arg) {
         if (functions.length === 0) {
             return arg;
         }
@@ -152,8 +170,13 @@ function compose(...functions) {
         const last = functions[functions.length - 1];
         /** @type {?} */
         const rest = functions.slice(0, -1);
-        return rest.reduceRight((composed, fn) => fn(composed), last(arg));
-    };
+        return rest.reduceRight((/**
+         * @param {?} composed
+         * @param {?} fn
+         * @return {?}
+         */
+        (composed, fn) => fn(composed)), last(arg));
+    });
 }
 /**
  * @template T, V
@@ -165,14 +188,24 @@ function createReducerFactory(reducerFactory, metaReducers) {
     if (Array.isArray(metaReducers) && metaReducers.length > 0) {
         reducerFactory = compose.apply(null, [...metaReducers, reducerFactory]);
     }
-    return (reducers, initialState) => {
+    return (/**
+     * @param {?} reducers
+     * @param {?=} initialState
+     * @return {?}
+     */
+    (reducers, initialState) => {
         /** @type {?} */
         const reducer = reducerFactory(reducers);
-        return (state, action) => {
-            state = state === undefined ? (/** @type {?} */ (initialState)) : state;
+        return (/**
+         * @param {?} state
+         * @param {?} action
+         * @return {?}
+         */
+        (state, action) => {
+            state = state === undefined ? ((/** @type {?} */ (initialState))) : state;
             return reducer(state, action);
-        };
-    };
+        });
+    });
 }
 /**
  * @template T, V
@@ -183,19 +216,33 @@ function createFeatureReducerFactory(metaReducers) {
     /** @type {?} */
     const reducerFactory = Array.isArray(metaReducers) && metaReducers.length > 0
         ? compose(...metaReducers)
-        : (r) => r;
-    return (reducer, initialState) => {
+        : (/**
+         * @param {?} r
+         * @return {?}
+         */
+        (r) => r);
+    return (/**
+     * @param {?} reducer
+     * @param {?=} initialState
+     * @return {?}
+     */
+    (reducer, initialState) => {
         reducer = reducerFactory(reducer);
-        return (state, action) => {
+        return (/**
+         * @param {?} state
+         * @param {?} action
+         * @return {?}
+         */
+        (state, action) => {
             state = state === undefined ? initialState : state;
             return reducer(state, action);
-        };
-    };
+        });
+    });
 }
 
 /**
  * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,uselessCode} checked by tsc
+ * @suppress {checkTypes,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
  */
 /**
  * @abstract
@@ -208,7 +255,7 @@ class ReducerObservable extends Observable {
 class ReducerManagerDispatcher extends ActionsSubject {
 }
 /** @type {?} */
-const UPDATE = /** @type {?} */ ('@ngrx/store/update-reducers');
+const UPDATE = (/** @type {?} */ ('@ngrx/store/update-reducers'));
 class ReducerManager extends BehaviorSubject {
     /**
      * @param {?} dispatcher
@@ -236,14 +283,19 @@ class ReducerManager extends BehaviorSubject {
      */
     addFeatures(features) {
         /** @type {?} */
-        const reducers = features.reduce((reducerDict, { reducers, reducerFactory, metaReducers, initialState, key }) => {
+        const reducers = features.reduce((/**
+         * @param {?} reducerDict
+         * @param {?} __1
+         * @return {?}
+         */
+        (reducerDict, { reducers, reducerFactory, metaReducers, initialState, key }) => {
             /** @type {?} */
             const reducer = typeof reducers === 'function'
                 ? createFeatureReducerFactory(metaReducers)(reducers, initialState)
                 : createReducerFactory(reducerFactory, metaReducers)(reducers, initialState);
             reducerDict[key] = reducer;
             return reducerDict;
-        }, /** @type {?} */ ({}));
+        }), (/** @type {?} */ ({})));
         this.addReducers(reducers);
     }
     /**
@@ -258,7 +310,11 @@ class ReducerManager extends BehaviorSubject {
      * @return {?}
      */
     removeFeatures(features) {
-        this.removeReducers(features.map(p => p.key));
+        this.removeReducers(features.map((/**
+         * @param {?} p
+         * @return {?}
+         */
+        p => p.key)));
     }
     /**
      * @param {?} key
@@ -288,21 +344,26 @@ class ReducerManager extends BehaviorSubject {
      * @return {?}
      */
     removeReducers(featureKeys) {
-        featureKeys.forEach(key => {
-            this.reducers = /** @type {?} */ (omit(this.reducers, key) /*TODO(#823)*/);
-        });
+        featureKeys.forEach((/**
+         * @param {?} key
+         * @return {?}
+         */
+        key => {
+            this.reducers = (/** @type {?} */ (omit(this.reducers, key) /*TODO(#823)*/));
+        }));
         this.updateReducers(featureKeys);
     }
     /**
+     * @private
      * @param {?} featureKeys
      * @return {?}
      */
     updateReducers(featureKeys) {
         this.next(this.reducerFactory(this.reducers, this.initialState));
-        this.dispatcher.next(/** @type {?} */ ({
+        this.dispatcher.next((/** @type {?} */ ({
             type: UPDATE,
             features: featureKeys,
-        }));
+        })));
     }
     /**
      * @return {?}
@@ -330,7 +391,7 @@ const REDUCER_MANAGER_PROVIDERS = [
 
 /**
  * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,uselessCode} checked by tsc
+ * @suppress {checkTypes,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
  */
 class ScannedActionsSubject extends Subject {
     /**
@@ -350,7 +411,7 @@ const SCANNED_ACTIONS_SUBJECT_PROVIDERS = [
 
 /**
  * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,uselessCode} checked by tsc
+ * @suppress {checkTypes,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
  */
 /**
  * @abstract
@@ -377,10 +438,14 @@ class State extends BehaviorSubject {
         const seed = { state: initialState };
         /** @type {?} */
         const stateAndAction$ = withLatestReducer$.pipe(scan(reduceState, seed));
-        this.stateSubscription = stateAndAction$.subscribe(({ state, action }) => {
+        this.stateSubscription = stateAndAction$.subscribe((/**
+         * @param {?} __0
+         * @return {?}
+         */
+        ({ state, action }) => {
             this.next(state);
             scannedActions.next(action);
-        });
+        }));
     }
     /**
      * @return {?}
@@ -419,7 +484,7 @@ const STATE_PROVIDERS = [
 
 /**
  * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,uselessCode} checked by tsc
+ * @suppress {checkTypes,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
  */
 /**
  * @template T
@@ -521,28 +586,36 @@ const STORE_PROVIDERS = [Store];
  * @return {?}
  */
 function select(pathOrMapFn, propsOrPath, ...paths) {
-    return function selectOperator(source$) {
+    return (/**
+     * @param {?} source$
+     * @return {?}
+     */
+    function selectOperator(source$) {
         /** @type {?} */
         let mapped$;
         if (typeof pathOrMapFn === 'string') {
             /** @type {?} */
-            const pathSlices = [/** @type {?} */ (propsOrPath), ...paths].filter(Boolean);
+            const pathSlices = [(/** @type {?} */ (propsOrPath)), ...paths].filter(Boolean);
             mapped$ = source$.pipe(pluck(pathOrMapFn, ...pathSlices));
         }
         else if (typeof pathOrMapFn === 'function') {
-            mapped$ = source$.pipe(map(source => pathOrMapFn(source, /** @type {?} */ (propsOrPath))));
+            mapped$ = source$.pipe(map((/**
+             * @param {?} source
+             * @return {?}
+             */
+            source => pathOrMapFn(source, (/** @type {?} */ (propsOrPath))))));
         }
         else {
             throw new TypeError(`Unexpected type '${typeof pathOrMapFn}' in select operator,` +
                 ` expected 'string' or 'function'`);
         }
         return mapped$.pipe(distinctUntilChanged());
-    };
+    });
 }
 
 /**
  * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,uselessCode} checked by tsc
+ * @suppress {checkTypes,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
  */
 /**
  * @param {?} a
@@ -583,6 +656,7 @@ function resultMemoize(projectionFn, isResultEqual) {
 function defaultMemoize(projectionFn, isArgumentsEqual = isEqualCheck, isResultEqual = isEqualCheck) {
     /** @type {?} */
     let lastArguments = null;
+    // tslint:disable-next-line:no-any anything could be the result.
     /** @type {?} */
     let lastResult = null;
     /**
@@ -592,6 +666,7 @@ function defaultMemoize(projectionFn, isArgumentsEqual = isEqualCheck, isResultE
         lastArguments = null;
         lastResult = null;
     }
+    // tslint:disable-next-line:no-any anything could be the result.
     /**
      * @return {?}
      */
@@ -632,11 +707,19 @@ function createSelector(...input) {
 function defaultStateFn(state, selectors, props, memoizedProjector) {
     if (props === undefined) {
         /** @type {?} */
-        const args = (/** @type {?} */ (selectors)).map(fn => fn(state));
+        const args = ((/** @type {?} */ (selectors))).map((/**
+         * @param {?} fn
+         * @return {?}
+         */
+        fn => fn(state)));
         return memoizedProjector.memoized.apply(null, args);
     }
     /** @type {?} */
-    const args = (/** @type {?} */ (selectors)).map(fn => fn(state, props));
+    const args = ((/** @type {?} */ (selectors))).map((/**
+     * @param {?} fn
+     * @return {?}
+     */
+    fn => fn(state, props)));
     return memoizedProjector.memoized.apply(null, [...args, props]);
 }
 /**
@@ -647,7 +730,11 @@ function defaultStateFn(state, selectors, props, memoizedProjector) {
 function createSelectorFactory(memoize, options = {
     stateFn: defaultStateFn,
 }) {
-    return function (...input) {
+    return (/**
+     * @param {...?} input
+     * @return {?}
+     */
+    function (...input) {
         /** @type {?} */
         let args = input;
         if (Array.isArray(args[0])) {
@@ -659,13 +746,26 @@ function createSelectorFactory(memoize, options = {
         /** @type {?} */
         const projector = args[args.length - 1];
         /** @type {?} */
-        const memoizedSelectors = selectors.filter((selector) => selector.release && typeof selector.release === 'function');
+        const memoizedSelectors = selectors.filter((/**
+         * @param {?} selector
+         * @return {?}
+         */
+        (selector) => selector.release && typeof selector.release === 'function'));
         /** @type {?} */
-        const memoizedProjector = memoize(function (...selectors) {
+        const memoizedProjector = memoize((/**
+         * @param {...?} selectors
+         * @return {?}
+         */
+        function (...selectors) {
             return projector.apply(null, selectors);
-        });
+        }));
         /** @type {?} */
-        const memoizedState = defaultMemoize(function (state, props) {
+        const memoizedState = defaultMemoize((/**
+         * @param {?} state
+         * @param {?} props
+         * @return {?}
+         */
+        function (state, props) {
             // createSelector works directly on state
             // e.g. createSelector((state, props) => ...)
             if (selectors.length === 0 && props !== undefined) {
@@ -677,32 +777,44 @@ function createSelectorFactory(memoize, options = {
                 props,
                 memoizedProjector,
             ]);
-        });
+        }));
         /**
          * @return {?}
          */
         function release() {
             memoizedState.reset();
             memoizedProjector.reset();
-            memoizedSelectors.forEach(selector => selector.release());
+            memoizedSelectors.forEach((/**
+             * @param {?} selector
+             * @return {?}
+             */
+            selector => selector.release()));
         }
         return Object.assign(memoizedState.memoized, {
             release,
             projector: memoizedProjector.memoized,
         });
-    };
+    });
 }
 /**
  * @param {?} featureName
  * @return {?}
  */
 function createFeatureSelector(featureName) {
-    return createSelector((state) => state[featureName], (featureState) => featureState);
+    return createSelector((/**
+     * @param {?} state
+     * @return {?}
+     */
+    (state) => state[featureName]), (/**
+     * @param {?} featureState
+     * @return {?}
+     */
+    (featureState) => featureState));
 }
 
 /**
  * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,uselessCode} checked by tsc
+ * @suppress {checkTypes,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
  */
 class StoreRootModule {
     /**
@@ -735,13 +847,18 @@ class StoreFeatureModule {
         this.featureReducers = featureReducers;
         this.reducerManager = reducerManager;
         /** @type {?} */
-        const feats = features.map((feature, index) => {
+        const feats = features.map((/**
+         * @param {?} feature
+         * @param {?} index
+         * @return {?}
+         */
+        (feature, index) => {
             /** @type {?} */
             const featureReducerCollection = featureReducers.shift();
             /** @type {?} */
-            const reducers = /** @type {?} */ ((featureReducerCollection))[index];
+            const reducers = (/** @type {?} */ (featureReducerCollection /*TODO(#823)*/))[index];
             return Object.assign({}, feature, { reducers, initialState: _initialStateFactory(feature.initialState) });
-        });
+        }));
         reducerManager.addFeatures(feats);
     }
     /**
@@ -885,7 +1002,12 @@ function _createStoreReducers(injector, reducers, tokenReducers) {
  * @return {?}
  */
 function _createFeatureStore(injector, configs, featureStores) {
-    return featureStores.map((feat, index) => {
+    return featureStores.map((/**
+     * @param {?} feat
+     * @param {?} index
+     * @return {?}
+     */
+    (feat, index) => {
         if (configs[index] instanceof InjectionToken) {
             /** @type {?} */
             const conf = injector.get(configs[index]);
@@ -899,7 +1021,7 @@ function _createFeatureStore(injector, configs, featureStores) {
             };
         }
         return feat;
-    });
+    }));
 }
 /**
  * @param {?} injector
@@ -909,9 +1031,14 @@ function _createFeatureStore(injector, configs, featureStores) {
  */
 function _createFeatureReducers(injector, reducerCollection, tokenReducerCollection) {
     /** @type {?} */
-    const reducers = reducerCollection.map((reducer, index) => {
+    const reducers = reducerCollection.map((/**
+     * @param {?} reducer
+     * @param {?} index
+     * @return {?}
+     */
+    (reducer, index) => {
         return reducer instanceof InjectionToken ? injector.get(reducer) : reducer;
-    });
+    }));
     return reducers;
 }
 /**
@@ -927,17 +1054,17 @@ function _initialStateFactory(initialState) {
 
 /**
  * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,uselessCode} checked by tsc
+ * @suppress {checkTypes,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
  */
 
 /**
  * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,uselessCode} checked by tsc
+ * @suppress {checkTypes,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
  */
 
 /**
  * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,uselessCode} checked by tsc
+ * @suppress {checkTypes,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
  */
 
 /**

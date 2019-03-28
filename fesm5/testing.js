@@ -1,11 +1,11 @@
 /**
- * @license NgRx 7.2.0+36.sha-a7e6303
+ * @license NgRx 7.2.0+37.sha-4bdb66e
  * (c) 2015-2018 Brandon Roberts, Mike Ryan, Rob Wormald, Victor Savkin
  * License: MIT
  */
 import { Injectable, Inject } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
-import { ActionsSubject, INITIAL_STATE, ReducerManager, Store, StateObservable } from '@ngrx/store';
+import { INITIAL_STATE, ActionsSubject, ReducerManager, Store, StateObservable } from '@ngrx/store';
 
 var __extends = (undefined && undefined.__extends) || (function () {
     var extendStatics = function (d, b) {

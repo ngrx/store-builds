@@ -1,11 +1,11 @@
 /**
- * @license NgRx 7.2.0+36.sha-a7e6303
+ * @license NgRx 7.2.0+37.sha-4bdb66e
  * (c) 2015-2018 Brandon Roberts, Mike Ryan, Rob Wormald, Victor Savkin
  * License: MIT
  */
 import { Injectable, InjectionToken, Inject, NgModule, Injector } from '@angular/core';
 import { BehaviorSubject, Observable, Subject, queueScheduler } from 'rxjs';
-import { observeOn, scan, withLatestFrom, distinctUntilChanged, map, pluck } from 'rxjs/operators';
+import { observeOn, withLatestFrom, scan, pluck, map, distinctUntilChanged } from 'rxjs/operators';
 
 var __extends = (undefined && undefined.__extends) || (function () {
     var extendStatics = function (d, b) {
