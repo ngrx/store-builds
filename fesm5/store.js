@@ -1,11 +1,75 @@
 /**
- * @license NgRx 7.2.0+38.sha-d559998
+ * @license NgRx 7.2.0+39.sha-e7fe28b
  * (c) 2015-2018 Brandon Roberts, Mike Ryan, Rob Wormald, Victor Savkin
  * License: MIT
  */
 import { Injectable, InjectionToken, Inject, NgModule, Injector } from '@angular/core';
 import { BehaviorSubject, Observable, Subject, queueScheduler } from 'rxjs';
 import { observeOn, withLatestFrom, scan, pluck, map, distinctUntilChanged } from 'rxjs/operators';
+
+var __assign = (undefined && undefined.__assign) || function () {
+    __assign = Object.assign || function(t) {
+        for (var s, i = 1, n = arguments.length; i < n; i++) {
+            s = arguments[i];
+            for (var p in s) if (Object.prototype.hasOwnProperty.call(s, p))
+                t[p] = s[p];
+        }
+        return t;
+    };
+    return __assign.apply(this, arguments);
+};
+var __read = (undefined && undefined.__read) || function (o, n) {
+    var m = typeof Symbol === "function" && o[Symbol.iterator];
+    if (!m) return o;
+    var i = m.call(o), r, ar = [], e;
+    try {
+        while ((n === void 0 || n-- > 0) && !(r = i.next()).done) ar.push(r.value);
+    }
+    catch (error) { e = { error: error }; }
+    finally {
+        try {
+            if (r && !r.done && (m = i["return"])) m.call(i);
+        }
+        finally { if (e) throw e.error; }
+    }
+    return ar;
+};
+var __spread = (undefined && undefined.__spread) || function () {
+    for (var ar = [], i = 0; i < arguments.length; i++) ar = ar.concat(__read(arguments[i]));
+    return ar;
+};
+function createAction(type, config) {
+    if (typeof config === 'function') {
+        return defineType(type, function () {
+            var args = [];
+            for (var _i = 0; _i < arguments.length; _i++) {
+                args[_i] = arguments[_i];
+            }
+            return (__assign({}, config.apply(void 0, __spread(args)), { type: type }));
+        });
+    }
+    var as = config ? config._as : 'empty';
+    switch (as) {
+        case 'empty':
+            return defineType(type, function () { return ({ type: type }); });
+        case 'props':
+            return defineType(type, function (props) { return (__assign({}, props, { type: type })); });
+        default:
+            throw new Error('Unexpected config.');
+    }
+}
+function props() {
+    return { _as: 'props', _p: undefined };
+}
+function union(creators) {
+    return undefined;
+}
+function defineType(type, creator) {
+    return Object.defineProperty(creator, 'type', {
+        value: type,
+        writable: false,
+    });
+}
 
 var __extends = (undefined && undefined.__extends) || (function () {
     var extendStatics = function (d, b) {
@@ -73,7 +137,7 @@ var _STORE_FEATURES = new InjectionToken('@ngrx/store Internal Store Features');
 var _FEATURE_REDUCERS_TOKEN = new InjectionToken('@ngrx/store Internal Feature Reducers Token');
 var FEATURE_REDUCERS = new InjectionToken('@ngrx/store Feature Reducers');
 
-var __read = (undefined && undefined.__read) || function (o, n) {
+var __read$1 = (undefined && undefined.__read) || function (o, n) {
     var m = typeof Symbol === "function" && o[Symbol.iterator];
     if (!m) return o;
     var i = m.call(o), r, ar = [], e;
@@ -89,8 +153,8 @@ var __read = (undefined && undefined.__read) || function (o, n) {
     }
     return ar;
 };
-var __spread = (undefined && undefined.__spread) || function () {
-    for (var ar = [], i = 0; i < arguments.length; i++) ar = ar.concat(__read(arguments[i]));
+var __spread$1 = (undefined && undefined.__spread) || function () {
+    for (var ar = [], i = 0; i < arguments.length; i++) ar = ar.concat(__read$1(arguments[i]));
     return ar;
 };
 function combineReducers(reducers, initialState) {
@@ -143,7 +207,7 @@ function compose() {
 }
 function createReducerFactory(reducerFactory, metaReducers) {
     if (Array.isArray(metaReducers) && metaReducers.length > 0) {
-        reducerFactory = compose.apply(null, __spread(metaReducers, [reducerFactory]));
+        reducerFactory = compose.apply(null, __spread$1(metaReducers, [reducerFactory]));
     }
     return function (reducers, initialState) {
         var reducer = reducerFactory(reducers);
@@ -155,7 +219,7 @@ function createReducerFactory(reducerFactory, metaReducers) {
 }
 function createFeatureReducerFactory(metaReducers) {
     var reducerFactory = Array.isArray(metaReducers) && metaReducers.length > 0
-        ? compose.apply(void 0, __spread(metaReducers)) : function (r) { return r; };
+        ? compose.apply(void 0, __spread$1(metaReducers)) : function (r) { return r; };
     return function (reducer, initialState) {
         reducer = reducerFactory(reducer);
         return function (state, action) {
@@ -178,8 +242,8 @@ var __extends$1 = (undefined && undefined.__extends) || (function () {
         d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
     };
 })();
-var __assign = (undefined && undefined.__assign) || function () {
-    __assign = Object.assign || function(t) {
+var __assign$1 = (undefined && undefined.__assign) || function () {
+    __assign$1 = Object.assign || function(t) {
         for (var s, i = 1, n = arguments.length; i < n; i++) {
             s = arguments[i];
             for (var p in s) if (Object.prototype.hasOwnProperty.call(s, p))
@@ -187,7 +251,7 @@ var __assign = (undefined && undefined.__assign) || function () {
         }
         return t;
     };
-    return __assign.apply(this, arguments);
+    return __assign$1.apply(this, arguments);
 };
 var __decorate$1 = (undefined && undefined.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
@@ -251,7 +315,7 @@ var ReducerManager = /** @class */ (function (_super) {
         this.addReducers((_a = {}, _a[key] = reducer, _a));
     };
     ReducerManager.prototype.addReducers = function (reducers) {
-        this.reducers = __assign({}, this.reducers, reducers);
+        this.reducers = __assign$1({}, this.reducers, reducers);
         this.updateReducers(Object.keys(reducers));
     };
     ReducerManager.prototype.removeReducer = function (featureKey) {
@@ -350,7 +414,7 @@ var __metadata$2 = (undefined && undefined.__metadata) || function (k, v) {
 var __param$1 = (undefined && undefined.__param) || function (paramIndex, decorator) {
     return function (target, key) { decorator(target, key, paramIndex); }
 };
-var __read$1 = (undefined && undefined.__read) || function (o, n) {
+var __read$2 = (undefined && undefined.__read) || function (o, n) {
     var m = typeof Symbol === "function" && o[Symbol.iterator];
     if (!m) return o;
     var i = m.call(o), r, ar = [], e;
@@ -404,7 +468,7 @@ var State = /** @class */ (function (_super) {
 }(BehaviorSubject));
 function reduceState(stateActionPair, _a) {
     if (stateActionPair === void 0) { stateActionPair = { state: undefined }; }
-    var _b = __read$1(_a, 2), action = _b[0], reducer = _b[1];
+    var _b = __read$2(_a, 2), action = _b[0], reducer = _b[1];
     var state = stateActionPair.state;
     return { state: reducer(state, action), action: action };
 }
@@ -435,7 +499,7 @@ var __decorate$4 = (undefined && undefined.__decorate) || function (decorators, 
 var __metadata$3 = (undefined && undefined.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
-var __read$2 = (undefined && undefined.__read) || function (o, n) {
+var __read$3 = (undefined && undefined.__read) || function (o, n) {
     var m = typeof Symbol === "function" && o[Symbol.iterator];
     if (!m) return o;
     var i = m.call(o), r, ar = [], e;
@@ -451,8 +515,8 @@ var __read$2 = (undefined && undefined.__read) || function (o, n) {
     }
     return ar;
 };
-var __spread$1 = (undefined && undefined.__spread) || function () {
-    for (var ar = [], i = 0; i < arguments.length; i++) ar = ar.concat(__read$2(arguments[i]));
+var __spread$2 = (undefined && undefined.__spread) || function () {
+    for (var ar = [], i = 0; i < arguments.length; i++) ar = ar.concat(__read$3(arguments[i]));
     return ar;
 };
 var Store = /** @class */ (function (_super) {
@@ -470,7 +534,7 @@ var Store = /** @class */ (function (_super) {
         for (var _i = 1; _i < arguments.length; _i++) {
             paths[_i - 1] = arguments[_i];
         }
-        return select.call.apply(select, __spread$1([null, pathOrMapFn], paths))(this);
+        return select.call.apply(select, __spread$2([null, pathOrMapFn], paths))(this);
     };
     Store.prototype.lift = function (operator) {
         var store = new Store_1(this, this.actionsObserver, this.reducerManager);
@@ -513,8 +577,8 @@ function select(pathOrMapFn, propsOrPath) {
     return function selectOperator(source$) {
         var mapped$;
         if (typeof pathOrMapFn === 'string') {
-            var pathSlices = __spread$1([propsOrPath], paths).filter(Boolean);
-            mapped$ = source$.pipe(pluck.apply(void 0, __spread$1([pathOrMapFn], pathSlices)));
+            var pathSlices = __spread$2([propsOrPath], paths).filter(Boolean);
+            mapped$ = source$.pipe(pluck.apply(void 0, __spread$2([pathOrMapFn], pathSlices)));
         }
         else if (typeof pathOrMapFn === 'function') {
             mapped$ = source$.pipe(map(function (source) { return pathOrMapFn(source, propsOrPath); }));
@@ -527,7 +591,7 @@ function select(pathOrMapFn, propsOrPath) {
     };
 }
 
-var __read$3 = (undefined && undefined.__read) || function (o, n) {
+var __read$4 = (undefined && undefined.__read) || function (o, n) {
     var m = typeof Symbol === "function" && o[Symbol.iterator];
     if (!m) return o;
     var i = m.call(o), r, ar = [], e;
@@ -543,8 +607,8 @@ var __read$3 = (undefined && undefined.__read) || function (o, n) {
     }
     return ar;
 };
-var __spread$2 = (undefined && undefined.__spread) || function () {
-    for (var ar = [], i = 0; i < arguments.length; i++) ar = ar.concat(__read$3(arguments[i]));
+var __spread$3 = (undefined && undefined.__spread) || function () {
+    for (var ar = [], i = 0; i < arguments.length; i++) ar = ar.concat(__read$4(arguments[i]));
     return ar;
 };
 function isEqualCheck(a, b) {
@@ -596,7 +660,7 @@ function createSelector() {
     for (var _i = 0; _i < arguments.length; _i++) {
         input[_i] = arguments[_i];
     }
-    return createSelectorFactory(defaultMemoize).apply(void 0, __spread$2(input));
+    return createSelectorFactory(defaultMemoize).apply(void 0, __spread$3(input));
 }
 function defaultStateFn(state, selectors, props, memoizedProjector) {
     if (props === undefined) {
@@ -606,7 +670,7 @@ function defaultStateFn(state, selectors, props, memoizedProjector) {
     var args = selectors.map(function (fn) {
         return fn(state, props);
     });
-    return memoizedProjector.memoized.apply(null, __spread$2(args, [props]));
+    return memoizedProjector.memoized.apply(null, __spread$3(args, [props]));
 }
 function createSelectorFactory(memoize, options) {
     if (options === void 0) { options = {
@@ -619,8 +683,8 @@ function createSelectorFactory(memoize, options) {
         }
         var args = input;
         if (Array.isArray(args[0])) {
-            var _a = __read$3(args), head = _a[0], tail = _a.slice(1);
-            args = __spread$2(head, tail);
+            var _a = __read$4(args), head = _a[0], tail = _a.slice(1);
+            args = __spread$3(head, tail);
         }
         var selectors = args.slice(0, args.length - 1);
         var projector = args[args.length - 1];
@@ -662,8 +726,8 @@ function createFeatureSelector(featureName) {
     return createSelector(function (state) { return state[featureName]; }, function (featureState) { return featureState; });
 }
 
-var __assign$1 = (undefined && undefined.__assign) || function () {
-    __assign$1 = Object.assign || function(t) {
+var __assign$2 = (undefined && undefined.__assign) || function () {
+    __assign$2 = Object.assign || function(t) {
         for (var s, i = 1, n = arguments.length; i < n; i++) {
             s = arguments[i];
             for (var p in s) if (Object.prototype.hasOwnProperty.call(s, p))
@@ -671,7 +735,7 @@ var __assign$1 = (undefined && undefined.__assign) || function () {
         }
         return t;
     };
-    return __assign$1.apply(this, arguments);
+    return __assign$2.apply(this, arguments);
 };
 var __decorate$5 = (undefined && undefined.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
@@ -705,7 +769,7 @@ var StoreFeatureModule = /** @class */ (function () {
         var feats = features.map(function (feature, index) {
             var featureReducerCollection = featureReducers.shift();
             var reducers = featureReducerCollection /*TODO(#823)*/[index];
-            return __assign$1({}, feature, { reducers: reducers, initialState: _initialStateFactory(feature.initialState) });
+            return __assign$2({}, feature, { reducers: reducers, initialState: _initialStateFactory(feature.initialState) });
         });
         reducerManager.addFeatures(feats);
     }
@@ -865,5 +929,5 @@ function _initialStateFactory(initialState) {
  * Generated bundle index. Do not edit.
  */
 
-export { ACTIONS_SUBJECT_PROVIDERS as ɵngrx_modules_store_store_c, REDUCER_MANAGER_PROVIDERS as ɵngrx_modules_store_store_d, SCANNED_ACTIONS_SUBJECT_PROVIDERS as ɵngrx_modules_store_store_e, isEqualCheck as ɵngrx_modules_store_store_f, STATE_PROVIDERS as ɵngrx_modules_store_store_g, STORE_PROVIDERS as ɵngrx_modules_store_store_b, _createFeatureStore as ɵngrx_modules_store_store_j, _FEATURE_CONFIGS as ɵngrx_modules_store_store_h, _STORE_FEATURES as ɵngrx_modules_store_store_i, Store, select, combineReducers, compose, createReducerFactory, ActionsSubject, INIT, ReducerManager, ReducerObservable, ReducerManagerDispatcher, UPDATE, ScannedActionsSubject, createSelector, createSelectorFactory, createFeatureSelector, defaultMemoize, defaultStateFn, resultMemoize, State, StateObservable, reduceState, INITIAL_STATE, _REDUCER_FACTORY, REDUCER_FACTORY, _INITIAL_REDUCERS, INITIAL_REDUCERS, STORE_FEATURES, _INITIAL_STATE, META_REDUCERS, _STORE_REDUCERS, _FEATURE_REDUCERS, FEATURE_REDUCERS, _FEATURE_REDUCERS_TOKEN, StoreModule, StoreRootModule, StoreFeatureModule, _initialStateFactory, _createStoreReducers, _createFeatureReducers };
+export { ACTIONS_SUBJECT_PROVIDERS as ɵngrx_modules_store_store_c, REDUCER_MANAGER_PROVIDERS as ɵngrx_modules_store_store_d, SCANNED_ACTIONS_SUBJECT_PROVIDERS as ɵngrx_modules_store_store_e, isEqualCheck as ɵngrx_modules_store_store_f, STATE_PROVIDERS as ɵngrx_modules_store_store_g, STORE_PROVIDERS as ɵngrx_modules_store_store_b, _createFeatureStore as ɵngrx_modules_store_store_j, _FEATURE_CONFIGS as ɵngrx_modules_store_store_h, _STORE_FEATURES as ɵngrx_modules_store_store_i, createAction, props, union, Store, select, combineReducers, compose, createReducerFactory, ActionsSubject, INIT, ReducerManager, ReducerObservable, ReducerManagerDispatcher, UPDATE, ScannedActionsSubject, createSelector, createSelectorFactory, createFeatureSelector, defaultMemoize, defaultStateFn, resultMemoize, State, StateObservable, reduceState, INITIAL_STATE, _REDUCER_FACTORY, REDUCER_FACTORY, _INITIAL_REDUCERS, INITIAL_REDUCERS, STORE_FEATURES, _INITIAL_STATE, META_REDUCERS, _STORE_REDUCERS, _FEATURE_REDUCERS, FEATURE_REDUCERS, _FEATURE_REDUCERS_TOKEN, StoreModule, StoreRootModule, StoreFeatureModule, _initialStateFactory, _createStoreReducers, _createFeatureReducers };
 //# sourceMappingURL=store.js.map

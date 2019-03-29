@@ -1,4 +1,5 @@
-export { Action, ActionReducer, ActionReducerMap, ActionReducerFactory, MetaReducer, Selector, SelectorWithProps, } from './models';
+export { Action, ActionCreator, ActionReducer, ActionReducerMap, ActionReducerFactory, Creator, MetaReducer, Selector, SelectorWithProps, } from './models';
+export { createAction, props, union } from './action_creator';
 export { Store, select } from './store';
 export { combineReducers, compose, createReducerFactory } from './utils';
 export { ActionsSubject, INIT } from './actions_subject';

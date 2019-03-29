@@ -1,11 +1,74 @@
 /**
- * @license NgRx 7.2.0+38.sha-d559998
+ * @license NgRx 7.2.0+39.sha-e7fe28b
  * (c) 2015-2018 Brandon Roberts, Mike Ryan, Rob Wormald, Victor Savkin
  * License: MIT
  */
 import { Injectable, InjectionToken, Inject, NgModule, Injector } from '@angular/core';
 import { BehaviorSubject, Observable, Subject, queueScheduler } from 'rxjs';
 import { observeOn, withLatestFrom, scan, pluck, map, distinctUntilChanged } from 'rxjs/operators';
+
+/**
+ * @fileoverview added by tsickle
+ * @suppress {checkTypes,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
+ */
+/**
+ * @template T
+ * @param {?} type
+ * @param {?=} config
+ * @return {?}
+ */
+function createAction(type, config) {
+    if (typeof config === 'function') {
+        return defineType(type, (/**
+         * @param {...?} args
+         * @return {?}
+         */
+        (...args) => (Object.assign({}, config(...args), { type }))));
+    }
+    /** @type {?} */
+    const as = config ? config._as : 'empty';
+    switch (as) {
+        case 'empty':
+            return defineType(type, (/**
+             * @return {?}
+             */
+            () => ({ type })));
+        case 'props':
+            return defineType(type, (/**
+             * @param {?} props
+             * @return {?}
+             */
+            (props) => (Object.assign({}, ((/** @type {?} */ (props))), { type }))));
+        default:
+            throw new Error('Unexpected config.');
+    }
+}
+/**
+ * @template P
+ * @return {?}
+ */
+function props() {
+    return { _as: 'props', _p: (/** @type {?} */ (undefined)) };
+}
+/**
+ * @template C
+ * @param {?} creators
+ * @return {?}
+ */
+function union(creators) {
+    return (/** @type {?} */ (undefined));
+}
+/**
+ * @param {?} type
+ * @param {?} creator
+ * @return {?}
+ */
+function defineType(type, creator) {
+    return Object.defineProperty(creator, 'type', {
+        value: type,
+        writable: false,
+    });
+}
 
 /**
  * @fileoverview added by tsickle
@@ -1071,5 +1134,5 @@ function _initialStateFactory(initialState) {
  * Generated bundle index. Do not edit.
  */
 
-export { ACTIONS_SUBJECT_PROVIDERS as ɵngrx_modules_store_store_c, REDUCER_MANAGER_PROVIDERS as ɵngrx_modules_store_store_d, SCANNED_ACTIONS_SUBJECT_PROVIDERS as ɵngrx_modules_store_store_e, isEqualCheck as ɵngrx_modules_store_store_f, STATE_PROVIDERS as ɵngrx_modules_store_store_g, STORE_PROVIDERS as ɵngrx_modules_store_store_b, _createFeatureStore as ɵngrx_modules_store_store_j, _FEATURE_CONFIGS as ɵngrx_modules_store_store_h, _STORE_FEATURES as ɵngrx_modules_store_store_i, Store, select, combineReducers, compose, createReducerFactory, ActionsSubject, INIT, ReducerManager, ReducerObservable, ReducerManagerDispatcher, UPDATE, ScannedActionsSubject, createSelector, createSelectorFactory, createFeatureSelector, defaultMemoize, defaultStateFn, resultMemoize, State, StateObservable, reduceState, INITIAL_STATE, _REDUCER_FACTORY, REDUCER_FACTORY, _INITIAL_REDUCERS, INITIAL_REDUCERS, STORE_FEATURES, _INITIAL_STATE, META_REDUCERS, _STORE_REDUCERS, _FEATURE_REDUCERS, FEATURE_REDUCERS, _FEATURE_REDUCERS_TOKEN, StoreModule, StoreRootModule, StoreFeatureModule, _initialStateFactory, _createStoreReducers, _createFeatureReducers };
+export { ACTIONS_SUBJECT_PROVIDERS as ɵngrx_modules_store_store_c, REDUCER_MANAGER_PROVIDERS as ɵngrx_modules_store_store_d, SCANNED_ACTIONS_SUBJECT_PROVIDERS as ɵngrx_modules_store_store_e, isEqualCheck as ɵngrx_modules_store_store_f, STATE_PROVIDERS as ɵngrx_modules_store_store_g, STORE_PROVIDERS as ɵngrx_modules_store_store_b, _createFeatureStore as ɵngrx_modules_store_store_j, _FEATURE_CONFIGS as ɵngrx_modules_store_store_h, _STORE_FEATURES as ɵngrx_modules_store_store_i, createAction, props, union, Store, select, combineReducers, compose, createReducerFactory, ActionsSubject, INIT, ReducerManager, ReducerObservable, ReducerManagerDispatcher, UPDATE, ScannedActionsSubject, createSelector, createSelectorFactory, createFeatureSelector, defaultMemoize, defaultStateFn, resultMemoize, State, StateObservable, reduceState, INITIAL_STATE, _REDUCER_FACTORY, REDUCER_FACTORY, _INITIAL_REDUCERS, INITIAL_REDUCERS, STORE_FEATURES, _INITIAL_STATE, META_REDUCERS, _STORE_REDUCERS, _FEATURE_REDUCERS, FEATURE_REDUCERS, _FEATURE_REDUCERS_TOKEN, StoreModule, StoreRootModule, StoreFeatureModule, _initialStateFactory, _createStoreReducers, _createFeatureReducers };
 //# sourceMappingURL=store.js.map
