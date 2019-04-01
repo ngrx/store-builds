@@ -15,7 +15,7 @@ export declare type ActionReducerMap<T, V extends Action = Action> = {
 export interface ActionReducerFactory<T, V extends Action = Action> {
     (reducerMap: ActionReducerMap<T, V>, initialState?: InitialState<T>): ActionReducer<T, V>;
 }
-export declare type MetaReducer<T, V extends Action = Action> = (reducer: ActionReducer<T, V>) => ActionReducer<T, V>;
+export declare type MetaReducer<T = any, V extends Action = Action> = (reducer: ActionReducer<T, V>) => ActionReducer<T, V>;
 export interface StoreFeature<T, V extends Action = Action> {
     key: string;
     reducers: ActionReducerMap<T, V> | ActionReducer<T, V>;
@@ -29,3 +29,8 @@ export declare type Creator = (...args: any[]) => object;
 export declare type ActionCreator<T extends string, C extends Creator> = C & TypedAction<T>;
 export declare type FunctionWithParametersType<P extends unknown[], R = void> = (...args: P) => R;
 export declare type ParametersType<T> = T extends (...args: infer U) => unknown ? U : never;
+export interface RuntimeChecks {
+    strictStateSerializability: boolean;
+    strictActionSerializability: boolean;
+    strictImmutability: boolean;
+}

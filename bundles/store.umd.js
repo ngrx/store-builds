@@ -1,5 +1,5 @@
 /**
- * @license NgRx 7.4.0+1.sha-78e237c
+ * @license NgRx 7.4.0+13.sha-7f42917
  * (c) 2015-2018 Brandon Roberts, Mike Ryan, Rob Wormald, Victor Savkin
  * License: MIT
  */
@@ -127,10 +127,9 @@
     var _INITIAL_STATE = new core.InjectionToken('@ngrx/store Internal Initial State');
     var INITIAL_STATE = new core.InjectionToken('@ngrx/store Initial State');
     var REDUCER_FACTORY = new core.InjectionToken('@ngrx/store Reducer Factory');
-    var _REDUCER_FACTORY = new core.InjectionToken('@ngrx/store Reducer Factory Provider');
+    var _REDUCER_FACTORY = new core.InjectionToken('@ngrx/store Internal Reducer Factory Provider');
     var INITIAL_REDUCERS = new core.InjectionToken('@ngrx/store Initial Reducers');
     var _INITIAL_REDUCERS = new core.InjectionToken('@ngrx/store Internal Initial Reducers');
-    var META_REDUCERS = new core.InjectionToken('@ngrx/store Meta Reducers');
     var STORE_FEATURES = new core.InjectionToken('@ngrx/store Store Features');
     var _STORE_REDUCERS = new core.InjectionToken('@ngrx/store Internal Store Reducers');
     var _FEATURE_REDUCERS = new core.InjectionToken('@ngrx/store Internal Feature Reducers');
@@ -138,6 +137,27 @@
     var _STORE_FEATURES = new core.InjectionToken('@ngrx/store Internal Store Features');
     var _FEATURE_REDUCERS_TOKEN = new core.InjectionToken('@ngrx/store Internal Feature Reducers Token');
     var FEATURE_REDUCERS = new core.InjectionToken('@ngrx/store Feature Reducers');
+    /**
+     * User-defined meta reducers from StoreModule.forRoot()
+     */
+    var USER_PROVIDED_META_REDUCERS = new core.InjectionToken('@ngrx/store User Provided Meta Reducers');
+    /**
+     * Meta reducers defined either internally by @ngrx/store or by library authors
+     */
+    var META_REDUCERS = new core.InjectionToken('@ngrx/store Meta Reducers');
+    /**
+     * Concats the user provided meta reducers and the meta reducers provided on the multi
+     * injection token
+     */
+    var _RESOLVED_META_REDUCERS = new core.InjectionToken('@ngrx/store Internal Resolved Meta Reducers');
+    /**
+     * Runtime checks defined by the user
+     */
+    var _USER_RUNTIME_CHECKS = new core.InjectionToken('@ngrx/store Internal User Runtime Checks Config');
+    /**
+     * Runtime checks currently in use
+     */
+    var _ACTIVE_RUNTIME_CHECKS = new core.InjectionToken('@ngrx/store Internal Runetime Checks');
 
     var __read$1 = (undefined && undefined.__read) || function (o, n) {
         var m = typeof Symbol === "function" && o[Symbol.iterator];
@@ -447,10 +467,13 @@
             var withLatestReducer$ = actionsOnQueue$.pipe(operators.withLatestFrom(reducer$));
             var seed = { state: initialState };
             var stateAndAction$ = withLatestReducer$.pipe(operators.scan(reduceState, seed));
-            _this.stateSubscription = stateAndAction$.subscribe(function (_a) {
-                var state = _a.state, action = _a.action;
-                _this.next(state);
-                scannedActions.next(action);
+            _this.stateSubscription = stateAndAction$.subscribe({
+                next: function (_a) {
+                    var state = _a.state, action = _a.action;
+                    _this.next(state);
+                    scannedActions.next(action);
+                },
+                error: function (err) { return _this.error(err); },
             });
             return _this;
         }
@@ -701,11 +724,6 @@
                 return projector.apply(null, selectors);
             });
             var memoizedState = defaultMemoize(function (state, props) {
-                // createSelector works directly on state
-                // e.g. createSelector((state, props) => ...)
-                if (selectors.length === 0 && props !== undefined) {
-                    return projector.apply(null, [state, props]);
-                }
                 return options.stateFn.apply(null, [
                     state,
                     selectors,
@@ -728,6 +746,147 @@
         return createSelector(function (state) { return state[featureName]; }, function (featureState) { return featureState; });
     }
 
+    var __read$5 = (undefined && undefined.__read) || function (o, n) {
+        var m = typeof Symbol === "function" && o[Symbol.iterator];
+        if (!m) return o;
+        var i = m.call(o), r, ar = [], e;
+        try {
+            while ((n === void 0 || n-- > 0) && !(r = i.next()).done) ar.push(r.value);
+        }
+        catch (error) { e = { error: error }; }
+        finally {
+            try {
+                if (r && !r.done && (m = i["return"])) m.call(i);
+            }
+            finally { if (e) throw e.error; }
+        }
+        return ar;
+    };
+    var __spread$4 = (undefined && undefined.__spread) || function () {
+        for (var ar = [], i = 0; i < arguments.length; i++) ar = ar.concat(__read$5(arguments[i]));
+        return ar;
+    };
+    function getUnserializable(target, path) {
+        if (path === void 0) { path = []; }
+        // Guard against undefined and null, e.g. a reducer that returns undefined
+        if ((isUndefined(target) || isNull(target)) && path.length === 0) {
+            return {
+                path: ['root'],
+                value: target,
+            };
+        }
+        var keys = Object.keys(target);
+        return keys.reduce(function (result, key) {
+            if (result) {
+                return result;
+            }
+            var value = target[key];
+            if (isUndefined(value) ||
+                isNull(value) ||
+                isNumber(value) ||
+                isBoolean(value) ||
+                isString(value) ||
+                isArray(value)) {
+                return false;
+            }
+            if (isPlainObject(value)) {
+                return getUnserializable(value, __spread$4(path, [key]));
+            }
+            return {
+                path: __spread$4(path, [key]),
+                value: value,
+            };
+        }, false);
+    }
+    function throwIfUnserializable(unserializable, context) {
+        if (unserializable === false) {
+            return;
+        }
+        var unserializablePath = unserializable.path.join('.');
+        var error = new Error("Detected unserializable " + context + " at \"" + unserializablePath + "\"");
+        error.value = unserializable.value;
+        error.unserializablePath = unserializablePath;
+        throw error;
+    }
+    /**
+     * Object Utilities
+     */
+    function isUndefined(target) {
+        return target === undefined;
+    }
+    function isNull(target) {
+        return target === null;
+    }
+    function isArray(target) {
+        return Array.isArray(target);
+    }
+    function isString(target) {
+        return typeof target === 'string';
+    }
+    function isBoolean(target) {
+        return typeof target === 'boolean';
+    }
+    function isNumber(target) {
+        return typeof target === 'number';
+    }
+    function isObjectLike(target) {
+        return typeof target === 'object' && target !== null;
+    }
+    function isObject(target) {
+        return isObjectLike(target) && !isArray(target);
+    }
+    function isPlainObject(target) {
+        if (!isObject(target)) {
+            return false;
+        }
+        var targetPrototype = Object.getPrototypeOf(target);
+        return targetPrototype === Object.prototype || targetPrototype === null;
+    }
+    function isFunction(target) {
+        return typeof target === 'function';
+    }
+    function hasOwnProperty(target, propertyName) {
+        return Object.prototype.hasOwnProperty.call(target, propertyName);
+    }
+
+    function stateSerializationCheckMetaReducer(reducer) {
+        return function (state, action) {
+            var nextState = reducer(state, action);
+            var unserializable = getUnserializable(nextState);
+            throwIfUnserializable(unserializable, 'state');
+            return nextState;
+        };
+    }
+
+    function actionSerializationCheckMetaReducer(reducer) {
+        return function (state, action) {
+            var unserializable = getUnserializable(action);
+            throwIfUnserializable(unserializable, 'action');
+            return reducer(state, action);
+        };
+    }
+
+    function immutabilityCheckMetaReducer(reducer) {
+        return function (state, action) {
+            var nextState = reducer(state, freeze(action));
+            return freeze(nextState);
+        };
+    }
+    function freeze(target) {
+        Object.freeze(target);
+        var targetIsFunction = isFunction(target);
+        Object.getOwnPropertyNames(target).forEach(function (prop) {
+            var propValue = target[prop];
+            if (hasOwnProperty(target, prop) && targetIsFunction
+                ? prop !== 'caller' && prop !== 'callee' && prop !== 'arguments'
+                : isObjectLike(propValue) || isFunction(propValue) &&
+                    !Object.isFrozen(propValue)) {
+                freeze(propValue);
+            }
+        });
+        return target;
+    }
+
     var __assign$2 = (undefined && undefined.__assign) || function () {
         __assign$2 = Object.assign || function(t) {
             for (var s, i = 1, n = arguments.length; i < n; i++) {
@@ -738,6 +897,84 @@
             return t;
         };
         return __assign$2.apply(this, arguments);
+    };
+    function createActiveRuntimeChecks(runtimeChecks) {
+        if (core.isDevMode()) {
+            if (runtimeChecks === undefined) {
+                console.warn('@ngrx/store: runtime checks are currently opt-in but will be the default in the next major version, see https://ngrx.io/guide/migration/v8 for more information.');
+            }
+            return __assign$2({ strictStateSerializability: false, strictActionSerializability: false, strictImmutability: false }, runtimeChecks);
+        }
+        return {
+            strictStateSerializability: false,
+            strictActionSerializability: false,
+            strictImmutability: false,
+        };
+    }
+    function createStateSerializationCheckMetaReducer(_a) {
+        var strictStateSerializability = _a.strictStateSerializability;
+        return function (reducer) {
+            return strictStateSerializability
+                ? stateSerializationCheckMetaReducer(reducer)
+                : reducer;
+        };
+    }
+    function createActionSerializationCheckMetaReducer(_a) {
+        var strictActionSerializability = _a.strictActionSerializability;
+        return function (reducer) {
+            return strictActionSerializability
+                ? actionSerializationCheckMetaReducer(reducer)
+                : reducer;
+        };
+    }
+    function createImmutabilityCheckMetaReducer(_a) {
+        var strictImmutability = _a.strictImmutability;
+        return function (reducer) {
+            return strictImmutability ? immutabilityCheckMetaReducer(reducer) : reducer;
+        };
+    }
+    function provideRuntimeChecks(runtimeChecks) {
+        return [
+            {
+                provide: _USER_RUNTIME_CHECKS,
+                useValue: runtimeChecks,
+            },
+            {
+                provide: _ACTIVE_RUNTIME_CHECKS,
+                deps: [_USER_RUNTIME_CHECKS],
+                useFactory: createActiveRuntimeChecks,
+            },
+            {
+                provide: META_REDUCERS,
+                multi: true,
+                deps: [_ACTIVE_RUNTIME_CHECKS],
+                useFactory: createStateSerializationCheckMetaReducer,
+            },
+            {
+                provide: META_REDUCERS,
+                multi: true,
+                deps: [_ACTIVE_RUNTIME_CHECKS],
+                useFactory: createActionSerializationCheckMetaReducer,
+            },
+            {
+                provide: META_REDUCERS,
+                multi: true,
+                deps: [_ACTIVE_RUNTIME_CHECKS],
+                useFactory: createImmutabilityCheckMetaReducer,
+            },
+        ];
+    }
+
+    var __assign$3 = (undefined && undefined.__assign) || function () {
+        __assign$3 = Object.assign || function(t) {
+            for (var s, i = 1, n = arguments.length; i < n; i++) {
+                s = arguments[i];
+                for (var p in s) if (Object.prototype.hasOwnProperty.call(s, p))
+                    t[p] = s[p];
+            }
+            return t;
+        };
+        return __assign$3.apply(this, arguments);
     };
     var __decorate$5 = (undefined && undefined.__decorate) || function (decorators, target, key, desc) {
         var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
@@ -771,7 +1008,7 @@
             var feats = features.map(function (feature, index) {
                 var featureReducerCollection = featureReducers.shift();
                 var reducers = featureReducerCollection /*TODO(#823)*/[index];
-                return __assign$2({}, feature, { reducers: reducers, initialState: _initialStateFactory(feature.initialState) });
+                return __assign$3({}, feature, { reducers: reducers, initialState: _initialStateFactory(feature.initialState) });
             });
             reducerManager.addFeatures(feats);
         }
@@ -812,8 +1049,13 @@
                         useFactory: _createStoreReducers,
                     },
                     {
-                        provide: META_REDUCERS,
+                        provide: USER_PROVIDED_META_REDUCERS,
                         useValue: config.metaReducers ? config.metaReducers : [],
+                    },
+                    {
+                        provide: _RESOLVED_META_REDUCERS,
+                        deps: [META_REDUCERS, USER_PROVIDED_META_REDUCERS],
+                        useFactory: _concatMetaReducers,
                     },
                     {
                         provide: _REDUCER_FACTORY,
@@ -823,7 +1065,7 @@
                     },
                     {
                         provide: REDUCER_FACTORY,
-                        deps: [_REDUCER_FACTORY, META_REDUCERS],
+                        deps: [_REDUCER_FACTORY, _RESOLVED_META_REDUCERS],
                         useFactory: createReducerFactory,
                     },
                     ACTIONS_SUBJECT_PROVIDERS,
@@ -831,6 +1073,7 @@
                     SCANNED_ACTIONS_SUBJECT_PROVIDERS,
                     STATE_PROVIDERS,
                     STORE_PROVIDERS,
+                    provideRuntimeChecks(config.runtimeChecks),
                 ],
             };
         };
@@ -889,7 +1132,7 @@
         ], StoreModule);
         return StoreModule;
     }());
-    function _createStoreReducers(injector, reducers, tokenReducers) {
+    function _createStoreReducers(injector, reducers) {
         return reducers instanceof core.InjectionToken ? injector.get(reducers) : reducers;
     }
     function _createFeatureStore(injector, configs, featureStores) {
@@ -908,8 +1151,8 @@
             return feat;
         });
     }
-    function _createFeatureReducers(injector, reducerCollection, tokenReducerCollection) {
-        var reducers = reducerCollection.map(function (reducer, index) {
+    function _createFeatureReducers(injector, reducerCollection) {
+        var reducers = reducerCollection.map(function (reducer) {
             return reducer instanceof core.InjectionToken ? injector.get(reducer) : reducer;
         });
         return reducers;
@@ -919,6 +1162,9 @@
             return initialState();
         }
         return initialState;
+    }
+    function _concatMetaReducers(metaReducers, userProvidedMetaReducers) {
+        return metaReducers.concat(userProvidedMetaReducers);
     }
 
     /**
@@ -933,13 +1179,31 @@
 
     exports.ɵngrx_modules_store_store_c = ACTIONS_SUBJECT_PROVIDERS;
     exports.ɵngrx_modules_store_store_d = REDUCER_MANAGER_PROVIDERS;
+    exports.ɵngrx_modules_store_store_z = createActionSerializationCheckMetaReducer;
+    exports.ɵngrx_modules_store_store_x = createActiveRuntimeChecks;
+    exports.ɵngrx_modules_store_store_ba = createImmutabilityCheckMetaReducer;
+    exports.ɵngrx_modules_store_store_y = createStateSerializationCheckMetaReducer;
+    exports.ɵngrx_modules_store_store_bb = provideRuntimeChecks;
     exports.ɵngrx_modules_store_store_e = SCANNED_ACTIONS_SUBJECT_PROVIDERS;
     exports.ɵngrx_modules_store_store_f = isEqualCheck;
     exports.ɵngrx_modules_store_store_g = STATE_PROVIDERS;
     exports.ɵngrx_modules_store_store_b = STORE_PROVIDERS;
-    exports.ɵngrx_modules_store_store_j = _createFeatureStore;
-    exports.ɵngrx_modules_store_store_h = _FEATURE_CONFIGS;
-    exports.ɵngrx_modules_store_store_i = _STORE_FEATURES;
+    exports.ɵngrx_modules_store_store_w = _concatMetaReducers;
+    exports.ɵngrx_modules_store_store_u = _createFeatureReducers;
+    exports.ɵngrx_modules_store_store_t = _createFeatureStore;
+    exports.ɵngrx_modules_store_store_s = _createStoreReducers;
+    exports.ɵngrx_modules_store_store_v = _initialStateFactory;
+    exports.ɵngrx_modules_store_store_r = _ACTIVE_RUNTIME_CHECKS;
+    exports.ɵngrx_modules_store_store_m = _FEATURE_CONFIGS;
+    exports.ɵngrx_modules_store_store_l = _FEATURE_REDUCERS;
+    exports.ɵngrx_modules_store_store_o = _FEATURE_REDUCERS_TOKEN;
+    exports.ɵngrx_modules_store_store_j = _INITIAL_REDUCERS;
+    exports.ɵngrx_modules_store_store_h = _INITIAL_STATE;
+    exports.ɵngrx_modules_store_store_i = _REDUCER_FACTORY;
+    exports.ɵngrx_modules_store_store_p = _RESOLVED_META_REDUCERS;
+    exports.ɵngrx_modules_store_store_n = _STORE_FEATURES;
+    exports.ɵngrx_modules_store_store_k = _STORE_REDUCERS;
+    exports.ɵngrx_modules_store_store_q = _USER_RUNTIME_CHECKS;
     exports.createAction = createAction;
     exports.props = props;
     exports.union = union;
@@ -965,23 +1229,15 @@
     exports.StateObservable = StateObservable;
     exports.reduceState = reduceState;
     exports.INITIAL_STATE = INITIAL_STATE;
-    exports._REDUCER_FACTORY = _REDUCER_FACTORY;
     exports.REDUCER_FACTORY = REDUCER_FACTORY;
-    exports._INITIAL_REDUCERS = _INITIAL_REDUCERS;
     exports.INITIAL_REDUCERS = INITIAL_REDUCERS;
     exports.STORE_FEATURES = STORE_FEATURES;
-    exports._INITIAL_STATE = _INITIAL_STATE;
     exports.META_REDUCERS = META_REDUCERS;
-    exports._STORE_REDUCERS = _STORE_REDUCERS;
-    exports._FEATURE_REDUCERS = _FEATURE_REDUCERS;
     exports.FEATURE_REDUCERS = FEATURE_REDUCERS;
-    exports._FEATURE_REDUCERS_TOKEN = _FEATURE_REDUCERS_TOKEN;
+    exports.USER_PROVIDED_META_REDUCERS = USER_PROVIDED_META_REDUCERS;
     exports.StoreModule = StoreModule;
     exports.StoreRootModule = StoreRootModule;
     exports.StoreFeatureModule = StoreFeatureModule;
-    exports._initialStateFactory = _initialStateFactory;
-    exports._createStoreReducers = _createStoreReducers;
-    exports._createFeatureReducers = _createFeatureReducers;
 
     Object.defineProperty(exports, '__esModule', { value: true });
 

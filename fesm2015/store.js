@@ -1,9 +1,9 @@
 /**
- * @license NgRx 7.4.0+1.sha-78e237c
+ * @license NgRx 7.4.0+13.sha-7f42917
  * (c) 2015-2018 Brandon Roberts, Mike Ryan, Rob Wormald, Victor Savkin
  * License: MIT
  */
-import { Injectable, InjectionToken, Inject, NgModule, Injector } from '@angular/core';
+import { Injectable, InjectionToken, Inject, isDevMode, NgModule, Injector } from '@angular/core';
 import { BehaviorSubject, Observable, Subject, queueScheduler } from 'rxjs';
 import { observeOn, withLatestFrom, scan, pluck, map, distinctUntilChanged } from 'rxjs/operators';
 
@@ -125,13 +125,11 @@ const INITIAL_STATE = new InjectionToken('@ngrx/store Initial State');
 /** @type {?} */
 const REDUCER_FACTORY = new InjectionToken('@ngrx/store Reducer Factory');
 /** @type {?} */
-const _REDUCER_FACTORY = new InjectionToken('@ngrx/store Reducer Factory Provider');
+const _REDUCER_FACTORY = new InjectionToken('@ngrx/store Internal Reducer Factory Provider');
 /** @type {?} */
 const INITIAL_REDUCERS = new InjectionToken('@ngrx/store Initial Reducers');
 /** @type {?} */
 const _INITIAL_REDUCERS = new InjectionToken('@ngrx/store Internal Initial Reducers');
-/** @type {?} */
-const META_REDUCERS = new InjectionToken('@ngrx/store Meta Reducers');
 /** @type {?} */
 const STORE_FEATURES = new InjectionToken('@ngrx/store Store Features');
 /** @type {?} */
@@ -146,6 +144,32 @@ const _STORE_FEATURES = new InjectionToken('@ngrx/store Internal Store Features'
 const _FEATURE_REDUCERS_TOKEN = new InjectionToken('@ngrx/store Internal Feature Reducers Token');
 /** @type {?} */
 const FEATURE_REDUCERS = new InjectionToken('@ngrx/store Feature Reducers');
+/**
+ * User-defined meta reducers from StoreModule.forRoot()
+ * @type {?}
+ */
+const USER_PROVIDED_META_REDUCERS = new InjectionToken('@ngrx/store User Provided Meta Reducers');
+/**
+ * Meta reducers defined either internally by \@ngrx/store or by library authors
+ * @type {?}
+ */
+const META_REDUCERS = new InjectionToken('@ngrx/store Meta Reducers');
+/**
+ * Concats the user provided meta reducers and the meta reducers provided on the multi
+ * injection token
+ * @type {?}
+ */
+const _RESOLVED_META_REDUCERS = new InjectionToken('@ngrx/store Internal Resolved Meta Reducers');
+/**
+ * Runtime checks defined by the user
+ * @type {?}
+ */
+const _USER_RUNTIME_CHECKS = new InjectionToken('@ngrx/store Internal User Runtime Checks Config');
+/**
+ * Runtime checks currently in use
+ * @type {?}
+ */
+const _ACTIVE_RUNTIME_CHECKS = new InjectionToken('@ngrx/store Internal Runetime Checks');
 
 /**
  * @fileoverview added by tsickle
@@ -501,14 +525,21 @@ class State extends BehaviorSubject {
         const seed = { state: initialState };
         /** @type {?} */
         const stateAndAction$ = withLatestReducer$.pipe(scan(reduceState, seed));
-        this.stateSubscription = stateAndAction$.subscribe((/**
-         * @param {?} __0
-         * @return {?}
-         */
-        ({ state, action }) => {
-            this.next(state);
-            scannedActions.next(action);
-        }));
+        this.stateSubscription = stateAndAction$.subscribe({
+            next: (/**
+             * @param {?} __0
+             * @return {?}
+             */
+            ({ state, action }) => {
+                this.next(state);
+                scannedActions.next(action);
+            }),
+            error: (/**
+             * @param {?} err
+             * @return {?}
+             */
+            err => this.error(err)),
+        });
     }
     /**
      * @return {?}
@@ -829,11 +860,6 @@ function createSelectorFactory(memoize, options = {
          * @return {?}
          */
         function (state, props) {
-            // createSelector works directly on state
-            // e.g. createSelector((state, props) => ...)
-            if (selectors.length === 0 && props !== undefined) {
-                return projector.apply(null, [state, props]);
-            }
             return options.stateFn.apply(null, [
                 state,
                 selectors,
@@ -873,6 +899,345 @@ function createFeatureSelector(featureName) {
      * @return {?}
      */
     (featureState) => featureState));
+}
+
+/**
+ * @fileoverview added by tsickle
+ * @suppress {checkTypes,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
+ */
+/**
+ * @param {?=} target
+ * @param {?=} path
+ * @return {?}
+ */
+function getUnserializable(target, path = []) {
+    // Guard against undefined and null, e.g. a reducer that returns undefined
+    if ((isUndefined(target) || isNull(target)) && path.length === 0) {
+        return {
+            path: ['root'],
+            value: target,
+        };
+    }
+    /** @type {?} */
+    const keys = Object.keys(target);
+    return keys.reduce((/**
+     * @param {?} result
+     * @param {?} key
+     * @return {?}
+     */
+    (result, key) => {
+        if (result) {
+            return result;
+        }
+        /** @type {?} */
+        const value = ((/** @type {?} */ (target)))[key];
+        if (isUndefined(value) ||
+            isNull(value) ||
+            isNumber(value) ||
+            isBoolean(value) ||
+            isString(value) ||
+            isArray(value)) {
+            return false;
+        }
+        if (isPlainObject(value)) {
+            return getUnserializable(value, [...path, key]);
+        }
+        return {
+            path: [...path, key],
+            value,
+        };
+    }), false);
+}
+/**
+ * @param {?} unserializable
+ * @param {?} context
+ * @return {?}
+ */
+function throwIfUnserializable(unserializable, context) {
+    if (unserializable === false) {
+        return;
+    }
+    /** @type {?} */
+    const unserializablePath = unserializable.path.join('.');
+    /** @type {?} */
+    const error = new Error(`Detected unserializable ${context} at "${unserializablePath}"`);
+    error.value = unserializable.value;
+    error.unserializablePath = unserializablePath;
+    throw error;
+}
+/**
+ * Object Utilities
+ * @param {?} target
+ * @return {?}
+ */
+function isUndefined(target) {
+    return target === undefined;
+}
+/**
+ * @param {?} target
+ * @return {?}
+ */
+function isNull(target) {
+    return target === null;
+}
+/**
+ * @param {?} target
+ * @return {?}
+ */
+function isArray(target) {
+    return Array.isArray(target);
+}
+/**
+ * @param {?} target
+ * @return {?}
+ */
+function isString(target) {
+    return typeof target === 'string';
+}
+/**
+ * @param {?} target
+ * @return {?}
+ */
+function isBoolean(target) {
+    return typeof target === 'boolean';
+}
+/**
+ * @param {?} target
+ * @return {?}
+ */
+function isNumber(target) {
+    return typeof target === 'number';
+}
+/**
+ * @param {?} target
+ * @return {?}
+ */
+function isObjectLike(target) {
+    return typeof target === 'object' && target !== null;
+}
+/**
+ * @param {?} target
+ * @return {?}
+ */
+function isObject(target) {
+    return isObjectLike(target) && !isArray(target);
+}
+/**
+ * @param {?} target
+ * @return {?}
+ */
+function isPlainObject(target) {
+    if (!isObject(target)) {
+        return false;
+    }
+    /** @type {?} */
+    const targetPrototype = Object.getPrototypeOf(target);
+    return targetPrototype === Object.prototype || targetPrototype === null;
+}
+/**
+ * @param {?} target
+ * @return {?}
+ */
+function isFunction(target) {
+    return typeof target === 'function';
+}
+/**
+ * @param {?} target
+ * @param {?} propertyName
+ * @return {?}
+ */
+function hasOwnProperty(target, propertyName) {
+    return Object.prototype.hasOwnProperty.call(target, propertyName);
+}
+
+/**
+ * @fileoverview added by tsickle
+ * @suppress {checkTypes,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
+ */
+/**
+ * @param {?} reducer
+ * @return {?}
+ */
+function stateSerializationCheckMetaReducer(reducer) {
+    return (/**
+     * @param {?} state
+     * @param {?} action
+     * @return {?}
+     */
+    function (state, action) {
+        /** @type {?} */
+        const nextState = reducer(state, action);
+        /** @type {?} */
+        const unserializable = getUnserializable(nextState);
+        throwIfUnserializable(unserializable, 'state');
+        return nextState;
+    });
+}
+
+/**
+ * @fileoverview added by tsickle
+ * @suppress {checkTypes,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
+ */
+/**
+ * @param {?} reducer
+ * @return {?}
+ */
+function actionSerializationCheckMetaReducer(reducer) {
+    return (/**
+     * @param {?} state
+     * @param {?} action
+     * @return {?}
+     */
+    function (state, action) {
+        /** @type {?} */
+        const unserializable = getUnserializable(action);
+        throwIfUnserializable(unserializable, 'action');
+        return reducer(state, action);
+    });
+}
+
+/**
+ * @fileoverview added by tsickle
+ * @suppress {checkTypes,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
+ */
+/**
+ * @param {?} reducer
+ * @return {?}
+ */
+function immutabilityCheckMetaReducer(reducer) {
+    return (/**
+     * @param {?} state
+     * @param {?} action
+     * @return {?}
+     */
+    function (state, action) {
+        /** @type {?} */
+        const nextState = reducer(state, freeze(action));
+        return freeze(nextState);
+    });
+}
+/**
+ * @param {?} target
+ * @return {?}
+ */
+function freeze(target) {
+    Object.freeze(target);
+    /** @type {?} */
+    const targetIsFunction = isFunction(target);
+    Object.getOwnPropertyNames(target).forEach((/**
+     * @param {?} prop
+     * @return {?}
+     */
+    prop => {
+        /** @type {?} */
+        const propValue = target[prop];
+        if (hasOwnProperty(target, prop) && targetIsFunction
+            ? prop !== 'caller' && prop !== 'callee' && prop !== 'arguments'
+            : isObjectLike(propValue) || isFunction(propValue) &&
+                !Object.isFrozen(propValue)) {
+            freeze(propValue);
+        }
+    }));
+    return target;
+}
+
+/**
+ * @fileoverview added by tsickle
+ * @suppress {checkTypes,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
+ */
+
+/**
+ * @fileoverview added by tsickle
+ * @suppress {checkTypes,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
+ */
+/**
+ * @param {?=} runtimeChecks
+ * @return {?}
+ */
+function createActiveRuntimeChecks(runtimeChecks) {
+    if (isDevMode()) {
+        if (runtimeChecks === undefined) {
+            console.warn('@ngrx/store: runtime checks are currently opt-in but will be the default in the next major version, see https://ngrx.io/guide/migration/v8 for more information.');
+        }
+        return Object.assign({ strictStateSerializability: false, strictActionSerializability: false, strictImmutability: false }, runtimeChecks);
+    }
+    return {
+        strictStateSerializability: false,
+        strictActionSerializability: false,
+        strictImmutability: false,
+    };
+}
+/**
+ * @param {?} __0
+ * @return {?}
+ */
+function createStateSerializationCheckMetaReducer({ strictStateSerializability, }) {
+    return (/**
+     * @param {?} reducer
+     * @return {?}
+     */
+    reducer => strictStateSerializability
+        ? stateSerializationCheckMetaReducer(reducer)
+        : reducer);
+}
+/**
+ * @param {?} __0
+ * @return {?}
+ */
+function createActionSerializationCheckMetaReducer({ strictActionSerializability, }) {
+    return (/**
+     * @param {?} reducer
+     * @return {?}
+     */
+    reducer => strictActionSerializability
+        ? actionSerializationCheckMetaReducer(reducer)
+        : reducer);
+}
+/**
+ * @param {?} __0
+ * @return {?}
+ */
+function createImmutabilityCheckMetaReducer({ strictImmutability, }) {
+    return (/**
+     * @param {?} reducer
+     * @return {?}
+     */
+    reducer => strictImmutability ? immutabilityCheckMetaReducer(reducer) : reducer);
+}
+/**
+ * @param {?=} runtimeChecks
+ * @return {?}
+ */
+function provideRuntimeChecks(runtimeChecks) {
+    return [
+        {
+            provide: _USER_RUNTIME_CHECKS,
+            useValue: runtimeChecks,
+        },
+        {
+            provide: _ACTIVE_RUNTIME_CHECKS,
+            deps: [_USER_RUNTIME_CHECKS],
+            useFactory: createActiveRuntimeChecks,
+        },
+        {
+            provide: META_REDUCERS,
+            multi: true,
+            deps: [_ACTIVE_RUNTIME_CHECKS],
+            useFactory: createStateSerializationCheckMetaReducer,
+        },
+        {
+            provide: META_REDUCERS,
+            multi: true,
+            deps: [_ACTIVE_RUNTIME_CHECKS],
+            useFactory: createActionSerializationCheckMetaReducer,
+        },
+        {
+            provide: META_REDUCERS,
+            multi: true,
+            deps: [_ACTIVE_RUNTIME_CHECKS],
+            useFactory: createImmutabilityCheckMetaReducer,
+        },
+    ];
 }
 
 /**
@@ -968,8 +1333,13 @@ class StoreModule {
                     useFactory: _createStoreReducers,
                 },
                 {
-                    provide: META_REDUCERS,
+                    provide: USER_PROVIDED_META_REDUCERS,
                     useValue: config.metaReducers ? config.metaReducers : [],
+                },
+                {
+                    provide: _RESOLVED_META_REDUCERS,
+                    deps: [META_REDUCERS, USER_PROVIDED_META_REDUCERS],
+                    useFactory: _concatMetaReducers,
                 },
                 {
                     provide: _REDUCER_FACTORY,
@@ -979,7 +1349,7 @@ class StoreModule {
                 },
                 {
                     provide: REDUCER_FACTORY,
-                    deps: [_REDUCER_FACTORY, META_REDUCERS],
+                    deps: [_REDUCER_FACTORY, _RESOLVED_META_REDUCERS],
                     useFactory: createReducerFactory,
                 },
                 ACTIONS_SUBJECT_PROVIDERS,
@@ -987,6 +1357,7 @@ class StoreModule {
                 SCANNED_ACTIONS_SUBJECT_PROVIDERS,
                 STATE_PROVIDERS,
                 STORE_PROVIDERS,
+                provideRuntimeChecks(config.runtimeChecks),
             ],
         };
     }
@@ -1052,10 +1423,9 @@ StoreModule.decorators = [
 /**
  * @param {?} injector
  * @param {?} reducers
- * @param {?} tokenReducers
  * @return {?}
  */
-function _createStoreReducers(injector, reducers, tokenReducers) {
+function _createStoreReducers(injector, reducers) {
     return reducers instanceof InjectionToken ? injector.get(reducers) : reducers;
 }
 /**
@@ -1089,17 +1459,15 @@ function _createFeatureStore(injector, configs, featureStores) {
 /**
  * @param {?} injector
  * @param {?} reducerCollection
- * @param {?} tokenReducerCollection
  * @return {?}
  */
-function _createFeatureReducers(injector, reducerCollection, tokenReducerCollection) {
+function _createFeatureReducers(injector, reducerCollection) {
     /** @type {?} */
     const reducers = reducerCollection.map((/**
      * @param {?} reducer
-     * @param {?} index
      * @return {?}
      */
-    (reducer, index) => {
+    reducer => {
         return reducer instanceof InjectionToken ? injector.get(reducer) : reducer;
     }));
     return reducers;
@@ -1113,6 +1481,14 @@ function _initialStateFactory(initialState) {
         return initialState();
     }
     return initialState;
+}
+/**
+ * @param {?} metaReducers
+ * @param {?} userProvidedMetaReducers
+ * @return {?}
+ */
+function _concatMetaReducers(metaReducers, userProvidedMetaReducers) {
+    return metaReducers.concat(userProvidedMetaReducers);
 }
 
 /**
@@ -1134,5 +1510,5 @@ function _initialStateFactory(initialState) {
  * Generated bundle index. Do not edit.
  */
 
-export { ACTIONS_SUBJECT_PROVIDERS as ɵngrx_modules_store_store_c, REDUCER_MANAGER_PROVIDERS as ɵngrx_modules_store_store_d, SCANNED_ACTIONS_SUBJECT_PROVIDERS as ɵngrx_modules_store_store_e, isEqualCheck as ɵngrx_modules_store_store_f, STATE_PROVIDERS as ɵngrx_modules_store_store_g, STORE_PROVIDERS as ɵngrx_modules_store_store_b, _createFeatureStore as ɵngrx_modules_store_store_j, _FEATURE_CONFIGS as ɵngrx_modules_store_store_h, _STORE_FEATURES as ɵngrx_modules_store_store_i, createAction, props, union, Store, select, combineReducers, compose, createReducerFactory, ActionsSubject, INIT, ReducerManager, ReducerObservable, ReducerManagerDispatcher, UPDATE, ScannedActionsSubject, createSelector, createSelectorFactory, createFeatureSelector, defaultMemoize, defaultStateFn, resultMemoize, State, StateObservable, reduceState, INITIAL_STATE, _REDUCER_FACTORY, REDUCER_FACTORY, _INITIAL_REDUCERS, INITIAL_REDUCERS, STORE_FEATURES, _INITIAL_STATE, META_REDUCERS, _STORE_REDUCERS, _FEATURE_REDUCERS, FEATURE_REDUCERS, _FEATURE_REDUCERS_TOKEN, StoreModule, StoreRootModule, StoreFeatureModule, _initialStateFactory, _createStoreReducers, _createFeatureReducers };
+export { ACTIONS_SUBJECT_PROVIDERS as ɵngrx_modules_store_store_c, REDUCER_MANAGER_PROVIDERS as ɵngrx_modules_store_store_d, createActionSerializationCheckMetaReducer as ɵngrx_modules_store_store_z, createActiveRuntimeChecks as ɵngrx_modules_store_store_x, createImmutabilityCheckMetaReducer as ɵngrx_modules_store_store_ba, createStateSerializationCheckMetaReducer as ɵngrx_modules_store_store_y, provideRuntimeChecks as ɵngrx_modules_store_store_bb, SCANNED_ACTIONS_SUBJECT_PROVIDERS as ɵngrx_modules_store_store_e, isEqualCheck as ɵngrx_modules_store_store_f, STATE_PROVIDERS as ɵngrx_modules_store_store_g, STORE_PROVIDERS as ɵngrx_modules_store_store_b, _concatMetaReducers as ɵngrx_modules_store_store_w, _createFeatureReducers as ɵngrx_modules_store_store_u, _createFeatureStore as ɵngrx_modules_store_store_t, _createStoreReducers as ɵngrx_modules_store_store_s, _initialStateFactory as ɵngrx_modules_store_store_v, _ACTIVE_RUNTIME_CHECKS as ɵngrx_modules_store_store_r, _FEATURE_CONFIGS as ɵngrx_modules_store_store_m, _FEATURE_REDUCERS as ɵngrx_modules_store_store_l, _FEATURE_REDUCERS_TOKEN as ɵngrx_modules_store_store_o, _INITIAL_REDUCERS as ɵngrx_modules_store_store_j, _INITIAL_STATE as ɵngrx_modules_store_store_h, _REDUCER_FACTORY as ɵngrx_modules_store_store_i, _RESOLVED_META_REDUCERS as ɵngrx_modules_store_store_p, _STORE_FEATURES as ɵngrx_modules_store_store_n, _STORE_REDUCERS as ɵngrx_modules_store_store_k, _USER_RUNTIME_CHECKS as ɵngrx_modules_store_store_q, createAction, props, union, Store, select, combineReducers, compose, createReducerFactory, ActionsSubject, INIT, ReducerManager, ReducerObservable, ReducerManagerDispatcher, UPDATE, ScannedActionsSubject, createSelector, createSelectorFactory, createFeatureSelector, defaultMemoize, defaultStateFn, resultMemoize, State, StateObservable, reduceState, INITIAL_STATE, REDUCER_FACTORY, INITIAL_REDUCERS, STORE_FEATURES, META_REDUCERS, FEATURE_REDUCERS, USER_PROVIDED_META_REDUCERS, StoreModule, StoreRootModule, StoreFeatureModule };
 //# sourceMappingURL=store.js.map
