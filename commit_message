@@ -1,1 +1,1 @@
-3b9b890 fix(schematics): check for empty name when using store schematic for feature states (#1659) (#1666)
+2a9b067 feat(store): add API to mock selectors (#1688)

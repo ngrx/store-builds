@@ -1,5 +1,5 @@
 /**
- * @license NgRx 7.4.0+16.sha-3b9b890
+ * @license NgRx 7.4.0+17.sha-2a9b067
  * (c) 2015-2018 Brandon Roberts, Mike Ryan, Rob Wormald, Victor Savkin
  * License: MIT
  */
@@ -656,12 +656,20 @@
         var lastArguments = null;
         // tslint:disable-next-line:no-any anything could be the result.
         var lastResult = null;
+        var overrideResult;
         function reset() {
             lastArguments = null;
             lastResult = null;
         }
+        function setResult(result) {
+            if (result === void 0) { result = undefined; }
+            overrideResult = result;
+        }
         // tslint:disable-next-line:no-any anything could be the result.
         function memoized() {
+            if (overrideResult !== undefined) {
+                return overrideResult;
+            }
             if (!lastArguments) {
                 lastResult = projectionFn.apply(null, arguments);
                 lastArguments = arguments;
@@ -678,7 +686,7 @@
             lastResult = newResult;
             return newResult;
         }
-        return { memoized: memoized, reset: reset };
+        return { memoized: memoized, reset: reset, setResult: setResult };
     }
     function createSelector() {
         var input = [];
@@ -739,6 +747,7 @@
             return Object.assign(memoizedState.memoized, {
                 release: release,
                 projector: memoizedProjector.memoized,
+                setResult: memoizedState.setResult,
             });
         };
     }

@@ -3,16 +3,19 @@ export declare type AnyFn = (...args: any[]) => any;
 export declare type MemoizedProjection = {
     memoized: AnyFn;
     reset: () => void;
+    setResult: (result?: any) => void;
 };
 export declare type MemoizeFn = (t: AnyFn) => MemoizedProjection;
 export declare type ComparatorFn = (a: any, b: any) => boolean;
 export interface MemoizedSelector<State, Result> extends Selector<State, Result> {
     release(): void;
     projector: AnyFn;
+    setResult: (result?: Result) => void;
 }
 export interface MemoizedSelectorWithProps<State, Props, Result> extends SelectorWithProps<State, Props, Result> {
     release(): void;
     projector: AnyFn;
+    setResult: (result?: Result) => void;
 }
 export declare function isEqualCheck(a: any, b: any): boolean;
 export declare function resultMemoize(projectionFn: AnyFn, isResultEqual: ComparatorFn): MemoizedProjection;

@@ -1,11 +1,11 @@
 /**
- * @license NgRx 7.4.0+16.sha-3b9b890
+ * @license NgRx 7.4.0+17.sha-2a9b067
  * (c) 2015-2018 Brandon Roberts, Mike Ryan, Rob Wormald, Victor Savkin
  * License: MIT
  */
 import { Injectable, Inject } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
-import { Store, ActionsSubject, ReducerManager, INITIAL_STATE, StateObservable } from '@ngrx/store';
+import { Store, createSelector, ActionsSubject, ReducerManager, INITIAL_STATE, StateObservable } from '@ngrx/store';
 
 /**
  * @fileoverview added by tsickle
@@ -43,6 +43,7 @@ class MockStore extends Store {
         super(state$, actionsObserver, reducerManager);
         this.state$ = state$;
         this.initialState = initialState;
+        this.resetSelectors();
         this.state$.next(this.initialState);
         this.scannedActions$ = actionsObserver.asObservable();
     }
@@ -52,6 +53,55 @@ class MockStore extends Store {
      */
     setState(nextState) {
         this.state$.next(nextState);
+    }
+    /**
+     * @template T, Result
+     * @param {?} selector
+     * @param {?} value
+     * @return {?}
+     */
+    overrideSelector(selector, value) {
+        MockStore.selectors.set(selector, value);
+        if (typeof selector === 'string') {
+            /** @type {?} */
+            const stringSelector = createSelector((/**
+             * @return {?}
+             */
+            () => { }), (/**
+             * @return {?}
+             */
+            () => value));
+            return stringSelector;
+        }
+        selector.setResult(value);
+        return selector;
+    }
+    /**
+     * @return {?}
+     */
+    resetSelectors() {
+        MockStore.selectors.forEach((/**
+         * @param {?} _
+         * @param {?} selector
+         * @return {?}
+         */
+        (_, selector) => {
+            if (typeof selector !== 'string') {
+                selector.release();
+                selector.setResult();
+            }
+        }));
+        MockStore.selectors.clear();
+    }
+    /**
+     * @param {?} selector
+     * @return {?}
+     */
+    select(selector) {
+        if (MockStore.selectors.has(selector)) {
+            return new BehaviorSubject(MockStore.selectors.get(selector)).asObservable();
+        }
+        return super.select(selector);
     }
     /**
      * @return {?}
@@ -66,6 +116,7 @@ class MockStore extends Store {
         /* noop */
     }
 }
+MockStore.selectors = new Map();
 MockStore.decorators = [
     { type: Injectable }
 ];

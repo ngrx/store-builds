@@ -1,5 +1,5 @@
 /**
- * @license NgRx 7.4.0+16.sha-3b9b890
+ * @license NgRx 7.4.0+17.sha-2a9b067
  * (c) 2015-2018 Brandon Roberts, Mike Ryan, Rob Wormald, Victor Savkin
  * License: MIT
  */
@@ -753,6 +753,8 @@ function defaultMemoize(projectionFn, isArgumentsEqual = isEqualCheck, isResultE
     // tslint:disable-next-line:no-any anything could be the result.
     /** @type {?} */
     let lastResult = null;
+    /** @type {?} */
+    let overrideResult;
     /**
      * @return {?}
      */
@@ -760,11 +762,21 @@ function defaultMemoize(projectionFn, isArgumentsEqual = isEqualCheck, isResultE
         lastArguments = null;
         lastResult = null;
     }
+    /**
+     * @param {?=} result
+     * @return {?}
+     */
+    function setResult(result = undefined) {
+        overrideResult = result;
+    }
     // tslint:disable-next-line:no-any anything could be the result.
     /**
      * @return {?}
      */
     function memoized() {
+        if (overrideResult !== undefined) {
+            return overrideResult;
+        }
         if (!lastArguments) {
             lastResult = projectionFn.apply(null, arguments);
             lastArguments = arguments;
@@ -782,7 +794,7 @@ function defaultMemoize(projectionFn, isArgumentsEqual = isEqualCheck, isResultE
         lastResult = newResult;
         return newResult;
     }
-    return { memoized, reset };
+    return { memoized, reset, setResult };
 }
 /**
  * @param {...?} input
@@ -882,6 +894,7 @@ function createSelectorFactory(memoize, options = {
         return Object.assign(memoizedState.memoized, {
             release,
             projector: memoizedProjector.memoized,
+            setResult: memoizedState.setResult,
         });
     });
 }

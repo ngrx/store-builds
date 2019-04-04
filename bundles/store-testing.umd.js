@@ -1,5 +1,5 @@
 /**
- * @license NgRx 7.4.0+16.sha-3b9b890
+ * @license NgRx 7.4.0+17.sha-2a9b067
  * (c) 2015-2018 Brandon Roberts, Mike Ryan, Rob Wormald, Victor Savkin
  * License: MIT
  */
@@ -74,12 +74,38 @@
             var _this = _super.call(this, state$, actionsObserver, reducerManager) || this;
             _this.state$ = state$;
             _this.initialState = initialState;
+            _this.resetSelectors();
             _this.state$.next(_this.initialState);
             _this.scannedActions$ = actionsObserver.asObservable();
             return _this;
         }
+        MockStore_1 = MockStore;
         MockStore.prototype.setState = function (nextState) {
             this.state$.next(nextState);
+        };
+        MockStore.prototype.overrideSelector = function (selector, value) {
+            MockStore_1.selectors.set(selector, value);
+            if (typeof selector === 'string') {
+                var stringSelector = store.createSelector(function () { }, function () { return value; });
+                return stringSelector;
+            }
+            selector.setResult(value);
+            return selector;
+        };
+        MockStore.prototype.resetSelectors = function () {
+            MockStore_1.selectors.forEach(function (_, selector) {
+                if (typeof selector !== 'string') {
+                    selector.release();
+                    selector.setResult();
+                }
+            });
+            MockStore_1.selectors.clear();
+        };
+        MockStore.prototype.select = function (selector) {
+            if (MockStore_1.selectors.has(selector)) {
+                return new rxjs.BehaviorSubject(MockStore_1.selectors.get(selector)).asObservable();
+            }
+            return _super.prototype.select.call(this, selector);
         };
         MockStore.prototype.addReducer = function () {
             /* noop */
@@ -87,7 +113,9 @@
         MockStore.prototype.removeReducer = function () {
             /* noop */
         };
-        MockStore = __decorate$1([
+        var MockStore_1;
+        MockStore.selectors = new Map();
+        MockStore = MockStore_1 = __decorate$1([
             core.Injectable(),
             __param(3, core.Inject(store.INITIAL_STATE)),
             __metadata$1("design:paramtypes", [MockState,
