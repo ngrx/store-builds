@@ -1,5 +1,5 @@
 /**
- * @license NgRx 7.4.0+20.sha-c9c9a0e
+ * @license NgRx 7.4.0+21.sha-00b550e
  * (c) 2015-2018 Brandon Roberts, Mike Ryan, Rob Wormald, Victor Savkin
  * License: MIT
  */
@@ -273,7 +273,10 @@ function compose(...functions) {
  */
 function createReducerFactory(reducerFactory, metaReducers) {
     if (Array.isArray(metaReducers) && metaReducers.length > 0) {
-        reducerFactory = compose.apply(null, [...metaReducers, reducerFactory]);
+        ((/** @type {?} */ (reducerFactory))) = compose.apply(null, [
+            ...metaReducers,
+            reducerFactory,
+        ]);
     }
     return (/**
      * @param {?} reducers
@@ -778,7 +781,7 @@ function defaultMemoize(projectionFn, isArgumentsEqual = isEqualCheck, isResultE
             return overrideResult;
         }
         if (!lastArguments) {
-            lastResult = projectionFn.apply(null, arguments);
+            lastResult = projectionFn.apply(null, (/** @type {?} */ (arguments)));
             lastArguments = arguments;
             return lastResult;
         }
@@ -787,7 +790,7 @@ function defaultMemoize(projectionFn, isArgumentsEqual = isEqualCheck, isResultE
         }
         lastArguments = arguments;
         /** @type {?} */
-        const newResult = projectionFn.apply(null, arguments);
+        const newResult = projectionFn.apply(null, (/** @type {?} */ (arguments)));
         if (isResultEqual(lastResult, newResult)) {
             return lastResult;
         }
