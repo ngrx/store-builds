@@ -1,1 +1,1 @@
-d472757 feat(entity): add undefined to Dictionary's index signature (#1719)
+04e07a6 feat(effects): allow non-dispatching effects to not return an action (#1689)
