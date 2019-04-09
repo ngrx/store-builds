@@ -1,1 +1,1 @@
-04e07a6 feat(effects): allow non-dispatching effects to not return an action (#1689)
+20a4d5e build: update to @bazel/jasmine (#1665)
