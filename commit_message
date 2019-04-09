@@ -1,1 +1,1 @@
-0abc948 feat(store): run migration schema for v8 beta (#1716)
+d472757 feat(entity): add undefined to Dictionary's index signature (#1719)
