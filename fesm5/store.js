@@ -1,5 +1,5 @@
 /**
- * @license NgRx 7.4.0+33.sha-20a4d5e
+ * @license NgRx 7.4.0+34.sha-56f8a59
  * (c) 2015-2018 Brandon Roberts, Mike Ryan, Rob Wormald, Victor Savkin
  * License: MIT
  */
@@ -636,10 +636,12 @@ function freeze(target) {
     var targetIsFunction = isFunction(target);
     Object.getOwnPropertyNames(target).forEach(function (prop) {
         var propValue = target[prop];
-        if (hasOwnProperty(target, prop) && targetIsFunction
-            ? prop !== 'caller' && prop !== 'callee' && prop !== 'arguments'
-            : isObjectLike(propValue) || isFunction(propValue) &&
-                !Object.isFrozen(propValue)) {
+        if (hasOwnProperty(target, prop) &&
+            (targetIsFunction
+                ? prop !== 'caller' && prop !== 'callee' && prop !== 'arguments'
+                : true) &&
+            (isObjectLike(propValue) || isFunction(propValue)) &&
+            !Object.isFrozen(propValue)) {
             freeze(propValue);
         }
     });
