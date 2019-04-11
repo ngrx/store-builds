@@ -1,1 +1,1 @@
-56f8a59 fix(store): add the missing bracket in immutability meta-reducer (#1721)
+1ab12e3 docs: add section to Effects overview about using state with effects (#1728)
