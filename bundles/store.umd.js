@@ -1,5 +1,5 @@
 /**
- * @license NgRx 7.4.0+47.sha-dbfdbaf
+ * @license NgRx 7.4.0+48.sha-f954e14
  * (c) 2015-2018 Brandon Roberts, Mike Ryan, Rob Wormald, Victor Savkin
  * License: MIT
  */
@@ -895,6 +895,50 @@
         return metaReducers.concat(userProvidedMetaReducers);
     }
 
+    function on() {
+        var args = [];
+        for (var _i = 0; _i < arguments.length; _i++) {
+            args[_i] = arguments[_i];
+        }
+        var reducer = args.pop();
+        var types = args.reduce(function (result, creator) { return tslib_1.__spread(result, [creator.type]); }, []);
+        return { reducer: reducer, types: types };
+    }
+    function createReducer(ons, initialState) {
+        var e_1, _a, e_2, _b;
+        var map = new Map();
+        try {
+            for (var ons_1 = tslib_1.__values(ons), ons_1_1 = ons_1.next(); !ons_1_1.done; ons_1_1 = ons_1.next()) {
+                var on_1 = ons_1_1.value;
+                try {
+                    for (var _c = tslib_1.__values(on_1.types), _d = _c.next(); !_d.done; _d = _c.next()) {
+                        var type = _d.value;
+                        map.set(type, on_1.reducer);
+                    }
+                }
+                catch (e_2_1) { e_2 = { error: e_2_1 }; }
+                finally {
+                    try {
+                        if (_d && !_d.done && (_b = _c.return)) _b.call(_c);
+                    }
+                    finally { if (e_2) throw e_2.error; }
+                }
+            }
+        }
+        catch (e_1_1) { e_1 = { error: e_1_1 }; }
+        finally {
+            try {
+                if (ons_1_1 && !ons_1_1.done && (_a = ons_1.return)) _a.call(ons_1);
+            }
+            finally { if (e_1) throw e_1.error; }
+        }
+        return function (state, action) {
+            if (state === void 0) { state = initialState; }
+            var reducer = map.get(action.type);
+            return reducer ? reducer(state, action) : state;
+        };
+    }
+
     /**
      * DO NOT EDIT
      *
@@ -966,6 +1010,8 @@
     exports.StoreModule = StoreModule;
     exports.StoreRootModule = StoreRootModule;
     exports.StoreFeatureModule = StoreFeatureModule;
+    exports.on = on;
+    exports.createReducer = createReducer;
 
     Object.defineProperty(exports, '__esModule', { value: true });
 

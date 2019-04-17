@@ -4,6 +4,9 @@ export interface Action {
 export declare interface TypedAction<T extends string> extends Action {
     readonly type: T;
 }
+export declare type ActionType<A> = A extends ActionCreator<infer T, infer C> ? ReturnType<C> & {
+    type: T;
+} : never;
 export declare type TypeId<T> = () => T;
 export declare type InitialState<T> = Partial<T> | TypeId<Partial<T>> | void;
 export interface ActionReducer<T, V extends Action = Action> {
@@ -26,7 +29,7 @@ export interface StoreFeature<T, V extends Action = Action> {
 export declare type Selector<T, V> = (state: T) => V;
 export declare type SelectorWithProps<State, Props, Result> = (state: State, props: Props) => Result;
 export declare type Creator = (...args: any[]) => object;
-export declare type ActionCreator<T extends string, C extends Creator> = C & TypedAction<T>;
+export declare type ActionCreator<T extends string = string, C extends Creator = Creator> = C & TypedAction<T>;
 export declare type FunctionWithParametersType<P extends unknown[], R = void> = (...args: P) => R;
 export declare type ParametersType<T> = T extends (...args: infer U) => unknown ? U : never;
 export interface RuntimeChecks {

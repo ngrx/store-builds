@@ -1,1 +1,1 @@
-dbfdbaf feat: introduce @ngrx/data library to the platform (#1754)
+f954e14 feat(store): add createReducer function (#1746)

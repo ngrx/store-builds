@@ -9,3 +9,4 @@ export { createSelector, createSelectorFactory, createFeatureSelector, defaultMe
 export { State, StateObservable, reduceState } from './state';
 export { INITIAL_STATE, REDUCER_FACTORY, INITIAL_REDUCERS, STORE_FEATURES, META_REDUCERS, FEATURE_REDUCERS, USER_PROVIDED_META_REDUCERS, } from './tokens';
 export { StoreModule, StoreRootModule, StoreFeatureModule, } from './store_module';
+export { on, createReducer } from './reducer_creator';
