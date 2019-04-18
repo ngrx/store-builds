@@ -1,1 +1,1 @@
-c0893c1 chore: release 8.0.0-beta.0
+fc0d9e4 ci: clean Bazel workspace before tests (#1773)
