@@ -1,1 +1,1 @@
-a53bffa docs: add 'data' contribution scope to CONTRIBUTING.md (#1779)
+4c850b5 refactor(data): rename NgRxDataModule to EntityDataModule (#1780)
