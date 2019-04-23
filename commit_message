@@ -1,1 +1,1 @@
-8a0a049 feat(schematics): add support for reducer creators (#1785)
+703b351 build: move pre-commit to husky hook (#1787)
