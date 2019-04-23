@@ -1,1 +1,1 @@
-4c850b5 refactor(data): rename NgRxDataModule to EntityDataModule (#1780)
+be106c9 docs: update breaking changes and add migration schematics to v8 migration guide (#1776)
