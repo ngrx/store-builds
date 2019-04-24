@@ -1,1 +1,1 @@
-2b83bef docs: add instructions for using ng add with @ngrx/schematics (#1770)
+8f2cb7b feat(store): change createReducer to avoid generic (#1796)

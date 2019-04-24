@@ -1,5 +1,5 @@
 /**
- * @license NgRx 7.4.0+67.sha-2b83bef
+ * @license NgRx 7.4.0+68.sha-8f2cb7b
  * (c) 2015-2018 Brandon Roberts, Mike Ryan, Rob Wormald, Victor Savkin
  * License: MIT
  */
@@ -903,7 +903,11 @@ function on() {
     var types = args.reduce(function (result, creator) { return __spread(result, [creator.type]); }, []);
     return { reducer: reducer, types: types };
 }
-function createReducer(ons, initialState) {
+function createReducer(initialState) {
+    var ons = [];
+    for (var _i = 1; _i < arguments.length; _i++) {
+        ons[_i - 1] = arguments[_i];
+    }
     var e_1, _a, e_2, _b;
     var map = new Map();
     try {
