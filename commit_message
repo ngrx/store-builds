@@ -1,1 +1,1 @@
-ecda5f7 feat(store): warn when same action is registered (#1801)
+63e4926 feat(store): expand createReducer type signature to support up to ten action creators (#1803)
