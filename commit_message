@@ -1,1 +1,1 @@
-46678f2 docs: add explanation and suggested fix for string enforcement of MemoizedSelector type (#1772)
+ecda5f7 feat(store): warn when same action is registered (#1801)
