@@ -1,1 +1,1 @@
-18f382b docs: remove undeclared close method call in data example (#1815)
+e1fae9e refactor(data): rename @params to @param to remove jsdoc warning (#1817)
