@@ -1,1 +1,1 @@
-00c00e0 fix(data): update the package name for replacement to ngrx-data (#1805)
+8755d07 docs: add section to Store testing guide on using mock selectors (#1797)
