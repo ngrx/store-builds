@@ -1,1 +1,1 @@
-e1fae9e refactor(data): rename @params to @param to remove jsdoc warning (#1817)
+6bb3f39 refactor(example): use barrel import for auth module (#1808)
