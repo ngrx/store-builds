@@ -1,5 +1,5 @@
 /**
- * @license NgRx 8.0.0-beta.1+11.sha-6bb3f39
+ * @license NgRx 8.0.0-beta.1+12.sha-b49638a
  * (c) 2015-2018 Brandon Roberts, Mike Ryan, Rob Wormald, Victor Savkin
  * License: MIT
  */
@@ -904,11 +904,11 @@ function on() {
     return { reducer: reducer, types: types };
 }
 function createReducer(initialState) {
+    var e_1, _a, e_2, _b;
     var ons = [];
     for (var _i = 1; _i < arguments.length; _i++) {
         ons[_i - 1] = arguments[_i];
     }
-    var e_1, _a, e_2, _b;
     var map = new Map();
     var devMode = isDevMode();
     try {

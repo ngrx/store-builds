@@ -1,6 +1,6 @@
 {
   "name": "@ngrx/store",
-  "version": "8.0.0-beta.1+11.sha-6bb3f39",
+  "version": "8.0.0-beta.1+12.sha-b49638a",
   "description": "RxJS powered Redux for Angular apps",
   "repository": {
     "type": "git",
@@ -22,7 +22,7 @@
   "homepage": "https://github.com/ngrx/platform#readme",
   "peerDependencies": {
     "@angular/core": "^8.0.0-beta",
-    "rxjs": "^6.4.0"
+    "rxjs": "^6.5.0"
   },
   "schematics": "./schematics/collection.json",
   "ng-update": {

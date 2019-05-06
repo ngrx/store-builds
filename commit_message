@@ -1,1 +1,1 @@
-6bb3f39 refactor(example): use barrel import for auth module (#1808)
+b49638a build: update Angular dependencies to RC, TypeScript to 3.4.x, and RxJS to 6.5.x (#1795)
