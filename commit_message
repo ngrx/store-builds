@@ -1,1 +1,1 @@
-e836719 docs: fix table styles bug uncovered with latest CLI update (#1831)
+1fbd59c fix(example): resolve circular dependency (#1833)
