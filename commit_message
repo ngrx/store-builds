@@ -1,1 +1,1 @@
-eec9cc6 docs: use more neutral intro to NgRx Data (#1838)
+b07ae4e revert: warn when same action is registered (#1801) (#1841)

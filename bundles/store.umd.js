@@ -1,5 +1,5 @@
 /**
- * @license NgRx 8.0.0-beta.1+17.sha-eec9cc6
+ * @license NgRx 8.0.0-beta.1+18.sha-b07ae4e
  * (c) 2015-2018 Brandon Roberts, Mike Ryan, Rob Wormald, Victor Savkin
  * License: MIT
  */
@@ -911,16 +911,12 @@
             ons[_i - 1] = arguments[_i];
         }
         var map = new Map();
-        var devMode = core.isDevMode();
         try {
             for (var ons_1 = tslib_1.__values(ons), ons_1_1 = ons_1.next(); !ons_1_1.done; ons_1_1 = ons_1.next()) {
                 var on_1 = ons_1_1.value;
                 try {
                     for (var _c = tslib_1.__values(on_1.types), _d = _c.next(); !_d.done; _d = _c.next()) {
                         var type = _d.value;
-                        if (devMode && map.has(type)) {
-                            console.warn("@ngrx/store: The provided action type '" + type + "' is already provided.");
-                        }
                         map.set(type, on_1.reducer);
                     }
                 }
