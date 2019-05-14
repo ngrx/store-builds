@@ -1,10 +1,10 @@
 /**
- * @license NgRx 8.0.0-beta.1+20.sha-a8ce110
+ * @license NgRx 8.0.0-beta.1+22.sha-92a6b20
  * (c) 2015-2018 Brandon Roberts, Mike Ryan, Rob Wormald, Victor Savkin
  * License: MIT
  */
 import { __extends, __decorate, __metadata, __param } from 'tslib';
-import { Injectable, Inject } from '@angular/core';
+import { Injectable, InjectionToken, Inject } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
 import { createSelector, INITIAL_STATE, ActionsSubject, ReducerManager, Store, StateObservable } from '@ngrx/store';
 
@@ -20,15 +20,28 @@ var MockState = /** @class */ (function (_super) {
     return MockState;
 }(BehaviorSubject));
 
+var MOCK_SELECTORS = new InjectionToken('@ngrx/store Mock Selectors');
+
 var MockStore = /** @class */ (function (_super) {
     __extends(MockStore, _super);
-    function MockStore(state$, actionsObserver, reducerManager, initialState) {
+    function MockStore(state$, actionsObserver, reducerManager, initialState, mockSelectors) {
         var _this = _super.call(this, state$, actionsObserver, reducerManager) || this;
         _this.state$ = state$;
         _this.initialState = initialState;
         _this.resetSelectors();
         _this.state$.next(_this.initialState);
         _this.scannedActions$ = actionsObserver.asObservable();
+        if (mockSelectors) {
+            mockSelectors.forEach(function (mockSelector) {
+                var selector = mockSelector.selector;
+                if (typeof selector === 'string') {
+                    _this.overrideSelector(selector, mockSelector.value);
+                }
+                else {
+                    _this.overrideSelector(selector, mockSelector.value);
+                }
+            });
+        }
         return _this;
     }
     MockStore_1 = MockStore;
@@ -70,9 +83,10 @@ var MockStore = /** @class */ (function (_super) {
     MockStore = MockStore_1 = __decorate([
         Injectable(),
         __param(3, Inject(INITIAL_STATE)),
+        __param(4, Inject(MOCK_SELECTORS)),
         __metadata("design:paramtypes", [MockState,
             ActionsSubject,
-            ReducerManager, Object])
+            ReducerManager, Object, Array])
     ], MockStore);
     return MockStore;
 }(Store));
@@ -95,6 +109,7 @@ function provideMockStore(config) {
         ActionsSubject,
         MockState,
         { provide: INITIAL_STATE, useValue: config.initialState },
+        { provide: MOCK_SELECTORS, useValue: config.selectors },
         { provide: StateObservable, useClass: MockState },
         { provide: ReducerManager, useClass: MockReducerManager },
         { provide: Store, useClass: MockStore },
@@ -105,5 +120,5 @@ function provideMockStore(config) {
  * Generated bundle index. Do not edit.
  */
 
-export { provideMockStore, MockReducerManager, MockState, MockStore };
+export { MOCK_SELECTORS as ɵngrx_modules_store_testing_testing_a, provideMockStore, MockReducerManager, MockState, MockStore };
 //# sourceMappingURL=testing.js.map
