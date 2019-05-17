@@ -1,1 +1,1 @@
-59a9e6c revert(store): store should fail synchronously (#1871)
+fe34f60 style(store): make it clear that it's possible to opt-out of runtime checks (#1872)

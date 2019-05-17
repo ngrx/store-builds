@@ -1,5 +1,5 @@
 /**
- * @license NgRx 8.0.0-beta.2+1.sha-59a9e6c
+ * @license NgRx 8.0.0-beta.2+2.sha-fe34f60
  * (c) 2015-2018 Brandon Roberts, Mike Ryan, Rob Wormald, Victor Savkin
  * License: MIT
  */
@@ -1168,7 +1168,7 @@ function freeze(target) {
 function createActiveRuntimeChecks(runtimeChecks) {
     if (isDevMode()) {
         if (runtimeChecks === undefined) {
-            console.warn('@ngrx/store: runtime checks are currently opt-in but will be the default in the next major version, see https://ngrx.io/guide/migration/v8 for more information.');
+            console.warn('@ngrx/store: runtime checks are currently opt-in but will be the default in the next major version with the possibility to opt-out, see https://ngrx.io/guide/migration/v8 for more information.');
         }
         return Object.assign({ strictStateSerializability: false, strictActionSerializability: false, strictImmutability: false }, runtimeChecks);
     }
