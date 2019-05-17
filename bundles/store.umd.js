@@ -1,5 +1,5 @@
 /**
- * @license NgRx 8.0.0-beta.2
+ * @license NgRx 8.0.0-beta.2+1.sha-59a9e6c
  * (c) 2015-2018 Brandon Roberts, Mike Ryan, Rob Wormald, Victor Savkin
  * License: MIT
  */
@@ -300,13 +300,10 @@
             var withLatestReducer$ = actionsOnQueue$.pipe(operators.withLatestFrom(reducer$));
             var seed = { state: initialState };
             var stateAndAction$ = withLatestReducer$.pipe(operators.scan(reduceState, seed));
-            _this.stateSubscription = stateAndAction$.subscribe({
-                next: function (_a) {
-                    var state = _a.state, action = _a.action;
-                    _this.next(state);
-                    scannedActions.next(action);
-                },
-                error: function (err) { return _this.error(err); },
+            _this.stateSubscription = stateAndAction$.subscribe(function (_a) {
+                var state = _a.state, action = _a.action;
+                _this.next(state);
+                scannedActions.next(action);
             });
             return _this;
         }

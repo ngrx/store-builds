@@ -1,5 +1,5 @@
 /**
- * @license NgRx 8.0.0-beta.2
+ * @license NgRx 8.0.0-beta.2+1.sha-59a9e6c
  * (c) 2015-2018 Brandon Roberts, Mike Ryan, Rob Wormald, Victor Savkin
  * License: MIT
  */
@@ -528,21 +528,14 @@ class State extends BehaviorSubject {
         const seed = { state: initialState };
         /** @type {?} */
         const stateAndAction$ = withLatestReducer$.pipe(scan(reduceState, seed));
-        this.stateSubscription = stateAndAction$.subscribe({
-            next: (/**
-             * @param {?} __0
-             * @return {?}
-             */
-            ({ state, action }) => {
-                this.next(state);
-                scannedActions.next(action);
-            }),
-            error: (/**
-             * @param {?} err
-             * @return {?}
-             */
-            err => this.error(err)),
-        });
+        this.stateSubscription = stateAndAction$.subscribe((/**
+         * @param {?} __0
+         * @return {?}
+         */
+        ({ state, action }) => {
+            this.next(state);
+            scannedActions.next(action);
+        }));
     }
     /**
      * @return {?}

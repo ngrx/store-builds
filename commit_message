@@ -1,1 +1,1 @@
-4a5153c chore: release 8.0.0-beta.2
+59a9e6c revert(store): store should fail synchronously (#1871)
