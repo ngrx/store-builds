@@ -1,1 +1,1 @@
-29c426b refactor(example): use barrel import for core module (#1869)
+d874cfc feat(router-store): add routerState config option (#1847)
