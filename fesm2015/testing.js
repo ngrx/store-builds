@@ -1,5 +1,5 @@
 /**
- * @license NgRx 8.0.0-beta.2+5.sha-3454e70
+ * @license NgRx 8.0.0-beta.2+6.sha-a7ded00
  * (c) 2015-2018 Brandon Roberts, Mike Ryan, Rob Wormald, Victor Savkin
  * License: MIT
  */
@@ -119,13 +119,14 @@ class MockStore extends Store {
     }
     /**
      * @param {?} selector
+     * @param {?=} prop
      * @return {?}
      */
-    select(selector) {
+    select(selector, prop) {
         if (MockStore.selectors.has(selector)) {
             return new BehaviorSubject(MockStore.selectors.get(selector)).asObservable();
         }
-        return super.select(selector);
+        return super.select(selector, prop);
     }
     /**
      * @return {?}

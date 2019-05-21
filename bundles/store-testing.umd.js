@@ -1,5 +1,5 @@
 /**
- * @license NgRx 8.0.0-beta.2+5.sha-3454e70
+ * @license NgRx 8.0.0-beta.2+6.sha-a7ded00
  * (c) 2015-2018 Brandon Roberts, Mike Ryan, Rob Wormald, Victor Savkin
  * License: MIT
  */
@@ -67,11 +67,11 @@
             });
             MockStore_1.selectors.clear();
         };
-        MockStore.prototype.select = function (selector) {
+        MockStore.prototype.select = function (selector, prop) {
             if (MockStore_1.selectors.has(selector)) {
                 return new rxjs.BehaviorSubject(MockStore_1.selectors.get(selector)).asObservable();
             }
-            return _super.prototype.select.call(this, selector);
+            return _super.prototype.select.call(this, selector, prop);
         };
         MockStore.prototype.addReducer = function () {
             /* noop */

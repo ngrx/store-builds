@@ -1,1 +1,1 @@
-3454e70 feat(example): add examples of effects not based on the Actions stream (#1845)
+a7ded00 fix(store): adjust mock store to handle selectors with props (#1878)

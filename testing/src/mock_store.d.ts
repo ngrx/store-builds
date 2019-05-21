@@ -13,7 +13,7 @@ export declare class MockStore<T> extends Store<T> {
     overrideSelector<T, Result>(selector: MemoizedSelector<T, Result>, value: Result): MemoizedSelector<T, Result>;
     overrideSelector<T, Result>(selector: MemoizedSelectorWithProps<T, any, Result>, value: Result): MemoizedSelectorWithProps<T, any, Result>;
     resetSelectors(): void;
-    select(selector: any): Observable<any>;
+    select(selector: any, prop?: any): Observable<any>;
     addReducer(): void;
     removeReducer(): void;
 }
