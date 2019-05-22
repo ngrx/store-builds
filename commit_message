@@ -1,1 +1,1 @@
-8b31da7 fix: update signature for createSelectorFactory and createSelector to return a MemoizedSelector (#1883)
+23c7c75 docs: update docs to use createReducer() function (#1856)
