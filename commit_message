@@ -1,1 +1,1 @@
-a7ded00 fix(store): adjust mock store to handle selectors with props (#1878)
+8b31da7 fix: update signature for createSelectorFactory and createSelector to return a MemoizedSelector (#1883)

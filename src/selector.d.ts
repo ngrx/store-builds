@@ -56,9 +56,9 @@ export declare function defaultStateFn(state: any, selectors: Selector<any, any>
 export declare type SelectorFactoryConfig<T = any, V = any> = {
     stateFn: (state: T, props: any, selectors: Selector<any, any>[], memoizedProjector: MemoizedProjection) => V;
 };
-export declare function createSelectorFactory<T = any, V = any>(memoize: MemoizeFn): (...input: any[]) => Selector<T, V>;
-export declare function createSelectorFactory<T = any, V = any>(memoize: MemoizeFn, options: SelectorFactoryConfig<T, V>): (...input: any[]) => Selector<T, V>;
-export declare function createSelectorFactory<T = any, Props = any, V = any>(memoize: MemoizeFn): (...input: any[]) => SelectorWithProps<T, Props, V>;
-export declare function createSelectorFactory<T = any, Props = any, V = any>(memoize: MemoizeFn, options: SelectorFactoryConfig<T, V>): (...input: any[]) => SelectorWithProps<T, Props, V>;
+export declare function createSelectorFactory<T = any, V = any>(memoize: MemoizeFn): (...input: any[]) => MemoizedSelector<T, V>;
+export declare function createSelectorFactory<T = any, V = any>(memoize: MemoizeFn, options: SelectorFactoryConfig<T, V>): (...input: any[]) => MemoizedSelector<T, V>;
+export declare function createSelectorFactory<T = any, Props = any, V = any>(memoize: MemoizeFn): (...input: any[]) => MemoizedSelectorWithProps<T, Props, V>;
+export declare function createSelectorFactory<T = any, Props = any, V = any>(memoize: MemoizeFn, options: SelectorFactoryConfig<T, V>): (...input: any[]) => MemoizedSelectorWithProps<T, Props, V>;
 export declare function createFeatureSelector<T>(featureName: string): MemoizedSelector<object, T>;
 export declare function createFeatureSelector<T, V>(featureName: keyof T): MemoizedSelector<T, V>;
