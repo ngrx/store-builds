@@ -1,1 +1,1 @@
-71137e5 feat(effects): resubscribe to effects on error (#1881)
+fd0a63c docs(effects): correct usage of pipe with mapToAction example (#1886)
