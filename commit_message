@@ -1,1 +1,1 @@
-fd0a63c docs(effects): correct usage of pipe with mapToAction example (#1886)
+3fdd78d ci(example): re-enable E2E tests in CI (#1889)
