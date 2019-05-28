@@ -1,14 +1,3 @@
-export declare function getUnserializable(target?: any, path?: string[]): false | {
-    path: string[];
-    value: any;
-};
-export declare function throwIfUnserializable(unserializable: false | {
-    path: string[];
-    value: any;
-}, context: 'state' | 'action'): void;
-/**
- * Object Utilities
- */
 export declare function isUndefined(target: any): target is undefined;
 export declare function isNull(target: any): target is null;
 export declare function isArray(target: any): target is Array<any>;

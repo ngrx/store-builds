@@ -1,5 +1,5 @@
 /**
- * @license NgRx 8.0.0-beta.2+13.sha-2fb8d67
+ * @license NgRx 8.0.0-beta.2+14.sha-c59c211
  * (c) 2015-2018 Brandon Roberts, Mike Ryan, Rob Wormald, Victor Savkin
  * License: MIT
  */
@@ -915,67 +915,6 @@ function createFeatureSelector(featureName) {
  * @suppress {checkTypes,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
  */
 /**
- * @param {?=} target
- * @param {?=} path
- * @return {?}
- */
-function getUnserializable(target, path = []) {
-    // Guard against undefined and null, e.g. a reducer that returns undefined
-    if ((isUndefined(target) || isNull(target)) && path.length === 0) {
-        return {
-            path: ['root'],
-            value: target,
-        };
-    }
-    /** @type {?} */
-    const keys = Object.keys(target);
-    return keys.reduce((/**
-     * @param {?} result
-     * @param {?} key
-     * @return {?}
-     */
-    (result, key) => {
-        if (result) {
-            return result;
-        }
-        /** @type {?} */
-        const value = ((/** @type {?} */ (target)))[key];
-        if (isUndefined(value) ||
-            isNull(value) ||
-            isNumber(value) ||
-            isBoolean(value) ||
-            isString(value) ||
-            isArray(value)) {
-            return false;
-        }
-        if (isPlainObject(value)) {
-            return getUnserializable(value, [...path, key]);
-        }
-        return {
-            path: [...path, key],
-            value,
-        };
-    }), false);
-}
-/**
- * @param {?} unserializable
- * @param {?} context
- * @return {?}
- */
-function throwIfUnserializable(unserializable, context) {
-    if (unserializable === false) {
-        return;
-    }
-    /** @type {?} */
-    const unserializablePath = unserializable.path.join('.');
-    /** @type {?} */
-    const error = new Error(`Detected unserializable ${context} at "${unserializablePath}"`);
-    error.value = unserializable.value;
-    error.unserializablePath = unserializablePath;
-    throw error;
-}
-/**
- * Object Utilities
  * @param {?} target
  * @return {?}
  */
@@ -1065,9 +1004,10 @@ function hasOwnProperty(target, propertyName) {
  */
 /**
  * @param {?} reducer
+ * @param {?} checks
  * @return {?}
  */
-function stateSerializationCheckMetaReducer(reducer) {
+function immutabilityCheckMetaReducer(reducer, checks) {
     return (/**
      * @param {?} state
      * @param {?} action
@@ -1075,54 +1015,10 @@ function stateSerializationCheckMetaReducer(reducer) {
      */
     function (state, action) {
         /** @type {?} */
-        const nextState = reducer(state, action);
+        const act = checks.action ? freeze(action) : action;
         /** @type {?} */
-        const unserializable = getUnserializable(nextState);
-        throwIfUnserializable(unserializable, 'state');
-        return nextState;
-    });
-}
-
-/**
- * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
- */
-/**
- * @param {?} reducer
- * @return {?}
- */
-function actionSerializationCheckMetaReducer(reducer) {
-    return (/**
-     * @param {?} state
-     * @param {?} action
-     * @return {?}
-     */
-    function (state, action) {
-        /** @type {?} */
-        const unserializable = getUnserializable(action);
-        throwIfUnserializable(unserializable, 'action');
-        return reducer(state, action);
-    });
-}
-
-/**
- * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
- */
-/**
- * @param {?} reducer
- * @return {?}
- */
-function immutabilityCheckMetaReducer(reducer) {
-    return (/**
-     * @param {?} state
-     * @param {?} action
-     * @return {?}
-     */
-    function (state, action) {
-        /** @type {?} */
-        const nextState = reducer(state, freeze(action));
-        return freeze(nextState);
+        const nextState = reducer(state, act);
+        return checks.state ? freeze(nextState) : nextState;
     });
 }
 /**
@@ -1156,6 +1052,98 @@ function freeze(target) {
  * @fileoverview added by tsickle
  * @suppress {checkTypes,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
  */
+/**
+ * @param {?} reducer
+ * @param {?} checks
+ * @return {?}
+ */
+function serializationCheckMetaReducer(reducer, checks) {
+    return (/**
+     * @param {?} state
+     * @param {?} action
+     * @return {?}
+     */
+    function (state, action) {
+        if (checks.action) {
+            /** @type {?} */
+            const unserializableAction = getUnserializable(action);
+            throwIfUnserializable(unserializableAction, 'action');
+        }
+        /** @type {?} */
+        const nextState = reducer(state, action);
+        if (checks.state) {
+            /** @type {?} */
+            const unserializableState = getUnserializable(nextState);
+            throwIfUnserializable(unserializableState, 'state');
+        }
+        return nextState;
+    });
+}
+/**
+ * @param {?=} target
+ * @param {?=} path
+ * @return {?}
+ */
+function getUnserializable(target, path = []) {
+    // Guard against undefined and null, e.g. a reducer that returns undefined
+    if ((isUndefined(target) || isNull(target)) && path.length === 0) {
+        return {
+            path: ['root'],
+            value: target,
+        };
+    }
+    /** @type {?} */
+    const keys = Object.keys(target);
+    return keys.reduce((/**
+     * @param {?} result
+     * @param {?} key
+     * @return {?}
+     */
+    (result, key) => {
+        if (result) {
+            return result;
+        }
+        /** @type {?} */
+        const value = ((/** @type {?} */ (target)))[key];
+        if (isUndefined(value) ||
+            isNull(value) ||
+            isNumber(value) ||
+            isBoolean(value) ||
+            isString(value) ||
+            isArray(value)) {
+            return false;
+        }
+        if (isPlainObject(value)) {
+            return getUnserializable(value, [...path, key]);
+        }
+        return {
+            path: [...path, key],
+            value,
+        };
+    }), false);
+}
+/**
+ * @param {?} unserializable
+ * @param {?} context
+ * @return {?}
+ */
+function throwIfUnserializable(unserializable, context) {
+    if (unserializable === false) {
+        return;
+    }
+    /** @type {?} */
+    const unserializablePath = unserializable.path.join('.');
+    /** @type {?} */
+    const error = new Error(`Detected unserializable ${context} at "${unserializablePath}"`);
+    error.value = unserializable.value;
+    error.unserializablePath = unserializablePath;
+    throw error;
+}
+
+/**
+ * @fileoverview added by tsickle
+ * @suppress {checkTypes,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
+ */
 
 /**
  * @fileoverview added by tsickle
@@ -1170,50 +1158,46 @@ function createActiveRuntimeChecks(runtimeChecks) {
         if (runtimeChecks === undefined) {
             console.warn('@ngrx/store: runtime checks are currently opt-in but will be the default in the next major version with the possibility to opt-out, see https://ngrx.io/guide/migration/v8 for more information.');
         }
-        return Object.assign({ strictStateSerializability: false, strictActionSerializability: false, strictImmutability: false }, runtimeChecks);
+        return Object.assign({ strictStateSerializability: false, strictActionSerializability: false, strictStateImmutability: false, strictActionImmutability: false }, runtimeChecks);
     }
     return {
         strictStateSerializability: false,
         strictActionSerializability: false,
-        strictImmutability: false,
+        strictStateImmutability: false,
+        strictActionImmutability: false,
     };
 }
 /**
  * @param {?} __0
  * @return {?}
  */
-function createStateSerializationCheckMetaReducer({ strictStateSerializability, }) {
+function createSerializationCheckMetaReducer({ strictActionSerializability, strictStateSerializability, }) {
     return (/**
      * @param {?} reducer
      * @return {?}
      */
-    reducer => strictStateSerializability
-        ? stateSerializationCheckMetaReducer(reducer)
+    reducer => strictActionSerializability || strictStateSerializability
+        ? serializationCheckMetaReducer(reducer, {
+            action: strictActionSerializability,
+            state: strictStateSerializability,
+        })
         : reducer);
 }
 /**
  * @param {?} __0
  * @return {?}
  */
-function createActionSerializationCheckMetaReducer({ strictActionSerializability, }) {
+function createImmutabilityCheckMetaReducer({ strictActionImmutability, strictStateImmutability, }) {
     return (/**
      * @param {?} reducer
      * @return {?}
      */
-    reducer => strictActionSerializability
-        ? actionSerializationCheckMetaReducer(reducer)
+    reducer => strictActionImmutability || strictStateImmutability
+        ? immutabilityCheckMetaReducer(reducer, {
+            action: strictActionImmutability,
+            state: strictStateImmutability,
+        })
         : reducer);
-}
-/**
- * @param {?} __0
- * @return {?}
- */
-function createImmutabilityCheckMetaReducer({ strictImmutability, }) {
-    return (/**
-     * @param {?} reducer
-     * @return {?}
-     */
-    reducer => strictImmutability ? immutabilityCheckMetaReducer(reducer) : reducer);
 }
 /**
  * @param {?=} runtimeChecks
@@ -1234,19 +1218,13 @@ function provideRuntimeChecks(runtimeChecks) {
             provide: META_REDUCERS,
             multi: true,
             deps: [_ACTIVE_RUNTIME_CHECKS],
-            useFactory: createStateSerializationCheckMetaReducer,
-        },
-        {
-            provide: META_REDUCERS,
-            multi: true,
-            deps: [_ACTIVE_RUNTIME_CHECKS],
-            useFactory: createActionSerializationCheckMetaReducer,
-        },
-        {
-            provide: META_REDUCERS,
-            multi: true,
-            deps: [_ACTIVE_RUNTIME_CHECKS],
             useFactory: createImmutabilityCheckMetaReducer,
+        },
+        {
+            provide: META_REDUCERS,
+            multi: true,
+            deps: [_ACTIVE_RUNTIME_CHECKS],
+            useFactory: createSerializationCheckMetaReducer,
         },
     ];
 }
@@ -1567,5 +1545,5 @@ function createReducer(initialState, ...ons) {
  * Generated bundle index. Do not edit.
  */
 
-export { ACTIONS_SUBJECT_PROVIDERS as ɵngrx_modules_store_store_c, REDUCER_MANAGER_PROVIDERS as ɵngrx_modules_store_store_d, createActionSerializationCheckMetaReducer as ɵngrx_modules_store_store_z, createActiveRuntimeChecks as ɵngrx_modules_store_store_x, createImmutabilityCheckMetaReducer as ɵngrx_modules_store_store_ba, createStateSerializationCheckMetaReducer as ɵngrx_modules_store_store_y, provideRuntimeChecks as ɵngrx_modules_store_store_bb, SCANNED_ACTIONS_SUBJECT_PROVIDERS as ɵngrx_modules_store_store_e, isEqualCheck as ɵngrx_modules_store_store_f, STATE_PROVIDERS as ɵngrx_modules_store_store_g, STORE_PROVIDERS as ɵngrx_modules_store_store_b, _concatMetaReducers as ɵngrx_modules_store_store_w, _createFeatureReducers as ɵngrx_modules_store_store_u, _createFeatureStore as ɵngrx_modules_store_store_t, _createStoreReducers as ɵngrx_modules_store_store_s, _initialStateFactory as ɵngrx_modules_store_store_v, _ACTIVE_RUNTIME_CHECKS as ɵngrx_modules_store_store_r, _FEATURE_CONFIGS as ɵngrx_modules_store_store_m, _FEATURE_REDUCERS as ɵngrx_modules_store_store_l, _FEATURE_REDUCERS_TOKEN as ɵngrx_modules_store_store_o, _INITIAL_REDUCERS as ɵngrx_modules_store_store_j, _INITIAL_STATE as ɵngrx_modules_store_store_h, _REDUCER_FACTORY as ɵngrx_modules_store_store_i, _RESOLVED_META_REDUCERS as ɵngrx_modules_store_store_p, _STORE_FEATURES as ɵngrx_modules_store_store_n, _STORE_REDUCERS as ɵngrx_modules_store_store_k, _USER_RUNTIME_CHECKS as ɵngrx_modules_store_store_q, createAction, props, union, Store, select, combineReducers, compose, createReducerFactory, ActionsSubject, INIT, ReducerManager, ReducerObservable, ReducerManagerDispatcher, UPDATE, ScannedActionsSubject, createSelector, createSelectorFactory, createFeatureSelector, defaultMemoize, defaultStateFn, resultMemoize, State, StateObservable, reduceState, INITIAL_STATE, REDUCER_FACTORY, INITIAL_REDUCERS, STORE_FEATURES, META_REDUCERS, FEATURE_REDUCERS, USER_PROVIDED_META_REDUCERS, StoreModule, StoreRootModule, StoreFeatureModule, on, createReducer };
+export { ACTIONS_SUBJECT_PROVIDERS as ɵngrx_modules_store_store_c, REDUCER_MANAGER_PROVIDERS as ɵngrx_modules_store_store_d, createActiveRuntimeChecks as ɵngrx_modules_store_store_x, createImmutabilityCheckMetaReducer as ɵngrx_modules_store_store_z, createSerializationCheckMetaReducer as ɵngrx_modules_store_store_y, provideRuntimeChecks as ɵngrx_modules_store_store_ba, SCANNED_ACTIONS_SUBJECT_PROVIDERS as ɵngrx_modules_store_store_e, isEqualCheck as ɵngrx_modules_store_store_f, STATE_PROVIDERS as ɵngrx_modules_store_store_g, STORE_PROVIDERS as ɵngrx_modules_store_store_b, _concatMetaReducers as ɵngrx_modules_store_store_w, _createFeatureReducers as ɵngrx_modules_store_store_u, _createFeatureStore as ɵngrx_modules_store_store_t, _createStoreReducers as ɵngrx_modules_store_store_s, _initialStateFactory as ɵngrx_modules_store_store_v, _ACTIVE_RUNTIME_CHECKS as ɵngrx_modules_store_store_r, _FEATURE_CONFIGS as ɵngrx_modules_store_store_m, _FEATURE_REDUCERS as ɵngrx_modules_store_store_l, _FEATURE_REDUCERS_TOKEN as ɵngrx_modules_store_store_o, _INITIAL_REDUCERS as ɵngrx_modules_store_store_j, _INITIAL_STATE as ɵngrx_modules_store_store_h, _REDUCER_FACTORY as ɵngrx_modules_store_store_i, _RESOLVED_META_REDUCERS as ɵngrx_modules_store_store_p, _STORE_FEATURES as ɵngrx_modules_store_store_n, _STORE_REDUCERS as ɵngrx_modules_store_store_k, _USER_RUNTIME_CHECKS as ɵngrx_modules_store_store_q, createAction, props, union, Store, select, combineReducers, compose, createReducerFactory, ActionsSubject, INIT, ReducerManager, ReducerObservable, ReducerManagerDispatcher, UPDATE, ScannedActionsSubject, createSelector, createSelectorFactory, createFeatureSelector, defaultMemoize, defaultStateFn, resultMemoize, State, StateObservable, reduceState, INITIAL_STATE, REDUCER_FACTORY, INITIAL_REDUCERS, STORE_FEATURES, META_REDUCERS, FEATURE_REDUCERS, USER_PROVIDED_META_REDUCERS, StoreModule, StoreRootModule, StoreFeatureModule, on, createReducer };
 //# sourceMappingURL=store.js.map

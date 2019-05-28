@@ -1,5 +1,5 @@
 /**
- * @license NgRx 8.0.0-beta.2+13.sha-2fb8d67
+ * @license NgRx 8.0.0-beta.2+14.sha-c59c211
  * (c) 2015-2018 Brandon Roberts, Mike Ryan, Rob Wormald, Victor Savkin
  * License: MIT
  */
@@ -523,6 +523,82 @@
         return createSelector(function (state) { return state[featureName]; }, function (featureState) { return featureState; });
     }
 
+    function isUndefined(target) {
+        return target === undefined;
+    }
+    function isNull(target) {
+        return target === null;
+    }
+    function isArray(target) {
+        return Array.isArray(target);
+    }
+    function isString(target) {
+        return typeof target === 'string';
+    }
+    function isBoolean(target) {
+        return typeof target === 'boolean';
+    }
+    function isNumber(target) {
+        return typeof target === 'number';
+    }
+    function isObjectLike(target) {
+        return typeof target === 'object' && target !== null;
+    }
+    function isObject(target) {
+        return isObjectLike(target) && !isArray(target);
+    }
+    function isPlainObject(target) {
+        if (!isObject(target)) {
+            return false;
+        }
+        var targetPrototype = Object.getPrototypeOf(target);
+        return targetPrototype === Object.prototype || targetPrototype === null;
+    }
+    function isFunction(target) {
+        return typeof target === 'function';
+    }
+    function hasOwnProperty(target, propertyName) {
+        return Object.prototype.hasOwnProperty.call(target, propertyName);
+    }
+
+    function immutabilityCheckMetaReducer(reducer, checks) {
+        return function (state, action) {
+            var act = checks.action ? freeze(action) : action;
+            var nextState = reducer(state, act);
+            return checks.state ? freeze(nextState) : nextState;
+        };
+    }
+    function freeze(target) {
+        Object.freeze(target);
+        var targetIsFunction = isFunction(target);
+        Object.getOwnPropertyNames(target).forEach(function (prop) {
+            var propValue = target[prop];
+            if (hasOwnProperty(target, prop) &&
+                (targetIsFunction
+                    ? prop !== 'caller' && prop !== 'callee' && prop !== 'arguments'
+                    : true) &&
+                (isObjectLike(propValue) || isFunction(propValue)) &&
+                !Object.isFrozen(propValue)) {
+                freeze(propValue);
+            }
+        });
+        return target;
+    }
+
+    function serializationCheckMetaReducer(reducer, checks) {
+        return function (state, action) {
+            if (checks.action) {
+                var unserializableAction = getUnserializable(action);
+                throwIfUnserializable(unserializableAction, 'action');
+            }
+            var nextState = reducer(state, action);
+            if (checks.state) {
+                var unserializableState = getUnserializable(nextState);
+                throwIfUnserializable(unserializableState, 'state');
+            }
+            return nextState;
+        };
+    }
     function getUnserializable(target, path) {
         if (path === void 0) { path = []; }
         // Guard against undefined and null, e.g. a reducer that returns undefined
@@ -565,120 +641,41 @@
         error.unserializablePath = unserializablePath;
         throw error;
     }
-    /**
-     * Object Utilities
-     */
-    function isUndefined(target) {
-        return target === undefined;
-    }
-    function isNull(target) {
-        return target === null;
-    }
-    function isArray(target) {
-        return Array.isArray(target);
-    }
-    function isString(target) {
-        return typeof target === 'string';
-    }
-    function isBoolean(target) {
-        return typeof target === 'boolean';
-    }
-    function isNumber(target) {
-        return typeof target === 'number';
-    }
-    function isObjectLike(target) {
-        return typeof target === 'object' && target !== null;
-    }
-    function isObject(target) {
-        return isObjectLike(target) && !isArray(target);
-    }
-    function isPlainObject(target) {
-        if (!isObject(target)) {
-            return false;
-        }
-        var targetPrototype = Object.getPrototypeOf(target);
-        return targetPrototype === Object.prototype || targetPrototype === null;
-    }
-    function isFunction(target) {
-        return typeof target === 'function';
-    }
-    function hasOwnProperty(target, propertyName) {
-        return Object.prototype.hasOwnProperty.call(target, propertyName);
-    }
-
-    function stateSerializationCheckMetaReducer(reducer) {
-        return function (state, action) {
-            var nextState = reducer(state, action);
-            var unserializable = getUnserializable(nextState);
-            throwIfUnserializable(unserializable, 'state');
-            return nextState;
-        };
-    }
-
-    function actionSerializationCheckMetaReducer(reducer) {
-        return function (state, action) {
-            var unserializable = getUnserializable(action);
-            throwIfUnserializable(unserializable, 'action');
-            return reducer(state, action);
-        };
-    }
-
-    function immutabilityCheckMetaReducer(reducer) {
-        return function (state, action) {
-            var nextState = reducer(state, freeze(action));
-            return freeze(nextState);
-        };
-    }
-    function freeze(target) {
-        Object.freeze(target);
-        var targetIsFunction = isFunction(target);
-        Object.getOwnPropertyNames(target).forEach(function (prop) {
-            var propValue = target[prop];
-            if (hasOwnProperty(target, prop) &&
-                (targetIsFunction
-                    ? prop !== 'caller' && prop !== 'callee' && prop !== 'arguments'
-                    : true) &&
-                (isObjectLike(propValue) || isFunction(propValue)) &&
-                !Object.isFrozen(propValue)) {
-                freeze(propValue);
-            }
-        });
-        return target;
-    }
 
     function createActiveRuntimeChecks(runtimeChecks) {
         if (core.isDevMode()) {
             if (runtimeChecks === undefined) {
                 console.warn('@ngrx/store: runtime checks are currently opt-in but will be the default in the next major version with the possibility to opt-out, see https://ngrx.io/guide/migration/v8 for more information.');
             }
-            return tslib_1.__assign({ strictStateSerializability: false, strictActionSerializability: false, strictImmutability: false }, runtimeChecks);
+            return tslib_1.__assign({ strictStateSerializability: false, strictActionSerializability: false, strictStateImmutability: false, strictActionImmutability: false }, runtimeChecks);
         }
         return {
             strictStateSerializability: false,
             strictActionSerializability: false,
-            strictImmutability: false,
+            strictStateImmutability: false,
+            strictActionImmutability: false,
         };
     }
-    function createStateSerializationCheckMetaReducer(_a) {
-        var strictStateSerializability = _a.strictStateSerializability;
+    function createSerializationCheckMetaReducer(_a) {
+        var strictActionSerializability = _a.strictActionSerializability, strictStateSerializability = _a.strictStateSerializability;
         return function (reducer) {
-            return strictStateSerializability
-                ? stateSerializationCheckMetaReducer(reducer)
-                : reducer;
-        };
-    }
-    function createActionSerializationCheckMetaReducer(_a) {
-        var strictActionSerializability = _a.strictActionSerializability;
-        return function (reducer) {
-            return strictActionSerializability
-                ? actionSerializationCheckMetaReducer(reducer)
+            return strictActionSerializability || strictStateSerializability
+                ? serializationCheckMetaReducer(reducer, {
+                    action: strictActionSerializability,
+                    state: strictStateSerializability,
+                })
                 : reducer;
         };
     }
     function createImmutabilityCheckMetaReducer(_a) {
-        var strictImmutability = _a.strictImmutability;
+        var strictActionImmutability = _a.strictActionImmutability, strictStateImmutability = _a.strictStateImmutability;
         return function (reducer) {
-            return strictImmutability ? immutabilityCheckMetaReducer(reducer) : reducer;
+            return strictActionImmutability || strictStateImmutability
+                ? immutabilityCheckMetaReducer(reducer, {
+                    action: strictActionImmutability,
+                    state: strictStateImmutability,
+                })
+                : reducer;
         };
     }
     function provideRuntimeChecks(runtimeChecks) {
@@ -696,19 +693,13 @@
                 provide: META_REDUCERS,
                 multi: true,
                 deps: [_ACTIVE_RUNTIME_CHECKS],
-                useFactory: createStateSerializationCheckMetaReducer,
-            },
-            {
-                provide: META_REDUCERS,
-                multi: true,
-                deps: [_ACTIVE_RUNTIME_CHECKS],
-                useFactory: createActionSerializationCheckMetaReducer,
-            },
-            {
-                provide: META_REDUCERS,
-                multi: true,
-                deps: [_ACTIVE_RUNTIME_CHECKS],
                 useFactory: createImmutabilityCheckMetaReducer,
+            },
+            {
+                provide: META_REDUCERS,
+                multi: true,
+                deps: [_ACTIVE_RUNTIME_CHECKS],
+                useFactory: createSerializationCheckMetaReducer,
             },
         ];
     }
@@ -952,11 +943,10 @@
 
     exports.ɵngrx_modules_store_store_c = ACTIONS_SUBJECT_PROVIDERS;
     exports.ɵngrx_modules_store_store_d = REDUCER_MANAGER_PROVIDERS;
-    exports.ɵngrx_modules_store_store_z = createActionSerializationCheckMetaReducer;
     exports.ɵngrx_modules_store_store_x = createActiveRuntimeChecks;
-    exports.ɵngrx_modules_store_store_ba = createImmutabilityCheckMetaReducer;
-    exports.ɵngrx_modules_store_store_y = createStateSerializationCheckMetaReducer;
-    exports.ɵngrx_modules_store_store_bb = provideRuntimeChecks;
+    exports.ɵngrx_modules_store_store_z = createImmutabilityCheckMetaReducer;
+    exports.ɵngrx_modules_store_store_y = createSerializationCheckMetaReducer;
+    exports.ɵngrx_modules_store_store_ba = provideRuntimeChecks;
     exports.ɵngrx_modules_store_store_e = SCANNED_ACTIONS_SUBJECT_PROVIDERS;
     exports.ɵngrx_modules_store_store_f = isEqualCheck;
     exports.ɵngrx_modules_store_store_g = STATE_PROVIDERS;

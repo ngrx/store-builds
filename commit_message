@@ -1,1 +1,1 @@
-2fb8d67 docs: import missing dependencies in entity adapter snippets (#1895)
+c59c211 feat(store): split immutibility checks in state and action checks (#1894)

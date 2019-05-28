@@ -35,5 +35,6 @@ export declare type ParametersType<T> = T extends (...args: infer U) => unknown 
 export interface RuntimeChecks {
     strictStateSerializability: boolean;
     strictActionSerializability: boolean;
-    strictImmutability: boolean;
+    strictStateImmutability: boolean;
+    strictActionImmutability: boolean;
 }
