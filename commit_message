@@ -1,1 +1,1 @@
-c59c211 feat(store): split immutibility checks in state and action checks (#1894)
+2110e91 docs: add return type changes and example of resubscribe on errors (#1893)
