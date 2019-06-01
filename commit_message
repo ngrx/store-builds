@@ -1,1 +1,1 @@
-75987a6 chore: release 8.0.0-rc.0
+0407c5b fix(router-store): remove circular dependency in serializers (#1904)
