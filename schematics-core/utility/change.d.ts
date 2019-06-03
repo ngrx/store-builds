@@ -48,11 +48,11 @@ export declare class InsertChange implements Change {
  */
 export declare class RemoveChange implements Change {
     path: string;
-    private pos;
-    private toRemove;
+    pos: number;
+    end: number;
     order: number;
     description: string;
-    constructor(path: string, pos: number, toRemove: string);
+    constructor(path: string, pos: number, end: number);
     apply(host: Host): Promise<void>;
 }
 /**
@@ -60,7 +60,7 @@ export declare class RemoveChange implements Change {
  */
 export declare class ReplaceChange implements Change {
     path: string;
-    private pos;
+    pos: number;
     oldText: string;
     newText: string;
     order: number;
@@ -69,4 +69,4 @@ export declare class ReplaceChange implements Change {
     apply(host: Host): Promise<void>;
 }
 export declare function createReplaceChange(sourceFile: ts.SourceFile, path: Path, node: ts.Node, oldText: string, newText: string): ReplaceChange;
-export declare function createChangeRecorder(tree: Tree, path: Path, changes: ReplaceChange[]): UpdateRecorder;
+export declare function createChangeRecorder(tree: Tree, path: string, changes: Change[]): UpdateRecorder;
