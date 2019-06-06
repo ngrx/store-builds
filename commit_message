@@ -1,1 +1,1 @@
-82216a5 docs: add exported reducer function to createReducer examples (#1924)
+bb9add7 feat(store): add protection from type property use (#1923)
