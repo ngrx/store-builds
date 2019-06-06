@@ -7,14 +7,15 @@ export declare type MemoizedProjection = {
 };
 export declare type MemoizeFn = (t: AnyFn) => MemoizedProjection;
 export declare type ComparatorFn = (a: any, b: any) => boolean;
-export interface MemoizedSelector<State, Result> extends Selector<State, Result> {
+export declare type DefaultProjectorFn<T> = (...args: any[]) => T;
+export interface MemoizedSelector<State, Result, ProjectorFn = DefaultProjectorFn<Result>> extends Selector<State, Result> {
     release(): void;
-    projector: AnyFn;
+    projector: ProjectorFn;
     setResult: (result?: Result) => void;
 }
-export interface MemoizedSelectorWithProps<State, Props, Result> extends SelectorWithProps<State, Props, Result> {
+export interface MemoizedSelectorWithProps<State, Props, Result, ProjectorFn = DefaultProjectorFn<Result>> extends SelectorWithProps<State, Props, Result> {
     release(): void;
-    projector: AnyFn;
+    projector: ProjectorFn;
     setResult: (result?: Result) => void;
 }
 export declare function isEqualCheck(a: any, b: any): boolean;

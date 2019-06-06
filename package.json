@@ -1,6 +1,6 @@
 {
   "name": "@ngrx/store",
-  "version": "8.0.0-rc.1",
+  "version": "8.0.0-rc.1+1.sha-4e39cc1",
   "description": "RxJS powered Redux for Angular apps",
   "repository": {
     "type": "git",
