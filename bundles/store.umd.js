@@ -1,5 +1,5 @@
 /**
- * @license NgRx 8.0.0-rc.1+5.sha-36f14bd
+ * @license NgRx 8.0.0-rc.1+7.sha-82216a5
  * (c) 2015-2018 Brandon Roberts, Mike Ryan, Rob Wormald, Victor Savkin
  * License: MIT
  */
@@ -30,6 +30,8 @@
         }
     }
     function props() {
+        // the return type does not match TypePropertyIsNotAllowed, so double casting
+        // is used.
         return { _as: 'props', _p: undefined };
     }
     function union(creators) {

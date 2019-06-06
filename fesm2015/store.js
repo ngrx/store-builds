@@ -1,5 +1,5 @@
 /**
- * @license NgRx 8.0.0-rc.1+5.sha-36f14bd
+ * @license NgRx 8.0.0-rc.1+7.sha-82216a5
  * (c) 2015-2018 Brandon Roberts, Mike Ryan, Rob Wormald, Victor Savkin
  * License: MIT
  */
@@ -12,7 +12,7 @@ import { observeOn, withLatestFrom, scan, pluck, map, distinctUntilChanged } fro
  * @suppress {checkTypes,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
  */
 /**
- * @template T
+ * @template T, C
  * @param {?} type
  * @param {?=} config
  * @return {?}
@@ -38,7 +38,7 @@ function createAction(type, config) {
              * @param {?} props
              * @return {?}
              */
-            (props) => (Object.assign({}, ((/** @type {?} */ (props))), { type }))));
+            (props) => (Object.assign({}, props, { type }))));
         default:
             throw new Error('Unexpected config.');
     }
@@ -48,7 +48,9 @@ function createAction(type, config) {
  * @return {?}
  */
 function props() {
-    return { _as: 'props', _p: (/** @type {?} */ (undefined)) };
+    // the return type does not match TypePropertyIsNotAllowed, so double casting
+    // is used.
+    return (/** @type {?} */ (((/** @type {?} */ ({ _as: 'props', _p: (/** @type {?} */ (undefined)) })))));
 }
 /**
  * @template C

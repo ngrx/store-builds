@@ -1,1 +1,1 @@
-36f14bd refactor(store): rename mapToAction operator to act  (#1927)
+82216a5 docs: add exported reducer function to createReducer examples (#1924)

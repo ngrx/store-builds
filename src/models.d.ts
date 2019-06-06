@@ -28,7 +28,20 @@ export interface StoreFeature<T, V extends Action = Action> {
 }
 export declare type Selector<T, V> = (state: T) => V;
 export declare type SelectorWithProps<State, Props, Result> = (state: State, props: Props) => Result;
-export declare type Creator = (...args: any[]) => object;
+export declare type DisallowTypeProperty<T> = T extends {
+    type: any;
+} ? TypePropertyIsNotAllowed : T;
+export declare const typePropertyIsNotAllowedMsg = "type property is not allowed in action creators";
+declare type TypePropertyIsNotAllowed = typeof typePropertyIsNotAllowedMsg;
+export declare type Creator<P extends any[] = any[], R extends object = object> = R extends {
+    type: any;
+} ? TypePropertyIsNotAllowed : FunctionWithParametersType<P, R>;
+export declare type PropsReturnType<T extends object> = T extends {
+    type: any;
+} ? TypePropertyIsNotAllowed : {
+    _as: 'props';
+    _p: T;
+};
 export declare type ActionCreator<T extends string = string, C extends Creator = Creator> = C & TypedAction<T>;
 export declare type FunctionWithParametersType<P extends unknown[], R = void> = (...args: P) => R;
 export declare type ParametersType<T> = T extends (...args: infer U) => unknown ? U : never;
@@ -38,3 +51,4 @@ export interface RuntimeChecks {
     strictStateImmutability: boolean;
     strictActionImmutability: boolean;
 }
+export {};
