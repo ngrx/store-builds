@@ -1,1 +1,1 @@
-bb9add7 feat(store): add protection from type property use (#1923)
+5fcdd3b perf: fine tune schematics to only commit changes (#1925)

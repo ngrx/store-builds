@@ -1,7 +1,6 @@
 /// <amd-module name="@ngrx/store/schematics-core/utility/change" />
 import * as ts from 'typescript';
 import { Tree, UpdateRecorder } from '@angular-devkit/schematics';
-import { Path } from '@angular-devkit/core';
 /**
  * @license
  * Copyright Google Inc. All Rights Reserved.
@@ -68,5 +67,6 @@ export declare class ReplaceChange implements Change {
     constructor(path: string, pos: number, oldText: string, newText: string);
     apply(host: Host): Promise<void>;
 }
-export declare function createReplaceChange(sourceFile: ts.SourceFile, path: Path, node: ts.Node, oldText: string, newText: string): ReplaceChange;
+export declare function createReplaceChange(sourceFile: ts.SourceFile, node: ts.Node, oldText: string, newText: string): ReplaceChange;
 export declare function createChangeRecorder(tree: Tree, path: string, changes: Change[]): UpdateRecorder;
+export declare function commitChanges(tree: Tree, path: string, changes: Change[]): boolean;
