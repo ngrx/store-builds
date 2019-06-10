@@ -1,5 +1,5 @@
 /**
- * @license NgRx 8.0.0+4.sha-878d31c
+ * @license NgRx 8.0.0+5.sha-78153cb
  * (c) 2015-2018 Brandon Roberts, Mike Ryan, Rob Wormald, Victor Savkin
  * License: MIT
  */
@@ -87,7 +87,13 @@ class ActionsSubject extends BehaviorSubject {
      * @return {?}
      */
     next(action) {
-        if (typeof action === 'undefined') {
+        if (typeof action === 'function') {
+            throw new TypeError(`
+        Dispatch expected an object, instead it received a function.
+        If you're using the createAction function, make sure to invoke the function
+        before dispatching the action. For example, someAction should be someAction().`);
+        }
+        else if (typeof action === 'undefined') {
             throw new TypeError(`Actions must be objects`);
         }
         else if (typeof action.type === 'undefined') {

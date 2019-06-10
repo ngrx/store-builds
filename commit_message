@@ -1,1 +1,1 @@
-878d31c docs: fix module import for EntityDataModule (#1930) (#1932)
+78153cb fix(store): prevent passing of action creator function to store dispatch and effects (#1914)
