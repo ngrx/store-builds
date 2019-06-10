@@ -1,1 +1,1 @@
-b59edc5 docs: fix typo in exported reducer function examples (#1929)
+878d31c docs: fix module import for EntityDataModule (#1930) (#1932)
