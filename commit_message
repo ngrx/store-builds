@@ -1,1 +1,1 @@
-78153cb fix(store): prevent passing of action creator function to store dispatch and effects (#1914)
+68588c5 build: point to RxJS 6.4
