@@ -1,5 +1,5 @@
 /**
- * @license NgRx 8.0.1+9.sha-187996f
+ * @license NgRx 8.0.1+10.sha-125d950
  * (c) 2015-2018 Brandon Roberts, Mike Ryan, Rob Wormald, Victor Savkin
  * License: MIT
  */
@@ -177,7 +177,7 @@ const _USER_RUNTIME_CHECKS = new InjectionToken('@ngrx/store Internal User Runti
  * Runtime checks currently in use
  * @type {?}
  */
-const _ACTIVE_RUNTIME_CHECKS = new InjectionToken('@ngrx/store Internal Runetime Checks');
+const _ACTIVE_RUNTIME_CHECKS = new InjectionToken('@ngrx/store Internal Runtime Checks');
 
 /**
  * @fileoverview added by tsickle
