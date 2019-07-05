@@ -1,1 +1,1 @@
-2b8178d feat(schematics): enable immutability checks for root store by default (#1983)
+11c0864 fix(store): add immutability check for IE compatibility (#1997)
