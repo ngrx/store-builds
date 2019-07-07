@@ -1,5 +1,5 @@
 /**
- * @license NgRx 8.0.1+17.sha-3b0b863
+ * @license NgRx 8.0.1+29.sha-3c18263
  * (c) 2015-2018 Brandon Roberts, Mike Ryan, Rob Wormald, Victor Savkin
  * License: MIT
  */
@@ -9,6 +9,78 @@
     (global = global || self, factory((global.ngrx = global.ngrx || {}, global.ngrx.store = {}), global.tslib, global.ng.core, global.rxjs, global.rxjs.operators));
 }(this, function (exports, tslib_1, core, rxjs, operators) { 'use strict';
 
+    /**
+     * @description
+     * Creates a configured `Creator` function that, when called, returns an object in the shape of the `Action` interface.
+     *
+     * Action creators reduce the explicitness of class-based action creators.
+     *
+     * @param type Describes the action that will be dispatched
+     * @param config Additional metadata needed for the handling of the action.  See {@link createAction#usage-notes Usage Notes}.
+     *
+     * @usageNotes
+     *
+     * **Declaring an action creator**
+     *
+     * Without additional metadata:
+     * ```ts
+     * export const increment = createAction('[Counter] Increment');
+     * ```
+     * With additional metadata:
+     * ```ts
+     * export const loginSuccess = createAction(
+     *   '[Auth/API] Login Success',
+     *   props<{ user: User }>()
+     * );
+     * ```
+     * With a function:
+     * ```ts
+     * export const loginSuccess = createAction(
+     *   '[Auth/API] Login Success',
+     *   (response: Response) => response.user
+     * );
+     * ```
+     *
+     * **Dispatching an action**
+     *
+     * Without additional metadata:
+     * ```ts
+     * store.dispatch(increment());
+     * ```
+     * With additional metadata:
+     * ```ts
+     * store.dispatch(loginSuccess({ user: newUser }));
+     * ```
+     *
+     * **Referencing an action in a reducer**
+     *
+     * Using a switch statement:
+     * ```ts
+     * switch (action.type) {
+     *   // ...
+     *   case AuthApiActions.loginSuccess.type: {
+     *     return {
+     *       ...state,
+     *       user: action.user
+     *     };
+     *   }
+     * }
+     * ```
+     * Using a reducer creator:
+     * ```ts
+     * on(AuthApiActions.loginSuccess, (state, { user }) => ({ ...state, user }))
+     * ```
+     *
+     *  **Referencing an action in an effect**
+     * ```ts
+     * effectName$ = createEffect(
+     *   () => this.actions$.pipe(
+     *     ofType(AuthApiActions.loginSuccess),
+     *     // ...
+     *   )
+     * );
+     * ```
+     */
     function createAction(type, config) {
         if (typeof config === 'function') {
             return defineType(type, function () {
@@ -889,6 +961,16 @@
         return metaReducers.concat(userProvidedMetaReducers);
     }
 
+    /**
+     * @description
+     * Associates actions with a given state change function.
+     * A state change function must be provided as the last parameter.
+     *
+     * @param args `ActionCreator`'s followed by a state change function.
+     *
+     * **To maintain type-safety**: pass 10 or less `ActionCreator`'s.
+     * @returns an association of action types with a state change function.
+     */
     function on() {
         var args = [];
         for (var _i = 0; _i < arguments.length; _i++) {
@@ -898,6 +980,42 @@
         var types = args.reduce(function (result, creator) { return tslib_1.__spread(result, [creator.type]); }, []);
         return { reducer: reducer, types: types };
     }
+    /**
+     * @description
+     * Creates a reducer function to handle state transitions.
+     *
+     * Reducer creators reduce the explicitness of reducer functions with switch statements.
+     *
+     * @param initialState Provides a state value if the current state is `undefined`, as it is initially.
+     * @param ons Associations between actions and state changes.
+     * @returns A reducer function.
+     *
+     * @usageNotes
+     *
+     * - Must be used with `ActionCreator`'s (returned by `createAction`).  Cannot be used with class-based action creators.
+     * - An action type should only be associated with at most one state change function, similar to switch statements.
+     *   - In the case this is violated, the latest defined associated will be used (the latest `on` function passed).
+     * - The returned `ActionReducer` should additionally be returned from an exported `reducer` function.
+     * This is because [function calls are not supported](https://angular.io/guide/aot-compiler#function-calls-are-not-supported) by the AOT compiler.
+     *
+     * **Declaring a reducer creator with an exported reducer function**
+     *
+     * ```ts
+     * const featureReducer = createReducer(
+     *   initialState,
+     *   on(
+     *     featureActions.actionOne,
+     *     featureActions.actionTwo,
+     *     (state, { updatedValue }) => ({ ...state, prop: updatedValue })
+     *   ),
+     *   on(featureActions.actionThree, () => initialState);
+     * );
+     *
+     * export function reducer(state: State | undefined, action: Action) {
+     *   return featureReducer(state, action);
+     * }
+     * ```
+     */
     function createReducer(initialState) {
         var e_1, _a, e_2, _b;
         var ons = [];

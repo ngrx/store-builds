@@ -9,6 +9,10 @@ export declare type ActionType<A> = A extends ActionCreator<infer T, infer C> ? 
 } : never;
 export declare type TypeId<T> = () => T;
 export declare type InitialState<T> = Partial<T> | TypeId<Partial<T>> | void;
+/**
+ * A function that takes an `Action` and a `State`, and returns a `State`.
+ * See `createReducer`.
+ */
 export interface ActionReducer<T, V extends Action = Action> {
     (state: T | undefined, action: V): T;
 }
@@ -33,6 +37,9 @@ export declare type DisallowTypeProperty<T> = T extends {
 } ? TypePropertyIsNotAllowed : T;
 export declare const typePropertyIsNotAllowedMsg = "type property is not allowed in action creators";
 declare type TypePropertyIsNotAllowed = typeof typePropertyIsNotAllowedMsg;
+/**
+ * A function that returns an object in the shape of the `Action` interface.  Configured using `createAction`.
+ */
 export declare type Creator<P extends any[] = any[], R extends object = object> = R extends {
     type: any;
 } ? TypePropertyIsNotAllowed : FunctionWithParametersType<P, R>;
@@ -42,6 +49,9 @@ export declare type PropsReturnType<T extends object> = T extends {
     _as: 'props';
     _p: T;
 };
+/**
+ * See `Creator`.
+ */
 export declare type ActionCreator<T extends string = string, C extends Creator = Creator> = C & TypedAction<T>;
 export declare type FunctionWithParametersType<P extends unknown[], R = void> = (...args: P) => R;
 export declare type ParametersType<T> = T extends (...args: infer U) => unknown ? U : never;
