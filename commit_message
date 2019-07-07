@@ -1,1 +1,1 @@
-fe7e6a0 docs: add section for why/when to use NgRx for state management to intro page (#1852) (#1882)
+30ce2c6 fix(data): search for replacements in all files when using ng-add (#1971)
