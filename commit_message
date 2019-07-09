@@ -1,1 +1,1 @@
-e377005 docs:  add destructuring actions with props example for createReducer
+b26127a docs: fix comment for environment in store devtools overview (#2002)
