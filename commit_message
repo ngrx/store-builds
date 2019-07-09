@@ -1,1 +1,1 @@
-b26127a docs: fix comment for environment in store devtools overview (#2002)
+c09ba19 docs: update store recipes to clarify proper use of META_REDUCERS token in libs (#1970)
