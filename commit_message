@@ -1,1 +1,1 @@
-c09ba19 docs: update store recipes to clarify proper use of META_REDUCERS token in libs (#1970)
+da4fefe docs: add docs for minimal flag to store, effects, and schematics
