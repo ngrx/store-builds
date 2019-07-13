@@ -1,1 +1,1 @@
-2c2e05e docs(entity): mention shorthand syntax alternative (#2008)
+5e01e50 fix(store): add missing StoreConfig and RootStoreConfig exports (#2009)
