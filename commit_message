@@ -1,1 +1,1 @@
-5e01e50 fix(store): add missing StoreConfig and RootStoreConfig exports (#2009)
+fa8da34 feat(store): add USER_RUNTIME_CHECKS public token (#2006)

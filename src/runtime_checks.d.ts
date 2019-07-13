@@ -4,3 +4,4 @@ export declare function createActiveRuntimeChecks(runtimeChecks?: Partial<Runtim
 export declare function createSerializationCheckMetaReducer({ strictActionSerializability, strictStateSerializability, }: RuntimeChecks): MetaReducer;
 export declare function createImmutabilityCheckMetaReducer({ strictActionImmutability, strictStateImmutability, }: RuntimeChecks): MetaReducer;
 export declare function provideRuntimeChecks(runtimeChecks?: Partial<RuntimeChecks>): Provider[];
+export declare function _runtimeChecksFactory(runtimeChecks: RuntimeChecks): RuntimeChecks;

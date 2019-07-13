@@ -1,5 +1,5 @@
 /**
- * @license NgRx 8.1.0+2.sha-5e01e50
+ * @license NgRx 8.1.0+3.sha-fa8da34
  * (c) 2015-2018 Brandon Roberts, Mike Ryan, Rob Wormald, Victor Savkin
  * License: MIT
  */
@@ -237,7 +237,13 @@ const META_REDUCERS = new InjectionToken('@ngrx/store Meta Reducers');
  */
 const _RESOLVED_META_REDUCERS = new InjectionToken('@ngrx/store Internal Resolved Meta Reducers');
 /**
- * Runtime checks defined by the user
+ * Runtime checks defined by the user via an InjectionToken
+ * Defaults to `_USER_RUNTIME_CHECKS`
+ * @type {?}
+ */
+const USER_RUNTIME_CHECKS = new InjectionToken('@ngrx/store User Runtime Checks Config');
+/**
+ * Runtime checks defined by the user via forRoot()
  * @type {?}
  */
 const _USER_RUNTIME_CHECKS = new InjectionToken('@ngrx/store Internal User Runtime Checks Config');
@@ -1287,8 +1293,13 @@ function provideRuntimeChecks(runtimeChecks) {
             useValue: runtimeChecks,
         },
         {
-            provide: _ACTIVE_RUNTIME_CHECKS,
+            provide: USER_RUNTIME_CHECKS,
+            useFactory: _runtimeChecksFactory,
             deps: [_USER_RUNTIME_CHECKS],
+        },
+        {
+            provide: _ACTIVE_RUNTIME_CHECKS,
+            deps: [USER_RUNTIME_CHECKS],
             useFactory: createActiveRuntimeChecks,
         },
         {
@@ -1304,6 +1315,13 @@ function provideRuntimeChecks(runtimeChecks) {
             useFactory: createSerializationCheckMetaReducer,
         },
     ];
+}
+/**
+ * @param {?} runtimeChecks
+ * @return {?}
+ */
+function _runtimeChecksFactory(runtimeChecks) {
+    return runtimeChecks;
 }
 
 /**
@@ -1659,5 +1677,5 @@ function createReducer(initialState, ...ons) {
  * Generated bundle index. Do not edit.
  */
 
-export { ACTIONS_SUBJECT_PROVIDERS as ɵngrx_modules_store_store_c, REDUCER_MANAGER_PROVIDERS as ɵngrx_modules_store_store_d, createActiveRuntimeChecks as ɵngrx_modules_store_store_x, createImmutabilityCheckMetaReducer as ɵngrx_modules_store_store_z, createSerializationCheckMetaReducer as ɵngrx_modules_store_store_y, provideRuntimeChecks as ɵngrx_modules_store_store_ba, SCANNED_ACTIONS_SUBJECT_PROVIDERS as ɵngrx_modules_store_store_e, isEqualCheck as ɵngrx_modules_store_store_f, STATE_PROVIDERS as ɵngrx_modules_store_store_g, STORE_PROVIDERS as ɵngrx_modules_store_store_b, _concatMetaReducers as ɵngrx_modules_store_store_w, _createFeatureReducers as ɵngrx_modules_store_store_u, _createFeatureStore as ɵngrx_modules_store_store_t, _createStoreReducers as ɵngrx_modules_store_store_s, _initialStateFactory as ɵngrx_modules_store_store_v, _ACTIVE_RUNTIME_CHECKS as ɵngrx_modules_store_store_r, _FEATURE_CONFIGS as ɵngrx_modules_store_store_m, _FEATURE_REDUCERS as ɵngrx_modules_store_store_l, _FEATURE_REDUCERS_TOKEN as ɵngrx_modules_store_store_o, _INITIAL_REDUCERS as ɵngrx_modules_store_store_j, _INITIAL_STATE as ɵngrx_modules_store_store_h, _REDUCER_FACTORY as ɵngrx_modules_store_store_i, _RESOLVED_META_REDUCERS as ɵngrx_modules_store_store_p, _STORE_FEATURES as ɵngrx_modules_store_store_n, _STORE_REDUCERS as ɵngrx_modules_store_store_k, _USER_RUNTIME_CHECKS as ɵngrx_modules_store_store_q, createAction, props, union, Store, select, combineReducers, compose, createReducerFactory, ActionsSubject, INIT, ReducerManager, ReducerObservable, ReducerManagerDispatcher, UPDATE, ScannedActionsSubject, createSelector, createSelectorFactory, createFeatureSelector, defaultMemoize, defaultStateFn, resultMemoize, State, StateObservable, reduceState, INITIAL_STATE, REDUCER_FACTORY, INITIAL_REDUCERS, STORE_FEATURES, META_REDUCERS, FEATURE_REDUCERS, USER_PROVIDED_META_REDUCERS, StoreModule, StoreRootModule, StoreFeatureModule, on, createReducer };
+export { ACTIONS_SUBJECT_PROVIDERS as ɵngrx_modules_store_store_c, REDUCER_MANAGER_PROVIDERS as ɵngrx_modules_store_store_d, _runtimeChecksFactory as ɵngrx_modules_store_store_bb, createActiveRuntimeChecks as ɵngrx_modules_store_store_x, createImmutabilityCheckMetaReducer as ɵngrx_modules_store_store_z, createSerializationCheckMetaReducer as ɵngrx_modules_store_store_y, provideRuntimeChecks as ɵngrx_modules_store_store_ba, SCANNED_ACTIONS_SUBJECT_PROVIDERS as ɵngrx_modules_store_store_e, isEqualCheck as ɵngrx_modules_store_store_f, STATE_PROVIDERS as ɵngrx_modules_store_store_g, STORE_PROVIDERS as ɵngrx_modules_store_store_b, _concatMetaReducers as ɵngrx_modules_store_store_w, _createFeatureReducers as ɵngrx_modules_store_store_u, _createFeatureStore as ɵngrx_modules_store_store_t, _createStoreReducers as ɵngrx_modules_store_store_s, _initialStateFactory as ɵngrx_modules_store_store_v, _ACTIVE_RUNTIME_CHECKS as ɵngrx_modules_store_store_r, _FEATURE_CONFIGS as ɵngrx_modules_store_store_m, _FEATURE_REDUCERS as ɵngrx_modules_store_store_l, _FEATURE_REDUCERS_TOKEN as ɵngrx_modules_store_store_o, _INITIAL_REDUCERS as ɵngrx_modules_store_store_j, _INITIAL_STATE as ɵngrx_modules_store_store_h, _REDUCER_FACTORY as ɵngrx_modules_store_store_i, _RESOLVED_META_REDUCERS as ɵngrx_modules_store_store_p, _STORE_FEATURES as ɵngrx_modules_store_store_n, _STORE_REDUCERS as ɵngrx_modules_store_store_k, _USER_RUNTIME_CHECKS as ɵngrx_modules_store_store_q, createAction, props, union, Store, select, combineReducers, compose, createReducerFactory, ActionsSubject, INIT, ReducerManager, ReducerObservable, ReducerManagerDispatcher, UPDATE, ScannedActionsSubject, createSelector, createSelectorFactory, createFeatureSelector, defaultMemoize, defaultStateFn, resultMemoize, State, StateObservable, reduceState, INITIAL_STATE, REDUCER_FACTORY, INITIAL_REDUCERS, STORE_FEATURES, META_REDUCERS, FEATURE_REDUCERS, USER_PROVIDED_META_REDUCERS, USER_RUNTIME_CHECKS, StoreModule, StoreRootModule, StoreFeatureModule, on, createReducer };
 //# sourceMappingURL=store.js.map

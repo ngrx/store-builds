@@ -27,7 +27,12 @@ export declare const META_REDUCERS: InjectionToken<MetaReducer<any, import("@ngr
  */
 export declare const _RESOLVED_META_REDUCERS: InjectionToken<MetaReducer<any, import("@ngrx/store/src/models").Action>>;
 /**
- * Runtime checks defined by the user
+ * Runtime checks defined by the user via an InjectionToken
+ * Defaults to `_USER_RUNTIME_CHECKS`
+ */
+export declare const USER_RUNTIME_CHECKS: InjectionToken<RuntimeChecks>;
+/**
+ * Runtime checks defined by the user via forRoot()
  */
 export declare const _USER_RUNTIME_CHECKS: InjectionToken<RuntimeChecks>;
 /**

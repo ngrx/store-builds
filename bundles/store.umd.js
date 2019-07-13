@@ -1,5 +1,5 @@
 /**
- * @license NgRx 8.1.0+2.sha-5e01e50
+ * @license NgRx 8.1.0+3.sha-fa8da34
  * (c) 2015-2018 Brandon Roberts, Mike Ryan, Rob Wormald, Victor Savkin
  * License: MIT
  */
@@ -175,7 +175,12 @@
      */
     var _RESOLVED_META_REDUCERS = new core.InjectionToken('@ngrx/store Internal Resolved Meta Reducers');
     /**
-     * Runtime checks defined by the user
+     * Runtime checks defined by the user via an InjectionToken
+     * Defaults to `_USER_RUNTIME_CHECKS`
+     */
+    var USER_RUNTIME_CHECKS = new core.InjectionToken('@ngrx/store User Runtime Checks Config');
+    /**
+     * Runtime checks defined by the user via forRoot()
      */
     var _USER_RUNTIME_CHECKS = new core.InjectionToken('@ngrx/store Internal User Runtime Checks Config');
     /**
@@ -763,8 +768,13 @@
                 useValue: runtimeChecks,
             },
             {
-                provide: _ACTIVE_RUNTIME_CHECKS,
+                provide: USER_RUNTIME_CHECKS,
+                useFactory: _runtimeChecksFactory,
                 deps: [_USER_RUNTIME_CHECKS],
+            },
+            {
+                provide: _ACTIVE_RUNTIME_CHECKS,
+                deps: [USER_RUNTIME_CHECKS],
                 useFactory: createActiveRuntimeChecks,
             },
             {
@@ -780,6 +790,9 @@
                 useFactory: createSerializationCheckMetaReducer,
             },
         ];
+    }
+    function _runtimeChecksFactory(runtimeChecks) {
+        return runtimeChecks;
     }
 
     var StoreRootModule = /** @class */ (function () {
@@ -1067,6 +1080,7 @@
 
     exports.ɵngrx_modules_store_store_c = ACTIONS_SUBJECT_PROVIDERS;
     exports.ɵngrx_modules_store_store_d = REDUCER_MANAGER_PROVIDERS;
+    exports.ɵngrx_modules_store_store_bb = _runtimeChecksFactory;
     exports.ɵngrx_modules_store_store_x = createActiveRuntimeChecks;
     exports.ɵngrx_modules_store_store_z = createImmutabilityCheckMetaReducer;
     exports.ɵngrx_modules_store_store_y = createSerializationCheckMetaReducer;
@@ -1122,6 +1136,7 @@
     exports.META_REDUCERS = META_REDUCERS;
     exports.FEATURE_REDUCERS = FEATURE_REDUCERS;
     exports.USER_PROVIDED_META_REDUCERS = USER_PROVIDED_META_REDUCERS;
+    exports.USER_RUNTIME_CHECKS = USER_RUNTIME_CHECKS;
     exports.StoreModule = StoreModule;
     exports.StoreRootModule = StoreRootModule;
     exports.StoreFeatureModule = StoreFeatureModule;
