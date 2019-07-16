@@ -1,4 +1,4 @@
-import { ActionCreator, ActionReducer, ActionType } from './models';
+import { ActionCreator, ActionReducer, ActionType, Action } from './models';
 export interface On<S> {
     reducer: ActionReducer<S>;
     types: string[];
@@ -53,4 +53,4 @@ export declare function on<S>(creator: ActionCreator, ...rest: (ActionCreator | 
  * }
  * ```
  */
-export declare function createReducer<S>(initialState: S, ...ons: On<S>[]): ActionReducer<S>;
+export declare function createReducer<S, A extends Action = Action>(initialState: S, ...ons: On<S>[]): ActionReducer<S, A>;

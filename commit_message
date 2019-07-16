@@ -1,1 +1,1 @@
-57fd3d7 feat(router-store): add selectQueryParam and selectRouteParam (#2014)
+9d413c9 refactor(store): allow for custom action types with createReducer (#2021)
