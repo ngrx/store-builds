@@ -1,1 +1,1 @@
-9d413c9 refactor(store): allow for custom action types with createReducer (#2021)
+136c5eb Schematics: Add and import feature key for reducer state (#2017)
