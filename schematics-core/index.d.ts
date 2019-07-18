@@ -1,5 +1,5 @@
 /// <amd-module name="@ngrx/store/schematics-core" />
-import { dasherize, decamelize, camelize, classify, underscore, group, capitalize, featurePath, pluralize } from './utility/strings';
+import { dasherize, decamelize, camelize, classify, underscore, group, capitalize, featurePath } from './utility/strings';
 export { findNodes, getSourceNodes, getDecoratorMetadata, getContentOfKeyLiteral, insertAfterLastOccurrence, insertImport, addBootstrapToModule, addDeclarationToModule, addExportToModule, addImportToModule, addProviderToModule, replaceImport, } from './utility/ast-utils';
 export { Host, Change, NoopChange, InsertChange, RemoveChange, ReplaceChange, createReplaceChange, createChangeRecorder, commitChanges, } from './utility/change';
 export { AppConfig, getWorkspace, getWorkspacePath } from './utility/config';
@@ -15,7 +15,6 @@ export declare const stringUtils: {
     group: typeof group;
     capitalize: typeof capitalize;
     featurePath: typeof featurePath;
-    pluralize: typeof pluralize;
 };
 export { updatePackage } from './utility/update';
 export { parseName } from './utility/parse-name';
