@@ -1,1 +1,1 @@
-fabbfec docs: removed unnecessary 'Effect' decorator in effects example. (#2040)
+b84ff9d docs(store): adds state management lifecycle diagram to getting started (#2031)
