@@ -1,1 +1,1 @@
-ddab4cd docs(data): improve DefaultDataServiceConfig root parameter docs (#2075)
+34c0420 fix(data): use correct guard when handling optimistic update (#2060)
