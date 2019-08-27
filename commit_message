@@ -1,1 +1,1 @@
-eb5dbb9 Update index.ts (#2081)
+6946e2e feat(store): add verbose error message for undefined feature state in development mode (#2078)

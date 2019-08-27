@@ -1,5 +1,5 @@
 /**
- * @license NgRx 8.2.0+11.sha-eb5dbb9
+ * @license NgRx 8.2.0+12.sha-6946e2e
  * (c) 2015-2018 Brandon Roberts, Mike Ryan, Rob Wormald, Victor Savkin
  * License: MIT
  */
@@ -985,7 +985,20 @@ function createFeatureSelector(featureName) {
      * @param {?} state
      * @return {?}
      */
-    (state) => state[featureName]), (/**
+    (state) => {
+        /** @type {?} */
+        const featureState = state[featureName];
+        if (isDevMode() && featureState === undefined) {
+            console.warn(`The feature name \"${featureName}\" does ` +
+                'not exist in the state, therefore createFeatureSelector ' +
+                'cannot access it.  Be sure it is imported in a loaded module ' +
+                `using StoreModule.forRoot('${featureName}', ...) or ` +
+                `StoreModule.forFeature('${featureName}', ...).  If the default ` +
+                'state is intended to be undefined, as is the case with router ' +
+                'state, this development-only warning message can be ignored.');
+        }
+        return featureState;
+    }), (/**
      * @param {?} featureState
      * @return {?}
      */
