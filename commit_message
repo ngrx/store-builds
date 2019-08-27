@@ -1,1 +1,1 @@
-303f9fe docs(store-devtools): add recipe to exclude store-devtools from the build (#2073)
+2d37b48 fix(store): add DefaultProjectorFn to public API (#2090)

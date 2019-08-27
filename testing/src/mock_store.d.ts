@@ -5,7 +5,7 @@ import { MockSelector } from './mock_selector';
 export declare class MockStore<T> extends Store<T> {
     private state$;
     private initialState;
-    static selectors: Map<string | MemoizedSelector<any, any, import("@ngrx/store/src/selector").DefaultProjectorFn<any>> | MemoizedSelectorWithProps<any, any, any, import("@ngrx/store/src/selector").DefaultProjectorFn<any>>, any>;
+    static selectors: Map<string | MemoizedSelector<any, any, import("@ngrx/store").DefaultProjectorFn<any>> | MemoizedSelectorWithProps<any, any, any, import("@ngrx/store").DefaultProjectorFn<any>>, any>;
     scannedActions$: Observable<Action>;
     constructor(state$: MockState<T>, actionsObserver: ActionsSubject, reducerManager: ReducerManager, initialState: T, mockSelectors?: MockSelector[]);
     setState(nextState: T): void;
