@@ -1,1 +1,1 @@
-6946e2e feat(store): add verbose error message for undefined feature state in development mode (#2078)
+303f9fe docs(store-devtools): add recipe to exclude store-devtools from the build (#2073)
