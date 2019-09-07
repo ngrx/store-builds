@@ -5,7 +5,7 @@ import { ReducerManager, ReducerObservable } from './reducer_manager';
 import { ScannedActionsSubject } from './scanned_actions_subject';
 import { Store } from './store';
 export declare class StoreRootModule {
-    constructor(actions$: ActionsSubject, reducer$: ReducerObservable, scannedActions$: ScannedActionsSubject, store: Store<any>);
+    constructor(actions$: ActionsSubject, reducer$: ReducerObservable, scannedActions$: ScannedActionsSubject, store: Store<any>, guard: any);
 }
 export declare class StoreFeatureModule implements OnDestroy {
     private features;
@@ -37,3 +37,4 @@ export declare function _createFeatureStore(injector: Injector, configs: StoreCo
 export declare function _createFeatureReducers(injector: Injector, reducerCollection: ActionReducerMap<any, any>[]): {}[];
 export declare function _initialStateFactory(initialState: any): any;
 export declare function _concatMetaReducers(metaReducers: MetaReducer[], userProvidedMetaReducers: MetaReducer[]): MetaReducer[];
+export declare function _provideForRootGuard(store: Store<any>): any;

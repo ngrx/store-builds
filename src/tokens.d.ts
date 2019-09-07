@@ -1,5 +1,6 @@
 import { InjectionToken } from '@angular/core';
 import { RuntimeChecks, MetaReducer } from './models';
+export declare const _ROOT_STORE_GUARD: InjectionToken<void>;
 export declare const _INITIAL_STATE: InjectionToken<{}>;
 export declare const INITIAL_STATE: InjectionToken<{}>;
 export declare const REDUCER_FACTORY: InjectionToken<{}>;

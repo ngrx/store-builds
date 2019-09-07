@@ -1,5 +1,5 @@
 /**
- * @license NgRx 8.3.0+1.sha-cb74051
+ * @license NgRx 8.3.0+4.sha-70a8f2d
  * (c) 2015-2018 Brandon Roberts, Mike Ryan, Rob Wormald, Victor Savkin
  * License: MIT
  */
@@ -148,6 +148,7 @@
     }(rxjs.BehaviorSubject));
     var ACTIONS_SUBJECT_PROVIDERS = [ActionsSubject];
 
+    var _ROOT_STORE_GUARD = new core.InjectionToken('@ngrx/store Internal Root Guard');
     var _INITIAL_STATE = new core.InjectionToken('@ngrx/store Internal Initial State');
     var INITIAL_STATE = new core.InjectionToken('@ngrx/store Initial State');
     var REDUCER_FACTORY = new core.InjectionToken('@ngrx/store Reducer Factory');
@@ -808,14 +809,16 @@
     }
 
     var StoreRootModule = /** @class */ (function () {
-        function StoreRootModule(actions$, reducer$, scannedActions$, store) {
+        function StoreRootModule(actions$, reducer$, scannedActions$, store, guard) {
         }
         StoreRootModule = tslib_1.__decorate([
             core.NgModule({}),
+            tslib_1.__param(4, core.Optional()),
+            tslib_1.__param(4, core.Inject(_ROOT_STORE_GUARD)),
             tslib_1.__metadata("design:paramtypes", [ActionsSubject,
                 ReducerObservable,
                 ScannedActionsSubject,
-                Store])
+                Store, Object])
         ], StoreRootModule);
         return StoreRootModule;
     }());
@@ -851,6 +854,11 @@
             return {
                 ngModule: StoreRootModule,
                 providers: [
+                    {
+                        provide: _ROOT_STORE_GUARD,
+                        useFactory: _provideForRootGuard,
+                        deps: [[Store, new core.Optional(), new core.SkipSelf()]],
+                    },
                     { provide: _INITIAL_STATE, useValue: config.initialState },
                     {
                         provide: INITIAL_STATE,
@@ -985,6 +993,12 @@
     function _concatMetaReducers(metaReducers, userProvidedMetaReducers) {
         return metaReducers.concat(userProvidedMetaReducers);
     }
+    function _provideForRootGuard(store) {
+        if (store) {
+            throw new TypeError("StoreModule.forRoot() called twice. Feature modules should use StoreModule.forFeature() instead.");
+        }
+        return 'guarded';
+    }
 
     /**
      * @description
@@ -1092,31 +1106,33 @@
 
     exports.ɵngrx_modules_store_store_c = ACTIONS_SUBJECT_PROVIDERS;
     exports.ɵngrx_modules_store_store_d = REDUCER_MANAGER_PROVIDERS;
-    exports.ɵngrx_modules_store_store_bb = _runtimeChecksFactory;
-    exports.ɵngrx_modules_store_store_x = createActiveRuntimeChecks;
-    exports.ɵngrx_modules_store_store_z = createImmutabilityCheckMetaReducer;
-    exports.ɵngrx_modules_store_store_y = createSerializationCheckMetaReducer;
-    exports.ɵngrx_modules_store_store_ba = provideRuntimeChecks;
+    exports.ɵngrx_modules_store_store_bd = _runtimeChecksFactory;
+    exports.ɵngrx_modules_store_store_z = createActiveRuntimeChecks;
+    exports.ɵngrx_modules_store_store_bb = createImmutabilityCheckMetaReducer;
+    exports.ɵngrx_modules_store_store_ba = createSerializationCheckMetaReducer;
+    exports.ɵngrx_modules_store_store_bc = provideRuntimeChecks;
     exports.ɵngrx_modules_store_store_e = SCANNED_ACTIONS_SUBJECT_PROVIDERS;
     exports.ɵngrx_modules_store_store_f = isEqualCheck;
     exports.ɵngrx_modules_store_store_g = STATE_PROVIDERS;
     exports.ɵngrx_modules_store_store_b = STORE_PROVIDERS;
-    exports.ɵngrx_modules_store_store_w = _concatMetaReducers;
-    exports.ɵngrx_modules_store_store_u = _createFeatureReducers;
-    exports.ɵngrx_modules_store_store_t = _createFeatureStore;
-    exports.ɵngrx_modules_store_store_s = _createStoreReducers;
-    exports.ɵngrx_modules_store_store_v = _initialStateFactory;
-    exports.ɵngrx_modules_store_store_r = _ACTIVE_RUNTIME_CHECKS;
-    exports.ɵngrx_modules_store_store_m = _FEATURE_CONFIGS;
-    exports.ɵngrx_modules_store_store_l = _FEATURE_REDUCERS;
-    exports.ɵngrx_modules_store_store_o = _FEATURE_REDUCERS_TOKEN;
-    exports.ɵngrx_modules_store_store_j = _INITIAL_REDUCERS;
-    exports.ɵngrx_modules_store_store_h = _INITIAL_STATE;
-    exports.ɵngrx_modules_store_store_i = _REDUCER_FACTORY;
-    exports.ɵngrx_modules_store_store_p = _RESOLVED_META_REDUCERS;
-    exports.ɵngrx_modules_store_store_n = _STORE_FEATURES;
-    exports.ɵngrx_modules_store_store_k = _STORE_REDUCERS;
-    exports.ɵngrx_modules_store_store_q = _USER_RUNTIME_CHECKS;
+    exports.ɵngrx_modules_store_store_x = _concatMetaReducers;
+    exports.ɵngrx_modules_store_store_v = _createFeatureReducers;
+    exports.ɵngrx_modules_store_store_u = _createFeatureStore;
+    exports.ɵngrx_modules_store_store_t = _createStoreReducers;
+    exports.ɵngrx_modules_store_store_w = _initialStateFactory;
+    exports.ɵngrx_modules_store_store_y = _provideForRootGuard;
+    exports.ɵngrx_modules_store_store_s = _ACTIVE_RUNTIME_CHECKS;
+    exports.ɵngrx_modules_store_store_n = _FEATURE_CONFIGS;
+    exports.ɵngrx_modules_store_store_m = _FEATURE_REDUCERS;
+    exports.ɵngrx_modules_store_store_p = _FEATURE_REDUCERS_TOKEN;
+    exports.ɵngrx_modules_store_store_k = _INITIAL_REDUCERS;
+    exports.ɵngrx_modules_store_store_i = _INITIAL_STATE;
+    exports.ɵngrx_modules_store_store_j = _REDUCER_FACTORY;
+    exports.ɵngrx_modules_store_store_q = _RESOLVED_META_REDUCERS;
+    exports.ɵngrx_modules_store_store_h = _ROOT_STORE_GUARD;
+    exports.ɵngrx_modules_store_store_o = _STORE_FEATURES;
+    exports.ɵngrx_modules_store_store_l = _STORE_REDUCERS;
+    exports.ɵngrx_modules_store_store_r = _USER_RUNTIME_CHECKS;
     exports.createAction = createAction;
     exports.props = props;
     exports.union = union;
