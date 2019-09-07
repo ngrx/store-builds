@@ -1,1 +1,1 @@
-70a8f2d build: add router as dependency
+c63941c fix(store): improve consistency of memoized selector result when projection fails (#2101)
