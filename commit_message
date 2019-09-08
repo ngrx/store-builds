@@ -1,1 +1,1 @@
-c63941c fix(store): improve consistency of memoized selector result when projection fails (#2101)
+0827916 docs(store): factory function has to return a reducer (#2110)
