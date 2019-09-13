@@ -56,9 +56,21 @@ export declare type ActionCreator<T extends string = string, C extends Creator =
 export declare type FunctionWithParametersType<P extends unknown[], R = void> = (...args: P) => R;
 export declare type ParametersType<T> = T extends (...args: infer U) => unknown ? U : never;
 export interface RuntimeChecks {
+    /**
+     * Verifies if the state is serializable
+     */
     strictStateSerializability: boolean;
+    /**
+     * Verifies if the actions are serializable. Please note, you may not need to set it to `true` unless you are storing/replaying actions using external resources, for example `localStorage`.
+     */
     strictActionSerializability: boolean;
+    /**
+     * Verifies that the state isn't mutated
+     */
     strictStateImmutability: boolean;
+    /**
+     * Verifies that actions aren't mutated
+     */
     strictActionImmutability: boolean;
 }
 export {};

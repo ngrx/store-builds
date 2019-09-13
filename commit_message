@@ -1,1 +1,1 @@
-ed3b1f9 fix(schematics): fixed the schematics/action spec template (#2092)
+8d19cb6 docs: add some guidance on when to use strict serializability for actions in guide and API docs (#2055)
