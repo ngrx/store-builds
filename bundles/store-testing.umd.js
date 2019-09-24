@@ -1,13 +1,13 @@
 /**
- * @license NgRx 8.3.0+13.sha-4bbf397
+ * @license NgRx 8.3.0+15.sha-2964e2b
  * (c) 2015-2018 Brandon Roberts, Mike Ryan, Rob Wormald, Victor Savkin
  * License: MIT
  */
 (function (global, factory) {
-    typeof exports === 'object' && typeof module !== 'undefined' ? factory(exports, require('tslib'), require('@angular/core'), require('rxjs'), require('@ngrx/store')) :
-    typeof define === 'function' && define.amd ? define('@ngrx/store/testing', ['exports', 'tslib', '@angular/core', 'rxjs', '@ngrx/store'], factory) :
-    (global = global || self, factory((global.ngrx = global.ngrx || {}, global.ngrx.store = global.ngrx.store || {}, global.ngrx.store.testing = {}), global.tslib, global.ng.core, global.rxjs, global['@ngrx/store']));
-}(this, function (exports, tslib_1, core, rxjs, store) { 'use strict';
+    typeof exports === 'object' && typeof module !== 'undefined' ? factory(exports, require('tslib'), require('@angular/core'), require('rxjs'), require('@ngrx/store'), require('@angular/core/testing')) :
+    typeof define === 'function' && define.amd ? define('@ngrx/store/testing', ['exports', 'tslib', '@angular/core', 'rxjs', '@ngrx/store', '@angular/core/testing'], factory) :
+    (global = global || self, factory((global.ngrx = global.ngrx || {}, global.ngrx.store = global.ngrx.store || {}, global.ngrx.store.testing = {}), global.tslib, global.ng.core, global.rxjs, global['@ngrx/store'], global.ng.core.testing));
+}(this, function (exports, tslib_1, core, rxjs, store, testing) { 'use strict';
 
     var MockState = /** @class */ (function (_super) {
         tslib_1.__extends(MockState, _super);
@@ -23,6 +23,17 @@
 
     var MOCK_SELECTORS = new core.InjectionToken('@ngrx/store Mock Selectors');
 
+    if (typeof afterEach === 'function') {
+        afterEach(function () {
+            try {
+                var store$1 = testing.TestBed.get(store.Store);
+                if (store$1 && 'resetSelectors' in store$1) {
+                    store$1.resetSelectors();
+                }
+            }
+            catch (_a) { }
+        });
+    }
     var MockStore = /** @class */ (function (_super) {
         tslib_1.__extends(MockStore, _super);
         function MockStore(state$, actionsObserver, reducerManager, initialState, mockSelectors) {

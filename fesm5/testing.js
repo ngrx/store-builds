@@ -1,12 +1,13 @@
 /**
- * @license NgRx 8.3.0+13.sha-4bbf397
+ * @license NgRx 8.3.0+15.sha-2964e2b
  * (c) 2015-2018 Brandon Roberts, Mike Ryan, Rob Wormald, Victor Savkin
  * License: MIT
  */
 import { __extends, __decorate, __metadata, __param } from 'tslib';
 import { Injectable, InjectionToken, Inject } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
-import { createSelector, INITIAL_STATE, ActionsSubject, ReducerManager, Store, StateObservable } from '@ngrx/store';
+import { Store, createSelector, INITIAL_STATE, ActionsSubject, ReducerManager, StateObservable } from '@ngrx/store';
+import { TestBed } from '@angular/core/testing';
 
 var MockState = /** @class */ (function (_super) {
     __extends(MockState, _super);
@@ -22,6 +23,17 @@ var MockState = /** @class */ (function (_super) {
 
 var MOCK_SELECTORS = new InjectionToken('@ngrx/store Mock Selectors');
 
+if (typeof afterEach === 'function') {
+    afterEach(function () {
+        try {
+            var store = TestBed.get(Store);
+            if (store && 'resetSelectors' in store) {
+                store.resetSelectors();
+            }
+        }
+        catch (_a) { }
+    });
+}
 var MockStore = /** @class */ (function (_super) {
     __extends(MockStore, _super);
     function MockStore(state$, actionsObserver, reducerManager, initialState, mockSelectors) {

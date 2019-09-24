@@ -1,11 +1,12 @@
 /**
- * @license NgRx 8.3.0+13.sha-4bbf397
+ * @license NgRx 8.3.0+15.sha-2964e2b
  * (c) 2015-2018 Brandon Roberts, Mike Ryan, Rob Wormald, Victor Savkin
  * License: MIT
  */
 import { Injectable, InjectionToken, Inject } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
 import { Store, createSelector, ActionsSubject, ReducerManager, INITIAL_STATE, StateObservable } from '@ngrx/store';
+import { TestBed } from '@angular/core/testing';
 
 /**
  * @fileoverview added by tsickle
@@ -36,6 +37,21 @@ const MOCK_SELECTORS = new InjectionToken('@ngrx/store Mock Selectors');
  * @fileoverview added by tsickle
  * @suppress {checkTypes,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
  */
+if (typeof afterEach === 'function') {
+    afterEach((/**
+     * @return {?}
+     */
+    () => {
+        try {
+            /** @type {?} */
+            const store = (/** @type {?} */ (TestBed.get(Store)));
+            if (store && 'resetSelectors' in store) {
+                store.resetSelectors();
+            }
+        }
+        catch (_a) { }
+    }));
+}
 /**
  * @template T
  */
