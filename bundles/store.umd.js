@@ -1,5 +1,5 @@
 /**
- * @license NgRx 8.3.0+16.sha-d560640
+ * @license NgRx 8.3.0+17.sha-9a70262
  * (c) 2015-2018 Brandon Roberts, Mike Ryan, Rob Wormald, Victor Savkin
  * License: MIT
  */
@@ -1056,28 +1056,44 @@
      * ```
      */
     function createReducer(initialState) {
-        var e_1, _a, e_2, _b;
+        var e_1, _a;
         var ons = [];
         for (var _i = 1; _i < arguments.length; _i++) {
             ons[_i - 1] = arguments[_i];
         }
         var map = new Map();
+        var _loop_1 = function (on_1) {
+            var e_2, _a;
+            var _loop_2 = function (type) {
+                if (map.has(type)) {
+                    var existingReducer_1 = map.get(type);
+                    var newReducer = function (state, action) {
+                        return on_1.reducer(existingReducer_1(state, action), action);
+                    };
+                    map.set(type, newReducer);
+                }
+                else {
+                    map.set(type, on_1.reducer);
+                }
+            };
+            try {
+                for (var _b = tslib_1.__values(on_1.types), _c = _b.next(); !_c.done; _c = _b.next()) {
+                    var type = _c.value;
+                    _loop_2(type);
+                }
+            }
+            catch (e_2_1) { e_2 = { error: e_2_1 }; }
+            finally {
+                try {
+                    if (_c && !_c.done && (_a = _b.return)) _a.call(_b);
+                }
+                finally { if (e_2) throw e_2.error; }
+            }
+        };
         try {
             for (var ons_1 = tslib_1.__values(ons), ons_1_1 = ons_1.next(); !ons_1_1.done; ons_1_1 = ons_1.next()) {
                 var on_1 = ons_1_1.value;
-                try {
-                    for (var _c = tslib_1.__values(on_1.types), _d = _c.next(); !_d.done; _d = _c.next()) {
-                        var type = _d.value;
-                        map.set(type, on_1.reducer);
-                    }
-                }
-                catch (e_2_1) { e_2 = { error: e_2_1 }; }
-                finally {
-                    try {
-                        if (_d && !_d.done && (_b = _c.return)) _b.call(_c);
-                    }
-                    finally { if (e_2) throw e_2.error; }
-                }
+                _loop_1(on_1);
             }
         }
         catch (e_1_1) { e_1 = { error: e_1_1 }; }

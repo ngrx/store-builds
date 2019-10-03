@@ -1,1 +1,1 @@
-d560640 docs(store): change alert to mention auto cleanup (#2132)
+9a70262 feat(store): allow multiple on handlers for the same action in createReducer(#2103)

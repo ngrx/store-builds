@@ -1,5 +1,5 @@
 /**
- * @license NgRx 8.3.0+16.sha-d560640
+ * @license NgRx 8.3.0+17.sha-9a70262
  * (c) 2015-2018 Brandon Roberts, Mike Ryan, Rob Wormald, Victor Savkin
  * License: MIT
  */
@@ -1675,7 +1675,21 @@ function createReducer(initialState, ...ons) {
     const map = new Map();
     for (let on of ons) {
         for (let type of on.types) {
-            map.set(type, on.reducer);
+            if (map.has(type)) {
+                /** @type {?} */
+                const existingReducer = (/** @type {?} */ (map.get(type)));
+                /** @type {?} */
+                const newReducer = (/**
+                 * @param {?} state
+                 * @param {?} action
+                 * @return {?}
+                 */
+                (state, action) => on.reducer(existingReducer(state, action), action));
+                map.set(type, newReducer);
+            }
+            else {
+                map.set(type, on.reducer);
+            }
         }
     }
     return (/**
