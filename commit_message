@@ -1,1 +1,1 @@
-9a70262 feat(store): allow multiple on handlers for the same action in createReducer(#2103)
+1728121 docs(store): document new behavior of createReducer for multiple actions of the same type (#2146)

@@ -1,5 +1,5 @@
 /**
- * @license NgRx 8.3.0+17.sha-9a70262
+ * @license NgRx 8.3.0+18.sha-1728121
  * (c) 2015-2018 Brandon Roberts, Mike Ryan, Rob Wormald, Victor Savkin
  * License: MIT
  */
@@ -1032,8 +1032,7 @@
      * @usageNotes
      *
      * - Must be used with `ActionCreator`'s (returned by `createAction`).  Cannot be used with class-based action creators.
-     * - An action type should only be associated with at most one state change function, similar to switch statements.
-     *   - In the case this is violated, the latest defined associated will be used (the latest `on` function passed).
+     * - An action can be associated with multiple state change functions. In this case the functions will be executed in the specified order.
      * - The returned `ActionReducer` should additionally be returned from an exported `reducer` function.
      * This is because [function calls are not supported](https://angular.io/guide/aot-compiler#function-calls-are-not-supported) by the AOT compiler.
      *
