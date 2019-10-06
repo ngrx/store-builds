@@ -1,9 +1,9 @@
 /**
- * @license NgRx 8.3.0+18.sha-1728121
+ * @license NgRx 8.3.0+19.sha-30e876f
  * (c) 2015-2018 Brandon Roberts, Mike Ryan, Rob Wormald, Victor Savkin
  * License: MIT
  */
-import { __extends, __decorate, __metadata, __param } from 'tslib';
+import { __extends, __decorate, __metadata, __assign, __param } from 'tslib';
 import { Injectable, InjectionToken, Inject } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
 import { Store, createSelector, INITIAL_STATE, ActionsSubject, ReducerManager, StateObservable } from '@ngrx/store';
@@ -41,7 +41,7 @@ var MockStore = /** @class */ (function (_super) {
         _this.state$ = state$;
         _this.initialState = initialState;
         _this.resetSelectors();
-        _this.state$.next(_this.initialState);
+        _this.setState(_this.initialState);
         _this.scannedActions$ = actionsObserver.asObservable();
         if (mockSelectors) {
             mockSelectors.forEach(function (mockSelector) {
@@ -59,6 +59,7 @@ var MockStore = /** @class */ (function (_super) {
     MockStore_1 = MockStore;
     MockStore.prototype.setState = function (nextState) {
         this.state$.next(nextState);
+        this.lastState = nextState;
     };
     MockStore.prototype.overrideSelector = function (selector, value) {
         MockStore_1.selectors.set(selector, value);
@@ -79,7 +80,7 @@ var MockStore = /** @class */ (function (_super) {
         MockStore_1.selectors.clear();
     };
     MockStore.prototype.select = function (selector, prop) {
-        if (MockStore_1.selectors.has(selector)) {
+        if (typeof selector === 'string' && MockStore_1.selectors.has(selector)) {
             return new BehaviorSubject(MockStore_1.selectors.get(selector)).asObservable();
         }
         return _super.prototype.select.call(this, selector, prop);
@@ -89,6 +90,12 @@ var MockStore = /** @class */ (function (_super) {
     };
     MockStore.prototype.removeReducer = function () {
         /* noop */
+    };
+    /**
+     * Refreshes the existing state.
+     */
+    MockStore.prototype.refreshState = function () {
+        this.setState(__assign({}, this.lastState));
     };
     var MockStore_1;
     MockStore.selectors = new Map();
@@ -120,7 +127,7 @@ function provideMockStore(config) {
     return [
         ActionsSubject,
         MockState,
-        { provide: INITIAL_STATE, useValue: config.initialState },
+        { provide: INITIAL_STATE, useValue: config.initialState || {} },
         { provide: MOCK_SELECTORS, useValue: config.selectors },
         { provide: StateObservable, useClass: MockState },
         { provide: ReducerManager, useClass: MockReducerManager },

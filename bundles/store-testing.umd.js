@@ -1,5 +1,5 @@
 /**
- * @license NgRx 8.3.0+18.sha-1728121
+ * @license NgRx 8.3.0+19.sha-30e876f
  * (c) 2015-2018 Brandon Roberts, Mike Ryan, Rob Wormald, Victor Savkin
  * License: MIT
  */
@@ -41,7 +41,7 @@
             _this.state$ = state$;
             _this.initialState = initialState;
             _this.resetSelectors();
-            _this.state$.next(_this.initialState);
+            _this.setState(_this.initialState);
             _this.scannedActions$ = actionsObserver.asObservable();
             if (mockSelectors) {
                 mockSelectors.forEach(function (mockSelector) {
@@ -59,6 +59,7 @@
         MockStore_1 = MockStore;
         MockStore.prototype.setState = function (nextState) {
             this.state$.next(nextState);
+            this.lastState = nextState;
         };
         MockStore.prototype.overrideSelector = function (selector, value) {
             MockStore_1.selectors.set(selector, value);
@@ -79,7 +80,7 @@
             MockStore_1.selectors.clear();
         };
         MockStore.prototype.select = function (selector, prop) {
-            if (MockStore_1.selectors.has(selector)) {
+            if (typeof selector === 'string' && MockStore_1.selectors.has(selector)) {
                 return new rxjs.BehaviorSubject(MockStore_1.selectors.get(selector)).asObservable();
             }
             return _super.prototype.select.call(this, selector, prop);
@@ -89,6 +90,12 @@
         };
         MockStore.prototype.removeReducer = function () {
             /* noop */
+        };
+        /**
+         * Refreshes the existing state.
+         */
+        MockStore.prototype.refreshState = function () {
+            this.setState(tslib_1.__assign({}, this.lastState));
         };
         var MockStore_1;
         MockStore.selectors = new Map();
@@ -120,7 +127,7 @@
         return [
             store.ActionsSubject,
             MockState,
-            { provide: store.INITIAL_STATE, useValue: config.initialState },
+            { provide: store.INITIAL_STATE, useValue: config.initialState || {} },
             { provide: MOCK_SELECTORS, useValue: config.selectors },
             { provide: store.StateObservable, useClass: MockState },
             { provide: store.ReducerManager, useClass: MockReducerManager },

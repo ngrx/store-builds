@@ -1,1 +1,1 @@
-1728121 docs(store): document new behavior of createReducer for multiple actions of the same type (#2146)
+30e876f feat(store): add refreshState method to mock store (#2148)

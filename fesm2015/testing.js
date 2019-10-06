@@ -1,5 +1,5 @@
 /**
- * @license NgRx 8.3.0+18.sha-1728121
+ * @license NgRx 8.3.0+19.sha-30e876f
  * (c) 2015-2018 Brandon Roberts, Mike Ryan, Rob Wormald, Victor Savkin
  * License: MIT
  */
@@ -68,7 +68,7 @@ class MockStore extends Store {
         this.state$ = state$;
         this.initialState = initialState;
         this.resetSelectors();
-        this.state$.next(this.initialState);
+        this.setState(this.initialState);
         this.scannedActions$ = actionsObserver.asObservable();
         if (mockSelectors) {
             mockSelectors.forEach((/**
@@ -93,6 +93,7 @@ class MockStore extends Store {
      */
     setState(nextState) {
         this.state$.next(nextState);
+        this.lastState = nextState;
     }
     /**
      * @template T, Result
@@ -139,7 +140,7 @@ class MockStore extends Store {
      * @return {?}
      */
     select(selector, prop) {
-        if (MockStore.selectors.has(selector)) {
+        if (typeof selector === 'string' && MockStore.selectors.has(selector)) {
             return new BehaviorSubject(MockStore.selectors.get(selector)).asObservable();
         }
         return super.select(selector, prop);
@@ -155,6 +156,13 @@ class MockStore extends Store {
      */
     removeReducer() {
         /* noop */
+    }
+    /**
+     * Refreshes the existing state.
+     * @return {?}
+     */
+    refreshState() {
+        this.setState(Object.assign({}, ((/** @type {?} */ (this.lastState)))));
     }
 }
 MockStore.selectors = new Map();
@@ -201,7 +209,7 @@ function provideMockStore(config = {}) {
     return [
         ActionsSubject,
         MockState,
-        { provide: INITIAL_STATE, useValue: config.initialState },
+        { provide: INITIAL_STATE, useValue: config.initialState || {} },
         { provide: MOCK_SELECTORS, useValue: config.selectors },
         { provide: StateObservable, useClass: MockState },
         { provide: ReducerManager, useClass: MockReducerManager },

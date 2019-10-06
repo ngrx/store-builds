@@ -7,6 +7,7 @@ export declare class MockStore<T> extends Store<T> {
     private initialState;
     static selectors: Map<string | MemoizedSelector<any, any, import("@ngrx/store").DefaultProjectorFn<any>> | MemoizedSelectorWithProps<any, any, any, import("@ngrx/store").DefaultProjectorFn<any>>, any>;
     scannedActions$: Observable<Action>;
+    private lastState;
     constructor(state$: MockState<T>, actionsObserver: ActionsSubject, reducerManager: ReducerManager, initialState: T, mockSelectors?: MockSelector[]);
     setState(nextState: T): void;
     overrideSelector<T, Result>(selector: string, value: Result): MemoizedSelector<string, Result>;
@@ -16,4 +17,8 @@ export declare class MockStore<T> extends Store<T> {
     select(selector: any, prop?: any): Observable<any>;
     addReducer(): void;
     removeReducer(): void;
+    /**
+     * Refreshes the existing state.
+     */
+    refreshState(): void;
 }
