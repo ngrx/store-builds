@@ -1,1 +1,1 @@
-ecf7a26 refactor(data): use createEffect function instead of decorator (#2087)
+de07805 refactor(store-devtools): add interface for type-safe feature options (#2150)
