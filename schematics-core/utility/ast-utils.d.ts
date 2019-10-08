@@ -7,7 +7,7 @@
  * found in the LICENSE file at https://angular.io/license
  */
 import * as ts from 'typescript';
-import { Change, ReplaceChange } from './change';
+import { Change, ReplaceChange, RemoveChange } from './change';
 import { Path } from '@angular-devkit/core';
 /**
  * Find all nodes from the AST in the subtree of node of SyntaxKind kind.
@@ -71,4 +71,4 @@ export declare function addBootstrapToModule(source: ts.SourceFile, modulePath: 
  * @return Change
  */
 export declare function insertImport(source: ts.SourceFile, fileToEdit: string, symbolName: string, fileName: string, isDefault?: boolean): Change;
-export declare function replaceImport(sourceFile: ts.SourceFile, path: Path, importFrom: string, importAsIs: string, importToBe: string): ReplaceChange[];
+export declare function replaceImport(sourceFile: ts.SourceFile, path: Path, importFrom: string, importAsIs: string, importToBe: string): (ReplaceChange | RemoveChange)[];

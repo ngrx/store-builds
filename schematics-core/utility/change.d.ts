@@ -68,5 +68,6 @@ export declare class ReplaceChange implements Change {
     apply(host: Host): Promise<void>;
 }
 export declare function createReplaceChange(sourceFile: ts.SourceFile, node: ts.Node, oldText: string, newText: string): ReplaceChange;
+export declare function createRemoveChange(sourceFile: ts.SourceFile, node: ts.Node, from?: number, to?: number): RemoveChange;
 export declare function createChangeRecorder(tree: Tree, path: string, changes: Change[]): UpdateRecorder;
 export declare function commitChanges(tree: Tree, path: string, changes: Change[]): boolean;
