@@ -1,1 +1,1 @@
-881c6bd docs(data): remove duplicate "the" in entity metadata description (#2166)
+1e4c0be fix(store): disallow arrays in action creators (#2155)

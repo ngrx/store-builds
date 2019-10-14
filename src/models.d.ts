@@ -32,7 +32,9 @@ export interface StoreFeature<T, V extends Action = Action> {
 }
 export declare type Selector<T, V> = (state: T) => V;
 export declare type SelectorWithProps<State, Props, Result> = (state: State, props: Props) => Result;
-export declare type DisallowTypeProperty<T> = T extends {
+export declare const arraysAreNotAllowedMsg = "arrays are not allowed in action creators";
+declare type ArraysAreNotAllowed = typeof arraysAreNotAllowedMsg;
+export declare type DisallowArraysAndTypeProperty<T> = T extends any[] ? ArraysAreNotAllowed : T extends {
     type: any;
 } ? TypePropertyIsNotAllowed : T;
 export declare const typePropertyIsNotAllowedMsg = "type property is not allowed in action creators";
@@ -40,10 +42,10 @@ declare type TypePropertyIsNotAllowed = typeof typePropertyIsNotAllowedMsg;
 /**
  * A function that returns an object in the shape of the `Action` interface.  Configured using `createAction`.
  */
-export declare type Creator<P extends any[] = any[], R extends object = object> = R extends {
+export declare type Creator<P extends any[] = any[], R extends object = object> = R extends any[] ? ArraysAreNotAllowed : R extends {
     type: any;
 } ? TypePropertyIsNotAllowed : FunctionWithParametersType<P, R>;
-export declare type PropsReturnType<T extends object> = T extends {
+export declare type PropsReturnType<T extends object> = T extends any[] ? ArraysAreNotAllowed : T extends {
     type: any;
 } ? TypePropertyIsNotAllowed : {
     _as: 'props';
