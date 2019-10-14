@@ -1,1 +1,1 @@
-8c7c42c docs(schematics): fix typo, action should be effect (#2162)
+e4765d6 fix(store): improve createFeatureSelector warning (#2163)

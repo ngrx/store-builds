@@ -1,5 +1,5 @@
 /**
- * @license NgRx 8.4.0+2.sha-8c7c42c
+ * @license NgRx 8.4.0+3.sha-e4765d6
  * (c) 2015-2018 Brandon Roberts, Mike Ryan, Rob Wormald, Victor Savkin
  * License: MIT
  */
@@ -990,8 +990,8 @@ function createFeatureSelector(featureName) {
     (state) => {
         /** @type {?} */
         const featureState = state[featureName];
-        if (isDevMode() && featureState === undefined) {
-            console.warn(`The feature name \"${featureName}\" does ` +
+        if (isDevMode() && !(featureName in state)) {
+            console.warn(`@ngrx/store: The feature name \"${featureName}\" does ` +
                 'not exist in the state, therefore createFeatureSelector ' +
                 'cannot access it.  Be sure it is imported in a loaded module ' +
                 `using StoreModule.forRoot('${featureName}', ...) or ` +
