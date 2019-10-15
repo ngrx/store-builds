@@ -1,1 +1,1 @@
-1e4c0be fix(store): disallow arrays in action creators (#2155)
+685c02b docs(data): update example to use correct provider for persistence result handler (#2168)
