@@ -1,1 +1,1 @@
-0d59783 fix(effects): resubscribe every time an error occurs (#2165)
+1b4ba1a feat(store): add On interface to public api (#2157)
