@@ -1,1 +1,1 @@
-46a8467 fix(store): improve types for string selectors (#2174)
+cf02dd2 feat(effects): improve types for ofType with action creators (#2175)
