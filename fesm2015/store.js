@@ -1,5 +1,5 @@
 /**
- * @license NgRx 8.4.0+11.sha-1b4ba1a
+ * @license NgRx 8.4.0+12.sha-46a8467
  * (c) 2015-2018 Brandon Roberts, Mike Ryan, Rob Wormald, Victor Savkin
  * License: MIT
  */
@@ -676,13 +676,13 @@ class Store extends Observable {
         this.source = state$;
     }
     /**
-     * @template Props
+     * @template Props, K
      * @param {?} pathOrMapFn
      * @param {...?} paths
      * @return {?}
      */
     select(pathOrMapFn, ...paths) {
-        return select.call(null, pathOrMapFn, ...paths)(this);
+        return ((/** @type {?} */ (select))).call(null, pathOrMapFn, ...paths)(this);
     }
     /**
      * @template R
@@ -755,7 +755,7 @@ const STORE_PROVIDERS = [Store];
 /**
  * @template T, Props, K
  * @param {?} pathOrMapFn
- * @param {?} propsOrPath
+ * @param {?=} propsOrPath
  * @param {...?} paths
  * @return {?}
  */

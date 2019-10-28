@@ -1,5 +1,5 @@
 /**
- * @license NgRx 8.4.0+11.sha-1b4ba1a
+ * @license NgRx 8.4.0+12.sha-46a8467
  * (c) 2015-2018 Brandon Roberts, Mike Ryan, Rob Wormald, Victor Savkin
  * License: MIT
  */
@@ -425,11 +425,12 @@ var Store = /** @class */ (function (_super) {
     }
     Store_1 = Store;
     Store.prototype.select = function (pathOrMapFn) {
+        var _a;
         var paths = [];
         for (var _i = 1; _i < arguments.length; _i++) {
             paths[_i - 1] = arguments[_i];
         }
-        return select.call.apply(select, __spread([null, pathOrMapFn], paths))(this);
+        return (_a = select).call.apply(_a, __spread([null, pathOrMapFn], paths))(this);
     };
     Store.prototype.lift = function (operator) {
         var store = new Store_1(this, this.actionsObserver, this.reducerManager);
