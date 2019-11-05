@@ -1,1 +1,1 @@
-e641d9d docs(effects): fixes typo in 'testing with ReplaySubject' code… (#2207)
+8a8dc83 refactor(example): close sidenav when logoutConfirmation is dispatched (#2189)
