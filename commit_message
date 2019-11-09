@@ -1,1 +1,1 @@
-de9a590 fix(effects): add action creator for root effects init action (#2219)
+90d0602 docs(data): add HttpClientModule to @ngrx/data module setup(#2238)
