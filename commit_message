@@ -1,1 +1,1 @@
-90d0602 docs(data): add HttpClientModule to @ngrx/data module setup(#2238)
+bfe4c81 fix(effects): export CreateEffectMetadata (#2245)
