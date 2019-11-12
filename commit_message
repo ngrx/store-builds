@@ -1,1 +1,1 @@
-bfe4c81 fix(effects): export CreateEffectMetadata (#2245)
+8ab113e refactor(schematics): update Effect schematics to unwrap createEffect callback function (#2230)
