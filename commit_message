@@ -1,1 +1,1 @@
-2fdfe17 docs(effects): add Observable type in Effects Overview (#2267)
+e888977 fix(store-devtools): escaping the safelist and blocklist strings (#2259)
