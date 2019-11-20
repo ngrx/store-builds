@@ -1,5 +1,5 @@
 /**
- * @license NgRx 8.5.1+3.sha-e888977
+ * @license NgRx 8.5.1+4.sha-c42e444
  * (c) 2015-2018 Brandon Roberts, Mike Ryan, Rob Wormald, Victor Savkin
  * License: MIT
  */
@@ -115,6 +115,12 @@ var MockReducerManager = /** @class */ (function (_super) {
     function MockReducerManager() {
         return _super.call(this, function () { return undefined; }) || this;
     }
+    MockReducerManager.prototype.addFeature = function (feature) {
+        /* noop */
+    };
+    MockReducerManager.prototype.addFeatures = function (feature) {
+        /* noop */
+    };
     MockReducerManager = __decorate([
         Injectable(),
         __metadata("design:paramtypes", [])

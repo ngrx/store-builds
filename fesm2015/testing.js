@@ -1,5 +1,5 @@
 /**
- * @license NgRx 8.5.1+3.sha-e888977
+ * @license NgRx 8.5.1+4.sha-c42e444
  * (c) 2015-2018 Brandon Roberts, Mike Ryan, Rob Wormald, Victor Savkin
  * License: MIT
  */
@@ -188,6 +188,20 @@ class MockReducerManager extends BehaviorSubject {
          * @return {?}
          */
         () => undefined));
+    }
+    /**
+     * @param {?} feature
+     * @return {?}
+     */
+    addFeature(feature) {
+        /* noop */
+    }
+    /**
+     * @param {?} feature
+     * @return {?}
+     */
+    addFeatures(feature) {
+        /* noop */
     }
 }
 MockReducerManager.decorators = [

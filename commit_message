@@ -1,1 +1,1 @@
-e888977 fix(store-devtools): escaping the safelist and blocklist strings (#2259)
+c42e444 fix(store): added noop for addFeature in MockReducerManager (#2265)
