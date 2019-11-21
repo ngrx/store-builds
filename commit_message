@@ -1,1 +1,1 @@
-c42e444 fix(store): added noop for addFeature in MockReducerManager (#2265)
+abe1f6b fix(effects): add EffectsRootModule and EffectsFeatureModule to public API (#2273)
