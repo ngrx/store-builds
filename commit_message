@@ -1,1 +1,1 @@
-98defed docs: add an example how to replace the DefaultHttpUrlGenerator (#2278)
+bcd752e docs(router-store): clarify that the extracted variables are functions (#2286)
