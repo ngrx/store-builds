@@ -1,1 +1,1 @@
-bcd752e docs(router-store): clarify that the extracted variables are functions (#2286)
+6e4fe25 docs(ngrx-router): fix typo in selectors code example (#2289)
