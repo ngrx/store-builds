@@ -1,1 +1,1 @@
-98b74ad feat(store): compile time errors when action creators being passed to dispatch without () (#2306)
+fe6bfa7 fix(store): replace Creator with ActionCreator on createAction (#2299)

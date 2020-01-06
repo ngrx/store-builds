@@ -1,5 +1,5 @@
 /**
- * @license NgRx 8.6.0+2.sha-98b74ad
+ * @license NgRx 8.6.0+3.sha-fe6bfa7
  * (c) 2015-2018 Brandon Roberts, Mike Ryan, Rob Wormald, Victor Savkin
  * License: MIT
  */
@@ -129,6 +129,7 @@ function union(creators) {
     return (/** @type {?} */ (undefined));
 }
 /**
+ * @template T
  * @param {?} type
  * @param {?} creator
  * @return {?}
