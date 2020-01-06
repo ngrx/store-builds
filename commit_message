@@ -1,1 +1,1 @@
-f783f9f chore: release 8.6.0
+98b74ad feat(store): compile time errors when action creators being passed to dispatch without () (#2306)

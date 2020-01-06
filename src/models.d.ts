@@ -39,6 +39,7 @@ export declare type DisallowArraysAndTypeProperty<T> = T extends any[] ? ArraysA
 } ? TypePropertyIsNotAllowed : T;
 export declare const typePropertyIsNotAllowedMsg = "type property is not allowed in action creators";
 declare type TypePropertyIsNotAllowed = typeof typePropertyIsNotAllowedMsg;
+export declare type FunctionIsNotAllowed<T, ErrorMessage extends string> = T extends Function ? ErrorMessage : T;
 /**
  * A function that returns an object in the shape of the `Action` interface.  Configured using `createAction`.
  */
