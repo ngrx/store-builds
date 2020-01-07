@@ -27,14 +27,14 @@ export declare class StoreModule {
     static forFeature<T, V extends Action = Action>(featureName: string, reducers: ActionReducerMap<T, V> | InjectionToken<ActionReducerMap<T, V>>, config?: StoreConfig<T, V> | InjectionToken<StoreConfig<T, V>>): ModuleWithProviders<StoreFeatureModule>;
     static forFeature<T, V extends Action = Action>(featureName: string, reducer: ActionReducer<T, V> | InjectionToken<ActionReducer<T, V>>, config?: StoreConfig<T, V> | InjectionToken<StoreConfig<T, V>>): ModuleWithProviders<StoreFeatureModule>;
 }
-export declare function _createStoreReducers(injector: Injector, reducers: ActionReducerMap<any, any>): {};
+export declare function _createStoreReducers(injector: Injector, reducers: ActionReducerMap<any, any>): unknown;
 export declare function _createFeatureStore(injector: Injector, configs: StoreConfig<any, any>[] | InjectionToken<StoreConfig<any, any>>[], featureStores: StoreFeature<any, any>[]): (StoreFeature<any, any> | {
     key: string;
     reducerFactory: any;
     metaReducers: any;
     initialState: any;
 })[];
-export declare function _createFeatureReducers(injector: Injector, reducerCollection: ActionReducerMap<any, any>[]): {}[];
+export declare function _createFeatureReducers(injector: Injector, reducerCollection: ActionReducerMap<any, any>[]): unknown[];
 export declare function _initialStateFactory(initialState: any): any;
 export declare function _concatMetaReducers(metaReducers: MetaReducer[], userProvidedMetaReducers: MetaReducer[]): MetaReducer[];
 export declare function _provideForRootGuard(store: Store<any>): any;

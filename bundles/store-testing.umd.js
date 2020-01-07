@@ -1,5 +1,5 @@
 /**
- * @license NgRx 8.6.0+3.sha-fe6bfa7
+ * @license NgRx 8.6.0+4.sha-b146af5
  * (c) 2015-2018 Brandon Roberts, Mike Ryan, Rob Wormald, Victor Savkin
  * License: MIT
  */
@@ -7,16 +7,16 @@
     typeof exports === 'object' && typeof module !== 'undefined' ? factory(exports, require('tslib'), require('@angular/core'), require('rxjs'), require('@ngrx/store'), require('@angular/core/testing')) :
     typeof define === 'function' && define.amd ? define('@ngrx/store/testing', ['exports', 'tslib', '@angular/core', 'rxjs', '@ngrx/store', '@angular/core/testing'], factory) :
     (global = global || self, factory((global.ngrx = global.ngrx || {}, global.ngrx.store = global.ngrx.store || {}, global.ngrx.store.testing = {}), global.tslib, global.ng.core, global.rxjs, global.ngrx.store, global.ng.core.testing));
-}(this, function (exports, tslib_1, core, rxjs, store, testing) { 'use strict';
+}(this, (function (exports, tslib, core, rxjs, store, testing) { 'use strict';
 
     var MockState = /** @class */ (function (_super) {
-        tslib_1.__extends(MockState, _super);
+        tslib.__extends(MockState, _super);
         function MockState() {
             return _super.call(this, {}) || this;
         }
-        MockState = tslib_1.__decorate([
+        MockState = tslib.__decorate([
             core.Injectable(),
-            tslib_1.__metadata("design:paramtypes", [])
+            tslib.__metadata("design:paramtypes", [])
         ], MockState);
         return MockState;
     }(rxjs.BehaviorSubject));
@@ -35,7 +35,7 @@
         });
     }
     var MockStore = /** @class */ (function (_super) {
-        tslib_1.__extends(MockStore, _super);
+        tslib.__extends(MockStore, _super);
         function MockStore(state$, actionsObserver, reducerManager, initialState, mockSelectors) {
             var _this = _super.call(this, state$, actionsObserver, reducerManager) || this;
             _this.state$ = state$;
@@ -95,15 +95,15 @@
          * Refreshes the existing state.
          */
         MockStore.prototype.refreshState = function () {
-            this.setState(tslib_1.__assign({}, this.lastState));
+            this.setState(tslib.__assign({}, this.lastState));
         };
         var MockStore_1;
         MockStore.selectors = new Map();
-        MockStore = MockStore_1 = tslib_1.__decorate([
+        MockStore = MockStore_1 = tslib.__decorate([
             core.Injectable(),
-            tslib_1.__param(3, core.Inject(store.INITIAL_STATE)),
-            tslib_1.__param(4, core.Inject(MOCK_SELECTORS)),
-            tslib_1.__metadata("design:paramtypes", [MockState,
+            tslib.__param(3, core.Inject(store.INITIAL_STATE)),
+            tslib.__param(4, core.Inject(MOCK_SELECTORS)),
+            tslib.__metadata("design:paramtypes", [MockState,
                 store.ActionsSubject,
                 store.ReducerManager, Object, Array])
         ], MockStore);
@@ -111,7 +111,7 @@
     }(store.Store));
 
     var MockReducerManager = /** @class */ (function (_super) {
-        tslib_1.__extends(MockReducerManager, _super);
+        tslib.__extends(MockReducerManager, _super);
         function MockReducerManager() {
             return _super.call(this, function () { return undefined; }) || this;
         }
@@ -121,9 +121,9 @@
         MockReducerManager.prototype.addFeatures = function (feature) {
             /* noop */
         };
-        MockReducerManager = tslib_1.__decorate([
+        MockReducerManager = tslib.__decorate([
             core.Injectable(),
-            tslib_1.__metadata("design:paramtypes", [])
+            tslib.__metadata("design:paramtypes", [])
         ], MockReducerManager);
         return MockReducerManager;
     }(rxjs.BehaviorSubject));
@@ -145,13 +145,13 @@
      * Generated bundle index. Do not edit.
      */
 
-    exports.ɵngrx_modules_store_testing_testing_a = MOCK_SELECTORS;
-    exports.provideMockStore = provideMockStore;
     exports.MockReducerManager = MockReducerManager;
     exports.MockState = MockState;
     exports.MockStore = MockStore;
+    exports.provideMockStore = provideMockStore;
+    exports.ɵngrx_modules_store_testing_testing_a = MOCK_SELECTORS;
 
     Object.defineProperty(exports, '__esModule', { value: true });
 
-}));
+})));
 //# sourceMappingURL=store-testing.umd.js.map

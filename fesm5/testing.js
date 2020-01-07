@@ -1,5 +1,5 @@
 /**
- * @license NgRx 8.6.0+3.sha-fe6bfa7
+ * @license NgRx 8.6.0+4.sha-b146af5
  * (c) 2015-2018 Brandon Roberts, Mike Ryan, Rob Wormald, Victor Savkin
  * License: MIT
  */
@@ -145,5 +145,5 @@ function provideMockStore(config) {
  * Generated bundle index. Do not edit.
  */
 
-export { MOCK_SELECTORS as ɵngrx_modules_store_testing_testing_a, provideMockStore, MockReducerManager, MockState, MockStore };
+export { MockReducerManager, MockState, MockStore, provideMockStore, MOCK_SELECTORS as ɵngrx_modules_store_testing_testing_a };
 //# sourceMappingURL=testing.js.map

@@ -1,5 +1,5 @@
 /**
- * @license NgRx 8.6.0+3.sha-fe6bfa7
+ * @license NgRx 8.6.0+4.sha-b146af5
  * (c) 2015-2018 Brandon Roberts, Mike Ryan, Rob Wormald, Victor Savkin
  * License: MIT
  */
@@ -7,7 +7,7 @@
     typeof exports === 'object' && typeof module !== 'undefined' ? factory(exports, require('tslib'), require('@angular/core'), require('rxjs'), require('rxjs/operators')) :
     typeof define === 'function' && define.amd ? define('@ngrx/store', ['exports', 'tslib', '@angular/core', 'rxjs', 'rxjs/operators'], factory) :
     (global = global || self, factory((global.ngrx = global.ngrx || {}, global.ngrx.store = {}), global.tslib, global.ng.core, global.rxjs, global.rxjs.operators));
-}(this, function (exports, tslib_1, core, rxjs, operators) { 'use strict';
+}(this, (function (exports, tslib, core, rxjs, operators) { 'use strict';
 
     /**
      * @description
@@ -88,7 +88,7 @@
                 for (var _i = 0; _i < arguments.length; _i++) {
                     args[_i] = arguments[_i];
                 }
-                return (tslib_1.__assign({}, config.apply(void 0, tslib_1.__spread(args)), { type: type }));
+                return (tslib.__assign(tslib.__assign({}, config.apply(void 0, tslib.__spread(args))), { type: type }));
             });
         }
         var as = config ? config._as : 'empty';
@@ -96,7 +96,7 @@
             case 'empty':
                 return defineType(type, function () { return ({ type: type }); });
             case 'props':
-                return defineType(type, function (props) { return (tslib_1.__assign({}, props, { type: type })); });
+                return defineType(type, function (props) { return (tslib.__assign(tslib.__assign({}, props), { type: type })); });
             default:
                 throw new Error('Unexpected config.');
         }
@@ -118,7 +118,7 @@
 
     var INIT = '@ngrx/store/init';
     var ActionsSubject = /** @class */ (function (_super) {
-        tslib_1.__extends(ActionsSubject, _super);
+        tslib.__extends(ActionsSubject, _super);
         function ActionsSubject() {
             return _super.call(this, { type: INIT }) || this;
         }
@@ -140,9 +140,9 @@
         ActionsSubject.prototype.ngOnDestroy = function () {
             _super.prototype.complete.call(this);
         };
-        ActionsSubject = tslib_1.__decorate([
+        ActionsSubject = tslib.__decorate([
             core.Injectable(),
-            tslib_1.__metadata("design:paramtypes", [])
+            tslib.__metadata("design:paramtypes", [])
         ], ActionsSubject);
         return ActionsSubject;
     }(rxjs.BehaviorSubject));
@@ -239,7 +239,7 @@
     }
     function createReducerFactory(reducerFactory, metaReducers) {
         if (Array.isArray(metaReducers) && metaReducers.length > 0) {
-            reducerFactory = compose.apply(null, tslib_1.__spread(metaReducers, [
+            reducerFactory = compose.apply(null, tslib.__spread(metaReducers, [
                 reducerFactory,
             ]));
         }
@@ -253,7 +253,7 @@
     }
     function createFeatureReducerFactory(metaReducers) {
         var reducerFactory = Array.isArray(metaReducers) && metaReducers.length > 0
-            ? compose.apply(void 0, tslib_1.__spread(metaReducers)) : function (r) { return r; };
+            ? compose.apply(void 0, tslib.__spread(metaReducers)) : function (r) { return r; };
         return function (reducer, initialState) {
             reducer = reducerFactory(reducer);
             return function (state, action) {
@@ -264,14 +264,14 @@
     }
 
     var ReducerObservable = /** @class */ (function (_super) {
-        tslib_1.__extends(ReducerObservable, _super);
+        tslib.__extends(ReducerObservable, _super);
         function ReducerObservable() {
             return _super !== null && _super.apply(this, arguments) || this;
         }
         return ReducerObservable;
     }(rxjs.Observable));
     var ReducerManagerDispatcher = /** @class */ (function (_super) {
-        tslib_1.__extends(ReducerManagerDispatcher, _super);
+        tslib.__extends(ReducerManagerDispatcher, _super);
         function ReducerManagerDispatcher() {
             return _super !== null && _super.apply(this, arguments) || this;
         }
@@ -279,7 +279,7 @@
     }(ActionsSubject));
     var UPDATE = '@ngrx/store/update-reducers';
     var ReducerManager = /** @class */ (function (_super) {
-        tslib_1.__extends(ReducerManager, _super);
+        tslib.__extends(ReducerManager, _super);
         function ReducerManager(dispatcher, initialState, reducers, reducerFactory) {
             var _this = _super.call(this, reducerFactory(reducers, initialState)) || this;
             _this.dispatcher = dispatcher;
@@ -313,7 +313,7 @@
             this.addReducers((_a = {}, _a[key] = reducer, _a));
         };
         ReducerManager.prototype.addReducers = function (reducers) {
-            this.reducers = tslib_1.__assign({}, this.reducers, reducers);
+            this.reducers = tslib.__assign(tslib.__assign({}, this.reducers), reducers);
             this.updateReducers(Object.keys(reducers));
         };
         ReducerManager.prototype.removeReducer = function (featureKey) {
@@ -336,12 +336,12 @@
         ReducerManager.prototype.ngOnDestroy = function () {
             this.complete();
         };
-        ReducerManager = tslib_1.__decorate([
+        ReducerManager = tslib.__decorate([
             core.Injectable(),
-            tslib_1.__param(1, core.Inject(INITIAL_STATE)),
-            tslib_1.__param(2, core.Inject(INITIAL_REDUCERS)),
-            tslib_1.__param(3, core.Inject(REDUCER_FACTORY)),
-            tslib_1.__metadata("design:paramtypes", [ReducerManagerDispatcher, Object, Object, Function])
+            tslib.__param(1, core.Inject(INITIAL_STATE)),
+            tslib.__param(2, core.Inject(INITIAL_REDUCERS)),
+            tslib.__param(3, core.Inject(REDUCER_FACTORY)),
+            tslib.__metadata("design:paramtypes", [ReducerManagerDispatcher, Object, Object, Function])
         ], ReducerManager);
         return ReducerManager;
     }(rxjs.BehaviorSubject));
@@ -352,14 +352,14 @@
     ];
 
     var ScannedActionsSubject = /** @class */ (function (_super) {
-        tslib_1.__extends(ScannedActionsSubject, _super);
+        tslib.__extends(ScannedActionsSubject, _super);
         function ScannedActionsSubject() {
             return _super !== null && _super.apply(this, arguments) || this;
         }
         ScannedActionsSubject.prototype.ngOnDestroy = function () {
             this.complete();
         };
-        ScannedActionsSubject = tslib_1.__decorate([
+        ScannedActionsSubject = tslib.__decorate([
             core.Injectable()
         ], ScannedActionsSubject);
         return ScannedActionsSubject;
@@ -369,14 +369,14 @@
     ];
 
     var StateObservable = /** @class */ (function (_super) {
-        tslib_1.__extends(StateObservable, _super);
+        tslib.__extends(StateObservable, _super);
         function StateObservable() {
             return _super !== null && _super.apply(this, arguments) || this;
         }
         return StateObservable;
     }(rxjs.Observable));
     var State = /** @class */ (function (_super) {
-        tslib_1.__extends(State, _super);
+        tslib.__extends(State, _super);
         function State(actions$, reducer$, scannedActions, initialState) {
             var _this = _super.call(this, initialState) || this;
             var actionsOnQueue$ = actions$.pipe(operators.observeOn(rxjs.queueScheduler));
@@ -395,10 +395,10 @@
             this.complete();
         };
         State.INIT = INIT;
-        State = tslib_1.__decorate([
+        State = tslib.__decorate([
             core.Injectable(),
-            tslib_1.__param(3, core.Inject(INITIAL_STATE)),
-            tslib_1.__metadata("design:paramtypes", [ActionsSubject,
+            tslib.__param(3, core.Inject(INITIAL_STATE)),
+            tslib.__metadata("design:paramtypes", [ActionsSubject,
                 ReducerObservable,
                 ScannedActionsSubject, Object])
         ], State);
@@ -406,7 +406,7 @@
     }(rxjs.BehaviorSubject));
     function reduceState(stateActionPair, _a) {
         if (stateActionPair === void 0) { stateActionPair = { state: undefined }; }
-        var _b = tslib_1.__read(_a, 2), action = _b[0], reducer = _b[1];
+        var _b = tslib.__read(_a, 2), action = _b[0], reducer = _b[1];
         var state = stateActionPair.state;
         return { state: reducer(state, action), action: action };
     }
@@ -416,7 +416,7 @@
     ];
 
     var Store = /** @class */ (function (_super) {
-        tslib_1.__extends(Store, _super);
+        tslib.__extends(Store, _super);
         function Store(state$, actionsObserver, reducerManager) {
             var _this = _super.call(this) || this;
             _this.actionsObserver = actionsObserver;
@@ -431,7 +431,7 @@
             for (var _i = 1; _i < arguments.length; _i++) {
                 paths[_i - 1] = arguments[_i];
             }
-            return (_a = select).call.apply(_a, tslib_1.__spread([null, pathOrMapFn], paths))(this);
+            return (_a = select).call.apply(_a, tslib.__spread([null, pathOrMapFn], paths))(this);
         };
         Store.prototype.lift = function (operator) {
             var store = new Store_1(this, this.actionsObserver, this.reducerManager);
@@ -457,9 +457,9 @@
             this.reducerManager.removeReducer(key);
         };
         var Store_1;
-        Store = Store_1 = tslib_1.__decorate([
+        Store = Store_1 = tslib.__decorate([
             core.Injectable(),
-            tslib_1.__metadata("design:paramtypes", [StateObservable,
+            tslib.__metadata("design:paramtypes", [StateObservable,
                 ActionsSubject,
                 ReducerManager])
         ], Store);
@@ -474,8 +474,8 @@
         return function selectOperator(source$) {
             var mapped$;
             if (typeof pathOrMapFn === 'string') {
-                var pathSlices = tslib_1.__spread([propsOrPath], paths).filter(Boolean);
-                mapped$ = source$.pipe(operators.pluck.apply(void 0, tslib_1.__spread([pathOrMapFn], pathSlices)));
+                var pathSlices = tslib.__spread([propsOrPath], paths).filter(Boolean);
+                mapped$ = source$.pipe(operators.pluck.apply(void 0, tslib.__spread([pathOrMapFn], pathSlices)));
             }
             else if (typeof pathOrMapFn === 'function') {
                 mapped$ = source$.pipe(operators.map(function (source) { return pathOrMapFn(source, propsOrPath); }));
@@ -545,7 +545,7 @@
         for (var _i = 0; _i < arguments.length; _i++) {
             input[_i] = arguments[_i];
         }
-        return createSelectorFactory(defaultMemoize).apply(void 0, tslib_1.__spread(input));
+        return createSelectorFactory(defaultMemoize).apply(void 0, tslib.__spread(input));
     }
     function defaultStateFn(state, selectors, props, memoizedProjector) {
         if (props === undefined) {
@@ -555,7 +555,7 @@
         var args = selectors.map(function (fn) {
             return fn(state, props);
         });
-        return memoizedProjector.memoized.apply(null, tslib_1.__spread(args, [props]));
+        return memoizedProjector.memoized.apply(null, tslib.__spread(args, [props]));
     }
     function createSelectorFactory(memoize, options) {
         if (options === void 0) { options = {
@@ -568,8 +568,8 @@
             }
             var args = input;
             if (Array.isArray(args[0])) {
-                var _a = tslib_1.__read(args), head = _a[0], tail = _a.slice(1);
-                args = tslib_1.__spread(head, tail);
+                var _a = tslib.__read(args), head_1 = _a[0], tail_1 = _a.slice(1);
+                args = tslib.__spread(head_1, tail_1);
             }
             var selectors = args.slice(0, args.length - 1);
             var projector = args[args.length - 1];
@@ -720,10 +720,10 @@
                 return false;
             }
             if (isPlainObject(value)) {
-                return getUnserializable(value, tslib_1.__spread(path, [key]));
+                return getUnserializable(value, tslib.__spread(path, [key]));
             }
             return {
-                path: tslib_1.__spread(path, [key]),
+                path: tslib.__spread(path, [key]),
                 value: value,
             };
         }, false);
@@ -744,7 +744,7 @@
             if (runtimeChecks === undefined) {
                 console.warn('@ngrx/store: runtime checks are currently opt-in but will be the default in the next major version with the possibility to opt-out, see https://ngrx.io/guide/migration/v8 for more information.');
             }
-            return tslib_1.__assign({ strictStateSerializability: false, strictActionSerializability: false, strictStateImmutability: false, strictActionImmutability: false }, runtimeChecks);
+            return tslib.__assign({ strictStateSerializability: false, strictActionSerializability: false, strictStateImmutability: false, strictActionImmutability: false }, runtimeChecks);
         }
         return {
             strictStateSerializability: false,
@@ -812,11 +812,11 @@
     var StoreRootModule = /** @class */ (function () {
         function StoreRootModule(actions$, reducer$, scannedActions$, store, guard) {
         }
-        StoreRootModule = tslib_1.__decorate([
+        StoreRootModule = tslib.__decorate([
             core.NgModule({}),
-            tslib_1.__param(4, core.Optional()),
-            tslib_1.__param(4, core.Inject(_ROOT_STORE_GUARD)),
-            tslib_1.__metadata("design:paramtypes", [ActionsSubject,
+            tslib.__param(4, core.Optional()),
+            tslib.__param(4, core.Inject(_ROOT_STORE_GUARD)),
+            tslib.__metadata("design:paramtypes", [ActionsSubject,
                 ReducerObservable,
                 ScannedActionsSubject,
                 Store, Object])
@@ -831,18 +831,18 @@
             var feats = features.map(function (feature, index) {
                 var featureReducerCollection = featureReducers.shift();
                 var reducers = featureReducerCollection /*TODO(#823)*/[index];
-                return tslib_1.__assign({}, feature, { reducers: reducers, initialState: _initialStateFactory(feature.initialState) });
+                return tslib.__assign(tslib.__assign({}, feature), { reducers: reducers, initialState: _initialStateFactory(feature.initialState) });
             });
             reducerManager.addFeatures(feats);
         }
         StoreFeatureModule.prototype.ngOnDestroy = function () {
             this.reducerManager.removeFeatures(this.features);
         };
-        StoreFeatureModule = tslib_1.__decorate([
+        StoreFeatureModule = tslib.__decorate([
             core.NgModule({}),
-            tslib_1.__param(0, core.Inject(_STORE_FEATURES)),
-            tslib_1.__param(1, core.Inject(FEATURE_REDUCERS)),
-            tslib_1.__metadata("design:paramtypes", [Array, Array, ReducerManager,
+            tslib.__param(0, core.Inject(_STORE_FEATURES)),
+            tslib.__param(1, core.Inject(FEATURE_REDUCERS)),
+            tslib.__metadata("design:paramtypes", [Array, Array, ReducerManager,
                 StoreRootModule])
         ], StoreFeatureModule);
         return StoreFeatureModule;
@@ -955,7 +955,7 @@
                 ],
             };
         };
-        StoreModule = tslib_1.__decorate([
+        StoreModule = tslib.__decorate([
             core.NgModule({})
         ], StoreModule);
         return StoreModule;
@@ -1017,7 +1017,7 @@
             args[_i] = arguments[_i];
         }
         var reducer = args.pop();
-        var types = args.reduce(function (result, creator) { return tslib_1.__spread(result, [creator.type]); }, []);
+        var types = args.reduce(function (result, creator) { return tslib.__spread(result, [creator.type]); }, []);
         return { reducer: reducer, types: types };
     }
     /**
@@ -1077,7 +1077,7 @@
                 }
             };
             try {
-                for (var _b = tslib_1.__values(on_1.types), _c = _b.next(); !_c.done; _c = _b.next()) {
+                for (var _b = (e_2 = void 0, tslib.__values(on_1.types)), _c = _b.next(); !_c.done; _c = _b.next()) {
                     var type = _c.value;
                     _loop_2(type);
                 }
@@ -1091,7 +1091,7 @@
             }
         };
         try {
-            for (var ons_1 = tslib_1.__values(ons), ons_1_1 = ons_1.next(); !ons_1_1.done; ons_1_1 = ons_1.next()) {
+            for (var ons_1 = tslib.__values(ons), ons_1_1 = ons_1.next(); !ons_1_1.done; ons_1_1 = ons_1.next()) {
                 var on_1 = ons_1_1.value;
                 _loop_1(on_1);
             }
@@ -1120,74 +1120,74 @@
      * Generated bundle index. Do not edit.
      */
 
+    exports.ActionsSubject = ActionsSubject;
+    exports.FEATURE_REDUCERS = FEATURE_REDUCERS;
+    exports.INIT = INIT;
+    exports.INITIAL_REDUCERS = INITIAL_REDUCERS;
+    exports.INITIAL_STATE = INITIAL_STATE;
+    exports.META_REDUCERS = META_REDUCERS;
+    exports.REDUCER_FACTORY = REDUCER_FACTORY;
+    exports.ReducerManager = ReducerManager;
+    exports.ReducerManagerDispatcher = ReducerManagerDispatcher;
+    exports.ReducerObservable = ReducerObservable;
+    exports.STORE_FEATURES = STORE_FEATURES;
+    exports.ScannedActionsSubject = ScannedActionsSubject;
+    exports.State = State;
+    exports.StateObservable = StateObservable;
+    exports.Store = Store;
+    exports.StoreFeatureModule = StoreFeatureModule;
+    exports.StoreModule = StoreModule;
+    exports.StoreRootModule = StoreRootModule;
+    exports.UPDATE = UPDATE;
+    exports.USER_PROVIDED_META_REDUCERS = USER_PROVIDED_META_REDUCERS;
+    exports.USER_RUNTIME_CHECKS = USER_RUNTIME_CHECKS;
+    exports.combineReducers = combineReducers;
+    exports.compose = compose;
+    exports.createAction = createAction;
+    exports.createFeatureSelector = createFeatureSelector;
+    exports.createReducer = createReducer;
+    exports.createReducerFactory = createReducerFactory;
+    exports.createSelector = createSelector;
+    exports.createSelectorFactory = createSelectorFactory;
+    exports.defaultMemoize = defaultMemoize;
+    exports.defaultStateFn = defaultStateFn;
+    exports.on = on;
+    exports.props = props;
+    exports.reduceState = reduceState;
+    exports.resultMemoize = resultMemoize;
+    exports.select = select;
+    exports.union = union;
+    exports.ɵngrx_modules_store_store_b = STORE_PROVIDERS;
+    exports.ɵngrx_modules_store_store_ba = createSerializationCheckMetaReducer;
+    exports.ɵngrx_modules_store_store_bb = createImmutabilityCheckMetaReducer;
+    exports.ɵngrx_modules_store_store_bc = provideRuntimeChecks;
+    exports.ɵngrx_modules_store_store_bd = _runtimeChecksFactory;
     exports.ɵngrx_modules_store_store_c = ACTIONS_SUBJECT_PROVIDERS;
     exports.ɵngrx_modules_store_store_d = REDUCER_MANAGER_PROVIDERS;
-    exports.ɵngrx_modules_store_store_bd = _runtimeChecksFactory;
-    exports.ɵngrx_modules_store_store_z = createActiveRuntimeChecks;
-    exports.ɵngrx_modules_store_store_bb = createImmutabilityCheckMetaReducer;
-    exports.ɵngrx_modules_store_store_ba = createSerializationCheckMetaReducer;
-    exports.ɵngrx_modules_store_store_bc = provideRuntimeChecks;
     exports.ɵngrx_modules_store_store_e = SCANNED_ACTIONS_SUBJECT_PROVIDERS;
     exports.ɵngrx_modules_store_store_f = isEqualCheck;
     exports.ɵngrx_modules_store_store_g = STATE_PROVIDERS;
-    exports.ɵngrx_modules_store_store_b = STORE_PROVIDERS;
-    exports.ɵngrx_modules_store_store_x = _concatMetaReducers;
-    exports.ɵngrx_modules_store_store_v = _createFeatureReducers;
-    exports.ɵngrx_modules_store_store_u = _createFeatureStore;
-    exports.ɵngrx_modules_store_store_t = _createStoreReducers;
-    exports.ɵngrx_modules_store_store_w = _initialStateFactory;
-    exports.ɵngrx_modules_store_store_y = _provideForRootGuard;
-    exports.ɵngrx_modules_store_store_s = _ACTIVE_RUNTIME_CHECKS;
-    exports.ɵngrx_modules_store_store_n = _FEATURE_CONFIGS;
-    exports.ɵngrx_modules_store_store_m = _FEATURE_REDUCERS;
-    exports.ɵngrx_modules_store_store_p = _FEATURE_REDUCERS_TOKEN;
-    exports.ɵngrx_modules_store_store_k = _INITIAL_REDUCERS;
+    exports.ɵngrx_modules_store_store_h = _ROOT_STORE_GUARD;
     exports.ɵngrx_modules_store_store_i = _INITIAL_STATE;
     exports.ɵngrx_modules_store_store_j = _REDUCER_FACTORY;
-    exports.ɵngrx_modules_store_store_q = _RESOLVED_META_REDUCERS;
-    exports.ɵngrx_modules_store_store_h = _ROOT_STORE_GUARD;
-    exports.ɵngrx_modules_store_store_o = _STORE_FEATURES;
+    exports.ɵngrx_modules_store_store_k = _INITIAL_REDUCERS;
     exports.ɵngrx_modules_store_store_l = _STORE_REDUCERS;
+    exports.ɵngrx_modules_store_store_m = _FEATURE_REDUCERS;
+    exports.ɵngrx_modules_store_store_n = _FEATURE_CONFIGS;
+    exports.ɵngrx_modules_store_store_o = _STORE_FEATURES;
+    exports.ɵngrx_modules_store_store_p = _FEATURE_REDUCERS_TOKEN;
+    exports.ɵngrx_modules_store_store_q = _RESOLVED_META_REDUCERS;
     exports.ɵngrx_modules_store_store_r = _USER_RUNTIME_CHECKS;
-    exports.createAction = createAction;
-    exports.props = props;
-    exports.union = union;
-    exports.Store = Store;
-    exports.select = select;
-    exports.combineReducers = combineReducers;
-    exports.compose = compose;
-    exports.createReducerFactory = createReducerFactory;
-    exports.ActionsSubject = ActionsSubject;
-    exports.INIT = INIT;
-    exports.ReducerManager = ReducerManager;
-    exports.ReducerObservable = ReducerObservable;
-    exports.ReducerManagerDispatcher = ReducerManagerDispatcher;
-    exports.UPDATE = UPDATE;
-    exports.ScannedActionsSubject = ScannedActionsSubject;
-    exports.createSelector = createSelector;
-    exports.createSelectorFactory = createSelectorFactory;
-    exports.createFeatureSelector = createFeatureSelector;
-    exports.defaultMemoize = defaultMemoize;
-    exports.defaultStateFn = defaultStateFn;
-    exports.resultMemoize = resultMemoize;
-    exports.State = State;
-    exports.StateObservable = StateObservable;
-    exports.reduceState = reduceState;
-    exports.INITIAL_STATE = INITIAL_STATE;
-    exports.REDUCER_FACTORY = REDUCER_FACTORY;
-    exports.INITIAL_REDUCERS = INITIAL_REDUCERS;
-    exports.STORE_FEATURES = STORE_FEATURES;
-    exports.META_REDUCERS = META_REDUCERS;
-    exports.FEATURE_REDUCERS = FEATURE_REDUCERS;
-    exports.USER_PROVIDED_META_REDUCERS = USER_PROVIDED_META_REDUCERS;
-    exports.USER_RUNTIME_CHECKS = USER_RUNTIME_CHECKS;
-    exports.StoreModule = StoreModule;
-    exports.StoreRootModule = StoreRootModule;
-    exports.StoreFeatureModule = StoreFeatureModule;
-    exports.on = on;
-    exports.createReducer = createReducer;
+    exports.ɵngrx_modules_store_store_s = _ACTIVE_RUNTIME_CHECKS;
+    exports.ɵngrx_modules_store_store_t = _createStoreReducers;
+    exports.ɵngrx_modules_store_store_u = _createFeatureStore;
+    exports.ɵngrx_modules_store_store_v = _createFeatureReducers;
+    exports.ɵngrx_modules_store_store_w = _initialStateFactory;
+    exports.ɵngrx_modules_store_store_x = _concatMetaReducers;
+    exports.ɵngrx_modules_store_store_y = _provideForRootGuard;
+    exports.ɵngrx_modules_store_store_z = createActiveRuntimeChecks;
 
     Object.defineProperty(exports, '__esModule', { value: true });
 
-}));
+})));
 //# sourceMappingURL=store.umd.js.map

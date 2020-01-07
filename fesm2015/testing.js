@@ -1,5 +1,5 @@
 /**
- * @license NgRx 8.6.0+3.sha-fe6bfa7
+ * @license NgRx 8.6.0+4.sha-b146af5
  * (c) 2015-2018 Brandon Roberts, Mike Ryan, Rob Wormald, Victor Savkin
  * License: MIT
  */
@@ -10,7 +10,8 @@ import { TestBed } from '@angular/core/testing';
 
 /**
  * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
+ * Generated from: modules/store/testing/src/mock_state.ts
+ * @suppress {checkTypes,constantProperty,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
  */
 /**
  * @template T
@@ -28,14 +29,16 @@ MockState.ctorParameters = () => [];
 
 /**
  * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
+ * Generated from: modules/store/testing/src/tokens.ts
+ * @suppress {checkTypes,constantProperty,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
  */
 /** @type {?} */
 const MOCK_SELECTORS = new InjectionToken('@ngrx/store Mock Selectors');
 
 /**
  * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
+ * Generated from: modules/store/testing/src/mock_store.ts
+ * @suppress {checkTypes,constantProperty,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
  */
 if (typeof afterEach === 'function') {
     afterEach((/**
@@ -177,10 +180,32 @@ MockStore.ctorParameters = () => [
     { type: undefined, decorators: [{ type: Inject, args: [INITIAL_STATE,] }] },
     { type: Array, decorators: [{ type: Inject, args: [MOCK_SELECTORS,] }] }
 ];
+if (false) {
+    /** @type {?} */
+    MockStore.selectors;
+    /** @type {?} */
+    MockStore.prototype.scannedActions$;
+    /**
+     * @type {?}
+     * @private
+     */
+    MockStore.prototype.lastState;
+    /**
+     * @type {?}
+     * @private
+     */
+    MockStore.prototype.state$;
+    /**
+     * @type {?}
+     * @private
+     */
+    MockStore.prototype.initialState;
+}
 
 /**
  * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
+ * Generated from: modules/store/testing/src/mock_reducer_manager.ts
+ * @suppress {checkTypes,constantProperty,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
  */
 class MockReducerManager extends BehaviorSubject {
     constructor() {
@@ -212,8 +237,20 @@ MockReducerManager.ctorParameters = () => [];
 
 /**
  * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
+ * Generated from: modules/store/testing/src/testing.ts
+ * @suppress {checkTypes,constantProperty,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
  */
+/**
+ * @record
+ * @template T
+ */
+function MockStoreConfig() { }
+if (false) {
+    /** @type {?|undefined} */
+    MockStoreConfig.prototype.initialState;
+    /** @type {?|undefined} */
+    MockStoreConfig.prototype.selectors;
+}
 /**
  * @template T
  * @param {?=} config
@@ -233,12 +270,13 @@ function provideMockStore(config = {}) {
 
 /**
  * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
+ * Generated from: modules/store/testing/index.ts
+ * @suppress {checkTypes,constantProperty,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
  */
 
 /**
  * Generated bundle index. Do not edit.
  */
 
-export { MOCK_SELECTORS as ɵngrx_modules_store_testing_testing_a, provideMockStore, MockReducerManager, MockState, MockStore };
+export { MockReducerManager, MockState, MockStore, provideMockStore, MOCK_SELECTORS as ɵngrx_modules_store_testing_testing_a };
 //# sourceMappingURL=testing.js.map

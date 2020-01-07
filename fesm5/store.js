@@ -1,5 +1,5 @@
 /**
- * @license NgRx 8.6.0+3.sha-fe6bfa7
+ * @license NgRx 8.6.0+4.sha-b146af5
  * (c) 2015-2018 Brandon Roberts, Mike Ryan, Rob Wormald, Victor Savkin
  * License: MIT
  */
@@ -87,7 +87,7 @@ function createAction(type, config) {
             for (var _i = 0; _i < arguments.length; _i++) {
                 args[_i] = arguments[_i];
             }
-            return (__assign({}, config.apply(void 0, __spread(args)), { type: type }));
+            return (__assign(__assign({}, config.apply(void 0, __spread(args))), { type: type }));
         });
     }
     var as = config ? config._as : 'empty';
@@ -95,7 +95,7 @@ function createAction(type, config) {
         case 'empty':
             return defineType(type, function () { return ({ type: type }); });
         case 'props':
-            return defineType(type, function (props) { return (__assign({}, props, { type: type })); });
+            return defineType(type, function (props) { return (__assign(__assign({}, props), { type: type })); });
         default:
             throw new Error('Unexpected config.');
     }
@@ -312,7 +312,7 @@ var ReducerManager = /** @class */ (function (_super) {
         this.addReducers((_a = {}, _a[key] = reducer, _a));
     };
     ReducerManager.prototype.addReducers = function (reducers) {
-        this.reducers = __assign({}, this.reducers, reducers);
+        this.reducers = __assign(__assign({}, this.reducers), reducers);
         this.updateReducers(Object.keys(reducers));
     };
     ReducerManager.prototype.removeReducer = function (featureKey) {
@@ -567,8 +567,8 @@ function createSelectorFactory(memoize, options) {
         }
         var args = input;
         if (Array.isArray(args[0])) {
-            var _a = __read(args), head = _a[0], tail = _a.slice(1);
-            args = __spread(head, tail);
+            var _a = __read(args), head_1 = _a[0], tail_1 = _a.slice(1);
+            args = __spread(head_1, tail_1);
         }
         var selectors = args.slice(0, args.length - 1);
         var projector = args[args.length - 1];
@@ -830,7 +830,7 @@ var StoreFeatureModule = /** @class */ (function () {
         var feats = features.map(function (feature, index) {
             var featureReducerCollection = featureReducers.shift();
             var reducers = featureReducerCollection /*TODO(#823)*/[index];
-            return __assign({}, feature, { reducers: reducers, initialState: _initialStateFactory(feature.initialState) });
+            return __assign(__assign({}, feature), { reducers: reducers, initialState: _initialStateFactory(feature.initialState) });
         });
         reducerManager.addFeatures(feats);
     }
@@ -1076,7 +1076,7 @@ function createReducer(initialState) {
             }
         };
         try {
-            for (var _b = __values(on_1.types), _c = _b.next(); !_c.done; _c = _b.next()) {
+            for (var _b = (e_2 = void 0, __values(on_1.types)), _c = _b.next(); !_c.done; _c = _b.next()) {
                 var type = _c.value;
                 _loop_2(type);
             }
@@ -1119,5 +1119,5 @@ function createReducer(initialState) {
  * Generated bundle index. Do not edit.
  */
 
-export { ACTIONS_SUBJECT_PROVIDERS as ɵngrx_modules_store_store_c, REDUCER_MANAGER_PROVIDERS as ɵngrx_modules_store_store_d, _runtimeChecksFactory as ɵngrx_modules_store_store_bd, createActiveRuntimeChecks as ɵngrx_modules_store_store_z, createImmutabilityCheckMetaReducer as ɵngrx_modules_store_store_bb, createSerializationCheckMetaReducer as ɵngrx_modules_store_store_ba, provideRuntimeChecks as ɵngrx_modules_store_store_bc, SCANNED_ACTIONS_SUBJECT_PROVIDERS as ɵngrx_modules_store_store_e, isEqualCheck as ɵngrx_modules_store_store_f, STATE_PROVIDERS as ɵngrx_modules_store_store_g, STORE_PROVIDERS as ɵngrx_modules_store_store_b, _concatMetaReducers as ɵngrx_modules_store_store_x, _createFeatureReducers as ɵngrx_modules_store_store_v, _createFeatureStore as ɵngrx_modules_store_store_u, _createStoreReducers as ɵngrx_modules_store_store_t, _initialStateFactory as ɵngrx_modules_store_store_w, _provideForRootGuard as ɵngrx_modules_store_store_y, _ACTIVE_RUNTIME_CHECKS as ɵngrx_modules_store_store_s, _FEATURE_CONFIGS as ɵngrx_modules_store_store_n, _FEATURE_REDUCERS as ɵngrx_modules_store_store_m, _FEATURE_REDUCERS_TOKEN as ɵngrx_modules_store_store_p, _INITIAL_REDUCERS as ɵngrx_modules_store_store_k, _INITIAL_STATE as ɵngrx_modules_store_store_i, _REDUCER_FACTORY as ɵngrx_modules_store_store_j, _RESOLVED_META_REDUCERS as ɵngrx_modules_store_store_q, _ROOT_STORE_GUARD as ɵngrx_modules_store_store_h, _STORE_FEATURES as ɵngrx_modules_store_store_o, _STORE_REDUCERS as ɵngrx_modules_store_store_l, _USER_RUNTIME_CHECKS as ɵngrx_modules_store_store_r, createAction, props, union, Store, select, combineReducers, compose, createReducerFactory, ActionsSubject, INIT, ReducerManager, ReducerObservable, ReducerManagerDispatcher, UPDATE, ScannedActionsSubject, createSelector, createSelectorFactory, createFeatureSelector, defaultMemoize, defaultStateFn, resultMemoize, State, StateObservable, reduceState, INITIAL_STATE, REDUCER_FACTORY, INITIAL_REDUCERS, STORE_FEATURES, META_REDUCERS, FEATURE_REDUCERS, USER_PROVIDED_META_REDUCERS, USER_RUNTIME_CHECKS, StoreModule, StoreRootModule, StoreFeatureModule, on, createReducer };
+export { ActionsSubject, FEATURE_REDUCERS, INIT, INITIAL_REDUCERS, INITIAL_STATE, META_REDUCERS, REDUCER_FACTORY, ReducerManager, ReducerManagerDispatcher, ReducerObservable, STORE_FEATURES, ScannedActionsSubject, State, StateObservable, Store, StoreFeatureModule, StoreModule, StoreRootModule, UPDATE, USER_PROVIDED_META_REDUCERS, USER_RUNTIME_CHECKS, combineReducers, compose, createAction, createFeatureSelector, createReducer, createReducerFactory, createSelector, createSelectorFactory, defaultMemoize, defaultStateFn, on, props, reduceState, resultMemoize, select, union, STORE_PROVIDERS as ɵngrx_modules_store_store_b, createSerializationCheckMetaReducer as ɵngrx_modules_store_store_ba, createImmutabilityCheckMetaReducer as ɵngrx_modules_store_store_bb, provideRuntimeChecks as ɵngrx_modules_store_store_bc, _runtimeChecksFactory as ɵngrx_modules_store_store_bd, ACTIONS_SUBJECT_PROVIDERS as ɵngrx_modules_store_store_c, REDUCER_MANAGER_PROVIDERS as ɵngrx_modules_store_store_d, SCANNED_ACTIONS_SUBJECT_PROVIDERS as ɵngrx_modules_store_store_e, isEqualCheck as ɵngrx_modules_store_store_f, STATE_PROVIDERS as ɵngrx_modules_store_store_g, _ROOT_STORE_GUARD as ɵngrx_modules_store_store_h, _INITIAL_STATE as ɵngrx_modules_store_store_i, _REDUCER_FACTORY as ɵngrx_modules_store_store_j, _INITIAL_REDUCERS as ɵngrx_modules_store_store_k, _STORE_REDUCERS as ɵngrx_modules_store_store_l, _FEATURE_REDUCERS as ɵngrx_modules_store_store_m, _FEATURE_CONFIGS as ɵngrx_modules_store_store_n, _STORE_FEATURES as ɵngrx_modules_store_store_o, _FEATURE_REDUCERS_TOKEN as ɵngrx_modules_store_store_p, _RESOLVED_META_REDUCERS as ɵngrx_modules_store_store_q, _USER_RUNTIME_CHECKS as ɵngrx_modules_store_store_r, _ACTIVE_RUNTIME_CHECKS as ɵngrx_modules_store_store_s, _createStoreReducers as ɵngrx_modules_store_store_t, _createFeatureStore as ɵngrx_modules_store_store_u, _createFeatureReducers as ɵngrx_modules_store_store_v, _initialStateFactory as ɵngrx_modules_store_store_w, _concatMetaReducers as ɵngrx_modules_store_store_x, _provideForRootGuard as ɵngrx_modules_store_store_y, createActiveRuntimeChecks as ɵngrx_modules_store_store_z };
 //# sourceMappingURL=store.js.map

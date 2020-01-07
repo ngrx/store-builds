@@ -1,5 +1,5 @@
 /**
- * @license NgRx 8.6.0+3.sha-fe6bfa7
+ * @license NgRx 8.6.0+4.sha-b146af5
  * (c) 2015-2018 Brandon Roberts, Mike Ryan, Rob Wormald, Victor Savkin
  * License: MIT
  */
@@ -9,7 +9,8 @@ import { observeOn, withLatestFrom, scan, pluck, map, distinctUntilChanged } fro
 
 /**
  * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
+ * Generated from: modules/store/src/action_creator.ts
+ * @suppress {checkTypes,constantProperty,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
  */
 /**
  * \@description
@@ -91,7 +92,7 @@ function createAction(type, config) {
          * @param {...?} args
          * @return {?}
          */
-        (...args) => (Object.assign({}, config(...args), { type }))));
+        (...args) => (Object.assign(Object.assign({}, config(...args)), { type }))));
     }
     /** @type {?} */
     const as = config ? config._as : 'empty';
@@ -106,7 +107,7 @@ function createAction(type, config) {
              * @param {?} props
              * @return {?}
              */
-            (props) => (Object.assign({}, props, { type }))));
+            (props) => (Object.assign(Object.assign({}, props), { type }))));
         default:
             throw new Error('Unexpected config.');
     }
@@ -143,7 +144,8 @@ function defineType(type, creator) {
 
 /**
  * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
+ * Generated from: modules/store/src/actions_subject.ts
+ * @suppress {checkTypes,constantProperty,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
  */
 /** @type {?} */
 const INIT = (/** @type {?} */ ('@ngrx/store/init'));
@@ -193,7 +195,8 @@ const ACTIONS_SUBJECT_PROVIDERS = [ActionsSubject];
 
 /**
  * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
+ * Generated from: modules/store/src/tokens.ts
+ * @suppress {checkTypes,constantProperty,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
  */
 /** @type {?} */
 const _ROOT_STORE_GUARD = new InjectionToken('@ngrx/store Internal Root Guard');
@@ -258,7 +261,8 @@ const _ACTIVE_RUNTIME_CHECKS = new InjectionToken('@ngrx/store Internal Runtime 
 
 /**
  * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
+ * Generated from: modules/store/src/utils.ts
+ * @suppress {checkTypes,constantProperty,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
  */
 /**
  * @param {?} reducers
@@ -417,7 +421,8 @@ function createFeatureReducerFactory(metaReducers) {
 
 /**
  * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
+ * Generated from: modules/store/src/reducer_manager.ts
+ * @suppress {checkTypes,constantProperty,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
  */
 /**
  * @abstract
@@ -504,7 +509,7 @@ class ReducerManager extends BehaviorSubject {
      * @return {?}
      */
     addReducers(reducers) {
-        this.reducers = Object.assign({}, this.reducers, reducers);
+        this.reducers = Object.assign(Object.assign({}, this.reducers), reducers);
         this.updateReducers(Object.keys(reducers));
     }
     /**
@@ -557,6 +562,28 @@ ReducerManager.ctorParameters = () => [
     { type: undefined, decorators: [{ type: Inject, args: [INITIAL_REDUCERS,] }] },
     { type: undefined, decorators: [{ type: Inject, args: [REDUCER_FACTORY,] }] }
 ];
+if (false) {
+    /**
+     * @type {?}
+     * @private
+     */
+    ReducerManager.prototype.dispatcher;
+    /**
+     * @type {?}
+     * @private
+     */
+    ReducerManager.prototype.initialState;
+    /**
+     * @type {?}
+     * @private
+     */
+    ReducerManager.prototype.reducers;
+    /**
+     * @type {?}
+     * @private
+     */
+    ReducerManager.prototype.reducerFactory;
+}
 /** @type {?} */
 const REDUCER_MANAGER_PROVIDERS = [
     ReducerManager,
@@ -566,7 +593,8 @@ const REDUCER_MANAGER_PROVIDERS = [
 
 /**
  * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
+ * Generated from: modules/store/src/scanned_actions_subject.ts
+ * @suppress {checkTypes,constantProperty,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
  */
 class ScannedActionsSubject extends Subject {
     /**
@@ -586,7 +614,8 @@ const SCANNED_ACTIONS_SUBJECT_PROVIDERS = [
 
 /**
  * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
+ * Generated from: modules/store/src/state.ts
+ * @suppress {checkTypes,constantProperty,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
  */
 /**
  * @abstract
@@ -641,6 +670,15 @@ State.ctorParameters = () => [
     { type: ScannedActionsSubject },
     { type: undefined, decorators: [{ type: Inject, args: [INITIAL_STATE,] }] }
 ];
+if (false) {
+    /** @type {?} */
+    State.INIT;
+    /**
+     * @type {?}
+     * @private
+     */
+    State.prototype.stateSubscription;
+}
 /**
  * @template T, V
  * @param {?=} stateActionPair
@@ -659,7 +697,8 @@ const STATE_PROVIDERS = [
 
 /**
  * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
+ * Generated from: modules/store/src/store.ts
+ * @suppress {checkTypes,constantProperty,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
  */
 /**
  * @template T
@@ -751,6 +790,18 @@ Store.ctorParameters = () => [
     { type: ActionsSubject },
     { type: ReducerManager }
 ];
+if (false) {
+    /**
+     * @type {?}
+     * @private
+     */
+    Store.prototype.actionsObserver;
+    /**
+     * @type {?}
+     * @private
+     */
+    Store.prototype.reducerManager;
+}
 /** @type {?} */
 const STORE_PROVIDERS = [Store];
 /**
@@ -790,8 +841,39 @@ function select(pathOrMapFn, propsOrPath, ...paths) {
 
 /**
  * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
+ * Generated from: modules/store/src/selector.ts
+ * @suppress {checkTypes,constantProperty,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
  */
+/**
+ * @record
+ * @template State, Result, ProjectorFn
+ */
+function MemoizedSelector() { }
+if (false) {
+    /** @type {?} */
+    MemoizedSelector.prototype.projector;
+    /** @type {?} */
+    MemoizedSelector.prototype.setResult;
+    /**
+     * @return {?}
+     */
+    MemoizedSelector.prototype.release = function () { };
+}
+/**
+ * @record
+ * @template State, Props, Result, ProjectorFn
+ */
+function MemoizedSelectorWithProps() { }
+if (false) {
+    /** @type {?} */
+    MemoizedSelectorWithProps.prototype.projector;
+    /** @type {?} */
+    MemoizedSelectorWithProps.prototype.setResult;
+    /**
+     * @return {?}
+     */
+    MemoizedSelectorWithProps.prototype.release = function () { };
+}
 /**
  * @param {?} a
  * @param {?} b
@@ -1010,7 +1092,8 @@ function createFeatureSelector(featureName) {
 
 /**
  * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
+ * Generated from: modules/store/src/meta-reducers/utils.ts
+ * @suppress {checkTypes,constantProperty,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
  */
 /**
  * @param {?} target
@@ -1098,7 +1181,8 @@ function hasOwnProperty(target, propertyName) {
 
 /**
  * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
+ * Generated from: modules/store/src/meta-reducers/immutability_reducer.ts
+ * @suppress {checkTypes,constantProperty,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
  */
 /**
  * @param {?} reducer
@@ -1149,7 +1233,8 @@ function freeze(target) {
 
 /**
  * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
+ * Generated from: modules/store/src/meta-reducers/serialization_reducer.ts
+ * @suppress {checkTypes,constantProperty,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
  */
 /**
  * @param {?} reducer
@@ -1241,12 +1326,14 @@ function throwIfUnserializable(unserializable, context) {
 
 /**
  * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
+ * Generated from: modules/store/src/meta-reducers/index.ts
+ * @suppress {checkTypes,constantProperty,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
  */
 
 /**
  * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
+ * Generated from: modules/store/src/runtime_checks.ts
+ * @suppress {checkTypes,constantProperty,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
  */
 /**
  * @param {?=} runtimeChecks
@@ -1342,7 +1429,8 @@ function _runtimeChecksFactory(runtimeChecks) {
 
 /**
  * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
+ * Generated from: modules/store/src/store_module.ts
+ * @suppress {checkTypes,constantProperty,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
  */
 class StoreRootModule {
     /**
@@ -1352,7 +1440,8 @@ class StoreRootModule {
      * @param {?} store
      * @param {?} guard
      */
-    constructor(actions$, reducer$, scannedActions$, store, guard) { }
+    constructor(actions$, reducer$, scannedActions$, store, guard) {
+    }
 }
 StoreRootModule.decorators = [
     { type: NgModule, args: [{},] }
@@ -1387,7 +1476,7 @@ class StoreFeatureModule {
             const featureReducerCollection = featureReducers.shift();
             /** @type {?} */
             const reducers = (/** @type {?} */ (featureReducerCollection /*TODO(#823)*/))[index];
-            return Object.assign({}, feature, { reducers, initialState: _initialStateFactory(feature.initialState) });
+            return Object.assign(Object.assign({}, feature), { reducers, initialState: _initialStateFactory(feature.initialState) });
         }));
         reducerManager.addFeatures(feats);
     }
@@ -1408,6 +1497,45 @@ StoreFeatureModule.ctorParameters = () => [
     { type: ReducerManager },
     { type: StoreRootModule }
 ];
+if (false) {
+    /**
+     * @type {?}
+     * @private
+     */
+    StoreFeatureModule.prototype.features;
+    /**
+     * @type {?}
+     * @private
+     */
+    StoreFeatureModule.prototype.featureReducers;
+    /**
+     * @type {?}
+     * @private
+     */
+    StoreFeatureModule.prototype.reducerManager;
+}
+/**
+ * @record
+ * @template T, V
+ */
+function StoreConfig() { }
+if (false) {
+    /** @type {?|undefined} */
+    StoreConfig.prototype.initialState;
+    /** @type {?|undefined} */
+    StoreConfig.prototype.reducerFactory;
+    /** @type {?|undefined} */
+    StoreConfig.prototype.metaReducers;
+}
+/**
+ * @record
+ * @template T, V
+ */
+function RootStoreConfig() { }
+if (false) {
+    /** @type {?|undefined} */
+    RootStoreConfig.prototype.runtimeChecks;
+}
 class StoreModule {
     /**
      * @param {?} reducers
@@ -1610,8 +1738,25 @@ function _provideForRootGuard(store) {
 
 /**
  * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
+ * Generated from: modules/store/src/reducer_creator.ts
+ * @suppress {checkTypes,constantProperty,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
  */
+/**
+ * @record
+ * @template S
+ */
+function On() { }
+if (false) {
+    /** @type {?} */
+    On.prototype.reducer;
+    /** @type {?} */
+    On.prototype.types;
+}
+/**
+ * @record
+ * @template S, C
+ */
+function OnReducer() { }
 /**
  * \@description
  * Associates actions with a given state change function.
@@ -1706,22 +1851,25 @@ function createReducer(initialState, ...ons) {
 
 /**
  * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
+ * Generated from: modules/store/src/index.ts
+ * @suppress {checkTypes,constantProperty,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
  */
 
 /**
  * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
+ * Generated from: modules/store/public_api.ts
+ * @suppress {checkTypes,constantProperty,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
  */
 
 /**
  * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
+ * Generated from: modules/store/index.ts
+ * @suppress {checkTypes,constantProperty,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
  */
 
 /**
  * Generated bundle index. Do not edit.
  */
 
-export { ACTIONS_SUBJECT_PROVIDERS as ɵngrx_modules_store_store_c, REDUCER_MANAGER_PROVIDERS as ɵngrx_modules_store_store_d, _runtimeChecksFactory as ɵngrx_modules_store_store_bd, createActiveRuntimeChecks as ɵngrx_modules_store_store_z, createImmutabilityCheckMetaReducer as ɵngrx_modules_store_store_bb, createSerializationCheckMetaReducer as ɵngrx_modules_store_store_ba, provideRuntimeChecks as ɵngrx_modules_store_store_bc, SCANNED_ACTIONS_SUBJECT_PROVIDERS as ɵngrx_modules_store_store_e, isEqualCheck as ɵngrx_modules_store_store_f, STATE_PROVIDERS as ɵngrx_modules_store_store_g, STORE_PROVIDERS as ɵngrx_modules_store_store_b, _concatMetaReducers as ɵngrx_modules_store_store_x, _createFeatureReducers as ɵngrx_modules_store_store_v, _createFeatureStore as ɵngrx_modules_store_store_u, _createStoreReducers as ɵngrx_modules_store_store_t, _initialStateFactory as ɵngrx_modules_store_store_w, _provideForRootGuard as ɵngrx_modules_store_store_y, _ACTIVE_RUNTIME_CHECKS as ɵngrx_modules_store_store_s, _FEATURE_CONFIGS as ɵngrx_modules_store_store_n, _FEATURE_REDUCERS as ɵngrx_modules_store_store_m, _FEATURE_REDUCERS_TOKEN as ɵngrx_modules_store_store_p, _INITIAL_REDUCERS as ɵngrx_modules_store_store_k, _INITIAL_STATE as ɵngrx_modules_store_store_i, _REDUCER_FACTORY as ɵngrx_modules_store_store_j, _RESOLVED_META_REDUCERS as ɵngrx_modules_store_store_q, _ROOT_STORE_GUARD as ɵngrx_modules_store_store_h, _STORE_FEATURES as ɵngrx_modules_store_store_o, _STORE_REDUCERS as ɵngrx_modules_store_store_l, _USER_RUNTIME_CHECKS as ɵngrx_modules_store_store_r, createAction, props, union, Store, select, combineReducers, compose, createReducerFactory, ActionsSubject, INIT, ReducerManager, ReducerObservable, ReducerManagerDispatcher, UPDATE, ScannedActionsSubject, createSelector, createSelectorFactory, createFeatureSelector, defaultMemoize, defaultStateFn, resultMemoize, State, StateObservable, reduceState, INITIAL_STATE, REDUCER_FACTORY, INITIAL_REDUCERS, STORE_FEATURES, META_REDUCERS, FEATURE_REDUCERS, USER_PROVIDED_META_REDUCERS, USER_RUNTIME_CHECKS, StoreModule, StoreRootModule, StoreFeatureModule, on, createReducer };
+export { ActionsSubject, FEATURE_REDUCERS, INIT, INITIAL_REDUCERS, INITIAL_STATE, META_REDUCERS, REDUCER_FACTORY, ReducerManager, ReducerManagerDispatcher, ReducerObservable, STORE_FEATURES, ScannedActionsSubject, State, StateObservable, Store, StoreFeatureModule, StoreModule, StoreRootModule, UPDATE, USER_PROVIDED_META_REDUCERS, USER_RUNTIME_CHECKS, combineReducers, compose, createAction, createFeatureSelector, createReducer, createReducerFactory, createSelector, createSelectorFactory, defaultMemoize, defaultStateFn, on, props, reduceState, resultMemoize, select, union, STORE_PROVIDERS as ɵngrx_modules_store_store_b, createSerializationCheckMetaReducer as ɵngrx_modules_store_store_ba, createImmutabilityCheckMetaReducer as ɵngrx_modules_store_store_bb, provideRuntimeChecks as ɵngrx_modules_store_store_bc, _runtimeChecksFactory as ɵngrx_modules_store_store_bd, ACTIONS_SUBJECT_PROVIDERS as ɵngrx_modules_store_store_c, REDUCER_MANAGER_PROVIDERS as ɵngrx_modules_store_store_d, SCANNED_ACTIONS_SUBJECT_PROVIDERS as ɵngrx_modules_store_store_e, isEqualCheck as ɵngrx_modules_store_store_f, STATE_PROVIDERS as ɵngrx_modules_store_store_g, _ROOT_STORE_GUARD as ɵngrx_modules_store_store_h, _INITIAL_STATE as ɵngrx_modules_store_store_i, _REDUCER_FACTORY as ɵngrx_modules_store_store_j, _INITIAL_REDUCERS as ɵngrx_modules_store_store_k, _STORE_REDUCERS as ɵngrx_modules_store_store_l, _FEATURE_REDUCERS as ɵngrx_modules_store_store_m, _FEATURE_CONFIGS as ɵngrx_modules_store_store_n, _STORE_FEATURES as ɵngrx_modules_store_store_o, _FEATURE_REDUCERS_TOKEN as ɵngrx_modules_store_store_p, _RESOLVED_META_REDUCERS as ɵngrx_modules_store_store_q, _USER_RUNTIME_CHECKS as ɵngrx_modules_store_store_r, _ACTIVE_RUNTIME_CHECKS as ɵngrx_modules_store_store_s, _createStoreReducers as ɵngrx_modules_store_store_t, _createFeatureStore as ɵngrx_modules_store_store_u, _createFeatureReducers as ɵngrx_modules_store_store_v, _initialStateFactory as ɵngrx_modules_store_store_w, _concatMetaReducers as ɵngrx_modules_store_store_x, _provideForRootGuard as ɵngrx_modules_store_store_y, createActiveRuntimeChecks as ɵngrx_modules_store_store_z };
 //# sourceMappingURL=store.js.map
