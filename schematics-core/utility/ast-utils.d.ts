@@ -72,3 +72,4 @@ export declare function addBootstrapToModule(source: ts.SourceFile, modulePath: 
  */
 export declare function insertImport(source: ts.SourceFile, fileToEdit: string, symbolName: string, fileName: string, isDefault?: boolean): Change;
 export declare function replaceImport(sourceFile: ts.SourceFile, path: Path, importFrom: string, importAsIs: string, importToBe: string): (ReplaceChange | RemoveChange)[];
+export declare function containsProperty(objectLiteral: ts.ObjectLiteralExpression, propertyName: string): boolean;

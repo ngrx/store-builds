@@ -1,6 +1,6 @@
 /// <amd-module name="@ngrx/store/schematics-core" />
 import { dasherize, decamelize, camelize, classify, underscore, group, capitalize, featurePath, pluralize } from './utility/strings';
-export { findNodes, getSourceNodes, getDecoratorMetadata, getContentOfKeyLiteral, insertAfterLastOccurrence, insertImport, addBootstrapToModule, addDeclarationToModule, addExportToModule, addImportToModule, addProviderToModule, replaceImport, } from './utility/ast-utils';
+export { findNodes, getSourceNodes, getDecoratorMetadata, getContentOfKeyLiteral, insertAfterLastOccurrence, insertImport, addBootstrapToModule, addDeclarationToModule, addExportToModule, addImportToModule, addProviderToModule, replaceImport, containsProperty, } from './utility/ast-utils';
 export { Host, Change, NoopChange, InsertChange, RemoveChange, ReplaceChange, createReplaceChange, createChangeRecorder, commitChanges, } from './utility/change';
 export { AppConfig, getWorkspace, getWorkspacePath } from './utility/config';
 export { findModule, findModuleFromOptions, buildRelativePath, ModuleOptions, } from './utility/find-module';
@@ -21,4 +21,4 @@ export { updatePackage } from './utility/update';
 export { parseName } from './utility/parse-name';
 export { addPackageToPackageJson } from './utility/package';
 export { platformVersion } from './utility/libs-version';
-export { visitTSSourceFiles } from './utility/visit-utils';
+export { visitTSSourceFiles, visitNgModuleImports } from './utility/visitors';
