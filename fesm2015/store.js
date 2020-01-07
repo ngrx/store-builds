@@ -1,5 +1,5 @@
 /**
- * @license NgRx 8.6.0+4.sha-b146af5
+ * @license NgRx 8.6.0+10.sha-b8a769a
  * (c) 2015-2018 Brandon Roberts, Mike Ryan, Rob Wormald, Victor Savkin
  * License: MIT
  */
@@ -1341,10 +1341,7 @@ function throwIfUnserializable(unserializable, context) {
  */
 function createActiveRuntimeChecks(runtimeChecks) {
     if (isDevMode()) {
-        if (runtimeChecks === undefined) {
-            console.warn('@ngrx/store: runtime checks are currently opt-in but will be the default in the next major version with the possibility to opt-out, see https://ngrx.io/guide/migration/v8 for more information.');
-        }
-        return Object.assign({ strictStateSerializability: false, strictActionSerializability: false, strictStateImmutability: false, strictActionImmutability: false }, runtimeChecks);
+        return Object.assign({ strictStateSerializability: false, strictActionSerializability: false, strictStateImmutability: true, strictActionImmutability: true }, runtimeChecks);
     }
     return {
         strictStateSerializability: false,
