@@ -1,5 +1,5 @@
 /**
- * @license NgRx 8.6.0+12.sha-3a683cd
+ * @license NgRx 8.6.0+13.sha-803295b
  * (c) 2015-2018 Brandon Roberts, Mike Ryan, Rob Wormald, Victor Savkin
  * License: MIT
  */
@@ -515,12 +515,15 @@
         }
         function setResult(result) {
             if (result === void 0) { result = undefined; }
-            overrideResult = result;
+            overrideResult = { result: result };
+        }
+        function clearResult() {
+            overrideResult = undefined;
         }
         // tslint:disable-next-line:no-any anything could be the result.
         function memoized() {
             if (overrideResult !== undefined) {
-                return overrideResult;
+                return overrideResult.result;
             }
             if (!lastArguments) {
                 lastResult = projectionFn.apply(null, arguments);
@@ -538,7 +541,7 @@
             lastResult = newResult;
             return newResult;
         }
-        return { memoized: memoized, reset: reset, setResult: setResult };
+        return { memoized: memoized, reset: reset, setResult: setResult, clearResult: clearResult };
     }
     function createSelector() {
         var input = [];
@@ -600,6 +603,7 @@
                 release: release,
                 projector: memoizedProjector.memoized,
                 setResult: memoizedState.setResult,
+                clearResult: memoizedState.clearResult,
             });
         };
     }

@@ -1,5 +1,5 @@
 /**
- * @license NgRx 8.6.0+12.sha-3a683cd
+ * @license NgRx 8.6.0+13.sha-803295b
  * (c) 2015-2018 Brandon Roberts, Mike Ryan, Rob Wormald, Victor Savkin
  * License: MIT
  */
@@ -132,7 +132,7 @@ class MockStore extends Store {
         (_, selector) => {
             if (typeof selector !== 'string') {
                 selector.release();
-                selector.setResult();
+                selector.clearResult();
             }
         }));
         MockStore.selectors.clear();

@@ -1,5 +1,5 @@
 /**
- * @license NgRx 8.6.0+12.sha-3a683cd
+ * @license NgRx 8.6.0+13.sha-803295b
  * (c) 2015-2018 Brandon Roberts, Mike Ryan, Rob Wormald, Victor Savkin
  * License: MIT
  */
@@ -854,6 +854,8 @@ if (false) {
     MemoizedSelector.prototype.projector;
     /** @type {?} */
     MemoizedSelector.prototype.setResult;
+    /** @type {?} */
+    MemoizedSelector.prototype.clearResult;
     /**
      * @return {?}
      */
@@ -869,6 +871,8 @@ if (false) {
     MemoizedSelectorWithProps.prototype.projector;
     /** @type {?} */
     MemoizedSelectorWithProps.prototype.setResult;
+    /** @type {?} */
+    MemoizedSelectorWithProps.prototype.clearResult;
     /**
      * @return {?}
      */
@@ -930,7 +934,13 @@ function defaultMemoize(projectionFn, isArgumentsEqual = isEqualCheck, isResultE
      * @return {?}
      */
     function setResult(result = undefined) {
-        overrideResult = result;
+        overrideResult = { result };
+    }
+    /**
+     * @return {?}
+     */
+    function clearResult() {
+        overrideResult = undefined;
     }
     // tslint:disable-next-line:no-any anything could be the result.
     /**
@@ -938,7 +948,7 @@ function defaultMemoize(projectionFn, isArgumentsEqual = isEqualCheck, isResultE
      */
     function memoized() {
         if (overrideResult !== undefined) {
-            return overrideResult;
+            return overrideResult.result;
         }
         if (!lastArguments) {
             lastResult = projectionFn.apply(null, (/** @type {?} */ (arguments)));
@@ -957,7 +967,7 @@ function defaultMemoize(projectionFn, isArgumentsEqual = isEqualCheck, isResultE
         lastResult = newResult;
         return newResult;
     }
-    return { memoized, reset, setResult };
+    return { memoized, reset, setResult, clearResult };
 }
 /**
  * @param {...?} input
@@ -1058,6 +1068,7 @@ function createSelectorFactory(memoize, options = {
             release,
             projector: memoizedProjector.memoized,
             setResult: memoizedState.setResult,
+            clearResult: memoizedState.clearResult,
         });
     });
 }

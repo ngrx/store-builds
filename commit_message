@@ -1,1 +1,1 @@
-3a683cd ci: use fallback runner for CI tests (#2309)
+803295b feat(store): add clearResult to reset a mock selector (#2270)

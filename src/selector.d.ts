@@ -4,6 +4,7 @@ export declare type MemoizedProjection = {
     memoized: AnyFn;
     reset: () => void;
     setResult: (result?: any) => void;
+    clearResult: () => void;
 };
 export declare type MemoizeFn = (t: AnyFn) => MemoizedProjection;
 export declare type ComparatorFn = (a: any, b: any) => boolean;
@@ -12,11 +13,13 @@ export interface MemoizedSelector<State, Result, ProjectorFn = DefaultProjectorF
     release(): void;
     projector: ProjectorFn;
     setResult: (result?: Result) => void;
+    clearResult: () => void;
 }
 export interface MemoizedSelectorWithProps<State, Props, Result, ProjectorFn = DefaultProjectorFn<Result>> extends SelectorWithProps<State, Props, Result> {
     release(): void;
     projector: ProjectorFn;
     setResult: (result?: Result) => void;
+    clearResult: () => void;
 }
 export declare function isEqualCheck(a: any, b: any): boolean;
 export declare function resultMemoize(projectionFn: AnyFn, isResultEqual: ComparatorFn): MemoizedProjection;

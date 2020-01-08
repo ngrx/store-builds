@@ -1,5 +1,5 @@
 /**
- * @license NgRx 8.6.0+12.sha-3a683cd
+ * @license NgRx 8.6.0+13.sha-803295b
  * (c) 2015-2018 Brandon Roberts, Mike Ryan, Rob Wormald, Victor Savkin
  * License: MIT
  */
@@ -74,7 +74,7 @@
             MockStore_1.selectors.forEach(function (_, selector) {
                 if (typeof selector !== 'string') {
                     selector.release();
-                    selector.setResult();
+                    selector.clearResult();
                 }
             });
             MockStore_1.selectors.clear();
