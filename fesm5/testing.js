@@ -1,5 +1,5 @@
 /**
- * @license NgRx 8.6.0+13.sha-803295b
+ * @license NgRx 8.6.0+19.sha-2620fbb
  * (c) 2015-2018 Brandon Roberts, Mike Ryan, Rob Wormald, Victor Savkin
  * License: MIT
  */
@@ -95,7 +95,8 @@ var MockStore = /** @class */ (function (_super) {
      * Refreshes the existing state.
      */
     MockStore.prototype.refreshState = function () {
-        this.setState(__assign({}, this.lastState));
+        if (this.lastState)
+            this.setState(__assign({}, this.lastState));
     };
     var MockStore_1;
     MockStore.selectors = new Map();

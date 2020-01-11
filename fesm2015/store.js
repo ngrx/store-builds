@@ -1,5 +1,5 @@
 /**
- * @license NgRx 8.6.0+13.sha-803295b
+ * @license NgRx 8.6.0+19.sha-2620fbb
  * (c) 2015-2018 Brandon Roberts, Mike Ryan, Rob Wormald, Victor Savkin
  * License: MIT
  */
@@ -117,9 +117,7 @@ function createAction(type, config) {
  * @return {?}
  */
 function props() {
-    // the return type does not match TypePropertyIsNotAllowed, so double casting
-    // is used.
-    return (/** @type {?} */ (((/** @type {?} */ ({ _as: 'props', _p: (/** @type {?} */ (undefined)) })))));
+    return { _as: 'props', _p: (/** @type {?} */ (undefined)) };
 }
 /**
  * @template C

@@ -34,28 +34,24 @@ export declare type Selector<T, V> = (state: T) => V;
 export declare type SelectorWithProps<State, Props, Result> = (state: State, props: Props) => Result;
 export declare const arraysAreNotAllowedMsg = "arrays are not allowed in action creators";
 declare type ArraysAreNotAllowed = typeof arraysAreNotAllowedMsg;
-export declare type DisallowArraysAndTypeProperty<T> = T extends any[] ? ArraysAreNotAllowed : T extends {
-    type: any;
-} ? TypePropertyIsNotAllowed : T;
 export declare const typePropertyIsNotAllowedMsg = "type property is not allowed in action creators";
 declare type TypePropertyIsNotAllowed = typeof typePropertyIsNotAllowedMsg;
 export declare type FunctionIsNotAllowed<T, ErrorMessage extends string> = T extends Function ? ErrorMessage : T;
 /**
  * A function that returns an object in the shape of the `Action` interface.  Configured using `createAction`.
  */
-export declare type Creator<P extends any[] = any[], R extends object = object> = R extends any[] ? ArraysAreNotAllowed : R extends {
+export declare type Creator<P extends any[] = any[], R extends object = object> = FunctionWithParametersType<P, R>;
+export declare type NotAllowedCheck<T extends object> = T extends any[] ? ArraysAreNotAllowed : T extends {
     type: any;
-} ? TypePropertyIsNotAllowed : FunctionWithParametersType<P, R>;
-export declare type PropsReturnType<T extends object> = T extends any[] ? ArraysAreNotAllowed : T extends {
-    type: any;
-} ? TypePropertyIsNotAllowed : {
-    _as: 'props';
-    _p: T;
-};
+} ? TypePropertyIsNotAllowed : unknown;
 /**
  * See `Creator`.
  */
 export declare type ActionCreator<T extends string = string, C extends Creator = Creator> = C & TypedAction<T>;
+export interface Props<T> {
+    _as: 'props';
+    _p: T;
+}
 export declare type FunctionWithParametersType<P extends unknown[], R = void> = (...args: P) => R;
 export declare type ParametersType<T> = T extends (...args: infer U) => unknown ? U : never;
 export interface RuntimeChecks {
