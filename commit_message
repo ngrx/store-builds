@@ -1,1 +1,1 @@
-2620fbb chore: bump CI node version
+fe2b190 build: update Bazel to 1.1.0, and update CI configuration for build/test (#2315)
