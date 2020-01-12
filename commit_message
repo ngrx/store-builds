@@ -1,1 +1,1 @@
-fe2b190 build: update Bazel to 1.1.0, and update CI configuration for build/test (#2315)
+2cc8885 docs: update usage of TestBed.get to TestBed.inject (#2311)
