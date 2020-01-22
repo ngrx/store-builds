@@ -1,1 +1,1 @@
-a528320 fix(effects): dispatch init action once (#2164)
+4b302ec docs(data): change registerReducer to registerReducers (#2327)
