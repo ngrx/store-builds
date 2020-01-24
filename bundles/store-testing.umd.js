@@ -1,5 +1,5 @@
 /**
- * @license NgRx 8.6.0+26.sha-9ac1165
+ * @license NgRx 8.6.0+27.sha-ef5cd5f
  * (c) 2015-2018 Brandon Roberts, Mike Ryan, Rob Wormald, Victor Savkin
  * License: MIT
  */
@@ -134,6 +134,7 @@
         return [
             store.ActionsSubject,
             MockState,
+            MockStore,
             { provide: store.INITIAL_STATE, useValue: config.initialState || {} },
             { provide: MOCK_SELECTORS, useValue: config.selectors },
             { provide: store.StateObservable, useClass: MockState },
