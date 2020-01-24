@@ -1,1 +1,1 @@
-660b62f refactor(example): use featureKey for layout selector (#2323)
+900bf75 fix(data): allow additional selectors in entitySelectors$ (#2332)
