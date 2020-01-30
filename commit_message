@@ -1,1 +1,1 @@
-3a9ad63 feat(effects): make resubscription handler overridable (#2295)
+93b4081 feat(effects): add migration for breaking change that renames effects error handler config key (#2335)
