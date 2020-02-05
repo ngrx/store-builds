@@ -1,1 +1,1 @@
-ba37ad8 feat(router): enabling MinimalRouterStateSerializer by default (#2326)
+09daeb9 feat(store): add default generic type to Store and MockStore (#2325)

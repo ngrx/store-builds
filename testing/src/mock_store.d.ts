@@ -2,7 +2,7 @@ import { Observable } from 'rxjs';
 import { Action, ActionsSubject, ReducerManager, Store, MemoizedSelectorWithProps, MemoizedSelector } from '@ngrx/store';
 import { MockState } from './mock_state';
 import { MockSelector } from './mock_selector';
-export declare class MockStore<T> extends Store<T> {
+export declare class MockStore<T = object> extends Store<T> {
     private state$;
     private initialState;
     static selectors: Map<string | MemoizedSelector<any, any, import("@ngrx/store").DefaultProjectorFn<any>> | MemoizedSelectorWithProps<any, any, any, import("@ngrx/store").DefaultProjectorFn<any>>, any>;
