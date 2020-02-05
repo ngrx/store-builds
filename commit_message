@@ -1,1 +1,1 @@
-93b4081 feat(effects): add migration for breaking change that renames effects error handler config key (#2335)
+ba37ad8 feat(router): enabling MinimalRouterStateSerializer by default (#2326)
