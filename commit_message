@@ -1,1 +1,1 @@
-0dabfc4 feat(store): ignore actions from NgRx libraries in runtime checks (#2351)
+27f5059 feat(entity): deprecate addAll and rename it to setAll (#2348)
