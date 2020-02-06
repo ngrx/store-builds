@@ -661,9 +661,9 @@
 
     function immutabilityCheckMetaReducer(reducer, checks) {
         return function (state, action) {
-            var act = checks.action ? freeze(action) : action;
+            var act = checks.action(action) ? freeze(action) : action;
             var nextState = reducer(state, act);
-            return checks.state ? freeze(nextState) : nextState;
+            return checks.state() ? freeze(nextState) : nextState;
         };
     }
     function freeze(target) {
@@ -686,12 +686,12 @@
 
     function serializationCheckMetaReducer(reducer, checks) {
         return function (state, action) {
-            if (checks.action) {
+            if (checks.action(action)) {
                 var unserializableAction = getUnserializable(action);
                 throwIfUnserializable(unserializableAction, 'action');
             }
             var nextState = reducer(state, action);
-            if (checks.state) {
+            if (checks.state()) {
                 var unserializableState = getUnserializable(nextState);
                 throwIfUnserializable(unserializableState, 'state');
             }
@@ -757,8 +757,10 @@
         return function (reducer) {
             return strictActionSerializability || strictStateSerializability
                 ? serializationCheckMetaReducer(reducer, {
-                    action: strictActionSerializability,
-                    state: strictStateSerializability,
+                    action: function (action) {
+                        return strictActionSerializability && !ignoreNgrxAction(action);
+                    },
+                    state: function () { return strictStateSerializability; },
                 })
                 : reducer;
         };
@@ -768,11 +770,16 @@
         return function (reducer) {
             return strictActionImmutability || strictStateImmutability
                 ? immutabilityCheckMetaReducer(reducer, {
-                    action: strictActionImmutability,
-                    state: strictStateImmutability,
+                    action: function (action) {
+                        return strictActionImmutability && !ignoreNgrxAction(action);
+                    },
+                    state: function () { return strictStateImmutability; },
                 })
                 : reducer;
         };
+    }
+    function ignoreNgrxAction(action) {
+        return action.type.startsWith('@ngrx');
     }
     function provideRuntimeChecks(runtimeChecks) {
         return [
