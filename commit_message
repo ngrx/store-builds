@@ -1,1 +1,1 @@
-09daeb9 feat(store): add default generic type to Store and MockStore (#2325)
+381f98e build: exclude component package from publishing script (#2350)
