@@ -1,1 +1,1 @@
-6df257d build: fix version stamping after Bazel build (#2354)
+94f3ef1 fix(data): change type of filter observable (#2349)
