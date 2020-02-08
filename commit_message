@@ -1,1 +1,1 @@
-182f140 fix(data): Angular 9 style ModuleWithProvider (#2356) (#2357)
+6df257d build: fix version stamping after Bazel build (#2354)
