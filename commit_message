@@ -1,1 +1,1 @@
-f09df95 docs(effects): tidy examples in effects lifecycle guide (#2336)
+637b2c7 fix(data): make undoMany remove tracking changes in changeState (#2346) (#2352)
