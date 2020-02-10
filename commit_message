@@ -1,1 +1,1 @@
-7b3aea3 chore: update examples to Angular v9 and NgRx v9 latest (#2360)
+234ce84 fix(data): EntityDataModuleWithoutEffect ModuleWithProviders (#2366)
