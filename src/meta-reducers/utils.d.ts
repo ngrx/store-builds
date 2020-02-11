@@ -1,3 +1,4 @@
+export declare const RUNTIME_CHECK_URL = "https://ngrx.io/guide/store/configuration/runtime-checks";
 export declare function isUndefined(target: any): target is undefined;
 export declare function isNull(target: any): target is null;
 export declare function isArray(target: any): target is Array<any>;

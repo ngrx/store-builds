@@ -1,10 +1,10 @@
 /**
- * @license NgRx 9.0.0-beta.0+7.sha-234ce84
+ * @license NgRx 9.0.0-beta.0+8.sha-4cae255
  * (c) 2015-2018 Brandon Roberts, Mike Ryan, Rob Wormald, Victor Savkin
  * License: MIT
  */
 import { __assign, __spread, __extends, __decorate, __metadata, __param, __read, __values } from 'tslib';
-import { Injectable, InjectionToken, Inject, isDevMode, NgModule, Optional, SkipSelf, Injector } from '@angular/core';
+import { Injectable, InjectionToken, Inject, isDevMode, NgZone, NgModule, Optional, SkipSelf, Injector } from '@angular/core';
 import { BehaviorSubject, Observable, Subject, queueScheduler } from 'rxjs';
 import { observeOn, withLatestFrom, scan, pluck, map, distinctUntilChanged } from 'rxjs/operators';
 
@@ -620,6 +620,7 @@ function createFeatureSelector(featureName) {
     }, function (featureState) { return featureState; });
 }
 
+var RUNTIME_CHECK_URL = 'https://ngrx.io/guide/store/configuration/runtime-checks';
 function isUndefined(target) {
     return target === undefined;
 }
@@ -734,21 +735,31 @@ function throwIfUnserializable(unserializable, context) {
         return;
     }
     var unserializablePath = unserializable.path.join('.');
-    var error = new Error("Detected unserializable " + context + " at \"" + unserializablePath + "\"");
+    var error = new Error("Detected unserializable " + context + " at \"" + unserializablePath + "\". " + RUNTIME_CHECK_URL + "#strict" + context + "serializability");
     error.value = unserializable.value;
     error.unserializablePath = unserializablePath;
     throw error;
 }
 
+function inNgZoneAssertMetaReducer(reducer, checks) {
+    return function (state, action) {
+        if (checks.action(action) && !NgZone.isInAngularZone()) {
+            throw new Error("Action '" + action.type + "' running outside NgZone. " + RUNTIME_CHECK_URL + "#strictactionwithinngzone");
+        }
+        return reducer(state, action);
+    };
+}
+
 function createActiveRuntimeChecks(runtimeChecks) {
     if (isDevMode()) {
-        return __assign({ strictStateSerializability: false, strictActionSerializability: false, strictStateImmutability: true, strictActionImmutability: true }, runtimeChecks);
+        return __assign({ strictStateSerializability: false, strictActionSerializability: false, strictStateImmutability: true, strictActionImmutability: true, strictActionWithinNgZone: false }, runtimeChecks);
     }
     return {
         strictStateSerializability: false,
         strictActionSerializability: false,
         strictStateImmutability: false,
         strictActionImmutability: false,
+        strictActionWithinNgZone: false,
     };
 }
 function createSerializationCheckMetaReducer(_a) {
@@ -780,6 +791,18 @@ function createImmutabilityCheckMetaReducer(_a) {
 function ignoreNgrxAction(action) {
     return action.type.startsWith('@ngrx');
 }
+function createInNgZoneCheckMetaReducer(_a) {
+    var strictActionWithinNgZone = _a.strictActionWithinNgZone;
+    return function (reducer) {
+        return strictActionWithinNgZone
+            ? inNgZoneAssertMetaReducer(reducer, {
+                action: function (action) {
+                    return strictActionWithinNgZone && !ignoreNgrxAction(action);
+                },
+            })
+            : reducer;
+    };
+}
 function provideRuntimeChecks(runtimeChecks) {
     return [
         {
@@ -807,6 +830,12 @@ function provideRuntimeChecks(runtimeChecks) {
             multi: true,
             deps: [_ACTIVE_RUNTIME_CHECKS],
             useFactory: createSerializationCheckMetaReducer,
+        },
+        {
+            provide: META_REDUCERS,
+            multi: true,
+            deps: [_ACTIVE_RUNTIME_CHECKS],
+            useFactory: createInNgZoneCheckMetaReducer,
         },
     ];
 }
@@ -1125,5 +1154,5 @@ function createReducer(initialState) {
  * Generated bundle index. Do not edit.
  */
 
-export { ActionsSubject, FEATURE_REDUCERS, INIT, INITIAL_REDUCERS, INITIAL_STATE, META_REDUCERS, REDUCER_FACTORY, ReducerManager, ReducerManagerDispatcher, ReducerObservable, STORE_FEATURES, ScannedActionsSubject, State, StateObservable, Store, StoreFeatureModule, StoreModule, StoreRootModule, UPDATE, USER_PROVIDED_META_REDUCERS, USER_RUNTIME_CHECKS, combineReducers, compose, createAction, createFeatureSelector, createReducer, createReducerFactory, createSelector, createSelectorFactory, defaultMemoize, defaultStateFn, on, props, reduceState, resultMemoize, select, union, STORE_PROVIDERS as ɵngrx_modules_store_store_b, createSerializationCheckMetaReducer as ɵngrx_modules_store_store_ba, createImmutabilityCheckMetaReducer as ɵngrx_modules_store_store_bb, provideRuntimeChecks as ɵngrx_modules_store_store_bc, _runtimeChecksFactory as ɵngrx_modules_store_store_bd, ACTIONS_SUBJECT_PROVIDERS as ɵngrx_modules_store_store_c, REDUCER_MANAGER_PROVIDERS as ɵngrx_modules_store_store_d, SCANNED_ACTIONS_SUBJECT_PROVIDERS as ɵngrx_modules_store_store_e, isEqualCheck as ɵngrx_modules_store_store_f, STATE_PROVIDERS as ɵngrx_modules_store_store_g, _ROOT_STORE_GUARD as ɵngrx_modules_store_store_h, _INITIAL_STATE as ɵngrx_modules_store_store_i, _REDUCER_FACTORY as ɵngrx_modules_store_store_j, _INITIAL_REDUCERS as ɵngrx_modules_store_store_k, _STORE_REDUCERS as ɵngrx_modules_store_store_l, _FEATURE_REDUCERS as ɵngrx_modules_store_store_m, _FEATURE_CONFIGS as ɵngrx_modules_store_store_n, _STORE_FEATURES as ɵngrx_modules_store_store_o, _FEATURE_REDUCERS_TOKEN as ɵngrx_modules_store_store_p, _RESOLVED_META_REDUCERS as ɵngrx_modules_store_store_q, _USER_RUNTIME_CHECKS as ɵngrx_modules_store_store_r, _ACTIVE_RUNTIME_CHECKS as ɵngrx_modules_store_store_s, _createStoreReducers as ɵngrx_modules_store_store_t, _createFeatureStore as ɵngrx_modules_store_store_u, _createFeatureReducers as ɵngrx_modules_store_store_v, _initialStateFactory as ɵngrx_modules_store_store_w, _concatMetaReducers as ɵngrx_modules_store_store_x, _provideForRootGuard as ɵngrx_modules_store_store_y, createActiveRuntimeChecks as ɵngrx_modules_store_store_z };
+export { ActionsSubject, FEATURE_REDUCERS, INIT, INITIAL_REDUCERS, INITIAL_STATE, META_REDUCERS, REDUCER_FACTORY, ReducerManager, ReducerManagerDispatcher, ReducerObservable, STORE_FEATURES, ScannedActionsSubject, State, StateObservable, Store, StoreFeatureModule, StoreModule, StoreRootModule, UPDATE, USER_PROVIDED_META_REDUCERS, USER_RUNTIME_CHECKS, combineReducers, compose, createAction, createFeatureSelector, createReducer, createReducerFactory, createSelector, createSelectorFactory, defaultMemoize, defaultStateFn, on, props, reduceState, resultMemoize, select, union, STORE_PROVIDERS as ɵngrx_modules_store_store_b, createSerializationCheckMetaReducer as ɵngrx_modules_store_store_ba, createImmutabilityCheckMetaReducer as ɵngrx_modules_store_store_bb, createInNgZoneCheckMetaReducer as ɵngrx_modules_store_store_bc, provideRuntimeChecks as ɵngrx_modules_store_store_bd, _runtimeChecksFactory as ɵngrx_modules_store_store_be, ACTIONS_SUBJECT_PROVIDERS as ɵngrx_modules_store_store_c, REDUCER_MANAGER_PROVIDERS as ɵngrx_modules_store_store_d, SCANNED_ACTIONS_SUBJECT_PROVIDERS as ɵngrx_modules_store_store_e, isEqualCheck as ɵngrx_modules_store_store_f, STATE_PROVIDERS as ɵngrx_modules_store_store_g, _ROOT_STORE_GUARD as ɵngrx_modules_store_store_h, _INITIAL_STATE as ɵngrx_modules_store_store_i, _REDUCER_FACTORY as ɵngrx_modules_store_store_j, _INITIAL_REDUCERS as ɵngrx_modules_store_store_k, _STORE_REDUCERS as ɵngrx_modules_store_store_l, _FEATURE_REDUCERS as ɵngrx_modules_store_store_m, _FEATURE_CONFIGS as ɵngrx_modules_store_store_n, _STORE_FEATURES as ɵngrx_modules_store_store_o, _FEATURE_REDUCERS_TOKEN as ɵngrx_modules_store_store_p, _RESOLVED_META_REDUCERS as ɵngrx_modules_store_store_q, _USER_RUNTIME_CHECKS as ɵngrx_modules_store_store_r, _ACTIVE_RUNTIME_CHECKS as ɵngrx_modules_store_store_s, _createStoreReducers as ɵngrx_modules_store_store_t, _createFeatureStore as ɵngrx_modules_store_store_u, _createFeatureReducers as ɵngrx_modules_store_store_v, _initialStateFactory as ɵngrx_modules_store_store_w, _concatMetaReducers as ɵngrx_modules_store_store_x, _provideForRootGuard as ɵngrx_modules_store_store_y, createActiveRuntimeChecks as ɵngrx_modules_store_store_z };
 //# sourceMappingURL=store.js.map

@@ -1,1 +1,1 @@
-234ce84 fix(data): EntityDataModuleWithoutEffect ModuleWithProviders (#2366)
+4cae255 feat(store): add strictActionWithinNgZone runtime check (#2364)

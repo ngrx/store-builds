@@ -1,5 +1,5 @@
 /**
- * @license NgRx 9.0.0-beta.0+7.sha-234ce84
+ * @license NgRx 9.0.0-beta.0+8.sha-4cae255
  * (c) 2015-2018 Brandon Roberts, Mike Ryan, Rob Wormald, Victor Savkin
  * License: MIT
  */
@@ -7,7 +7,7 @@
     typeof exports === 'object' && typeof module !== 'undefined' ? factory(exports, require('tslib'), require('@angular/core'), require('rxjs'), require('rxjs/operators')) :
     typeof define === 'function' && define.amd ? define('@ngrx/store', ['exports', 'tslib', '@angular/core', 'rxjs', 'rxjs/operators'], factory) :
     (global = global || self, factory((global.ngrx = global.ngrx || {}, global.ngrx.store = {}), global.tslib, global.ng.core, global.rxjs, global.rxjs.operators));
-}(this, (function (exports, tslib, core, rxjs, operators) { 'use strict';
+}(this, (function (exports, tslib, ngCore, rxjs, operators) { 'use strict';
 
     /**
      * @description
@@ -139,53 +139,53 @@
             _super.prototype.complete.call(this);
         };
         ActionsSubject = tslib.__decorate([
-            core.Injectable(),
+            ngCore.Injectable(),
             tslib.__metadata("design:paramtypes", [])
         ], ActionsSubject);
         return ActionsSubject;
     }(rxjs.BehaviorSubject));
     var ACTIONS_SUBJECT_PROVIDERS = [ActionsSubject];
 
-    var _ROOT_STORE_GUARD = new core.InjectionToken('@ngrx/store Internal Root Guard');
-    var _INITIAL_STATE = new core.InjectionToken('@ngrx/store Internal Initial State');
-    var INITIAL_STATE = new core.InjectionToken('@ngrx/store Initial State');
-    var REDUCER_FACTORY = new core.InjectionToken('@ngrx/store Reducer Factory');
-    var _REDUCER_FACTORY = new core.InjectionToken('@ngrx/store Internal Reducer Factory Provider');
-    var INITIAL_REDUCERS = new core.InjectionToken('@ngrx/store Initial Reducers');
-    var _INITIAL_REDUCERS = new core.InjectionToken('@ngrx/store Internal Initial Reducers');
-    var STORE_FEATURES = new core.InjectionToken('@ngrx/store Store Features');
-    var _STORE_REDUCERS = new core.InjectionToken('@ngrx/store Internal Store Reducers');
-    var _FEATURE_REDUCERS = new core.InjectionToken('@ngrx/store Internal Feature Reducers');
-    var _FEATURE_CONFIGS = new core.InjectionToken('@ngrx/store Internal Feature Configs');
-    var _STORE_FEATURES = new core.InjectionToken('@ngrx/store Internal Store Features');
-    var _FEATURE_REDUCERS_TOKEN = new core.InjectionToken('@ngrx/store Internal Feature Reducers Token');
-    var FEATURE_REDUCERS = new core.InjectionToken('@ngrx/store Feature Reducers');
+    var _ROOT_STORE_GUARD = new ngCore.InjectionToken('@ngrx/store Internal Root Guard');
+    var _INITIAL_STATE = new ngCore.InjectionToken('@ngrx/store Internal Initial State');
+    var INITIAL_STATE = new ngCore.InjectionToken('@ngrx/store Initial State');
+    var REDUCER_FACTORY = new ngCore.InjectionToken('@ngrx/store Reducer Factory');
+    var _REDUCER_FACTORY = new ngCore.InjectionToken('@ngrx/store Internal Reducer Factory Provider');
+    var INITIAL_REDUCERS = new ngCore.InjectionToken('@ngrx/store Initial Reducers');
+    var _INITIAL_REDUCERS = new ngCore.InjectionToken('@ngrx/store Internal Initial Reducers');
+    var STORE_FEATURES = new ngCore.InjectionToken('@ngrx/store Store Features');
+    var _STORE_REDUCERS = new ngCore.InjectionToken('@ngrx/store Internal Store Reducers');
+    var _FEATURE_REDUCERS = new ngCore.InjectionToken('@ngrx/store Internal Feature Reducers');
+    var _FEATURE_CONFIGS = new ngCore.InjectionToken('@ngrx/store Internal Feature Configs');
+    var _STORE_FEATURES = new ngCore.InjectionToken('@ngrx/store Internal Store Features');
+    var _FEATURE_REDUCERS_TOKEN = new ngCore.InjectionToken('@ngrx/store Internal Feature Reducers Token');
+    var FEATURE_REDUCERS = new ngCore.InjectionToken('@ngrx/store Feature Reducers');
     /**
      * User-defined meta reducers from StoreModule.forRoot()
      */
-    var USER_PROVIDED_META_REDUCERS = new core.InjectionToken('@ngrx/store User Provided Meta Reducers');
+    var USER_PROVIDED_META_REDUCERS = new ngCore.InjectionToken('@ngrx/store User Provided Meta Reducers');
     /**
      * Meta reducers defined either internally by @ngrx/store or by library authors
      */
-    var META_REDUCERS = new core.InjectionToken('@ngrx/store Meta Reducers');
+    var META_REDUCERS = new ngCore.InjectionToken('@ngrx/store Meta Reducers');
     /**
      * Concats the user provided meta reducers and the meta reducers provided on the multi
      * injection token
      */
-    var _RESOLVED_META_REDUCERS = new core.InjectionToken('@ngrx/store Internal Resolved Meta Reducers');
+    var _RESOLVED_META_REDUCERS = new ngCore.InjectionToken('@ngrx/store Internal Resolved Meta Reducers');
     /**
      * Runtime checks defined by the user via an InjectionToken
      * Defaults to `_USER_RUNTIME_CHECKS`
      */
-    var USER_RUNTIME_CHECKS = new core.InjectionToken('@ngrx/store User Runtime Checks Config');
+    var USER_RUNTIME_CHECKS = new ngCore.InjectionToken('@ngrx/store User Runtime Checks Config');
     /**
      * Runtime checks defined by the user via forRoot()
      */
-    var _USER_RUNTIME_CHECKS = new core.InjectionToken('@ngrx/store Internal User Runtime Checks Config');
+    var _USER_RUNTIME_CHECKS = new ngCore.InjectionToken('@ngrx/store Internal User Runtime Checks Config');
     /**
      * Runtime checks currently in use
      */
-    var _ACTIVE_RUNTIME_CHECKS = new core.InjectionToken('@ngrx/store Internal Runtime Checks');
+    var _ACTIVE_RUNTIME_CHECKS = new ngCore.InjectionToken('@ngrx/store Internal Runtime Checks');
 
     function combineReducers(reducers, initialState) {
         if (initialState === void 0) { initialState = {}; }
@@ -335,10 +335,10 @@
             this.complete();
         };
         ReducerManager = tslib.__decorate([
-            core.Injectable(),
-            tslib.__param(1, core.Inject(INITIAL_STATE)),
-            tslib.__param(2, core.Inject(INITIAL_REDUCERS)),
-            tslib.__param(3, core.Inject(REDUCER_FACTORY)),
+            ngCore.Injectable(),
+            tslib.__param(1, ngCore.Inject(INITIAL_STATE)),
+            tslib.__param(2, ngCore.Inject(INITIAL_REDUCERS)),
+            tslib.__param(3, ngCore.Inject(REDUCER_FACTORY)),
             tslib.__metadata("design:paramtypes", [ReducerManagerDispatcher, Object, Object, Function])
         ], ReducerManager);
         return ReducerManager;
@@ -358,7 +358,7 @@
             this.complete();
         };
         ScannedActionsSubject = tslib.__decorate([
-            core.Injectable()
+            ngCore.Injectable()
         ], ScannedActionsSubject);
         return ScannedActionsSubject;
     }(rxjs.Subject));
@@ -394,8 +394,8 @@
         };
         State.INIT = INIT;
         State = tslib.__decorate([
-            core.Injectable(),
-            tslib.__param(3, core.Inject(INITIAL_STATE)),
+            ngCore.Injectable(),
+            tslib.__param(3, ngCore.Inject(INITIAL_STATE)),
             tslib.__metadata("design:paramtypes", [ActionsSubject,
                 ReducerObservable,
                 ScannedActionsSubject, Object])
@@ -456,7 +456,7 @@
         };
         var Store_1;
         Store = Store_1 = tslib.__decorate([
-            core.Injectable(),
+            ngCore.Injectable(),
             tslib.__metadata("design:paramtypes", [StateObservable,
                 ActionsSubject,
                 ReducerManager])
@@ -608,7 +608,7 @@
     function createFeatureSelector(featureName) {
         return createSelector(function (state) {
             var featureState = state[featureName];
-            if (core.isDevMode() && !(featureName in state)) {
+            if (ngCore.isDevMode() && !(featureName in state)) {
                 console.warn("@ngrx/store: The feature name \"" + featureName + "\" does " +
                     'not exist in the state, therefore createFeatureSelector ' +
                     'cannot access it.  Be sure it is imported in a loaded module ' +
@@ -621,6 +621,7 @@
         }, function (featureState) { return featureState; });
     }
 
+    var RUNTIME_CHECK_URL = 'https://ngrx.io/guide/store/configuration/runtime-checks';
     function isUndefined(target) {
         return target === undefined;
     }
@@ -735,21 +736,31 @@
             return;
         }
         var unserializablePath = unserializable.path.join('.');
-        var error = new Error("Detected unserializable " + context + " at \"" + unserializablePath + "\"");
+        var error = new Error("Detected unserializable " + context + " at \"" + unserializablePath + "\". " + RUNTIME_CHECK_URL + "#strict" + context + "serializability");
         error.value = unserializable.value;
         error.unserializablePath = unserializablePath;
         throw error;
     }
 
+    function inNgZoneAssertMetaReducer(reducer, checks) {
+        return function (state, action) {
+            if (checks.action(action) && !ngCore.NgZone.isInAngularZone()) {
+                throw new Error("Action '" + action.type + "' running outside NgZone. " + RUNTIME_CHECK_URL + "#strictactionwithinngzone");
+            }
+            return reducer(state, action);
+        };
+    }
+
     function createActiveRuntimeChecks(runtimeChecks) {
-        if (core.isDevMode()) {
-            return tslib.__assign({ strictStateSerializability: false, strictActionSerializability: false, strictStateImmutability: true, strictActionImmutability: true }, runtimeChecks);
+        if (ngCore.isDevMode()) {
+            return tslib.__assign({ strictStateSerializability: false, strictActionSerializability: false, strictStateImmutability: true, strictActionImmutability: true, strictActionWithinNgZone: false }, runtimeChecks);
         }
         return {
             strictStateSerializability: false,
             strictActionSerializability: false,
             strictStateImmutability: false,
             strictActionImmutability: false,
+            strictActionWithinNgZone: false,
         };
     }
     function createSerializationCheckMetaReducer(_a) {
@@ -781,6 +792,18 @@
     function ignoreNgrxAction(action) {
         return action.type.startsWith('@ngrx');
     }
+    function createInNgZoneCheckMetaReducer(_a) {
+        var strictActionWithinNgZone = _a.strictActionWithinNgZone;
+        return function (reducer) {
+            return strictActionWithinNgZone
+                ? inNgZoneAssertMetaReducer(reducer, {
+                    action: function (action) {
+                        return strictActionWithinNgZone && !ignoreNgrxAction(action);
+                    },
+                })
+                : reducer;
+        };
+    }
     function provideRuntimeChecks(runtimeChecks) {
         return [
             {
@@ -809,6 +832,12 @@
                 deps: [_ACTIVE_RUNTIME_CHECKS],
                 useFactory: createSerializationCheckMetaReducer,
             },
+            {
+                provide: META_REDUCERS,
+                multi: true,
+                deps: [_ACTIVE_RUNTIME_CHECKS],
+                useFactory: createInNgZoneCheckMetaReducer,
+            },
         ];
     }
     function _runtimeChecksFactory(runtimeChecks) {
@@ -819,9 +848,9 @@
         function StoreRootModule(actions$, reducer$, scannedActions$, store, guard) {
         }
         StoreRootModule = tslib.__decorate([
-            core.NgModule({}),
-            tslib.__param(4, core.Optional()),
-            tslib.__param(4, core.Inject(_ROOT_STORE_GUARD)),
+            ngCore.NgModule({}),
+            tslib.__param(4, ngCore.Optional()),
+            tslib.__param(4, ngCore.Inject(_ROOT_STORE_GUARD)),
             tslib.__metadata("design:paramtypes", [ActionsSubject,
                 ReducerObservable,
                 ScannedActionsSubject,
@@ -845,9 +874,9 @@
             this.reducerManager.removeFeatures(this.features);
         };
         StoreFeatureModule = tslib.__decorate([
-            core.NgModule({}),
-            tslib.__param(0, core.Inject(_STORE_FEATURES)),
-            tslib.__param(1, core.Inject(FEATURE_REDUCERS)),
+            ngCore.NgModule({}),
+            tslib.__param(0, ngCore.Inject(_STORE_FEATURES)),
+            tslib.__param(1, ngCore.Inject(FEATURE_REDUCERS)),
             tslib.__metadata("design:paramtypes", [Array, Array, ReducerManager,
                 StoreRootModule])
         ], StoreFeatureModule);
@@ -864,7 +893,7 @@
                     {
                         provide: _ROOT_STORE_GUARD,
                         useFactory: _provideForRootGuard,
-                        deps: [[Store, new core.Optional(), new core.SkipSelf()]],
+                        deps: [[Store, new ngCore.Optional(), new ngCore.SkipSelf()]],
                     },
                     { provide: _INITIAL_STATE, useValue: config.initialState },
                     {
@@ -875,11 +904,11 @@
                     { provide: _INITIAL_REDUCERS, useValue: reducers },
                     {
                         provide: _STORE_REDUCERS,
-                        useExisting: reducers instanceof core.InjectionToken ? reducers : _INITIAL_REDUCERS,
+                        useExisting: reducers instanceof ngCore.InjectionToken ? reducers : _INITIAL_REDUCERS,
                     },
                     {
                         provide: INITIAL_REDUCERS,
-                        deps: [core.Injector, _INITIAL_REDUCERS, [new core.Inject(_STORE_REDUCERS)]],
+                        deps: [ngCore.Injector, _INITIAL_REDUCERS, [new ngCore.Inject(_STORE_REDUCERS)]],
                         useFactory: _createStoreReducers,
                     },
                     {
@@ -926,35 +955,35 @@
                         multi: true,
                         useValue: {
                             key: featureName,
-                            reducerFactory: !(config instanceof core.InjectionToken) && config.reducerFactory
+                            reducerFactory: !(config instanceof ngCore.InjectionToken) && config.reducerFactory
                                 ? config.reducerFactory
                                 : combineReducers,
-                            metaReducers: !(config instanceof core.InjectionToken) && config.metaReducers
+                            metaReducers: !(config instanceof ngCore.InjectionToken) && config.metaReducers
                                 ? config.metaReducers
                                 : [],
-                            initialState: !(config instanceof core.InjectionToken) && config.initialState
+                            initialState: !(config instanceof ngCore.InjectionToken) && config.initialState
                                 ? config.initialState
                                 : undefined,
                         },
                     },
                     {
                         provide: _STORE_FEATURES,
-                        deps: [core.Injector, _FEATURE_CONFIGS, STORE_FEATURES],
+                        deps: [ngCore.Injector, _FEATURE_CONFIGS, STORE_FEATURES],
                         useFactory: _createFeatureStore,
                     },
                     { provide: _FEATURE_REDUCERS, multi: true, useValue: reducers },
                     {
                         provide: _FEATURE_REDUCERS_TOKEN,
                         multi: true,
-                        useExisting: reducers instanceof core.InjectionToken ? reducers : _FEATURE_REDUCERS,
+                        useExisting: reducers instanceof ngCore.InjectionToken ? reducers : _FEATURE_REDUCERS,
                     },
                     {
                         provide: FEATURE_REDUCERS,
                         multi: true,
                         deps: [
-                            core.Injector,
+                            ngCore.Injector,
                             _FEATURE_REDUCERS,
-                            [new core.Inject(_FEATURE_REDUCERS_TOKEN)],
+                            [new ngCore.Inject(_FEATURE_REDUCERS_TOKEN)],
                         ],
                         useFactory: _createFeatureReducers,
                     },
@@ -962,16 +991,16 @@
             };
         };
         StoreModule = tslib.__decorate([
-            core.NgModule({})
+            ngCore.NgModule({})
         ], StoreModule);
         return StoreModule;
     }());
     function _createStoreReducers(injector, reducers) {
-        return reducers instanceof core.InjectionToken ? injector.get(reducers) : reducers;
+        return reducers instanceof ngCore.InjectionToken ? injector.get(reducers) : reducers;
     }
     function _createFeatureStore(injector, configs, featureStores) {
         return featureStores.map(function (feat, index) {
-            if (configs[index] instanceof core.InjectionToken) {
+            if (configs[index] instanceof ngCore.InjectionToken) {
                 var conf = injector.get(configs[index]);
                 return {
                     key: feat.key,
@@ -987,7 +1016,7 @@
     }
     function _createFeatureReducers(injector, reducerCollection) {
         var reducers = reducerCollection.map(function (reducer) {
-            return reducer instanceof core.InjectionToken ? injector.get(reducer) : reducer;
+            return reducer instanceof ngCore.InjectionToken ? injector.get(reducer) : reducer;
         });
         return reducers;
     }
@@ -1166,8 +1195,9 @@
     exports.ɵngrx_modules_store_store_b = STORE_PROVIDERS;
     exports.ɵngrx_modules_store_store_ba = createSerializationCheckMetaReducer;
     exports.ɵngrx_modules_store_store_bb = createImmutabilityCheckMetaReducer;
-    exports.ɵngrx_modules_store_store_bc = provideRuntimeChecks;
-    exports.ɵngrx_modules_store_store_bd = _runtimeChecksFactory;
+    exports.ɵngrx_modules_store_store_bc = createInNgZoneCheckMetaReducer;
+    exports.ɵngrx_modules_store_store_bd = provideRuntimeChecks;
+    exports.ɵngrx_modules_store_store_be = _runtimeChecksFactory;
     exports.ɵngrx_modules_store_store_c = ACTIONS_SUBJECT_PROVIDERS;
     exports.ɵngrx_modules_store_store_d = REDUCER_MANAGER_PROVIDERS;
     exports.ɵngrx_modules_store_store_e = SCANNED_ACTIONS_SUBJECT_PROVIDERS;
