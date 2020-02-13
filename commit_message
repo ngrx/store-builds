@@ -1,1 +1,1 @@
-c305086 docs: update AngularInDepth NgRx resource link (#2378)
+88124a7 feat(effects): limit retries to 10 by default (#2376)
