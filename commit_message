@@ -1,1 +1,1 @@
-b42f7da docs: update entry for ngrx-ducks (#2379)
+827f336 fix(store): provide the same instance of MockStore (#2381)
