@@ -1,1 +1,1 @@
-1c7872c refactor(data): explicity export symbols from public API
+bd86a99 refactor(example): replace TestBed.get with TestBed.inject (#2388)
