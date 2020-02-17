@@ -1,1 +1,1 @@
-bd86a99 refactor(example): replace TestBed.get with TestBed.inject (#2388)
+5e84b37 refactor(example): use barrel import for GoogleBooksService (#2375)
