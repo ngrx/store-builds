@@ -1,1 +1,1 @@
-5e84b37 refactor(example): use barrel import for GoogleBooksService (#2375)
+ee2c114 feat(store): testing - clean up mock store and remove static property (#2361)

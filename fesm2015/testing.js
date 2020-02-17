@@ -1,5 +1,5 @@
 /**
- * @license NgRx 9.0.0-beta.0+17.sha-5e84b37
+ * @license NgRx 9.0.0-beta.0+18.sha-ee2c114
  * (c) 2015-2018 Brandon Roberts, Mike Ryan, Rob Wormald, Victor Savkin
  * License: MIT
  */
@@ -47,9 +47,9 @@ if (typeof afterEach === 'function') {
     () => {
         try {
             /** @type {?} */
-            const store = (/** @type {?} */ (TestBed.get(Store)));
-            if (store && 'resetSelectors' in store) {
-                store.resetSelectors();
+            const mockStore = TestBed.inject(MockStore);
+            if (mockStore) {
+                mockStore.resetSelectors();
             }
         }
         catch (_a) { }
@@ -66,28 +66,16 @@ class MockStore extends Store {
      * @param {?} initialState
      * @param {?=} mockSelectors
      */
-    constructor(state$, actionsObserver, reducerManager, initialState, mockSelectors) {
+    constructor(state$, actionsObserver, reducerManager, initialState, mockSelectors = []) {
         super(state$, actionsObserver, reducerManager);
         this.state$ = state$;
         this.initialState = initialState;
+        this.selectors = new Map();
         this.resetSelectors();
         this.setState(this.initialState);
         this.scannedActions$ = actionsObserver.asObservable();
-        if (mockSelectors) {
-            mockSelectors.forEach((/**
-             * @param {?} mockSelector
-             * @return {?}
-             */
-            mockSelector => {
-                /** @type {?} */
-                const selector = mockSelector.selector;
-                if (typeof selector === 'string') {
-                    this.overrideSelector(selector, mockSelector.value);
-                }
-                else {
-                    this.overrideSelector(selector, mockSelector.value);
-                }
-            }));
+        for (const mockSelector of mockSelectors) {
+            this.overrideSelector(mockSelector.selector, mockSelector.value);
         }
     }
     /**
@@ -99,43 +87,37 @@ class MockStore extends Store {
         this.lastState = nextState;
     }
     /**
-     * @template T, Result
+     * @template Selector, Value, Result
      * @param {?} selector
      * @param {?} value
      * @return {?}
      */
     overrideSelector(selector, value) {
-        MockStore.selectors.set(selector, value);
-        if (typeof selector === 'string') {
-            /** @type {?} */
-            const stringSelector = createSelector((/**
+        this.selectors.set(selector, value);
+        /** @type {?} */
+        const resultSelector = typeof selector === 'string'
+            ? createSelector((/**
              * @return {?}
              */
             () => { }), (/**
              * @return {?}
              */
-            () => value));
-            return stringSelector;
-        }
-        selector.setResult(value);
-        return selector;
+            () => value))
+            : selector;
+        resultSelector.setResult(value);
+        return (/** @type {?} */ (resultSelector));
     }
     /**
      * @return {?}
      */
     resetSelectors() {
-        MockStore.selectors.forEach((/**
-         * @param {?} _
-         * @param {?} selector
-         * @return {?}
-         */
-        (_, selector) => {
+        for (const selector of this.selectors.keys()) {
             if (typeof selector !== 'string') {
                 selector.release();
                 selector.clearResult();
             }
-        }));
-        MockStore.selectors.clear();
+        }
+        this.selectors.clear();
     }
     /**
      * @param {?} selector
@@ -143,8 +125,8 @@ class MockStore extends Store {
      * @return {?}
      */
     select(selector, prop) {
-        if (typeof selector === 'string' && MockStore.selectors.has(selector)) {
-            return new BehaviorSubject(MockStore.selectors.get(selector)).asObservable();
+        if (typeof selector === 'string' && this.selectors.has(selector)) {
+            return new BehaviorSubject(this.selectors.get(selector)).asObservable();
         }
         return super.select(selector, prop);
     }
@@ -169,7 +151,6 @@ class MockStore extends Store {
             this.setState(Object.assign({}, this.lastState));
     }
 }
-MockStore.selectors = new Map();
 MockStore.decorators = [
     { type: Injectable }
 ];
@@ -182,8 +163,11 @@ MockStore.ctorParameters = () => [
     { type: Array, decorators: [{ type: Inject, args: [MOCK_SELECTORS,] }] }
 ];
 if (false) {
-    /** @type {?} */
-    MockStore.selectors;
+    /**
+     * @type {?}
+     * @private
+     */
+    MockStore.prototype.selectors;
     /** @type {?} */
     MockStore.prototype.scannedActions$;
     /**

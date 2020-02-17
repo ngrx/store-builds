@@ -1,12 +1,12 @@
 /**
- * @license NgRx 9.0.0-beta.0+17.sha-5e84b37
+ * @license NgRx 9.0.0-beta.0+18.sha-ee2c114
  * (c) 2015-2018 Brandon Roberts, Mike Ryan, Rob Wormald, Victor Savkin
  * License: MIT
  */
-import { __extends, __decorate, __metadata, __assign, __param } from 'tslib';
+import { __extends, __decorate, __metadata, __values, __assign, __param } from 'tslib';
 import { Injectable, InjectionToken, Inject } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
-import { Store, createSelector, INITIAL_STATE, ActionsSubject, ReducerManager, StateObservable } from '@ngrx/store';
+import { createSelector, INITIAL_STATE, ActionsSubject, ReducerManager, Store, StateObservable } from '@ngrx/store';
 import { TestBed } from '@angular/core/testing';
 
 var MockState = /** @class */ (function (_super) {
@@ -26,9 +26,9 @@ var MOCK_SELECTORS = new InjectionToken('@ngrx/store Mock Selectors');
 if (typeof afterEach === 'function') {
     afterEach(function () {
         try {
-            var store = TestBed.get(Store);
-            if (store && 'resetSelectors' in store) {
-                store.resetSelectors();
+            var mockStore = TestBed.inject(MockStore);
+            if (mockStore) {
+                mockStore.resetSelectors();
             }
         }
         catch (_a) { }
@@ -37,51 +37,65 @@ if (typeof afterEach === 'function') {
 var MockStore = /** @class */ (function (_super) {
     __extends(MockStore, _super);
     function MockStore(state$, actionsObserver, reducerManager, initialState, mockSelectors) {
+        var e_1, _a;
+        if (mockSelectors === void 0) { mockSelectors = []; }
         var _this = _super.call(this, state$, actionsObserver, reducerManager) || this;
         _this.state$ = state$;
         _this.initialState = initialState;
+        _this.selectors = new Map();
         _this.resetSelectors();
         _this.setState(_this.initialState);
         _this.scannedActions$ = actionsObserver.asObservable();
-        if (mockSelectors) {
-            mockSelectors.forEach(function (mockSelector) {
-                var selector = mockSelector.selector;
-                if (typeof selector === 'string') {
-                    _this.overrideSelector(selector, mockSelector.value);
-                }
-                else {
-                    _this.overrideSelector(selector, mockSelector.value);
-                }
-            });
+        try {
+            for (var mockSelectors_1 = __values(mockSelectors), mockSelectors_1_1 = mockSelectors_1.next(); !mockSelectors_1_1.done; mockSelectors_1_1 = mockSelectors_1.next()) {
+                var mockSelector = mockSelectors_1_1.value;
+                _this.overrideSelector(mockSelector.selector, mockSelector.value);
+            }
+        }
+        catch (e_1_1) { e_1 = { error: e_1_1 }; }
+        finally {
+            try {
+                if (mockSelectors_1_1 && !mockSelectors_1_1.done && (_a = mockSelectors_1.return)) _a.call(mockSelectors_1);
+            }
+            finally { if (e_1) throw e_1.error; }
         }
         return _this;
     }
-    MockStore_1 = MockStore;
     MockStore.prototype.setState = function (nextState) {
         this.state$.next(nextState);
         this.lastState = nextState;
     };
     MockStore.prototype.overrideSelector = function (selector, value) {
-        MockStore_1.selectors.set(selector, value);
-        if (typeof selector === 'string') {
-            var stringSelector = createSelector(function () { }, function () { return value; });
-            return stringSelector;
-        }
-        selector.setResult(value);
-        return selector;
+        this.selectors.set(selector, value);
+        var resultSelector = typeof selector === 'string'
+            ? createSelector(function () { }, function () { return value; })
+            : selector;
+        resultSelector.setResult(value);
+        return resultSelector;
     };
     MockStore.prototype.resetSelectors = function () {
-        MockStore_1.selectors.forEach(function (_, selector) {
-            if (typeof selector !== 'string') {
-                selector.release();
-                selector.clearResult();
+        var e_2, _a;
+        try {
+            for (var _b = __values(this.selectors.keys()), _c = _b.next(); !_c.done; _c = _b.next()) {
+                var selector = _c.value;
+                if (typeof selector !== 'string') {
+                    selector.release();
+                    selector.clearResult();
+                }
             }
-        });
-        MockStore_1.selectors.clear();
+        }
+        catch (e_2_1) { e_2 = { error: e_2_1 }; }
+        finally {
+            try {
+                if (_c && !_c.done && (_a = _b.return)) _a.call(_b);
+            }
+            finally { if (e_2) throw e_2.error; }
+        }
+        this.selectors.clear();
     };
     MockStore.prototype.select = function (selector, prop) {
-        if (typeof selector === 'string' && MockStore_1.selectors.has(selector)) {
-            return new BehaviorSubject(MockStore_1.selectors.get(selector)).asObservable();
+        if (typeof selector === 'string' && this.selectors.has(selector)) {
+            return new BehaviorSubject(this.selectors.get(selector)).asObservable();
         }
         return _super.prototype.select.call(this, selector, prop);
     };
@@ -98,9 +112,7 @@ var MockStore = /** @class */ (function (_super) {
         if (this.lastState)
             this.setState(__assign({}, this.lastState));
     };
-    var MockStore_1;
-    MockStore.selectors = new Map();
-    MockStore = MockStore_1 = __decorate([
+    MockStore = __decorate([
         Injectable(),
         __param(3, Inject(INITIAL_STATE)),
         __param(4, Inject(MOCK_SELECTORS)),
