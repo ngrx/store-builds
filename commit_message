@@ -1,1 +1,1 @@
-188a765 docs: fix typo in NgRx Data FAQs (#2393)
+daf1e64 fix(effects): dispatch OnInitEffects action after registration (#2386)
