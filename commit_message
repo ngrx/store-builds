@@ -1,1 +1,1 @@
-daf1e64 fix(effects): dispatch OnInitEffects action after registration (#2386)
+b3a49c1 fix(data): make mergeServerUpserts change state immutably (#2374) (#2389)
