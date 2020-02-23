@@ -1,1 +1,1 @@
-79c830c fix(effects): use source instance for ngrxOnRunEffects to retain context (#2401)
+d7ab532 docs(data): pluralizzer spelled wrong (#2407)
