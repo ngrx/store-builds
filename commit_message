@@ -1,1 +1,1 @@
-4dcba7d docs(data): clarify "entity" concept. (#2416)
+4b4bb85 feat(entity): add 'setOne' method to entity adapter (#2410)
