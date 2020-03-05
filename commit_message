@@ -1,1 +1,1 @@
-f532826 refactor(entity): fix a 'setOne' test case (#2421)
+0d6b6af docs(router-store): add missing selectCurrentRoute selector (#2425)
