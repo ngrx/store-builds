@@ -1,1 +1,1 @@
-b0aacf7 fix(example): optimistically add/remove book from collection (#2429)
+5c7eb7d ci: use disk cache for Bazel build (#2433)
