@@ -1,1 +1,1 @@
-fdee3d8 docs(data): clarify step one and keep same class name in entity metadata guide (#2428)
+b68fa67 feat(schematics): export reducer directly when Ivy is enabled (#2440)
