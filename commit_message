@@ -1,1 +1,1 @@
-5b2f2d4 ci: use bazel cache key first (#2481)
+388017c ci: don't use cache for deployment (#2482)
