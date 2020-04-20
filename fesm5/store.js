@@ -1,5 +1,5 @@
 /**
- * @license NgRx 9.1.0+6.sha-79ec1b4
+ * @license NgRx 9.1.0+11.sha-1f181e3
  * (c) 2015-2018 Brandon Roberts, Mike Ryan, Rob Wormald, Victor Savkin
  * License: MIT
  */
@@ -655,6 +655,9 @@ function isPlainObject(target) {
 function isFunction(target) {
     return typeof target === 'function';
 }
+function isComponent(target) {
+    return isFunction(target) && target.hasOwnProperty('ɵcmp');
+}
 function hasOwnProperty(target, propertyName) {
     return Object.prototype.hasOwnProperty.call(target, propertyName);
 }
@@ -670,6 +673,10 @@ function freeze(target) {
     Object.freeze(target);
     var targetIsFunction = isFunction(target);
     Object.getOwnPropertyNames(target).forEach(function (prop) {
+        // Ignore Ivy properties, ref: https://github.com/ngrx/platform/issues/2109#issuecomment-582689060
+        if (prop.startsWith('ɵ')) {
+            return;
+        }
         if (hasOwnProperty(target, prop) &&
             (targetIsFunction
                 ? prop !== 'caller' && prop !== 'callee' && prop !== 'arguments'
@@ -713,6 +720,10 @@ function getUnserializable(target, path) {
             return result;
         }
         var value = target[key];
+        // Ignore Ivy components
+        if (isComponent(value)) {
+            return result;
+        }
         if (isUndefined(value) ||
             isNull(value) ||
             isNumber(value) ||

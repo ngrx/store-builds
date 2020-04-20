@@ -1,5 +1,5 @@
 /**
- * @license NgRx 9.1.0+6.sha-79ec1b4
+ * @license NgRx 9.1.0+11.sha-1f181e3
  * (c) 2015-2018 Brandon Roberts, Mike Ryan, Rob Wormald, Victor Savkin
  * License: MIT
  */
@@ -1183,6 +1183,13 @@ function isFunction(target) {
 }
 /**
  * @param {?} target
+ * @return {?}
+ */
+function isComponent(target) {
+    return isFunction(target) && target.hasOwnProperty('ɵcmp');
+}
+/**
+ * @param {?} target
  * @param {?} propertyName
  * @return {?}
  */
@@ -1227,6 +1234,10 @@ function freeze(target) {
      * @return {?}
      */
     prop => {
+        // Ignore Ivy properties, ref: https://github.com/ngrx/platform/issues/2109#issuecomment-582689060
+        if (prop.startsWith('ɵ')) {
+            return;
+        }
         if (hasOwnProperty(target, prop) &&
             (targetIsFunction
                 ? prop !== 'caller' && prop !== 'callee' && prop !== 'arguments'
@@ -1300,6 +1311,10 @@ function getUnserializable(target, path = []) {
         }
         /** @type {?} */
         const value = ((/** @type {?} */ (target)))[key];
+        // Ignore Ivy components
+        if (isComponent(value)) {
+            return result;
+        }
         if (isUndefined(value) ||
             isNull(value) ||
             isNumber(value) ||
