@@ -1,1 +1,1 @@
-81efd42 docs(entity): use setAll instead of addAll in adapter collection methods section (#2508)
+7cd0624 fix(schematics): use Angular default properties when not defined (#2507)
