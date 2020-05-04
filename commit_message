@@ -1,1 +1,1 @@
-470b788 refactor: replace deprecated `TestBed.get` (#2504)
+81efd42 docs(entity): use setAll instead of addAll in adapter collection methods section (#2508)
