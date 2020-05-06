@@ -1,1 +1,1 @@
-3444baf chore: release 9.1.1
+5255fd1 Revert "fix(router-store): selectors should return MemoizedSelector (#2492)" (#2515)
