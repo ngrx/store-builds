@@ -1,1 +1,1 @@
-4f7dcdc fix(schematics): components should inject the store without generic (#2512)
+a2657ac feat(component-store): add initial setup (#2519)
