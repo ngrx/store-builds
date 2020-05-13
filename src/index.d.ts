@@ -3,6 +3,7 @@ export { createAction, props, union } from './action_creator';
 export { Store, select } from './store';
 export { combineReducers, compose, createReducerFactory } from './utils';
 export { ActionsSubject, INIT } from './actions_subject';
+export { setNgrxMockEnvironment, isNgrxMockEnvironment } from './flags';
 export { ReducerManager, ReducerObservable, ReducerManagerDispatcher, UPDATE, } from './reducer_manager';
 export { ScannedActionsSubject } from './scanned_actions_subject';
 export { createSelector, createSelectorFactory, createFeatureSelector, defaultMemoize, defaultStateFn, MemoizeFn, MemoizedProjection, MemoizedSelector, MemoizedSelectorWithProps, resultMemoize, DefaultProjectorFn, } from './selector';

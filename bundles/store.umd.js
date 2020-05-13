@@ -1,5 +1,5 @@
 /**
- * @license NgRx 9.1.2+4.sha-534aa09
+ * @license NgRx 9.1.2+5.sha-da1a0c0
  * (c) 2015-2018 Brandon Roberts, Mike Ryan, Rob Wormald, Victor Savkin
  * License: MIT
  */
@@ -486,6 +486,14 @@
         };
     }
 
+    var _ngrxMockEnvironment = false;
+    function setNgrxMockEnvironment(value) {
+        _ngrxMockEnvironment = value;
+    }
+    function isNgrxMockEnvironment() {
+        return _ngrxMockEnvironment;
+    }
+
     function isEqualCheck(a, b) {
         return a === b;
     }
@@ -608,7 +616,7 @@
     function createFeatureSelector(featureName) {
         return createSelector(function (state) {
             var featureState = state[featureName];
-            if (ngCore.isDevMode() && !(featureName in state)) {
+            if (!isNgrxMockEnvironment() && ngCore.isDevMode() && !(featureName in state)) {
                 console.warn("@ngrx/store: The feature name \"" + featureName + "\" does " +
                     'not exist in the state, therefore createFeatureSelector ' +
                     'cannot access it.  Be sure it is imported in a loaded module ' +
@@ -1197,11 +1205,13 @@
     exports.createSelectorFactory = createSelectorFactory;
     exports.defaultMemoize = defaultMemoize;
     exports.defaultStateFn = defaultStateFn;
+    exports.isNgrxMockEnvironment = isNgrxMockEnvironment;
     exports.on = on;
     exports.props = props;
     exports.reduceState = reduceState;
     exports.resultMemoize = resultMemoize;
     exports.select = select;
+    exports.setNgrxMockEnvironment = setNgrxMockEnvironment;
     exports.union = union;
     exports.ɵngrx_modules_store_store_b = STORE_PROVIDERS;
     exports.ɵngrx_modules_store_store_ba = createSerializationCheckMetaReducer;

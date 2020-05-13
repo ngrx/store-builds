@@ -1,11 +1,11 @@
 /**
- * @license NgRx 9.1.2+4.sha-534aa09
+ * @license NgRx 9.1.2+5.sha-da1a0c0
  * (c) 2015-2018 Brandon Roberts, Mike Ryan, Rob Wormald, Victor Savkin
  * License: MIT
  */
 import { Injectable, InjectionToken, Inject } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
-import { Store, createSelector, ActionsSubject, ReducerManager, INITIAL_STATE, StateObservable } from '@ngrx/store';
+import { Store, createSelector, ActionsSubject, ReducerManager, INITIAL_STATE, setNgrxMockEnvironment, StateObservable } from '@ngrx/store';
 import { TestBed } from '@angular/core/testing';
 
 /**
@@ -242,6 +242,7 @@ if (false) {
  * @return {?}
  */
 function provideMockStore(config = {}) {
+    setNgrxMockEnvironment(true);
     return [
         ActionsSubject,
         MockState,

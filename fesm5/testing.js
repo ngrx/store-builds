@@ -1,12 +1,12 @@
 /**
- * @license NgRx 9.1.2+4.sha-534aa09
+ * @license NgRx 9.1.2+5.sha-da1a0c0
  * (c) 2015-2018 Brandon Roberts, Mike Ryan, Rob Wormald, Victor Savkin
  * License: MIT
  */
 import { __extends, __decorate, __metadata, __values, __assign, __param } from 'tslib';
 import { Injectable, InjectionToken, Inject } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
-import { createSelector, INITIAL_STATE, ActionsSubject, ReducerManager, Store, StateObservable } from '@ngrx/store';
+import { createSelector, INITIAL_STATE, ActionsSubject, ReducerManager, Store, setNgrxMockEnvironment, StateObservable } from '@ngrx/store';
 import { TestBed } from '@angular/core/testing';
 
 var MockState = /** @class */ (function (_super) {
@@ -143,6 +143,7 @@ var MockReducerManager = /** @class */ (function (_super) {
 
 function provideMockStore(config) {
     if (config === void 0) { config = {}; }
+    setNgrxMockEnvironment(true);
     return [
         ActionsSubject,
         MockState,
