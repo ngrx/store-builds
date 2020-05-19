@@ -1,1 +1,1 @@
-da1a0c0 feat(store): add ngrxMockEnvironment function to control output during testing (#2513)
+bda97fa docs(data): fix missing word on entity dataservice (#2530)
