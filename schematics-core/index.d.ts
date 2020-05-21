@@ -23,4 +23,4 @@ export { updatePackage } from './utility/update';
 export { parseName } from './utility/parse-name';
 export { addPackageToPackageJson } from './utility/package';
 export { platformVersion } from './utility/libs-version';
-export { visitTSSourceFiles, visitNgModuleImports } from './utility/visitors';
+export { visitTSSourceFiles, visitNgModuleImports, visitNgModuleExports, visitComponents, visitDecorator, visitNgModules, visitTemplates, } from './utility/visitors';
