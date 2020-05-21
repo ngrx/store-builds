@@ -1,1 +1,1 @@
-bda97fa docs(data): fix missing word on entity dataservice (#2530)
+914de92 build: add bazel-jest rule that works with tests that do not require TestBed (#2533)
