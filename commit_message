@@ -1,1 +1,1 @@
-914de92 build: add bazel-jest rule that works with tests that do not require TestBed (#2533)
+3545df2 feat(component-store): initialization + updater/setState (#2528)
