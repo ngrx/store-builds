@@ -18,7 +18,7 @@ export declare class Store<T = object> extends Observable<T> implements Observer
     select<a extends keyof T, b extends keyof T[a], c extends keyof T[a][b], d extends keyof T[a][b][c], e extends keyof T[a][b][c][d], f extends keyof T[a][b][c][d][e]>(key1: a, key2: b, key3: c, key4: d, key5: e, key6: f): Observable<T[a][b][c][d][e][f]>;
     select<a extends keyof T, b extends keyof T[a], c extends keyof T[a][b], d extends keyof T[a][b][c], e extends keyof T[a][b][c][d], f extends keyof T[a][b][c][d][e], K = any>(key1: a, key2: b, key3: c, key4: d, key5: e, key6: f, ...paths: string[]): Observable<K>;
     lift<R>(operator: Operator<T, R>): Store<R>;
-    dispatch<V extends Action = Action>(action: V & FunctionIsNotAllowed<V, 'Functions are not allowed to be dispatched. Did you forget to call action creator function?'>): void;
+    dispatch<V extends Action = Action>(action: V & FunctionIsNotAllowed<V, 'Functions are not allowed to be dispatched. Did you forget to call the action creator function?'>): void;
     next(action: Action): void;
     error(err: any): void;
     complete(): void;

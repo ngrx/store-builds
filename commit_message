@@ -1,1 +1,1 @@
-6caae70 style: run yarn prettier for the entire codebase (#2537)
+100970b feat(effects): catch action creators being returned in effect without being called (#2536)
