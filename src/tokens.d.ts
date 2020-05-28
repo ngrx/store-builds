@@ -40,3 +40,4 @@ export declare const _USER_RUNTIME_CHECKS: InjectionToken<RuntimeChecks>;
  * Runtime checks currently in use
  */
 export declare const _ACTIVE_RUNTIME_CHECKS: InjectionToken<RuntimeChecks>;
+export declare const _ACTION_TYPE_UNIQUENESS_CHECK: InjectionToken<void>;

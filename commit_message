@@ -1,1 +1,1 @@
-100970b feat(effects): catch action creators being returned in effect without being called (#2536)
+2972980 feat(store): add runtime check for action type uniqueness (#2520)

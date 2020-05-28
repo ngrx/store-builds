@@ -75,5 +75,9 @@ export interface RuntimeChecks {
      * Verifies that actions are dispatched within NgZone
      */
     strictActionWithinNgZone: boolean;
+    /**
+     * Verifies that action types are not registered more than once
+     */
+    strictActionTypeUniqueness?: boolean;
 }
 export {};

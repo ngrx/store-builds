@@ -5,4 +5,6 @@ export declare function createSerializationCheckMetaReducer({ strictActionSerial
 export declare function createImmutabilityCheckMetaReducer({ strictActionImmutability, strictStateImmutability, }: RuntimeChecks): MetaReducer;
 export declare function createInNgZoneCheckMetaReducer({ strictActionWithinNgZone, }: RuntimeChecks): MetaReducer;
 export declare function provideRuntimeChecks(runtimeChecks?: Partial<RuntimeChecks>): Provider[];
+export declare function checkForActionTypeUniqueness(): Provider[];
 export declare function _runtimeChecksFactory(runtimeChecks: RuntimeChecks): RuntimeChecks;
+export declare function _actionTypeUniquenessCheck(config: RuntimeChecks): void;

@@ -5,13 +5,13 @@ import { ReducerManager, ReducerObservable } from './reducer_manager';
 import { ScannedActionsSubject } from './scanned_actions_subject';
 import { Store } from './store';
 export declare class StoreRootModule {
-    constructor(actions$: ActionsSubject, reducer$: ReducerObservable, scannedActions$: ScannedActionsSubject, store: Store<any>, guard: any);
+    constructor(actions$: ActionsSubject, reducer$: ReducerObservable, scannedActions$: ScannedActionsSubject, store: Store<any>, guard: any, actionCheck: any);
 }
 export declare class StoreFeatureModule implements OnDestroy {
     private features;
     private featureReducers;
     private reducerManager;
-    constructor(features: StoreFeature<any, any>[], featureReducers: ActionReducerMap<any>[], reducerManager: ReducerManager, root: StoreRootModule);
+    constructor(features: StoreFeature<any, any>[], featureReducers: ActionReducerMap<any>[], reducerManager: ReducerManager, root: StoreRootModule, actionCheck: any);
     ngOnDestroy(): void;
 }
 export interface StoreConfig<T, V extends Action = Action> {

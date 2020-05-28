@@ -1,5 +1,5 @@
 /**
- * @license NgRx 9.1.2+12.sha-100970b
+ * @license NgRx 9.1.2+13.sha-2972980
  * (c) 2015-2018 Brandon Roberts, Mike Ryan, Rob Wormald, Victor Savkin
  * License: MIT
  */
@@ -7,6 +7,11 @@ import { __assign, __spread, __extends, __decorate, __metadata, __param, __read,
 import { Injectable, InjectionToken, Inject, isDevMode, NgZone, NgModule, Optional, SkipSelf, Injector } from '@angular/core';
 import { BehaviorSubject, Observable, Subject, queueScheduler } from 'rxjs';
 import { observeOn, withLatestFrom, scan, pluck, map, distinctUntilChanged } from 'rxjs/operators';
+
+var REGISTERED_ACTION_TYPES = {};
+function resetRegisteredActionTypes() {
+    REGISTERED_ACTION_TYPES = {};
+}
 
 /**
  * @description
@@ -81,6 +86,7 @@ import { observeOn, withLatestFrom, scan, pluck, map, distinctUntilChanged } fro
  * ```
  */
 function createAction(type, config) {
+    REGISTERED_ACTION_TYPES[type] = (REGISTERED_ACTION_TYPES[type] || 0) + 1;
     if (typeof config === 'function') {
         return defineType(type, function () {
             var args = [];
@@ -185,6 +191,7 @@ var _USER_RUNTIME_CHECKS = new InjectionToken('@ngrx/store Internal User Runtime
  * Runtime checks currently in use
  */
 var _ACTIVE_RUNTIME_CHECKS = new InjectionToken('@ngrx/store Internal Runtime Checks');
+var _ACTION_TYPE_UNIQUENESS_CHECK = new InjectionToken('@ngrx/store Check if Action types are unique');
 
 function combineReducers(reducers, initialState) {
     if (initialState === void 0) { initialState = {}; }
@@ -771,7 +778,7 @@ function inNgZoneAssertMetaReducer(reducer, checks) {
 
 function createActiveRuntimeChecks(runtimeChecks) {
     if (isDevMode()) {
-        return __assign({ strictStateSerializability: false, strictActionSerializability: false, strictStateImmutability: true, strictActionImmutability: true, strictActionWithinNgZone: false }, runtimeChecks);
+        return __assign({ strictStateSerializability: false, strictActionSerializability: false, strictStateImmutability: true, strictActionImmutability: true, strictActionWithinNgZone: false, strictActionTypeUniqueness: false }, runtimeChecks);
     }
     return {
         strictStateSerializability: false,
@@ -779,6 +786,7 @@ function createActiveRuntimeChecks(runtimeChecks) {
         strictStateImmutability: false,
         strictActionImmutability: false,
         strictActionWithinNgZone: false,
+        strictActionTypeUniqueness: false,
     };
 }
 function createSerializationCheckMetaReducer(_a) {
@@ -858,26 +866,57 @@ function provideRuntimeChecks(runtimeChecks) {
         },
     ];
 }
+function checkForActionTypeUniqueness() {
+    return [
+        {
+            provide: _ACTION_TYPE_UNIQUENESS_CHECK,
+            multi: true,
+            deps: [_ACTIVE_RUNTIME_CHECKS],
+            useFactory: _actionTypeUniquenessCheck,
+        },
+    ];
+}
 function _runtimeChecksFactory(runtimeChecks) {
     return runtimeChecks;
 }
+function _actionTypeUniquenessCheck(config) {
+    if (!config.strictActionTypeUniqueness) {
+        return;
+    }
+    var duplicates = Object.entries(REGISTERED_ACTION_TYPES)
+        .filter(function (_a) {
+        var _b = __read(_a, 2), registrations = _b[1];
+        return registrations > 1;
+    })
+        .map(function (_a) {
+        var _b = __read(_a, 1), type = _b[0];
+        return type;
+    });
+    if (duplicates.length) {
+        throw new Error("Action types are registered more than once, " + duplicates
+            .map(function (type) { return "\"" + type + "\""; })
+            .join(', ') + ". " + RUNTIME_CHECK_URL + "#strictactiontypeuniqueness");
+    }
+}
 
 var StoreRootModule = /** @class */ (function () {
-    function StoreRootModule(actions$, reducer$, scannedActions$, store, guard) {
+    function StoreRootModule(actions$, reducer$, scannedActions$, store, guard, actionCheck) {
     }
     StoreRootModule = __decorate([
         NgModule({}),
         __param(4, Optional()),
         __param(4, Inject(_ROOT_STORE_GUARD)),
+        __param(5, Optional()),
+        __param(5, Inject(_ACTION_TYPE_UNIQUENESS_CHECK)),
         __metadata("design:paramtypes", [ActionsSubject,
             ReducerObservable,
             ScannedActionsSubject,
-            Store, Object])
+            Store, Object, Object])
     ], StoreRootModule);
     return StoreRootModule;
 }());
 var StoreFeatureModule = /** @class */ (function () {
-    function StoreFeatureModule(features, featureReducers, reducerManager, root) {
+    function StoreFeatureModule(features, featureReducers, reducerManager, root, actionCheck) {
         this.features = features;
         this.featureReducers = featureReducers;
         this.reducerManager = reducerManager;
@@ -895,8 +934,10 @@ var StoreFeatureModule = /** @class */ (function () {
         NgModule({}),
         __param(0, Inject(_STORE_FEATURES)),
         __param(1, Inject(FEATURE_REDUCERS)),
+        __param(4, Optional()),
+        __param(4, Inject(_ACTION_TYPE_UNIQUENESS_CHECK)),
         __metadata("design:paramtypes", [Array, Array, ReducerManager,
-            StoreRootModule])
+            StoreRootModule, Object])
     ], StoreFeatureModule);
     return StoreFeatureModule;
 }());
@@ -955,6 +996,7 @@ var StoreModule = /** @class */ (function () {
                 STATE_PROVIDERS,
                 STORE_PROVIDERS,
                 provideRuntimeChecks(config.runtimeChecks),
+                checkForActionTypeUniqueness(),
             ],
         };
     };
@@ -1005,6 +1047,7 @@ var StoreModule = /** @class */ (function () {
                     ],
                     useFactory: _createFeatureReducers,
                 },
+                checkForActionTypeUniqueness(),
             ],
         };
     };
@@ -1172,5 +1215,5 @@ function createReducer(initialState) {
  * Generated bundle index. Do not edit.
  */
 
-export { ActionsSubject, FEATURE_REDUCERS, INIT, INITIAL_REDUCERS, INITIAL_STATE, META_REDUCERS, REDUCER_FACTORY, ReducerManager, ReducerManagerDispatcher, ReducerObservable, STORE_FEATURES, ScannedActionsSubject, State, StateObservable, Store, StoreFeatureModule, StoreModule, StoreRootModule, UPDATE, USER_PROVIDED_META_REDUCERS, USER_RUNTIME_CHECKS, combineReducers, compose, createAction, createFeatureSelector, createReducer, createReducerFactory, createSelector, createSelectorFactory, defaultMemoize, defaultStateFn, isNgrxMockEnvironment, on, props, reduceState, resultMemoize, select, setNgrxMockEnvironment, union, STORE_PROVIDERS as ɵngrx_modules_store_store_b, createSerializationCheckMetaReducer as ɵngrx_modules_store_store_ba, createImmutabilityCheckMetaReducer as ɵngrx_modules_store_store_bb, createInNgZoneCheckMetaReducer as ɵngrx_modules_store_store_bc, provideRuntimeChecks as ɵngrx_modules_store_store_bd, _runtimeChecksFactory as ɵngrx_modules_store_store_be, ACTIONS_SUBJECT_PROVIDERS as ɵngrx_modules_store_store_c, REDUCER_MANAGER_PROVIDERS as ɵngrx_modules_store_store_d, SCANNED_ACTIONS_SUBJECT_PROVIDERS as ɵngrx_modules_store_store_e, isEqualCheck as ɵngrx_modules_store_store_f, STATE_PROVIDERS as ɵngrx_modules_store_store_g, _ROOT_STORE_GUARD as ɵngrx_modules_store_store_h, _INITIAL_STATE as ɵngrx_modules_store_store_i, _REDUCER_FACTORY as ɵngrx_modules_store_store_j, _INITIAL_REDUCERS as ɵngrx_modules_store_store_k, _STORE_REDUCERS as ɵngrx_modules_store_store_l, _FEATURE_REDUCERS as ɵngrx_modules_store_store_m, _FEATURE_CONFIGS as ɵngrx_modules_store_store_n, _STORE_FEATURES as ɵngrx_modules_store_store_o, _FEATURE_REDUCERS_TOKEN as ɵngrx_modules_store_store_p, _RESOLVED_META_REDUCERS as ɵngrx_modules_store_store_q, _USER_RUNTIME_CHECKS as ɵngrx_modules_store_store_r, _ACTIVE_RUNTIME_CHECKS as ɵngrx_modules_store_store_s, _createStoreReducers as ɵngrx_modules_store_store_t, _createFeatureStore as ɵngrx_modules_store_store_u, _createFeatureReducers as ɵngrx_modules_store_store_v, _initialStateFactory as ɵngrx_modules_store_store_w, _concatMetaReducers as ɵngrx_modules_store_store_x, _provideForRootGuard as ɵngrx_modules_store_store_y, createActiveRuntimeChecks as ɵngrx_modules_store_store_z };
+export { ActionsSubject, FEATURE_REDUCERS, INIT, INITIAL_REDUCERS, INITIAL_STATE, META_REDUCERS, REDUCER_FACTORY, ReducerManager, ReducerManagerDispatcher, ReducerObservable, STORE_FEATURES, ScannedActionsSubject, State, StateObservable, Store, StoreFeatureModule, StoreModule, StoreRootModule, UPDATE, USER_PROVIDED_META_REDUCERS, USER_RUNTIME_CHECKS, combineReducers, compose, createAction, createFeatureSelector, createReducer, createReducerFactory, createSelector, createSelectorFactory, defaultMemoize, defaultStateFn, isNgrxMockEnvironment, on, props, reduceState, resultMemoize, select, setNgrxMockEnvironment, union, STORE_PROVIDERS as ɵngrx_modules_store_store_b, createActiveRuntimeChecks as ɵngrx_modules_store_store_ba, createSerializationCheckMetaReducer as ɵngrx_modules_store_store_bb, createImmutabilityCheckMetaReducer as ɵngrx_modules_store_store_bc, createInNgZoneCheckMetaReducer as ɵngrx_modules_store_store_bd, provideRuntimeChecks as ɵngrx_modules_store_store_be, checkForActionTypeUniqueness as ɵngrx_modules_store_store_bf, _runtimeChecksFactory as ɵngrx_modules_store_store_bg, _actionTypeUniquenessCheck as ɵngrx_modules_store_store_bh, ACTIONS_SUBJECT_PROVIDERS as ɵngrx_modules_store_store_c, REDUCER_MANAGER_PROVIDERS as ɵngrx_modules_store_store_d, SCANNED_ACTIONS_SUBJECT_PROVIDERS as ɵngrx_modules_store_store_e, isEqualCheck as ɵngrx_modules_store_store_f, STATE_PROVIDERS as ɵngrx_modules_store_store_g, _ROOT_STORE_GUARD as ɵngrx_modules_store_store_h, _INITIAL_STATE as ɵngrx_modules_store_store_i, _REDUCER_FACTORY as ɵngrx_modules_store_store_j, _INITIAL_REDUCERS as ɵngrx_modules_store_store_k, _STORE_REDUCERS as ɵngrx_modules_store_store_l, _FEATURE_REDUCERS as ɵngrx_modules_store_store_m, _FEATURE_CONFIGS as ɵngrx_modules_store_store_n, _STORE_FEATURES as ɵngrx_modules_store_store_o, _FEATURE_REDUCERS_TOKEN as ɵngrx_modules_store_store_p, _RESOLVED_META_REDUCERS as ɵngrx_modules_store_store_q, _USER_RUNTIME_CHECKS as ɵngrx_modules_store_store_r, _ACTIVE_RUNTIME_CHECKS as ɵngrx_modules_store_store_s, _ACTION_TYPE_UNIQUENESS_CHECK as ɵngrx_modules_store_store_t, _createStoreReducers as ɵngrx_modules_store_store_u, _createFeatureStore as ɵngrx_modules_store_store_v, _createFeatureReducers as ɵngrx_modules_store_store_w, _initialStateFactory as ɵngrx_modules_store_store_x, _concatMetaReducers as ɵngrx_modules_store_store_y, _provideForRootGuard as ɵngrx_modules_store_store_z };
 //# sourceMappingURL=store.js.map

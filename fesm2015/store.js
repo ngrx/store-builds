@@ -1,11 +1,25 @@
 /**
- * @license NgRx 9.1.2+12.sha-100970b
+ * @license NgRx 9.1.2+13.sha-2972980
  * (c) 2015-2018 Brandon Roberts, Mike Ryan, Rob Wormald, Victor Savkin
  * License: MIT
  */
 import { Injectable, InjectionToken, Inject, isDevMode, NgZone, NgModule, Optional, SkipSelf, Injector } from '@angular/core';
 import { BehaviorSubject, Observable, Subject, queueScheduler } from 'rxjs';
 import { observeOn, withLatestFrom, scan, pluck, map, distinctUntilChanged } from 'rxjs/operators';
+
+/**
+ * @fileoverview added by tsickle
+ * Generated from: modules/store/src/globals.ts
+ * @suppress {checkTypes,constantProperty,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
+ */
+/** @type {?} */
+let REGISTERED_ACTION_TYPES = {};
+/**
+ * @return {?}
+ */
+function resetRegisteredActionTypes() {
+    REGISTERED_ACTION_TYPES = {};
+}
 
 /**
  * @fileoverview added by tsickle
@@ -87,6 +101,7 @@ import { observeOn, withLatestFrom, scan, pluck, map, distinctUntilChanged } fro
  * @return {?}
  */
 function createAction(type, config) {
+    REGISTERED_ACTION_TYPES[type] = (REGISTERED_ACTION_TYPES[type] || 0) + 1;
     if (typeof config === 'function') {
         return defineType(type, (/**
          * @param {...?} args
@@ -256,6 +271,8 @@ const _USER_RUNTIME_CHECKS = new InjectionToken('@ngrx/store Internal User Runti
  * @type {?}
  */
 const _ACTIVE_RUNTIME_CHECKS = new InjectionToken('@ngrx/store Internal Runtime Checks');
+/** @type {?} */
+const _ACTION_TYPE_UNIQUENESS_CHECK = new InjectionToken('@ngrx/store Check if Action types are unique');
 
 /**
  * @fileoverview added by tsickle
@@ -1412,7 +1429,7 @@ function inNgZoneAssertMetaReducer(reducer, checks) {
  */
 function createActiveRuntimeChecks(runtimeChecks) {
     if (isDevMode()) {
-        return Object.assign({ strictStateSerializability: false, strictActionSerializability: false, strictStateImmutability: true, strictActionImmutability: true, strictActionWithinNgZone: false }, runtimeChecks);
+        return Object.assign({ strictStateSerializability: false, strictActionSerializability: false, strictStateImmutability: true, strictActionImmutability: true, strictActionWithinNgZone: false, strictActionTypeUniqueness: false }, runtimeChecks);
     }
     return {
         strictStateSerializability: false,
@@ -1420,6 +1437,7 @@ function createActiveRuntimeChecks(runtimeChecks) {
         strictStateImmutability: false,
         strictActionImmutability: false,
         strictActionWithinNgZone: false,
+        strictActionTypeUniqueness: false,
     };
 }
 /**
@@ -1431,13 +1449,13 @@ function createSerializationCheckMetaReducer({ strictActionSerializability, stri
      * @param {?} reducer
      * @return {?}
      */
-    reducer => strictActionSerializability || strictStateSerializability
+    (reducer) => strictActionSerializability || strictStateSerializability
         ? serializationCheckMetaReducer(reducer, {
             action: (/**
              * @param {?} action
              * @return {?}
              */
-            action => strictActionSerializability && !ignoreNgrxAction(action)),
+            (action) => strictActionSerializability && !ignoreNgrxAction(action)),
             state: (/**
              * @return {?}
              */
@@ -1454,13 +1472,13 @@ function createImmutabilityCheckMetaReducer({ strictActionImmutability, strictSt
      * @param {?} reducer
      * @return {?}
      */
-    reducer => strictActionImmutability || strictStateImmutability
+    (reducer) => strictActionImmutability || strictStateImmutability
         ? immutabilityCheckMetaReducer(reducer, {
             action: (/**
              * @param {?} action
              * @return {?}
              */
-            action => strictActionImmutability && !ignoreNgrxAction(action)),
+            (action) => strictActionImmutability && !ignoreNgrxAction(action)),
             state: (/**
              * @return {?}
              */
@@ -1484,13 +1502,13 @@ function createInNgZoneCheckMetaReducer({ strictActionWithinNgZone, }) {
      * @param {?} reducer
      * @return {?}
      */
-    reducer => strictActionWithinNgZone
+    (reducer) => strictActionWithinNgZone
         ? inNgZoneAssertMetaReducer(reducer, {
             action: (/**
              * @param {?} action
              * @return {?}
              */
-            action => strictActionWithinNgZone && !ignoreNgrxAction(action)),
+            (action) => strictActionWithinNgZone && !ignoreNgrxAction(action)),
         })
         : reducer);
 }
@@ -1535,11 +1553,54 @@ function provideRuntimeChecks(runtimeChecks) {
     ];
 }
 /**
+ * @return {?}
+ */
+function checkForActionTypeUniqueness() {
+    return [
+        {
+            provide: _ACTION_TYPE_UNIQUENESS_CHECK,
+            multi: true,
+            deps: [_ACTIVE_RUNTIME_CHECKS],
+            useFactory: _actionTypeUniquenessCheck,
+        },
+    ];
+}
+/**
  * @param {?} runtimeChecks
  * @return {?}
  */
 function _runtimeChecksFactory(runtimeChecks) {
     return runtimeChecks;
+}
+/**
+ * @param {?} config
+ * @return {?}
+ */
+function _actionTypeUniquenessCheck(config) {
+    if (!config.strictActionTypeUniqueness) {
+        return;
+    }
+    /** @type {?} */
+    const duplicates = Object.entries(REGISTERED_ACTION_TYPES)
+        .filter((/**
+     * @param {?} __0
+     * @return {?}
+     */
+    ([, registrations]) => registrations > 1))
+        .map((/**
+     * @param {?} __0
+     * @return {?}
+     */
+    ([type]) => type));
+    if (duplicates.length) {
+        throw new Error(`Action types are registered more than once, ${duplicates
+            .map((/**
+         * @param {?} type
+         * @return {?}
+         */
+        (type) => `"${type}"`))
+            .join(', ')}. ${RUNTIME_CHECK_URL}#strictactiontypeuniqueness`);
+    }
 }
 
 /**
@@ -1554,8 +1615,9 @@ class StoreRootModule {
      * @param {?} scannedActions$
      * @param {?} store
      * @param {?} guard
+     * @param {?} actionCheck
      */
-    constructor(actions$, reducer$, scannedActions$, store, guard) {
+    constructor(actions$, reducer$, scannedActions$, store, guard, actionCheck) {
     }
 }
 StoreRootModule.decorators = [
@@ -1567,7 +1629,8 @@ StoreRootModule.ctorParameters = () => [
     { type: ReducerObservable },
     { type: ScannedActionsSubject },
     { type: Store },
-    { type: undefined, decorators: [{ type: Optional }, { type: Inject, args: [_ROOT_STORE_GUARD,] }] }
+    { type: undefined, decorators: [{ type: Optional }, { type: Inject, args: [_ROOT_STORE_GUARD,] }] },
+    { type: undefined, decorators: [{ type: Optional }, { type: Inject, args: [_ACTION_TYPE_UNIQUENESS_CHECK,] }] }
 ];
 class StoreFeatureModule {
     /**
@@ -1575,8 +1638,9 @@ class StoreFeatureModule {
      * @param {?} featureReducers
      * @param {?} reducerManager
      * @param {?} root
+     * @param {?} actionCheck
      */
-    constructor(features, featureReducers, reducerManager, root) {
+    constructor(features, featureReducers, reducerManager, root, actionCheck) {
         this.features = features;
         this.featureReducers = featureReducers;
         this.reducerManager = reducerManager;
@@ -1610,7 +1674,8 @@ StoreFeatureModule.ctorParameters = () => [
     { type: Array, decorators: [{ type: Inject, args: [_STORE_FEATURES,] }] },
     { type: Array, decorators: [{ type: Inject, args: [FEATURE_REDUCERS,] }] },
     { type: ReducerManager },
-    { type: StoreRootModule }
+    { type: StoreRootModule },
+    { type: undefined, decorators: [{ type: Optional }, { type: Inject, args: [_ACTION_TYPE_UNIQUENESS_CHECK,] }] }
 ];
 if (false) {
     /**
@@ -1708,6 +1773,7 @@ class StoreModule {
                 STATE_PROVIDERS,
                 STORE_PROVIDERS,
                 provideRuntimeChecks(config.runtimeChecks),
+                checkForActionTypeUniqueness(),
             ],
         };
     }
@@ -1763,6 +1829,7 @@ class StoreModule {
                     ],
                     useFactory: _createFeatureReducers,
                 },
+                checkForActionTypeUniqueness(),
             ],
         };
     }
@@ -1985,5 +2052,5 @@ function createReducer(initialState, ...ons) {
  * Generated bundle index. Do not edit.
  */
 
-export { ActionsSubject, FEATURE_REDUCERS, INIT, INITIAL_REDUCERS, INITIAL_STATE, META_REDUCERS, REDUCER_FACTORY, ReducerManager, ReducerManagerDispatcher, ReducerObservable, STORE_FEATURES, ScannedActionsSubject, State, StateObservable, Store, StoreFeatureModule, StoreModule, StoreRootModule, UPDATE, USER_PROVIDED_META_REDUCERS, USER_RUNTIME_CHECKS, combineReducers, compose, createAction, createFeatureSelector, createReducer, createReducerFactory, createSelector, createSelectorFactory, defaultMemoize, defaultStateFn, isNgrxMockEnvironment, on, props, reduceState, resultMemoize, select, setNgrxMockEnvironment, union, STORE_PROVIDERS as ɵngrx_modules_store_store_b, createSerializationCheckMetaReducer as ɵngrx_modules_store_store_ba, createImmutabilityCheckMetaReducer as ɵngrx_modules_store_store_bb, createInNgZoneCheckMetaReducer as ɵngrx_modules_store_store_bc, provideRuntimeChecks as ɵngrx_modules_store_store_bd, _runtimeChecksFactory as ɵngrx_modules_store_store_be, ACTIONS_SUBJECT_PROVIDERS as ɵngrx_modules_store_store_c, REDUCER_MANAGER_PROVIDERS as ɵngrx_modules_store_store_d, SCANNED_ACTIONS_SUBJECT_PROVIDERS as ɵngrx_modules_store_store_e, isEqualCheck as ɵngrx_modules_store_store_f, STATE_PROVIDERS as ɵngrx_modules_store_store_g, _ROOT_STORE_GUARD as ɵngrx_modules_store_store_h, _INITIAL_STATE as ɵngrx_modules_store_store_i, _REDUCER_FACTORY as ɵngrx_modules_store_store_j, _INITIAL_REDUCERS as ɵngrx_modules_store_store_k, _STORE_REDUCERS as ɵngrx_modules_store_store_l, _FEATURE_REDUCERS as ɵngrx_modules_store_store_m, _FEATURE_CONFIGS as ɵngrx_modules_store_store_n, _STORE_FEATURES as ɵngrx_modules_store_store_o, _FEATURE_REDUCERS_TOKEN as ɵngrx_modules_store_store_p, _RESOLVED_META_REDUCERS as ɵngrx_modules_store_store_q, _USER_RUNTIME_CHECKS as ɵngrx_modules_store_store_r, _ACTIVE_RUNTIME_CHECKS as ɵngrx_modules_store_store_s, _createStoreReducers as ɵngrx_modules_store_store_t, _createFeatureStore as ɵngrx_modules_store_store_u, _createFeatureReducers as ɵngrx_modules_store_store_v, _initialStateFactory as ɵngrx_modules_store_store_w, _concatMetaReducers as ɵngrx_modules_store_store_x, _provideForRootGuard as ɵngrx_modules_store_store_y, createActiveRuntimeChecks as ɵngrx_modules_store_store_z };
+export { ActionsSubject, FEATURE_REDUCERS, INIT, INITIAL_REDUCERS, INITIAL_STATE, META_REDUCERS, REDUCER_FACTORY, ReducerManager, ReducerManagerDispatcher, ReducerObservable, STORE_FEATURES, ScannedActionsSubject, State, StateObservable, Store, StoreFeatureModule, StoreModule, StoreRootModule, UPDATE, USER_PROVIDED_META_REDUCERS, USER_RUNTIME_CHECKS, combineReducers, compose, createAction, createFeatureSelector, createReducer, createReducerFactory, createSelector, createSelectorFactory, defaultMemoize, defaultStateFn, isNgrxMockEnvironment, on, props, reduceState, resultMemoize, select, setNgrxMockEnvironment, union, STORE_PROVIDERS as ɵngrx_modules_store_store_b, createActiveRuntimeChecks as ɵngrx_modules_store_store_ba, createSerializationCheckMetaReducer as ɵngrx_modules_store_store_bb, createImmutabilityCheckMetaReducer as ɵngrx_modules_store_store_bc, createInNgZoneCheckMetaReducer as ɵngrx_modules_store_store_bd, provideRuntimeChecks as ɵngrx_modules_store_store_be, checkForActionTypeUniqueness as ɵngrx_modules_store_store_bf, _runtimeChecksFactory as ɵngrx_modules_store_store_bg, _actionTypeUniquenessCheck as ɵngrx_modules_store_store_bh, ACTIONS_SUBJECT_PROVIDERS as ɵngrx_modules_store_store_c, REDUCER_MANAGER_PROVIDERS as ɵngrx_modules_store_store_d, SCANNED_ACTIONS_SUBJECT_PROVIDERS as ɵngrx_modules_store_store_e, isEqualCheck as ɵngrx_modules_store_store_f, STATE_PROVIDERS as ɵngrx_modules_store_store_g, _ROOT_STORE_GUARD as ɵngrx_modules_store_store_h, _INITIAL_STATE as ɵngrx_modules_store_store_i, _REDUCER_FACTORY as ɵngrx_modules_store_store_j, _INITIAL_REDUCERS as ɵngrx_modules_store_store_k, _STORE_REDUCERS as ɵngrx_modules_store_store_l, _FEATURE_REDUCERS as ɵngrx_modules_store_store_m, _FEATURE_CONFIGS as ɵngrx_modules_store_store_n, _STORE_FEATURES as ɵngrx_modules_store_store_o, _FEATURE_REDUCERS_TOKEN as ɵngrx_modules_store_store_p, _RESOLVED_META_REDUCERS as ɵngrx_modules_store_store_q, _USER_RUNTIME_CHECKS as ɵngrx_modules_store_store_r, _ACTIVE_RUNTIME_CHECKS as ɵngrx_modules_store_store_s, _ACTION_TYPE_UNIQUENESS_CHECK as ɵngrx_modules_store_store_t, _createStoreReducers as ɵngrx_modules_store_store_u, _createFeatureStore as ɵngrx_modules_store_store_v, _createFeatureReducers as ɵngrx_modules_store_store_w, _initialStateFactory as ɵngrx_modules_store_store_x, _concatMetaReducers as ɵngrx_modules_store_store_y, _provideForRootGuard as ɵngrx_modules_store_store_z };
 //# sourceMappingURL=store.js.map
