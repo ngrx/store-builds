@@ -1,0 +1,1 @@
+{"version":3,"file":"ngrx-store-testing.js","sourceRoot":"ng://@ngrx/store/testing/","sources":["ngrx-store-testing.ts"],"names":[],"mappings":";;;;;;;;AAIA,2EAAc,cAAc,CAAC;AAE7B,OAAO,EAAC,cAAc,IAAI,EAAE,EAAC,MAAM,UAAU,CAAC","sourcesContent":["/**\n * Generated bundle index. Do not edit.\n */\n\nexport * from './public_api';\n\nexport {MOCK_SELECTORS as ɵa} from './tokens';"]}

@@ -1,6 +1,6 @@
 {
   "name": "@ngrx/store",
-  "version": "9.2.0+2.sha-aba7368",
+  "version": "9.2.0",
   "description": "RxJS powered Redux for Angular apps",
   "repository": {
     "type": "git",
@@ -32,20 +32,23 @@
       "@ngrx/entity",
       "@ngrx/router-store",
       "@ngrx/data",
-      "@ngrx/component",
-      "@ngrx/component-store",
       "@ngrx/schematics",
       "@ngrx/store-devtools"
     ],
     "migrations": "./migrations/migration.json"
   },
   "sideEffects": false,
-  "main": "./bundles/store.umd.js",
-  "fesm5": "./fesm5/store.js",
-  "fesm2015": "./fesm2015/store.js",
-  "esm5": "./esm5/store.js",
-  "esm2015": "./esm2015/store.js",
-  "typings": "./store.d.ts",
-  "module": "./fesm5/store.js",
-  "es2015": "./fesm2015/store.js"
+  "main": "bundles/ngrx-store.umd.js",
+  "module": "fesm5/ngrx-store.js",
+  "es2015": "fesm2015/ngrx-store.js",
+  "esm5": "esm5/ngrx-store.js",
+  "esm2015": "esm2015/ngrx-store.js",
+  "fesm5": "fesm5/ngrx-store.js",
+  "fesm2015": "fesm2015/ngrx-store.js",
+  "typings": "ngrx-store.d.ts",
+  "metadata": "ngrx-store.metadata.json",
+  "dependencies": {
+    "tslib": "^1.10.0",
+    "@angular/platform-browser": "^9.1.0"
+  }
 }

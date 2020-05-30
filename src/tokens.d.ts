@@ -17,16 +17,16 @@ export declare const FEATURE_REDUCERS: InjectionToken<unknown>;
 /**
  * User-defined meta reducers from StoreModule.forRoot()
  */
-export declare const USER_PROVIDED_META_REDUCERS: InjectionToken<MetaReducer<any, import("@ngrx/store/src/models").Action>[]>;
+export declare const USER_PROVIDED_META_REDUCERS: InjectionToken<MetaReducer<any, import("./models").Action>[]>;
 /**
  * Meta reducers defined either internally by @ngrx/store or by library authors
  */
-export declare const META_REDUCERS: InjectionToken<MetaReducer<any, import("@ngrx/store/src/models").Action>[]>;
+export declare const META_REDUCERS: InjectionToken<MetaReducer<any, import("./models").Action>[]>;
 /**
  * Concats the user provided meta reducers and the meta reducers provided on the multi
  * injection token
  */
-export declare const _RESOLVED_META_REDUCERS: InjectionToken<MetaReducer<any, import("@ngrx/store/src/models").Action>>;
+export declare const _RESOLVED_META_REDUCERS: InjectionToken<MetaReducer<any, import("./models").Action>>;
 /**
  * Runtime checks defined by the user via an InjectionToken
  * Defaults to `_USER_RUNTIME_CHECKS`

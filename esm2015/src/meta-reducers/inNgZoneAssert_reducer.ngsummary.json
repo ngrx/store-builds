@@ -1,0 +1,1 @@
+{"moduleName":null,"summaries":[{"symbol":{"__symbol":0,"members":[]},"metadata":{"__symbolic":"function","parameters":["reducer","checks"],"value":{"__symbolic":"error","message":"Lambda not supported","fileName":"modules/store/src/meta-reducers/inNgZoneAssert_reducer.ts"}}}],"symbols":[{"__symbol":0,"name":"inNgZoneAssertMetaReducer","filePath":"./inNgZoneAssert_reducer"}]}

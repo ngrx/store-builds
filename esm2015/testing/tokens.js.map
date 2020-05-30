@@ -1,0 +1,1 @@
+{"version":3,"file":"tokens.js","sourceRoot":"ng://@ngrx/store/testing/","sources":["tokens.ts"],"names":[],"mappings":";;;;;AAAA,OAAO,EAAE,cAAc,EAAE,MAAM,eAAe,CAAC;;AAE/C,MAAM,OAAO,cAAc,GAAG,IAAI,cAAc,CAAC,4BAA4B,CAAC","sourcesContent":["import { InjectionToken } from '@angular/core';\n\nexport const MOCK_SELECTORS = new InjectionToken('@ngrx/store Mock Selectors');\n"]}
