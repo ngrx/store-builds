@@ -1,1 +1,1 @@
-834dc95 build: fix deploy job (#2551)
+c3afe2f build: run ngcc after install (#2552)
