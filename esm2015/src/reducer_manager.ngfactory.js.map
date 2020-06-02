@@ -1,1 +1,0 @@
-{"version":3,"file":"reducer_manager.ngfactory.js","sourceRoot":"ng://@ngrx/store/","sources":["src/reducer_manager.ngfactory.ts"],"names":[],"mappings":"","sourcesContent":["import * as i0 from '@angular/core';\ni0.ComponentFactory;\n"]}

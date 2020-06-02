@@ -20,13 +20,13 @@
     /**
      * @template T
      */
-    var MockState$1 = /** @class */ (function (_super) {
+    var MockState = /** @class */ (function (_super) {
         __extends(MockState, _super);
         function MockState() {
             return _super.call(this, (/** @type {?} */ ({}))) || this;
         }
         MockState.decorators = [
-            { type: core.Injectable },
+            { type: core.Injectable }
         ];
         /** @nocollapse */
         MockState.ctorParameters = function () { return []; };
@@ -236,13 +236,13 @@
                 this.setState(__assign({}, this.lastState));
         };
         MockStore.decorators = [
-            { type: core.Injectable },
+            { type: core.Injectable }
         ];
         /** @nocollapse */
         MockStore.ctorParameters = function () { return [
             { type: MockState },
-            { type: ActionsSubject },
-            { type: ReducerManager },
+            { type: store.ActionsSubject },
+            { type: store.ReducerManager },
             { type: undefined, decorators: [{ type: core.Inject, args: [store.INITIAL_STATE,] }] },
             { type: Array, decorators: [{ type: core.Inject, args: [MOCK_SELECTORS,] }] }
         ]; };
@@ -317,7 +317,7 @@
             /* noop */
         };
         MockReducerManager.decorators = [
-            { type: core.Injectable },
+            { type: core.Injectable }
         ];
         /** @nocollapse */
         MockReducerManager.ctorParameters = function () { return []; };
@@ -350,18 +350,18 @@
         store.setNgrxMockEnvironment(true);
         return [
             store.ActionsSubject,
-            MockState$1,
+            MockState,
             MockStore,
             { provide: store.INITIAL_STATE, useValue: config.initialState || {} },
             { provide: MOCK_SELECTORS, useValue: config.selectors },
-            { provide: store.StateObservable, useClass: MockState$1 },
+            { provide: store.StateObservable, useClass: MockState },
             { provide: store.ReducerManager, useClass: MockReducerManager },
             { provide: store.Store, useExisting: MockStore },
         ];
     }
 
     exports.MockReducerManager = MockReducerManager;
-    exports.MockState = MockState$1;
+    exports.MockState = MockState;
     exports.MockStore = MockStore;
     exports.provideMockStore = provideMockStore;
     exports.ɵa = MOCK_SELECTORS;

@@ -1,6 +1,6 @@
 import { Injectable, InjectionToken, Inject, isDevMode, NgZone, NgModule, Optional, SkipSelf, Injector } from '@angular/core';
-import { Observable, BehaviorSubject, Subject, queueScheduler } from 'rxjs';
-import { pluck, map, distinctUntilChanged, observeOn, withLatestFrom, scan } from 'rxjs/operators';
+import { BehaviorSubject, Observable, Subject, queueScheduler } from 'rxjs';
+import { observeOn, withLatestFrom, scan, pluck, map, distinctUntilChanged } from 'rxjs/operators';
 
 /**
  * @fileoverview added by tsickle
@@ -152,147 +152,122 @@ function defineType(type, creator) {
 
 /**
  * @fileoverview added by tsickle
- * Generated from: src/store.ts
+ * Generated from: src/actions_subject.ts
  * @suppress {checkTypes,constantProperty,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
  */
-/**
- * @template T
- */
-class Store extends Observable {
-    /**
-     * @param {?} state$
-     * @param {?} actionsObserver
-     * @param {?} reducerManager
-     */
-    constructor(state$, actionsObserver, reducerManager) {
-        super();
-        this.actionsObserver = actionsObserver;
-        this.reducerManager = reducerManager;
-        this.source = state$;
-    }
-    /**
-     * @template Props, K
-     * @param {?} pathOrMapFn
-     * @param {...?} paths
-     * @return {?}
-     */
-    select(pathOrMapFn, ...paths) {
-        return ((/** @type {?} */ (select))).call(null, pathOrMapFn, ...paths)(this);
-    }
-    /**
-     * @template R
-     * @param {?} operator
-     * @return {?}
-     */
-    lift(operator) {
-        /** @type {?} */
-        const store = new Store(this, this.actionsObserver, this.reducerManager);
-        store.operator = operator;
-        return store;
-    }
-    /**
-     * @template V
-     * @param {?} action
-     * @return {?}
-     */
-    dispatch(action) {
-        this.actionsObserver.next(action);
+/** @type {?} */
+const INIT = (/** @type {?} */ ('@ngrx/store/init'));
+class ActionsSubject extends BehaviorSubject {
+    constructor() {
+        super({ type: INIT });
     }
     /**
      * @param {?} action
      * @return {?}
      */
     next(action) {
-        this.actionsObserver.next(action);
-    }
-    /**
-     * @param {?} err
-     * @return {?}
-     */
-    error(err) {
-        this.actionsObserver.error(err);
+        if (typeof action === 'function') {
+            throw new TypeError(`
+        Dispatch expected an object, instead it received a function.
+        If you're using the createAction function, make sure to invoke the function
+        before dispatching the action. For example, someAction should be someAction().`);
+        }
+        else if (typeof action === 'undefined') {
+            throw new TypeError(`Actions must be objects`);
+        }
+        else if (typeof action.type === 'undefined') {
+            throw new TypeError(`Actions must have a type property`);
+        }
+        super.next(action);
     }
     /**
      * @return {?}
      */
     complete() {
-        this.actionsObserver.complete();
+        /* noop */
     }
     /**
-     * @template State, Actions
-     * @param {?} key
-     * @param {?} reducer
      * @return {?}
      */
-    addReducer(key, reducer) {
-        this.reducerManager.addReducer(key, reducer);
-    }
-    /**
-     * @template Key
-     * @param {?} key
-     * @return {?}
-     */
-    removeReducer(key) {
-        this.reducerManager.removeReducer(key);
+    ngOnDestroy() {
+        super.complete();
     }
 }
-Store.decorators = [
-    { type: Injectable },
+ActionsSubject.decorators = [
+    { type: Injectable }
 ];
 /** @nocollapse */
-Store.ctorParameters = () => [
-    { type: StateObservable },
-    { type: ActionsSubject },
-    { type: ReducerManager }
-];
-if (false) {
-    /**
-     * @type {?}
-     * @private
-     */
-    Store.prototype.actionsObserver;
-    /**
-     * @type {?}
-     * @private
-     */
-    Store.prototype.reducerManager;
-}
+ActionsSubject.ctorParameters = () => [];
 /** @type {?} */
-const STORE_PROVIDERS = [Store];
+const ACTIONS_SUBJECT_PROVIDERS = [ActionsSubject];
+
 /**
- * @template T, Props, K
- * @param {?} pathOrMapFn
- * @param {?=} propsOrPath
- * @param {...?} paths
- * @return {?}
+ * @fileoverview added by tsickle
+ * Generated from: src/tokens.ts
+ * @suppress {checkTypes,constantProperty,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
  */
-function select(pathOrMapFn, propsOrPath, ...paths) {
-    return (/**
-     * @param {?} source$
-     * @return {?}
-     */
-    function selectOperator(source$) {
-        /** @type {?} */
-        let mapped$;
-        if (typeof pathOrMapFn === 'string') {
-            /** @type {?} */
-            const pathSlices = [(/** @type {?} */ (propsOrPath)), ...paths].filter(Boolean);
-            mapped$ = source$.pipe(pluck(pathOrMapFn, ...pathSlices));
-        }
-        else if (typeof pathOrMapFn === 'function') {
-            mapped$ = source$.pipe(map((/**
-             * @param {?} source
-             * @return {?}
-             */
-            source => pathOrMapFn(source, (/** @type {?} */ (propsOrPath))))));
-        }
-        else {
-            throw new TypeError(`Unexpected type '${typeof pathOrMapFn}' in select operator,` +
-                ` expected 'string' or 'function'`);
-        }
-        return mapped$.pipe(distinctUntilChanged());
-    });
-}
+/** @type {?} */
+const _ROOT_STORE_GUARD = new InjectionToken('@ngrx/store Internal Root Guard');
+/** @type {?} */
+const _INITIAL_STATE = new InjectionToken('@ngrx/store Internal Initial State');
+/** @type {?} */
+const INITIAL_STATE = new InjectionToken('@ngrx/store Initial State');
+/** @type {?} */
+const REDUCER_FACTORY = new InjectionToken('@ngrx/store Reducer Factory');
+/** @type {?} */
+const _REDUCER_FACTORY = new InjectionToken('@ngrx/store Internal Reducer Factory Provider');
+/** @type {?} */
+const INITIAL_REDUCERS = new InjectionToken('@ngrx/store Initial Reducers');
+/** @type {?} */
+const _INITIAL_REDUCERS = new InjectionToken('@ngrx/store Internal Initial Reducers');
+/** @type {?} */
+const STORE_FEATURES = new InjectionToken('@ngrx/store Store Features');
+/** @type {?} */
+const _STORE_REDUCERS = new InjectionToken('@ngrx/store Internal Store Reducers');
+/** @type {?} */
+const _FEATURE_REDUCERS = new InjectionToken('@ngrx/store Internal Feature Reducers');
+/** @type {?} */
+const _FEATURE_CONFIGS = new InjectionToken('@ngrx/store Internal Feature Configs');
+/** @type {?} */
+const _STORE_FEATURES = new InjectionToken('@ngrx/store Internal Store Features');
+/** @type {?} */
+const _FEATURE_REDUCERS_TOKEN = new InjectionToken('@ngrx/store Internal Feature Reducers Token');
+/** @type {?} */
+const FEATURE_REDUCERS = new InjectionToken('@ngrx/store Feature Reducers');
+/**
+ * User-defined meta reducers from StoreModule.forRoot()
+ * @type {?}
+ */
+const USER_PROVIDED_META_REDUCERS = new InjectionToken('@ngrx/store User Provided Meta Reducers');
+/**
+ * Meta reducers defined either internally by \@ngrx/store or by library authors
+ * @type {?}
+ */
+const META_REDUCERS = new InjectionToken('@ngrx/store Meta Reducers');
+/**
+ * Concats the user provided meta reducers and the meta reducers provided on the multi
+ * injection token
+ * @type {?}
+ */
+const _RESOLVED_META_REDUCERS = new InjectionToken('@ngrx/store Internal Resolved Meta Reducers');
+/**
+ * Runtime checks defined by the user via an InjectionToken
+ * Defaults to `_USER_RUNTIME_CHECKS`
+ * @type {?}
+ */
+const USER_RUNTIME_CHECKS = new InjectionToken('@ngrx/store User Runtime Checks Config');
+/**
+ * Runtime checks defined by the user via forRoot()
+ * @type {?}
+ */
+const _USER_RUNTIME_CHECKS = new InjectionToken('@ngrx/store Internal User Runtime Checks Config');
+/**
+ * Runtime checks currently in use
+ * @type {?}
+ */
+const _ACTIVE_RUNTIME_CHECKS = new InjectionToken('@ngrx/store Internal Runtime Checks');
+/** @type {?} */
+const _ACTION_TYPE_UNIQUENESS_CHECK = new InjectionToken('@ngrx/store Check if Action types are unique');
 
 /**
  * @fileoverview added by tsickle
@@ -456,162 +431,22 @@ function createFeatureReducerFactory(metaReducers) {
 
 /**
  * @fileoverview added by tsickle
- * Generated from: src/actions_subject.ts
- * @suppress {checkTypes,constantProperty,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
- */
-/** @type {?} */
-const INIT = (/** @type {?} */ ('@ngrx/store/init'));
-class ActionsSubject$1 extends BehaviorSubject {
-    constructor() {
-        super({ type: INIT });
-    }
-    /**
-     * @param {?} action
-     * @return {?}
-     */
-    next(action) {
-        if (typeof action === 'function') {
-            throw new TypeError(`
-        Dispatch expected an object, instead it received a function.
-        If you're using the createAction function, make sure to invoke the function
-        before dispatching the action. For example, someAction should be someAction().`);
-        }
-        else if (typeof action === 'undefined') {
-            throw new TypeError(`Actions must be objects`);
-        }
-        else if (typeof action.type === 'undefined') {
-            throw new TypeError(`Actions must have a type property`);
-        }
-        super.next(action);
-    }
-    /**
-     * @return {?}
-     */
-    complete() {
-        /* noop */
-    }
-    /**
-     * @return {?}
-     */
-    ngOnDestroy() {
-        super.complete();
-    }
-}
-ActionsSubject$1.decorators = [
-    { type: Injectable },
-];
-/** @nocollapse */
-ActionsSubject$1.ctorParameters = () => [];
-/** @type {?} */
-const ACTIONS_SUBJECT_PROVIDERS = [ActionsSubject$1];
-
-/**
- * @fileoverview added by tsickle
- * Generated from: src/flags.ts
- * @suppress {checkTypes,constantProperty,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
- */
-/** @type {?} */
-let _ngrxMockEnvironment = false;
-/**
- * @param {?} value
- * @return {?}
- */
-function setNgrxMockEnvironment(value) {
-    _ngrxMockEnvironment = value;
-}
-/**
- * @return {?}
- */
-function isNgrxMockEnvironment() {
-    return _ngrxMockEnvironment;
-}
-
-/**
- * @fileoverview added by tsickle
- * Generated from: src/tokens.ts
- * @suppress {checkTypes,constantProperty,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
- */
-/** @type {?} */
-const _ROOT_STORE_GUARD = new InjectionToken('@ngrx/store Internal Root Guard');
-/** @type {?} */
-const _INITIAL_STATE = new InjectionToken('@ngrx/store Internal Initial State');
-/** @type {?} */
-const INITIAL_STATE = new InjectionToken('@ngrx/store Initial State');
-/** @type {?} */
-const REDUCER_FACTORY = new InjectionToken('@ngrx/store Reducer Factory');
-/** @type {?} */
-const _REDUCER_FACTORY = new InjectionToken('@ngrx/store Internal Reducer Factory Provider');
-/** @type {?} */
-const INITIAL_REDUCERS = new InjectionToken('@ngrx/store Initial Reducers');
-/** @type {?} */
-const _INITIAL_REDUCERS = new InjectionToken('@ngrx/store Internal Initial Reducers');
-/** @type {?} */
-const STORE_FEATURES = new InjectionToken('@ngrx/store Store Features');
-/** @type {?} */
-const _STORE_REDUCERS = new InjectionToken('@ngrx/store Internal Store Reducers');
-/** @type {?} */
-const _FEATURE_REDUCERS = new InjectionToken('@ngrx/store Internal Feature Reducers');
-/** @type {?} */
-const _FEATURE_CONFIGS = new InjectionToken('@ngrx/store Internal Feature Configs');
-/** @type {?} */
-const _STORE_FEATURES = new InjectionToken('@ngrx/store Internal Store Features');
-/** @type {?} */
-const _FEATURE_REDUCERS_TOKEN = new InjectionToken('@ngrx/store Internal Feature Reducers Token');
-/** @type {?} */
-const FEATURE_REDUCERS = new InjectionToken('@ngrx/store Feature Reducers');
-/**
- * User-defined meta reducers from StoreModule.forRoot()
- * @type {?}
- */
-const USER_PROVIDED_META_REDUCERS = new InjectionToken('@ngrx/store User Provided Meta Reducers');
-/**
- * Meta reducers defined either internally by \@ngrx/store or by library authors
- * @type {?}
- */
-const META_REDUCERS = new InjectionToken('@ngrx/store Meta Reducers');
-/**
- * Concats the user provided meta reducers and the meta reducers provided on the multi
- * injection token
- * @type {?}
- */
-const _RESOLVED_META_REDUCERS = new InjectionToken('@ngrx/store Internal Resolved Meta Reducers');
-/**
- * Runtime checks defined by the user via an InjectionToken
- * Defaults to `_USER_RUNTIME_CHECKS`
- * @type {?}
- */
-const USER_RUNTIME_CHECKS = new InjectionToken('@ngrx/store User Runtime Checks Config');
-/**
- * Runtime checks defined by the user via forRoot()
- * @type {?}
- */
-const _USER_RUNTIME_CHECKS = new InjectionToken('@ngrx/store Internal User Runtime Checks Config');
-/**
- * Runtime checks currently in use
- * @type {?}
- */
-const _ACTIVE_RUNTIME_CHECKS = new InjectionToken('@ngrx/store Internal Runtime Checks');
-/** @type {?} */
-const _ACTION_TYPE_UNIQUENESS_CHECK = new InjectionToken('@ngrx/store Check if Action types are unique');
-
-/**
- * @fileoverview added by tsickle
  * Generated from: src/reducer_manager.ts
  * @suppress {checkTypes,constantProperty,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
  */
 /**
  * @abstract
  */
-class ReducerObservable$1 extends Observable {
+class ReducerObservable extends Observable {
 }
 /**
  * @abstract
  */
-class ReducerManagerDispatcher extends ActionsSubject$1 {
+class ReducerManagerDispatcher extends ActionsSubject {
 }
 /** @type {?} */
 const UPDATE = (/** @type {?} */ ('@ngrx/store/update-reducers'));
-class ReducerManager$1 extends BehaviorSubject {
+class ReducerManager extends BehaviorSubject {
     /**
      * @param {?} dispatcher
      * @param {?} initialState
@@ -727,11 +562,11 @@ class ReducerManager$1 extends BehaviorSubject {
         this.complete();
     }
 }
-ReducerManager$1.decorators = [
-    { type: Injectable },
+ReducerManager.decorators = [
+    { type: Injectable }
 ];
 /** @nocollapse */
-ReducerManager$1.ctorParameters = () => [
+ReducerManager.ctorParameters = () => [
     { type: ReducerManagerDispatcher },
     { type: undefined, decorators: [{ type: Inject, args: [INITIAL_STATE,] }] },
     { type: undefined, decorators: [{ type: Inject, args: [INITIAL_REDUCERS,] }] },
@@ -742,28 +577,28 @@ if (false) {
      * @type {?}
      * @private
      */
-    ReducerManager$1.prototype.dispatcher;
+    ReducerManager.prototype.dispatcher;
     /**
      * @type {?}
      * @private
      */
-    ReducerManager$1.prototype.initialState;
+    ReducerManager.prototype.initialState;
     /**
      * @type {?}
      * @private
      */
-    ReducerManager$1.prototype.reducers;
+    ReducerManager.prototype.reducers;
     /**
      * @type {?}
      * @private
      */
-    ReducerManager$1.prototype.reducerFactory;
+    ReducerManager.prototype.reducerFactory;
 }
 /** @type {?} */
 const REDUCER_MANAGER_PROVIDERS = [
-    ReducerManager$1,
-    { provide: ReducerObservable$1, useExisting: ReducerManager$1 },
-    { provide: ReducerManagerDispatcher, useExisting: ActionsSubject$1 },
+    ReducerManager,
+    { provide: ReducerObservable, useExisting: ReducerManager },
+    { provide: ReducerManagerDispatcher, useExisting: ActionsSubject },
 ];
 
 /**
@@ -771,7 +606,7 @@ const REDUCER_MANAGER_PROVIDERS = [
  * Generated from: src/scanned_actions_subject.ts
  * @suppress {checkTypes,constantProperty,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
  */
-class ScannedActionsSubject$1 extends Subject {
+class ScannedActionsSubject extends Subject {
     /**
      * @return {?}
      */
@@ -779,13 +614,261 @@ class ScannedActionsSubject$1 extends Subject {
         this.complete();
     }
 }
-ScannedActionsSubject$1.decorators = [
-    { type: Injectable },
+ScannedActionsSubject.decorators = [
+    { type: Injectable }
 ];
 /** @type {?} */
 const SCANNED_ACTIONS_SUBJECT_PROVIDERS = [
-    ScannedActionsSubject$1,
+    ScannedActionsSubject,
 ];
+
+/**
+ * @fileoverview added by tsickle
+ * Generated from: src/state.ts
+ * @suppress {checkTypes,constantProperty,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
+ */
+/**
+ * @abstract
+ */
+class StateObservable extends Observable {
+}
+/**
+ * @template T
+ */
+class State extends BehaviorSubject {
+    /**
+     * @param {?} actions$
+     * @param {?} reducer$
+     * @param {?} scannedActions
+     * @param {?} initialState
+     */
+    constructor(actions$, reducer$, scannedActions, initialState) {
+        super(initialState);
+        /** @type {?} */
+        const actionsOnQueue$ = actions$.pipe(observeOn(queueScheduler));
+        /** @type {?} */
+        const withLatestReducer$ = actionsOnQueue$.pipe(withLatestFrom(reducer$));
+        /** @type {?} */
+        const seed = { state: initialState };
+        /** @type {?} */
+        const stateAndAction$ = withLatestReducer$.pipe(scan(reduceState, seed));
+        this.stateSubscription = stateAndAction$.subscribe((/**
+         * @param {?} __0
+         * @return {?}
+         */
+        ({ state, action }) => {
+            this.next(state);
+            scannedActions.next(action);
+        }));
+    }
+    /**
+     * @return {?}
+     */
+    ngOnDestroy() {
+        this.stateSubscription.unsubscribe();
+        this.complete();
+    }
+}
+State.INIT = INIT;
+State.decorators = [
+    { type: Injectable }
+];
+/** @nocollapse */
+State.ctorParameters = () => [
+    { type: ActionsSubject },
+    { type: ReducerObservable },
+    { type: ScannedActionsSubject },
+    { type: undefined, decorators: [{ type: Inject, args: [INITIAL_STATE,] }] }
+];
+if (false) {
+    /** @type {?} */
+    State.INIT;
+    /**
+     * @type {?}
+     * @private
+     */
+    State.prototype.stateSubscription;
+}
+/**
+ * @template T, V
+ * @param {?=} stateActionPair
+ * @param {?=} __1
+ * @return {?}
+ */
+function reduceState(stateActionPair = { state: undefined }, [action, reducer]) {
+    const { state } = stateActionPair;
+    return { state: reducer(state, action), action };
+}
+/** @type {?} */
+const STATE_PROVIDERS = [
+    State,
+    { provide: StateObservable, useExisting: State },
+];
+
+/**
+ * @fileoverview added by tsickle
+ * Generated from: src/store.ts
+ * @suppress {checkTypes,constantProperty,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
+ */
+/**
+ * @template T
+ */
+class Store extends Observable {
+    /**
+     * @param {?} state$
+     * @param {?} actionsObserver
+     * @param {?} reducerManager
+     */
+    constructor(state$, actionsObserver, reducerManager) {
+        super();
+        this.actionsObserver = actionsObserver;
+        this.reducerManager = reducerManager;
+        this.source = state$;
+    }
+    /**
+     * @template Props, K
+     * @param {?} pathOrMapFn
+     * @param {...?} paths
+     * @return {?}
+     */
+    select(pathOrMapFn, ...paths) {
+        return ((/** @type {?} */ (select))).call(null, pathOrMapFn, ...paths)(this);
+    }
+    /**
+     * @template R
+     * @param {?} operator
+     * @return {?}
+     */
+    lift(operator) {
+        /** @type {?} */
+        const store = new Store(this, this.actionsObserver, this.reducerManager);
+        store.operator = operator;
+        return store;
+    }
+    /**
+     * @template V
+     * @param {?} action
+     * @return {?}
+     */
+    dispatch(action) {
+        this.actionsObserver.next(action);
+    }
+    /**
+     * @param {?} action
+     * @return {?}
+     */
+    next(action) {
+        this.actionsObserver.next(action);
+    }
+    /**
+     * @param {?} err
+     * @return {?}
+     */
+    error(err) {
+        this.actionsObserver.error(err);
+    }
+    /**
+     * @return {?}
+     */
+    complete() {
+        this.actionsObserver.complete();
+    }
+    /**
+     * @template State, Actions
+     * @param {?} key
+     * @param {?} reducer
+     * @return {?}
+     */
+    addReducer(key, reducer) {
+        this.reducerManager.addReducer(key, reducer);
+    }
+    /**
+     * @template Key
+     * @param {?} key
+     * @return {?}
+     */
+    removeReducer(key) {
+        this.reducerManager.removeReducer(key);
+    }
+}
+Store.decorators = [
+    { type: Injectable }
+];
+/** @nocollapse */
+Store.ctorParameters = () => [
+    { type: StateObservable },
+    { type: ActionsSubject },
+    { type: ReducerManager }
+];
+if (false) {
+    /**
+     * @type {?}
+     * @private
+     */
+    Store.prototype.actionsObserver;
+    /**
+     * @type {?}
+     * @private
+     */
+    Store.prototype.reducerManager;
+}
+/** @type {?} */
+const STORE_PROVIDERS = [Store];
+/**
+ * @template T, Props, K
+ * @param {?} pathOrMapFn
+ * @param {?=} propsOrPath
+ * @param {...?} paths
+ * @return {?}
+ */
+function select(pathOrMapFn, propsOrPath, ...paths) {
+    return (/**
+     * @param {?} source$
+     * @return {?}
+     */
+    function selectOperator(source$) {
+        /** @type {?} */
+        let mapped$;
+        if (typeof pathOrMapFn === 'string') {
+            /** @type {?} */
+            const pathSlices = [(/** @type {?} */ (propsOrPath)), ...paths].filter(Boolean);
+            mapped$ = source$.pipe(pluck(pathOrMapFn, ...pathSlices));
+        }
+        else if (typeof pathOrMapFn === 'function') {
+            mapped$ = source$.pipe(map((/**
+             * @param {?} source
+             * @return {?}
+             */
+            source => pathOrMapFn(source, (/** @type {?} */ (propsOrPath))))));
+        }
+        else {
+            throw new TypeError(`Unexpected type '${typeof pathOrMapFn}' in select operator,` +
+                ` expected 'string' or 'function'`);
+        }
+        return mapped$.pipe(distinctUntilChanged());
+    });
+}
+
+/**
+ * @fileoverview added by tsickle
+ * Generated from: src/flags.ts
+ * @suppress {checkTypes,constantProperty,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
+ */
+/** @type {?} */
+let _ngrxMockEnvironment = false;
+/**
+ * @param {?} value
+ * @return {?}
+ */
+function setNgrxMockEnvironment(value) {
+    _ngrxMockEnvironment = value;
+}
+/**
+ * @return {?}
+ */
+function isNgrxMockEnvironment() {
+    return _ngrxMockEnvironment;
+}
 
 /**
  * @fileoverview added by tsickle
@@ -1048,89 +1131,6 @@ function createFeatureSelector(featureName) {
      */
     (featureState) => featureState));
 }
-
-/**
- * @fileoverview added by tsickle
- * Generated from: src/state.ts
- * @suppress {checkTypes,constantProperty,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
- */
-/**
- * @abstract
- */
-class StateObservable$1 extends Observable {
-}
-/**
- * @template T
- */
-class State extends BehaviorSubject {
-    /**
-     * @param {?} actions$
-     * @param {?} reducer$
-     * @param {?} scannedActions
-     * @param {?} initialState
-     */
-    constructor(actions$, reducer$, scannedActions, initialState) {
-        super(initialState);
-        /** @type {?} */
-        const actionsOnQueue$ = actions$.pipe(observeOn(queueScheduler));
-        /** @type {?} */
-        const withLatestReducer$ = actionsOnQueue$.pipe(withLatestFrom(reducer$));
-        /** @type {?} */
-        const seed = { state: initialState };
-        /** @type {?} */
-        const stateAndAction$ = withLatestReducer$.pipe(scan(reduceState, seed));
-        this.stateSubscription = stateAndAction$.subscribe((/**
-         * @param {?} __0
-         * @return {?}
-         */
-        ({ state, action }) => {
-            this.next(state);
-            scannedActions.next(action);
-        }));
-    }
-    /**
-     * @return {?}
-     */
-    ngOnDestroy() {
-        this.stateSubscription.unsubscribe();
-        this.complete();
-    }
-}
-State.INIT = INIT;
-State.decorators = [
-    { type: Injectable },
-];
-/** @nocollapse */
-State.ctorParameters = () => [
-    { type: ActionsSubject },
-    { type: ReducerObservable },
-    { type: ScannedActionsSubject },
-    { type: undefined, decorators: [{ type: Inject, args: [INITIAL_STATE,] }] }
-];
-if (false) {
-    /** @type {?} */
-    State.INIT;
-    /**
-     * @type {?}
-     * @private
-     */
-    State.prototype.stateSubscription;
-}
-/**
- * @template T, V
- * @param {?=} stateActionPair
- * @param {?=} __1
- * @return {?}
- */
-function reduceState(stateActionPair = { state: undefined }, [action, reducer]) {
-    const { state } = stateActionPair;
-    return { state: reducer(state, action), action };
-}
-/** @type {?} */
-const STATE_PROVIDERS = [
-    State,
-    { provide: StateObservable$1, useExisting: State },
-];
 
 /**
  * @fileoverview added by tsickle
@@ -1615,7 +1615,7 @@ class StoreRootModule {
     constructor(actions$, reducer$, scannedActions$, store, guard, actionCheck) { }
 }
 StoreRootModule.decorators = [
-    { type: NgModule, args: [{},] },
+    { type: NgModule, args: [{},] }
 ];
 /** @nocollapse */
 StoreRootModule.ctorParameters = () => [
@@ -1661,7 +1661,7 @@ class StoreFeatureModule {
     }
 }
 StoreFeatureModule.decorators = [
-    { type: NgModule, args: [{},] },
+    { type: NgModule, args: [{},] }
 ];
 /** @nocollapse */
 StoreFeatureModule.ctorParameters = () => [
@@ -1829,7 +1829,7 @@ class StoreModule {
     }
 }
 StoreModule.decorators = [
-    { type: NgModule, args: [{},] },
+    { type: NgModule, args: [{},] }
 ];
 /**
  * @param {?} injector
@@ -2048,5 +2048,5 @@ function createReducer(initialState, ...ons) {
  * @suppress {checkTypes,constantProperty,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
  */
 
-export { ActionsSubject$1 as ActionsSubject, FEATURE_REDUCERS, INIT, INITIAL_REDUCERS, INITIAL_STATE, META_REDUCERS, REDUCER_FACTORY, ReducerManager$1 as ReducerManager, ReducerManagerDispatcher, ReducerObservable$1 as ReducerObservable, STORE_FEATURES, ScannedActionsSubject$1 as ScannedActionsSubject, State, StateObservable$1 as StateObservable, Store, StoreFeatureModule, StoreModule, StoreRootModule, UPDATE, USER_PROVIDED_META_REDUCERS, USER_RUNTIME_CHECKS, combineReducers, compose, createAction, createFeatureSelector, createReducer, createReducerFactory, createSelector, createSelectorFactory, defaultMemoize, defaultStateFn, isNgrxMockEnvironment, on, props, reduceState, resultMemoize, select, setNgrxMockEnvironment, union, STORE_PROVIDERS as ɵb, createActiveRuntimeChecks as ɵba, createSerializationCheckMetaReducer as ɵbb, createImmutabilityCheckMetaReducer as ɵbc, createInNgZoneCheckMetaReducer as ɵbd, provideRuntimeChecks as ɵbe, checkForActionTypeUniqueness as ɵbf, _runtimeChecksFactory as ɵbg, _actionTypeUniquenessCheck as ɵbh, ACTIONS_SUBJECT_PROVIDERS as ɵc, REDUCER_MANAGER_PROVIDERS as ɵd, SCANNED_ACTIONS_SUBJECT_PROVIDERS as ɵe, isEqualCheck as ɵf, STATE_PROVIDERS as ɵg, _ROOT_STORE_GUARD as ɵh, _INITIAL_STATE as ɵi, _REDUCER_FACTORY as ɵj, _INITIAL_REDUCERS as ɵk, _STORE_REDUCERS as ɵl, _FEATURE_REDUCERS as ɵm, _FEATURE_CONFIGS as ɵn, _STORE_FEATURES as ɵo, _FEATURE_REDUCERS_TOKEN as ɵp, _RESOLVED_META_REDUCERS as ɵq, _USER_RUNTIME_CHECKS as ɵr, _ACTIVE_RUNTIME_CHECKS as ɵs, _ACTION_TYPE_UNIQUENESS_CHECK as ɵt, _createStoreReducers as ɵu, _createFeatureStore as ɵv, _createFeatureReducers as ɵw, _initialStateFactory as ɵx, _concatMetaReducers as ɵy, _provideForRootGuard as ɵz };
+export { ActionsSubject, FEATURE_REDUCERS, INIT, INITIAL_REDUCERS, INITIAL_STATE, META_REDUCERS, REDUCER_FACTORY, ReducerManager, ReducerManagerDispatcher, ReducerObservable, STORE_FEATURES, ScannedActionsSubject, State, StateObservable, Store, StoreFeatureModule, StoreModule, StoreRootModule, UPDATE, USER_PROVIDED_META_REDUCERS, USER_RUNTIME_CHECKS, combineReducers, compose, createAction, createFeatureSelector, createReducer, createReducerFactory, createSelector, createSelectorFactory, defaultMemoize, defaultStateFn, isNgrxMockEnvironment, on, props, reduceState, resultMemoize, select, setNgrxMockEnvironment, union, STORE_PROVIDERS as ɵb, createActiveRuntimeChecks as ɵba, createSerializationCheckMetaReducer as ɵbb, createImmutabilityCheckMetaReducer as ɵbc, createInNgZoneCheckMetaReducer as ɵbd, provideRuntimeChecks as ɵbe, checkForActionTypeUniqueness as ɵbf, _runtimeChecksFactory as ɵbg, _actionTypeUniquenessCheck as ɵbh, ACTIONS_SUBJECT_PROVIDERS as ɵc, REDUCER_MANAGER_PROVIDERS as ɵd, SCANNED_ACTIONS_SUBJECT_PROVIDERS as ɵe, isEqualCheck as ɵf, STATE_PROVIDERS as ɵg, _ROOT_STORE_GUARD as ɵh, _INITIAL_STATE as ɵi, _REDUCER_FACTORY as ɵj, _INITIAL_REDUCERS as ɵk, _STORE_REDUCERS as ɵl, _FEATURE_REDUCERS as ɵm, _FEATURE_CONFIGS as ɵn, _STORE_FEATURES as ɵo, _FEATURE_REDUCERS_TOKEN as ɵp, _RESOLVED_META_REDUCERS as ɵq, _USER_RUNTIME_CHECKS as ɵr, _ACTIVE_RUNTIME_CHECKS as ɵs, _ACTION_TYPE_UNIQUENESS_CHECK as ɵt, _createStoreReducers as ɵu, _createFeatureStore as ɵv, _createFeatureReducers as ɵw, _initialStateFactory as ɵx, _concatMetaReducers as ɵy, _provideForRootGuard as ɵz };
 //# sourceMappingURL=ngrx-store.js.map

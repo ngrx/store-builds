@@ -1,1 +1,1 @@
-f892cc8 feat(component-store): add support for side effects (#2544)
+d7958e7 build: fix path resolution with library dependencies (#2554)

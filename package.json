@@ -48,7 +48,6 @@
   "typings": "ngrx-store.d.ts",
   "metadata": "ngrx-store.metadata.json",
   "dependencies": {
-    "tslib": "^1.10.0",
-    "@angular/platform-browser": "^9.1.0"
+    "tslib": "^1.10.0"
   }
 }

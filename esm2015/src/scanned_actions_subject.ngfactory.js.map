@@ -1,1 +1,0 @@
-{"version":3,"file":"scanned_actions_subject.ngfactory.js","sourceRoot":"ng://@ngrx/store/","sources":["src/scanned_actions_subject.ngfactory.ts"],"names":[],"mappings":"","sourcesContent":["import * as i0 from '@angular/core';\ni0.ComponentFactory;\n"]}

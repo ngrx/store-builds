@@ -27,11 +27,11 @@ var MockState = /** @class */ (function (_super) {
         return _super.call(this, (/** @type {?} */ ({}))) || this;
     }
     MockState.decorators = [
-        { type: Injectable },
+        { type: Injectable }
     ];
     /** @nocollapse */
     MockState.ctorParameters = function () { return []; };
     return MockState;
 }(BehaviorSubject));
 export { MockState };
-//# sourceMappingURL=mock_state.js.map
+//# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJmaWxlIjoibW9ja19zdGF0ZS5qcyIsInNvdXJjZVJvb3QiOiJuZzovL0BuZ3J4L3N0b3JlL3Rlc3RpbmcvIiwic291cmNlcyI6WyJtb2NrX3N0YXRlLnRzIl0sIm5hbWVzIjpbXSwibWFwcGluZ3MiOiI7Ozs7Ozs7Ozs7Ozs7Ozs7OztBQUFBLE9BQU8sRUFBRSxVQUFVLEVBQUUsTUFBTSxlQUFlLENBQUM7QUFDM0MsT0FBTyxFQUFFLGVBQWUsRUFBRSxNQUFNLE1BQU0sQ0FBQzs7OztBQUV2QztJQUM2Qyw2QkFBa0I7SUFDN0Q7ZUFDRSxrQkFBTSxtQkFBRyxFQUFFLEVBQUEsQ0FBQztJQUNkLENBQUM7O2dCQUpGLFVBQVU7Ozs7SUFLWCxnQkFBQztDQUFBLEFBTEQsQ0FDNkMsZUFBZSxHQUkzRDtTQUpZLFNBQVMiLCJzb3VyY2VzQ29udGVudCI6WyJpbXBvcnQgeyBJbmplY3RhYmxlIH0gZnJvbSAnQGFuZ3VsYXIvY29yZSc7XG5pbXBvcnQgeyBCZWhhdmlvclN1YmplY3QgfSBmcm9tICdyeGpzJztcblxuQEluamVjdGFibGUoKVxuZXhwb3J0IGNsYXNzIE1vY2tTdGF0ZTxUIGV4dGVuZHMge30+IGV4dGVuZHMgQmVoYXZpb3JTdWJqZWN0PFQ+IHtcbiAgY29uc3RydWN0b3IoKSB7XG4gICAgc3VwZXIoPFQ+e30pO1xuICB9XG59XG4iXX0=

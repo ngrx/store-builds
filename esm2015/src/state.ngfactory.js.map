@@ -1,1 +1,0 @@
-{"version":3,"file":"state.ngfactory.js","sourceRoot":"ng://@ngrx/store/","sources":["src/state.ngfactory.ts"],"names":[],"mappings":"","sourcesContent":["import * as i0 from '@angular/core';\ni0.ComponentFactory;\n"]}

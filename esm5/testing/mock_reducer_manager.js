@@ -49,11 +49,11 @@ var MockReducerManager = /** @class */ (function (_super) {
         /* noop */
     };
     MockReducerManager.decorators = [
-        { type: Injectable },
+        { type: Injectable }
     ];
     /** @nocollapse */
     MockReducerManager.ctorParameters = function () { return []; };
     return MockReducerManager;
 }(BehaviorSubject));
 export { MockReducerManager };
-//# sourceMappingURL=mock_reducer_manager.js.map
+//# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJmaWxlIjoibW9ja19yZWR1Y2VyX21hbmFnZXIuanMiLCJzb3VyY2VSb290Ijoibmc6Ly9AbmdyeC9zdG9yZS90ZXN0aW5nLyIsInNvdXJjZXMiOlsibW9ja19yZWR1Y2VyX21hbmFnZXIudHMiXSwibmFtZXMiOltdLCJtYXBwaW5ncyI6Ijs7Ozs7Ozs7Ozs7Ozs7Ozs7O0FBQUEsT0FBTyxFQUFFLFVBQVUsRUFBRSxNQUFNLGVBQWUsQ0FBQztBQUMzQyxPQUFPLEVBQUUsZUFBZSxFQUFFLE1BQU0sTUFBTSxDQUFDO0FBR3ZDO0lBQ3dDLHNDQUV2QztJQUNDO2VBQ0U7OztRQUFNLGNBQU0sT0FBQSxTQUFTLEVBQVQsQ0FBUyxFQUFDO0lBQ3hCLENBQUM7Ozs7O0lBRUQsdUNBQVU7Ozs7SUFBVixVQUFXLE9BQVk7UUFDckIsVUFBVTtJQUNaLENBQUM7Ozs7O0lBRUQsd0NBQVc7Ozs7SUFBWCxVQUFZLE9BQVk7UUFDdEIsVUFBVTtJQUNaLENBQUM7O2dCQWRGLFVBQVU7Ozs7SUFlWCx5QkFBQztDQUFBLEFBZkQsQ0FDd0MsZUFBZSxHQWN0RDtTQWRZLGtCQUFrQiIsInNvdXJjZXNDb250ZW50IjpbImltcG9ydCB7IEluamVjdGFibGUgfSBmcm9tICdAYW5ndWxhci9jb3JlJztcbmltcG9ydCB7IEJlaGF2aW9yU3ViamVjdCB9IGZyb20gJ3J4anMnO1xuaW1wb3J0IHsgQWN0aW9uUmVkdWNlciB9IGZyb20gJ0BuZ3J4L3N0b3JlJztcblxuQEluamVjdGFibGUoKVxuZXhwb3J0IGNsYXNzIE1vY2tSZWR1Y2VyTWFuYWdlciBleHRlbmRzIEJlaGF2aW9yU3ViamVjdDxcbiAgQWN0aW9uUmVkdWNlcjxhbnksIGFueT5cbj4ge1xuICBjb25zdHJ1Y3RvcigpIHtcbiAgICBzdXBlcigoKSA9PiB1bmRlZmluZWQpO1xuICB9XG5cbiAgYWRkRmVhdHVyZShmZWF0dXJlOiBhbnkpIHtcbiAgICAvKiBub29wICovXG4gIH1cblxuICBhZGRGZWF0dXJlcyhmZWF0dXJlOiBhbnkpIHtcbiAgICAvKiBub29wICovXG4gIH1cbn1cbiJdfQ==

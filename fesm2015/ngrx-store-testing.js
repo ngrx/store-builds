@@ -1,6 +1,6 @@
 import { Injectable, InjectionToken, Inject } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
-import { Store, createSelector, INITIAL_STATE, setNgrxMockEnvironment, ActionsSubject as ActionsSubject$1, StateObservable, ReducerManager as ReducerManager$1 } from '@ngrx/store';
+import { Store, createSelector, ActionsSubject, ReducerManager, INITIAL_STATE, setNgrxMockEnvironment, StateObservable } from '@ngrx/store';
 import { TestBed } from '@angular/core/testing';
 
 /**
@@ -11,16 +11,16 @@ import { TestBed } from '@angular/core/testing';
 /**
  * @template T
  */
-class MockState$1 extends BehaviorSubject {
+class MockState extends BehaviorSubject {
     constructor() {
         super((/** @type {?} */ ({})));
     }
 }
-MockState$1.decorators = [
-    { type: Injectable },
+MockState.decorators = [
+    { type: Injectable }
 ];
 /** @nocollapse */
-MockState$1.ctorParameters = () => [];
+MockState.ctorParameters = () => [];
 
 /**
  * @fileoverview added by tsickle
@@ -147,7 +147,7 @@ class MockStore extends Store {
     }
 }
 MockStore.decorators = [
-    { type: Injectable },
+    { type: Injectable }
 ];
 /** @nocollapse */
 MockStore.ctorParameters = () => [
@@ -210,7 +210,7 @@ class MockReducerManager extends BehaviorSubject {
     }
 }
 MockReducerManager.decorators = [
-    { type: Injectable },
+    { type: Injectable }
 ];
 /** @nocollapse */
 MockReducerManager.ctorParameters = () => [];
@@ -239,13 +239,13 @@ if (false) {
 function provideMockStore(config = {}) {
     setNgrxMockEnvironment(true);
     return [
-        ActionsSubject$1,
-        MockState$1,
+        ActionsSubject,
+        MockState,
         MockStore,
         { provide: INITIAL_STATE, useValue: config.initialState || {} },
         { provide: MOCK_SELECTORS, useValue: config.selectors },
-        { provide: StateObservable, useClass: MockState$1 },
-        { provide: ReducerManager$1, useClass: MockReducerManager },
+        { provide: StateObservable, useClass: MockState },
+        { provide: ReducerManager, useClass: MockReducerManager },
         { provide: Store, useExisting: MockStore },
     ];
 }
@@ -262,5 +262,5 @@ function provideMockStore(config = {}) {
  * @suppress {checkTypes,constantProperty,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
  */
 
-export { MockReducerManager, MockState$1 as MockState, MockStore, provideMockStore, MOCK_SELECTORS as ɵa };
+export { MockReducerManager, MockState, MockStore, provideMockStore, MOCK_SELECTORS as ɵa };
 //# sourceMappingURL=ngrx-store-testing.js.map
