@@ -1,1 +1,1 @@
-f2a2212 fix(component-store): export EffectReturnFn interface (#2555)
+75ccf92 refactor(component-store): make Closure Compiler happy with Error (#2565)
