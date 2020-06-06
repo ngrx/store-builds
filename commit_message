@@ -1,1 +1,1 @@
-75ccf92 refactor(component-store): make Closure Compiler happy with Error (#2565)
+0b41c71 refactor(component): clean up cdAware creator and simplify strategy (#2566)
