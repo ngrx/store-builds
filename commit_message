@@ -1,1 +1,1 @@
-39ccd01 chore(data): fix assertions for merge strategy tests (#2567)
+de02aa73 refactor(store): assert value for RxJS v7 compatibility (#2571)

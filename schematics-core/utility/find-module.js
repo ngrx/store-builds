@@ -22,9 +22,7 @@ function findModuleFromOptions(host, options) {
     }
     else {
         var modulePath = core_1.normalize('/' + options.path + '/' + options.module);
-        var moduleBaseName = core_1.normalize(modulePath)
-            .split('/')
-            .pop();
+        var moduleBaseName = core_1.normalize(modulePath).split('/').pop();
         if (host.exists(modulePath)) {
             return core_1.normalize(modulePath);
         }

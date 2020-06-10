@@ -131,9 +131,7 @@ function insertAfterLastOccurrence(nodes, toInsert, file, fallbackPos, syntaxKin
         throw new Error();
     }
     if (syntaxKind) {
-        lastItem = findNodes(lastItem, syntaxKind)
-            .sort(nodesByPosition)
-            .pop();
+        lastItem = findNodes(lastItem, syntaxKind).sort(nodesByPosition).pop();
     }
     if (!lastItem && fallbackPos == undefined) {
         throw new Error("tried to insert " + toInsert + " as first occurence with no fallback position");
@@ -203,7 +201,9 @@ function _angularImportsFromNode(node, _sourceFile) {
 }
 function getDecoratorMetadata(source, identifier, module) {
     var angularImports = findNodes(source, ts.SyntaxKind.ImportDeclaration)
-        .map(function (node) { return _angularImportsFromNode(node, source); })
+        .map(function (node) {
+        return _angularImportsFromNode(node, source);
+    })
         .reduce(function (acc, current) {
         var e_2, _a;
         try {

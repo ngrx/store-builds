@@ -331,7 +331,7 @@ function omit(object, keyToRemove) {
      * @param {?} key
      * @return {?}
      */
-    key => key !== keyToRemove))
+    (key) => key !== keyToRemove))
         .reduce((/**
      * @param {?} result
      * @param {?} key
@@ -504,7 +504,7 @@ class ReducerManager extends BehaviorSubject {
          * @param {?} p
          * @return {?}
          */
-        p => p.key)));
+        (p) => p.key)));
     }
     /**
      * @param {?} key
@@ -538,7 +538,7 @@ class ReducerManager extends BehaviorSubject {
          * @param {?} key
          * @return {?}
          */
-        key => {
+        (key) => {
             this.reducers = (/** @type {?} */ (omit(this.reducers, key) /*TODO(#823)*/));
         }));
         this.updateReducers(featureKeys);
@@ -658,7 +658,7 @@ class State extends BehaviorSubject {
          */
         ({ state, action }) => {
             this.next(state);
-            scannedActions.next(action);
+            scannedActions.next((/** @type {?} */ (action)));
         }));
     }
     /**
@@ -839,7 +839,7 @@ function select(pathOrMapFn, propsOrPath, ...paths) {
              * @param {?} source
              * @return {?}
              */
-            source => pathOrMapFn(source, (/** @type {?} */ (propsOrPath))))));
+            (source) => pathOrMapFn(source, (/** @type {?} */ (propsOrPath))))));
         }
         else {
             throw new TypeError(`Unexpected type '${typeof pathOrMapFn}' in select operator,` +
@@ -1266,7 +1266,7 @@ function freeze(target) {
      * @param {?} prop
      * @return {?}
      */
-    prop => {
+    (prop) => {
         // Ignore Ivy properties, ref: https://github.com/ngrx/platform/issues/2109#issuecomment-582689060
         if (prop.startsWith('ɵ')) {
             return;
@@ -1878,7 +1878,7 @@ function _createFeatureReducers(injector, reducerCollection) {
      * @param {?} reducer
      * @return {?}
      */
-    reducer => {
+    (reducer) => {
         return reducer instanceof InjectionToken ? injector.get(reducer) : reducer;
     }));
     return reducers;
