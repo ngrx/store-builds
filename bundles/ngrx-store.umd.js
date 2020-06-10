@@ -855,7 +855,7 @@
             function (_a) {
                 var state = _a.state, action = _a.action;
                 _this.next(state);
-                scannedActions.next((/** @type {?} */ (action)));
+                scannedActions.next(action);
             }));
             return _this;
         }

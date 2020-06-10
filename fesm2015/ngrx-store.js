@@ -658,7 +658,7 @@ class State extends BehaviorSubject {
          */
         ({ state, action }) => {
             this.next(state);
-            scannedActions.next((/** @type {?} */ (action)));
+            scannedActions.next(action);
         }));
     }
     /**
