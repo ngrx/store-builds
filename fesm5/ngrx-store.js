@@ -853,7 +853,7 @@ var State = /** @class */ (function (_super) {
         function (_a) {
             var state = _a.state, action = _a.action;
             _this.next(state);
-            scannedActions.next(action);
+            scannedActions.next((/** @type {?} */ (action)));
         }));
         return _this;
     }
