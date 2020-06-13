@@ -39,15 +39,13 @@
   },
   "sideEffects": false,
   "main": "bundles/ngrx-store.umd.js",
-  "module": "fesm5/ngrx-store.js",
+  "module": "fesm2015/ngrx-store.js",
   "es2015": "fesm2015/ngrx-store.js",
-  "esm5": "esm5/ngrx-store.js",
   "esm2015": "esm2015/ngrx-store.js",
-  "fesm5": "fesm5/ngrx-store.js",
   "fesm2015": "fesm2015/ngrx-store.js",
   "typings": "ngrx-store.d.ts",
   "metadata": "ngrx-store.metadata.json",
   "dependencies": {
-    "tslib": "^1.10.0"
+    "tslib": "^2.0.0"
   }
 }

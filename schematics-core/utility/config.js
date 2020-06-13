@@ -1,5 +1,6 @@
 "use strict";
 exports.__esModule = true;
+exports.getWorkspace = exports.getWorkspacePath = void 0;
 var schematics_1 = require("@angular-devkit/schematics");
 function getWorkspacePath(host) {
     var possibleFiles = ['/angular.json', '/.angular.json'];

@@ -1,5 +1,6 @@
 "use strict";
 exports.__esModule = true;
+exports.isLib = exports.getProjectPath = exports.getProject = void 0;
 var config_1 = require("./config");
 function getProject(host, options) {
     var workspace = config_1.getWorkspace(host);

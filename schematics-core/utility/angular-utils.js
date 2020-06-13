@@ -1,5 +1,6 @@
 "use strict";
 exports.__esModule = true;
+exports.isIvyEnabled = void 0;
 var core_1 = require("@angular-devkit/core");
 var json_utilts_1 = require("./json-utilts");
 // https://github.com/angular/angular-cli/blob/master/packages/schematics/angular/migrations/update-9/utils.ts

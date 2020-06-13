@@ -1,5 +1,6 @@
 "use strict";
 exports.__esModule = true;
+exports.featurePath = exports.group = exports.pluralize = exports.capitalize = exports.underscore = exports.classify = exports.camelize = exports.dasherize = exports.decamelize = void 0;
 /**
  * @license
  * Copyright Google Inc. All Rights Reserved.

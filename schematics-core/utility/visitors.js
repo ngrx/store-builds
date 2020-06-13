@@ -54,6 +54,7 @@ var __read = (this && this.__read) || function (o, n) {
     return ar;
 };
 exports.__esModule = true;
+exports.visitDecorator = exports.visitNgModules = exports.visitComponents = exports.visitNgModuleExports = exports.visitNgModuleImports = exports.visitTemplates = exports.visitTSSourceFiles = void 0;
 var ts = require("typescript");
 var core_1 = require("@angular-devkit/core");
 function visitTSSourceFiles(tree, visitor) {

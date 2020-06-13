@@ -1,5 +1,6 @@
 "use strict";
 exports.__esModule = true;
+exports.parseName = void 0;
 var core_1 = require("@angular-devkit/core");
 function parseName(path, name) {
     var nameWithoutPath = core_1.basename(name);

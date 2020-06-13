@@ -1,5 +1,6 @@
 "use strict";
 exports.__esModule = true;
+exports.addPackageToPackageJson = void 0;
 /**
  * Adds a package to the package.json
  */

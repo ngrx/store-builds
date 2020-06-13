@@ -1,5 +1,6 @@
 "use strict";
 exports.__esModule = true;
+exports.buildRelativePath = exports.findModule = exports.findModuleFromOptions = void 0;
 /**
  * @license
  * Copyright Google Inc. All Rights Reserved.

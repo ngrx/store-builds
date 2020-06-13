@@ -2,7 +2,299 @@
     typeof exports === 'object' && typeof module !== 'undefined' ? factory(exports, require('@angular/core'), require('rxjs'), require('rxjs/operators')) :
     typeof define === 'function' && define.amd ? define('@ngrx/store', ['exports', '@angular/core', 'rxjs', 'rxjs/operators'], factory) :
     (global = global || self, factory((global.ngrx = global.ngrx || {}, global.ngrx.store = {}), global.ng.core, global.rxjs, global.rxjs.operators));
-}(this, (function (exports, core, rxjs, operators) { 'use strict';
+}(this, (function (exports, ngCore, rxjs, operators) { 'use strict';
+
+    /*! *****************************************************************************
+    Copyright (c) Microsoft Corporation.
+
+    Permission to use, copy, modify, and/or distribute this software for any
+    purpose with or without fee is hereby granted.
+
+    THE SOFTWARE IS PROVIDED "AS IS" AND THE AUTHOR DISCLAIMS ALL WARRANTIES WITH
+    REGARD TO THIS SOFTWARE INCLUDING ALL IMPLIED WARRANTIES OF MERCHANTABILITY
+    AND FITNESS. IN NO EVENT SHALL THE AUTHOR BE LIABLE FOR ANY SPECIAL, DIRECT,
+    INDIRECT, OR CONSEQUENTIAL DAMAGES OR ANY DAMAGES WHATSOEVER RESULTING FROM
+    LOSS OF USE, DATA OR PROFITS, WHETHER IN AN ACTION OF CONTRACT, NEGLIGENCE OR
+    OTHER TORTIOUS ACTION, ARISING OUT OF OR IN CONNECTION WITH THE USE OR
+    PERFORMANCE OF THIS SOFTWARE.
+    ***************************************************************************** */
+    /* global Reflect, Promise */
+    var extendStatics = function (d, b) {
+        extendStatics = Object.setPrototypeOf ||
+            ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
+            function (d, b) { for (var p in b)
+                if (b.hasOwnProperty(p))
+                    d[p] = b[p]; };
+        return extendStatics(d, b);
+    };
+    function __extends(d, b) {
+        extendStatics(d, b);
+        function __() { this.constructor = d; }
+        d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
+    }
+    var __assign = function () {
+        __assign = Object.assign || function __assign(t) {
+            for (var s, i = 1, n = arguments.length; i < n; i++) {
+                s = arguments[i];
+                for (var p in s)
+                    if (Object.prototype.hasOwnProperty.call(s, p))
+                        t[p] = s[p];
+            }
+            return t;
+        };
+        return __assign.apply(this, arguments);
+    };
+    function __rest(s, e) {
+        var t = {};
+        for (var p in s)
+            if (Object.prototype.hasOwnProperty.call(s, p) && e.indexOf(p) < 0)
+                t[p] = s[p];
+        if (s != null && typeof Object.getOwnPropertySymbols === "function")
+            for (var i = 0, p = Object.getOwnPropertySymbols(s); i < p.length; i++) {
+                if (e.indexOf(p[i]) < 0 && Object.prototype.propertyIsEnumerable.call(s, p[i]))
+                    t[p[i]] = s[p[i]];
+            }
+        return t;
+    }
+    function __decorate(decorators, target, key, desc) {
+        var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+        if (typeof Reflect === "object" && typeof Reflect.decorate === "function")
+            r = Reflect.decorate(decorators, target, key, desc);
+        else
+            for (var i = decorators.length - 1; i >= 0; i--)
+                if (d = decorators[i])
+                    r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+        return c > 3 && r && Object.defineProperty(target, key, r), r;
+    }
+    function __param(paramIndex, decorator) {
+        return function (target, key) { decorator(target, key, paramIndex); };
+    }
+    function __metadata(metadataKey, metadataValue) {
+        if (typeof Reflect === "object" && typeof Reflect.metadata === "function")
+            return Reflect.metadata(metadataKey, metadataValue);
+    }
+    function __awaiter(thisArg, _arguments, P, generator) {
+        function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
+        return new (P || (P = Promise))(function (resolve, reject) {
+            function fulfilled(value) { try {
+                step(generator.next(value));
+            }
+            catch (e) {
+                reject(e);
+            } }
+            function rejected(value) { try {
+                step(generator["throw"](value));
+            }
+            catch (e) {
+                reject(e);
+            } }
+            function step(result) { result.done ? resolve(result.value) : adopt(result.value).then(fulfilled, rejected); }
+            step((generator = generator.apply(thisArg, _arguments || [])).next());
+        });
+    }
+    function __generator(thisArg, body) {
+        var _ = { label: 0, sent: function () { if (t[0] & 1)
+                throw t[1]; return t[1]; }, trys: [], ops: [] }, f, y, t, g;
+        return g = { next: verb(0), "throw": verb(1), "return": verb(2) }, typeof Symbol === "function" && (g[Symbol.iterator] = function () { return this; }), g;
+        function verb(n) { return function (v) { return step([n, v]); }; }
+        function step(op) {
+            if (f)
+                throw new TypeError("Generator is already executing.");
+            while (_)
+                try {
+                    if (f = 1, y && (t = op[0] & 2 ? y["return"] : op[0] ? y["throw"] || ((t = y["return"]) && t.call(y), 0) : y.next) && !(t = t.call(y, op[1])).done)
+                        return t;
+                    if (y = 0, t)
+                        op = [op[0] & 2, t.value];
+                    switch (op[0]) {
+                        case 0:
+                        case 1:
+                            t = op;
+                            break;
+                        case 4:
+                            _.label++;
+                            return { value: op[1], done: false };
+                        case 5:
+                            _.label++;
+                            y = op[1];
+                            op = [0];
+                            continue;
+                        case 7:
+                            op = _.ops.pop();
+                            _.trys.pop();
+                            continue;
+                        default:
+                            if (!(t = _.trys, t = t.length > 0 && t[t.length - 1]) && (op[0] === 6 || op[0] === 2)) {
+                                _ = 0;
+                                continue;
+                            }
+                            if (op[0] === 3 && (!t || (op[1] > t[0] && op[1] < t[3]))) {
+                                _.label = op[1];
+                                break;
+                            }
+                            if (op[0] === 6 && _.label < t[1]) {
+                                _.label = t[1];
+                                t = op;
+                                break;
+                            }
+                            if (t && _.label < t[2]) {
+                                _.label = t[2];
+                                _.ops.push(op);
+                                break;
+                            }
+                            if (t[2])
+                                _.ops.pop();
+                            _.trys.pop();
+                            continue;
+                    }
+                    op = body.call(thisArg, _);
+                }
+                catch (e) {
+                    op = [6, e];
+                    y = 0;
+                }
+                finally {
+                    f = t = 0;
+                }
+            if (op[0] & 5)
+                throw op[1];
+            return { value: op[0] ? op[1] : void 0, done: true };
+        }
+    }
+    function __createBinding(o, m, k, k2) {
+        if (k2 === undefined)
+            k2 = k;
+        o[k2] = m[k];
+    }
+    function __exportStar(m, exports) {
+        for (var p in m)
+            if (p !== "default" && !exports.hasOwnProperty(p))
+                exports[p] = m[p];
+    }
+    function __values(o) {
+        var s = typeof Symbol === "function" && Symbol.iterator, m = s && o[s], i = 0;
+        if (m)
+            return m.call(o);
+        if (o && typeof o.length === "number")
+            return {
+                next: function () {
+                    if (o && i >= o.length)
+                        o = void 0;
+                    return { value: o && o[i++], done: !o };
+                }
+            };
+        throw new TypeError(s ? "Object is not iterable." : "Symbol.iterator is not defined.");
+    }
+    function __read(o, n) {
+        var m = typeof Symbol === "function" && o[Symbol.iterator];
+        if (!m)
+            return o;
+        var i = m.call(o), r, ar = [], e;
+        try {
+            while ((n === void 0 || n-- > 0) && !(r = i.next()).done)
+                ar.push(r.value);
+        }
+        catch (error) {
+            e = { error: error };
+        }
+        finally {
+            try {
+                if (r && !r.done && (m = i["return"]))
+                    m.call(i);
+            }
+            finally {
+                if (e)
+                    throw e.error;
+            }
+        }
+        return ar;
+    }
+    function __spread() {
+        for (var ar = [], i = 0; i < arguments.length; i++)
+            ar = ar.concat(__read(arguments[i]));
+        return ar;
+    }
+    function __spreadArrays() {
+        for (var s = 0, i = 0, il = arguments.length; i < il; i++)
+            s += arguments[i].length;
+        for (var r = Array(s), k = 0, i = 0; i < il; i++)
+            for (var a = arguments[i], j = 0, jl = a.length; j < jl; j++, k++)
+                r[k] = a[j];
+        return r;
+    }
+    ;
+    function __await(v) {
+        return this instanceof __await ? (this.v = v, this) : new __await(v);
+    }
+    function __asyncGenerator(thisArg, _arguments, generator) {
+        if (!Symbol.asyncIterator)
+            throw new TypeError("Symbol.asyncIterator is not defined.");
+        var g = generator.apply(thisArg, _arguments || []), i, q = [];
+        return i = {}, verb("next"), verb("throw"), verb("return"), i[Symbol.asyncIterator] = function () { return this; }, i;
+        function verb(n) { if (g[n])
+            i[n] = function (v) { return new Promise(function (a, b) { q.push([n, v, a, b]) > 1 || resume(n, v); }); }; }
+        function resume(n, v) { try {
+            step(g[n](v));
+        }
+        catch (e) {
+            settle(q[0][3], e);
+        } }
+        function step(r) { r.value instanceof __await ? Promise.resolve(r.value.v).then(fulfill, reject) : settle(q[0][2], r); }
+        function fulfill(value) { resume("next", value); }
+        function reject(value) { resume("throw", value); }
+        function settle(f, v) { if (f(v), q.shift(), q.length)
+            resume(q[0][0], q[0][1]); }
+    }
+    function __asyncDelegator(o) {
+        var i, p;
+        return i = {}, verb("next"), verb("throw", function (e) { throw e; }), verb("return"), i[Symbol.iterator] = function () { return this; }, i;
+        function verb(n, f) { i[n] = o[n] ? function (v) { return (p = !p) ? { value: __await(o[n](v)), done: n === "return" } : f ? f(v) : v; } : f; }
+    }
+    function __asyncValues(o) {
+        if (!Symbol.asyncIterator)
+            throw new TypeError("Symbol.asyncIterator is not defined.");
+        var m = o[Symbol.asyncIterator], i;
+        return m ? m.call(o) : (o = typeof __values === "function" ? __values(o) : o[Symbol.iterator](), i = {}, verb("next"), verb("throw"), verb("return"), i[Symbol.asyncIterator] = function () { return this; }, i);
+        function verb(n) { i[n] = o[n] && function (v) { return new Promise(function (resolve, reject) { v = o[n](v), settle(resolve, reject, v.done, v.value); }); }; }
+        function settle(resolve, reject, d, v) { Promise.resolve(v).then(function (v) { resolve({ value: v, done: d }); }, reject); }
+    }
+    function __makeTemplateObject(cooked, raw) {
+        if (Object.defineProperty) {
+            Object.defineProperty(cooked, "raw", { value: raw });
+        }
+        else {
+            cooked.raw = raw;
+        }
+        return cooked;
+    }
+    ;
+    function __importStar(mod) {
+        if (mod && mod.__esModule)
+            return mod;
+        var result = {};
+        if (mod != null)
+            for (var k in mod)
+                if (Object.hasOwnProperty.call(mod, k))
+                    result[k] = mod[k];
+        result.default = mod;
+        return result;
+    }
+    function __importDefault(mod) {
+        return (mod && mod.__esModule) ? mod : { default: mod };
+    }
+    function __classPrivateFieldGet(receiver, privateMap) {
+        if (!privateMap.has(receiver)) {
+            throw new TypeError("attempted to get private field on non-instance");
+        }
+        return privateMap.get(receiver);
+    }
+    function __classPrivateFieldSet(receiver, privateMap, value) {
+        if (!privateMap.has(receiver)) {
+            throw new TypeError("attempted to set private field on non-instance");
+        }
+        privateMap.set(receiver, value);
+        return value;
+    }
 
     /**
      * @fileoverview added by tsickle
@@ -18,37 +310,6 @@
         REGISTERED_ACTION_TYPES = {};
     }
 
-    var __assign = (this && this.__assign) || function () {
-        __assign = Object.assign || function(t) {
-            for (var s, i = 1, n = arguments.length; i < n; i++) {
-                s = arguments[i];
-                for (var p in s) if (Object.prototype.hasOwnProperty.call(s, p))
-                    t[p] = s[p];
-            }
-            return t;
-        };
-        return __assign.apply(this, arguments);
-    };
-    var __read = (this && this.__read) || function (o, n) {
-        var m = typeof Symbol === "function" && o[Symbol.iterator];
-        if (!m) return o;
-        var i = m.call(o), r, ar = [], e;
-        try {
-            while ((n === void 0 || n-- > 0) && !(r = i.next()).done) ar.push(r.value);
-        }
-        catch (error) { e = { error: error }; }
-        finally {
-            try {
-                if (r && !r.done && (m = i["return"])) m.call(i);
-            }
-            finally { if (e) throw e.error; }
-        }
-        return ar;
-    };
-    var __spread = (this && this.__spread) || function () {
-        for (var ar = [], i = 0; i < arguments.length; i++) ar = ar.concat(__read(arguments[i]));
-        return ar;
-    };
     /**
      * \@description
      * Creates a configured `Creator` function that, when called, returns an object in the shape of the `Action` interface.
@@ -126,32 +387,29 @@
     function createAction(type, config) {
         REGISTERED_ACTION_TYPES[type] = (REGISTERED_ACTION_TYPES[type] || 0) + 1;
         if (typeof config === 'function') {
-            return defineType(type, (/**
+            return defineType(type, ( /**
              * @param {...?} args
              * @return {?}
-             */
-            function () {
+             */function () {
                 var args = [];
                 for (var _i = 0; _i < arguments.length; _i++) {
                     args[_i] = arguments[_i];
                 }
-                return (__assign(__assign({}, config.apply(void 0, __spread(args))), { type: type }));
+                return (Object.assign(Object.assign({}, config.apply(void 0, __spread(args))), { type: type }));
             }));
         }
         /** @type {?} */
         var as = config ? config._as : 'empty';
         switch (as) {
             case 'empty':
-                return defineType(type, (/**
+                return defineType(type, ( /**
                  * @return {?}
-                 */
-                function () { return ({ type: type }); }));
+                 */function () { return ({ type: type }); }));
             case 'props':
-                return defineType(type, (/**
+                return defineType(type, ( /**
                  * @param {?} props
                  * @return {?}
-                 */
-                function (props) { return (__assign(__assign({}, props), { type: type })); }));
+                 */function (props) { return (Object.assign(Object.assign({}, props), { type: type })); }));
             default:
                 throw new Error('Unexpected config.');
         }
@@ -161,7 +419,7 @@
      * @return {?}
      */
     function props() {
-        return { _as: 'props', _p: (/** @type {?} */ (undefined)) };
+        return { _as: 'props', _p: ( /** @type {?} */(undefined)) };
     }
     /**
      * @template C
@@ -169,7 +427,7 @@
      * @return {?}
      */
     function union(creators) {
-        return (/** @type {?} */ (undefined));
+        return ( /** @type {?} */(undefined));
     }
     /**
      * @template T
@@ -184,21 +442,8 @@
         });
     }
 
-    var __extends = (this && this.__extends) || (function () {
-        var extendStatics = function (d, b) {
-            extendStatics = Object.setPrototypeOf ||
-                ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
-                function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
-            return extendStatics(d, b);
-        };
-        return function (d, b) {
-            extendStatics(d, b);
-            function __() { this.constructor = d; }
-            d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
-        };
-    })();
     /** @type {?} */
-    var INIT = (/** @type {?} */ ('@ngrx/store/init'));
+    var INIT = ( /** @type {?} */('@ngrx/store/init'));
     var ActionsSubject = /** @class */ (function (_super) {
         __extends(ActionsSubject, _super);
         function ActionsSubject() {
@@ -208,11 +453,7 @@
          * @param {?} action
          * @return {?}
          */
-        ActionsSubject.prototype.next = /**
-         * @param {?} action
-         * @return {?}
-         */
-        function (action) {
+        ActionsSubject.prototype.next = function (action) {
             if (typeof action === 'function') {
                 throw new TypeError("\n        Dispatch expected an object, instead it received a function.\n        If you're using the createAction function, make sure to invoke the function\n        before dispatching the action. For example, someAction should be someAction().");
             }
@@ -227,28 +468,22 @@
         /**
          * @return {?}
          */
-        ActionsSubject.prototype.complete = /**
-         * @return {?}
-         */
-        function () {
+        ActionsSubject.prototype.complete = function () {
             /* noop */
         };
         /**
          * @return {?}
          */
-        ActionsSubject.prototype.ngOnDestroy = /**
-         * @return {?}
-         */
-        function () {
+        ActionsSubject.prototype.ngOnDestroy = function () {
             _super.prototype.complete.call(this);
         };
-        ActionsSubject.decorators = [
-            { type: core.Injectable }
-        ];
-        /** @nocollapse */
-        ActionsSubject.ctorParameters = function () { return []; };
         return ActionsSubject;
     }(rxjs.BehaviorSubject));
+    ActionsSubject.decorators = [
+        { type: ngCore.Injectable }
+    ];
+    /** @nocollapse */
+    ActionsSubject.ctorParameters = function () { return []; };
     /** @type {?} */
     var ACTIONS_SUBJECT_PROVIDERS = [ActionsSubject];
 
@@ -258,88 +493,68 @@
      * @suppress {checkTypes,constantProperty,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
      */
     /** @type {?} */
-    var _ROOT_STORE_GUARD = new core.InjectionToken('@ngrx/store Internal Root Guard');
+    var _ROOT_STORE_GUARD = new ngCore.InjectionToken('@ngrx/store Internal Root Guard');
     /** @type {?} */
-    var _INITIAL_STATE = new core.InjectionToken('@ngrx/store Internal Initial State');
+    var _INITIAL_STATE = new ngCore.InjectionToken('@ngrx/store Internal Initial State');
     /** @type {?} */
-    var INITIAL_STATE = new core.InjectionToken('@ngrx/store Initial State');
+    var INITIAL_STATE = new ngCore.InjectionToken('@ngrx/store Initial State');
     /** @type {?} */
-    var REDUCER_FACTORY = new core.InjectionToken('@ngrx/store Reducer Factory');
+    var REDUCER_FACTORY = new ngCore.InjectionToken('@ngrx/store Reducer Factory');
     /** @type {?} */
-    var _REDUCER_FACTORY = new core.InjectionToken('@ngrx/store Internal Reducer Factory Provider');
+    var _REDUCER_FACTORY = new ngCore.InjectionToken('@ngrx/store Internal Reducer Factory Provider');
     /** @type {?} */
-    var INITIAL_REDUCERS = new core.InjectionToken('@ngrx/store Initial Reducers');
+    var INITIAL_REDUCERS = new ngCore.InjectionToken('@ngrx/store Initial Reducers');
     /** @type {?} */
-    var _INITIAL_REDUCERS = new core.InjectionToken('@ngrx/store Internal Initial Reducers');
+    var _INITIAL_REDUCERS = new ngCore.InjectionToken('@ngrx/store Internal Initial Reducers');
     /** @type {?} */
-    var STORE_FEATURES = new core.InjectionToken('@ngrx/store Store Features');
+    var STORE_FEATURES = new ngCore.InjectionToken('@ngrx/store Store Features');
     /** @type {?} */
-    var _STORE_REDUCERS = new core.InjectionToken('@ngrx/store Internal Store Reducers');
+    var _STORE_REDUCERS = new ngCore.InjectionToken('@ngrx/store Internal Store Reducers');
     /** @type {?} */
-    var _FEATURE_REDUCERS = new core.InjectionToken('@ngrx/store Internal Feature Reducers');
+    var _FEATURE_REDUCERS = new ngCore.InjectionToken('@ngrx/store Internal Feature Reducers');
     /** @type {?} */
-    var _FEATURE_CONFIGS = new core.InjectionToken('@ngrx/store Internal Feature Configs');
+    var _FEATURE_CONFIGS = new ngCore.InjectionToken('@ngrx/store Internal Feature Configs');
     /** @type {?} */
-    var _STORE_FEATURES = new core.InjectionToken('@ngrx/store Internal Store Features');
+    var _STORE_FEATURES = new ngCore.InjectionToken('@ngrx/store Internal Store Features');
     /** @type {?} */
-    var _FEATURE_REDUCERS_TOKEN = new core.InjectionToken('@ngrx/store Internal Feature Reducers Token');
+    var _FEATURE_REDUCERS_TOKEN = new ngCore.InjectionToken('@ngrx/store Internal Feature Reducers Token');
     /** @type {?} */
-    var FEATURE_REDUCERS = new core.InjectionToken('@ngrx/store Feature Reducers');
+    var FEATURE_REDUCERS = new ngCore.InjectionToken('@ngrx/store Feature Reducers');
     /**
      * User-defined meta reducers from StoreModule.forRoot()
      * @type {?}
      */
-    var USER_PROVIDED_META_REDUCERS = new core.InjectionToken('@ngrx/store User Provided Meta Reducers');
+    var USER_PROVIDED_META_REDUCERS = new ngCore.InjectionToken('@ngrx/store User Provided Meta Reducers');
     /**
      * Meta reducers defined either internally by \@ngrx/store or by library authors
      * @type {?}
      */
-    var META_REDUCERS = new core.InjectionToken('@ngrx/store Meta Reducers');
+    var META_REDUCERS = new ngCore.InjectionToken('@ngrx/store Meta Reducers');
     /**
      * Concats the user provided meta reducers and the meta reducers provided on the multi
      * injection token
      * @type {?}
      */
-    var _RESOLVED_META_REDUCERS = new core.InjectionToken('@ngrx/store Internal Resolved Meta Reducers');
+    var _RESOLVED_META_REDUCERS = new ngCore.InjectionToken('@ngrx/store Internal Resolved Meta Reducers');
     /**
      * Runtime checks defined by the user via an InjectionToken
      * Defaults to `_USER_RUNTIME_CHECKS`
      * @type {?}
      */
-    var USER_RUNTIME_CHECKS = new core.InjectionToken('@ngrx/store User Runtime Checks Config');
+    var USER_RUNTIME_CHECKS = new ngCore.InjectionToken('@ngrx/store User Runtime Checks Config');
     /**
      * Runtime checks defined by the user via forRoot()
      * @type {?}
      */
-    var _USER_RUNTIME_CHECKS = new core.InjectionToken('@ngrx/store Internal User Runtime Checks Config');
+    var _USER_RUNTIME_CHECKS = new ngCore.InjectionToken('@ngrx/store Internal User Runtime Checks Config');
     /**
      * Runtime checks currently in use
      * @type {?}
      */
-    var _ACTIVE_RUNTIME_CHECKS = new core.InjectionToken('@ngrx/store Internal Runtime Checks');
+    var _ACTIVE_RUNTIME_CHECKS = new ngCore.InjectionToken('@ngrx/store Internal Runtime Checks');
     /** @type {?} */
-    var _ACTION_TYPE_UNIQUENESS_CHECK = new core.InjectionToken('@ngrx/store Check if Action types are unique');
+    var _ACTION_TYPE_UNIQUENESS_CHECK = new ngCore.InjectionToken('@ngrx/store Check if Action types are unique');
 
-    var __read$1 = (this && this.__read) || function (o, n) {
-        var m = typeof Symbol === "function" && o[Symbol.iterator];
-        if (!m) return o;
-        var i = m.call(o), r, ar = [], e;
-        try {
-            while ((n === void 0 || n-- > 0) && !(r = i.next()).done) ar.push(r.value);
-        }
-        catch (error) { e = { error: error }; }
-        finally {
-            try {
-                if (r && !r.done && (m = i["return"])) m.call(i);
-            }
-            finally { if (e) throw e.error; }
-        }
-        return ar;
-    };
-    var __spread$1 = (this && this.__spread) || function () {
-        for (var ar = [], i = 0; i < arguments.length; i++) ar = ar.concat(__read$1(arguments[i]));
-        return ar;
-    };
     /**
      * @fileoverview added by tsickle
      * Generated from: src/utils.ts
@@ -365,12 +580,11 @@
         }
         /** @type {?} */
         var finalReducerKeys = Object.keys(finalReducers);
-        return (/**
+        return ( /**
          * @param {?} state
          * @param {?} action
          * @return {?}
-         */
-        function combination(state, action) {
+         */function combination(state, action) {
             state = state === undefined ? initialState : state;
             /** @type {?} */
             var hasChanged = false;
@@ -399,17 +613,15 @@
      */
     function omit(object, keyToRemove) {
         return Object.keys(object)
-            .filter((/**
-         * @param {?} key
-         * @return {?}
-         */
-        function (key) { return key !== keyToRemove; }))
-            .reduce((/**
-         * @param {?} result
-         * @param {?} key
-         * @return {?}
-         */
-        function (result, key) {
+            .filter(( /**
+     * @param {?} key
+     * @return {?}
+     */function (key) { return key !== keyToRemove; }))
+            .reduce(( /**
+     * @param {?} result
+     * @param {?} key
+     * @return {?}
+     */function (result, key) {
             var _a;
             return Object.assign(result, (_a = {}, _a[key] = object[key], _a));
         }), {});
@@ -423,11 +635,10 @@
         for (var _i = 0; _i < arguments.length; _i++) {
             functions[_i] = arguments[_i];
         }
-        return (/**
+        return ( /**
          * @param {?} arg
          * @return {?}
-         */
-        function (arg) {
+         */function (arg) {
             if (functions.length === 0) {
                 return arg;
             }
@@ -435,12 +646,11 @@
             var last = functions[functions.length - 1];
             /** @type {?} */
             var rest = functions.slice(0, -1);
-            return rest.reduceRight((/**
+            return rest.reduceRight(( /**
              * @param {?} composed
              * @param {?} fn
              * @return {?}
-             */
-            function (composed, fn) { return fn(composed); }), last(arg));
+             */function (composed, fn) { return fn(composed); }), last(arg));
         });
     }
     /**
@@ -451,25 +661,23 @@
      */
     function createReducerFactory(reducerFactory, metaReducers) {
         if (Array.isArray(metaReducers) && metaReducers.length > 0) {
-            ((/** @type {?} */ (reducerFactory))) = compose.apply(null, __spread$1(metaReducers, [
+            (( /** @type {?} */(reducerFactory))) = compose.apply(null, __spread(metaReducers, [
                 reducerFactory,
             ]));
         }
-        return (/**
+        return ( /**
          * @param {?} reducers
          * @param {?=} initialState
          * @return {?}
-         */
-        function (reducers, initialState) {
+         */function (reducers, initialState) {
             /** @type {?} */
             var reducer = reducerFactory(reducers);
-            return (/**
+            return ( /**
              * @param {?} state
              * @param {?} action
              * @return {?}
-             */
-            function (state, action) {
-                state = state === undefined ? ((/** @type {?} */ (initialState))) : state;
+             */function (state, action) {
+                state = state === undefined ? (( /** @type {?} */(initialState))) : state;
                 return reducer(state, action);
             });
         });
@@ -482,62 +690,32 @@
     function createFeatureReducerFactory(metaReducers) {
         /** @type {?} */
         var reducerFactory = Array.isArray(metaReducers) && metaReducers.length > 0
-            ? compose.apply(void 0, __spread$1(metaReducers)) : (/**
+            ? compose.apply(void 0, __spread(metaReducers)) : ( /**
          * @param {?} r
          * @return {?}
-         */
-        function (r) { return r; });
-        return (/**
+         */function (r) { return r; });
+        return ( /**
          * @param {?} reducer
          * @param {?=} initialState
          * @return {?}
-         */
-        function (reducer, initialState) {
+         */function (reducer, initialState) {
             reducer = reducerFactory(reducer);
-            return (/**
+            return ( /**
              * @param {?} state
              * @param {?} action
              * @return {?}
-             */
-            function (state, action) {
+             */function (state, action) {
                 state = state === undefined ? initialState : state;
                 return reducer(state, action);
             });
         });
     }
 
-    var __extends$1 = (this && this.__extends) || (function () {
-        var extendStatics = function (d, b) {
-            extendStatics = Object.setPrototypeOf ||
-                ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
-                function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
-            return extendStatics(d, b);
-        };
-        return function (d, b) {
-            extendStatics(d, b);
-            function __() { this.constructor = d; }
-            d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
-        };
-    })();
-    var __assign$1 = (this && this.__assign) || function () {
-        __assign$1 = Object.assign || function(t) {
-            for (var s, i = 1, n = arguments.length; i < n; i++) {
-                s = arguments[i];
-                for (var p in s) if (Object.prototype.hasOwnProperty.call(s, p))
-                    t[p] = s[p];
-            }
-            return t;
-        };
-        return __assign$1.apply(this, arguments);
-    };
     /**
      * @abstract
      */
-    var   /**
-     * @abstract
-     */
-    ReducerObservable = /** @class */ (function (_super) {
-        __extends$1(ReducerObservable, _super);
+    var ReducerObservable = /** @class */ (function (_super) {
+        __extends(ReducerObservable, _super);
         function ReducerObservable() {
             return _super !== null && _super.apply(this, arguments) || this;
         }
@@ -546,20 +724,23 @@
     /**
      * @abstract
      */
-    var   /**
-     * @abstract
-     */
-    ReducerManagerDispatcher = /** @class */ (function (_super) {
-        __extends$1(ReducerManagerDispatcher, _super);
+    var ReducerManagerDispatcher = /** @class */ (function (_super) {
+        __extends(ReducerManagerDispatcher, _super);
         function ReducerManagerDispatcher() {
             return _super !== null && _super.apply(this, arguments) || this;
         }
         return ReducerManagerDispatcher;
     }(ActionsSubject));
     /** @type {?} */
-    var UPDATE = (/** @type {?} */ ('@ngrx/store/update-reducers'));
+    var UPDATE = ( /** @type {?} */('@ngrx/store/update-reducers'));
     var ReducerManager = /** @class */ (function (_super) {
-        __extends$1(ReducerManager, _super);
+        __extends(ReducerManager, _super);
+        /**
+         * @param {?} dispatcher
+         * @param {?} initialState
+         * @param {?} reducers
+         * @param {?} reducerFactory
+         */
         function ReducerManager(dispatcher, initialState, reducers, reducerFactory) {
             var _this = _super.call(this, reducerFactory(reducers, initialState)) || this;
             _this.dispatcher = dispatcher;
@@ -572,29 +753,20 @@
          * @param {?} feature
          * @return {?}
          */
-        ReducerManager.prototype.addFeature = /**
-         * @param {?} feature
-         * @return {?}
-         */
-        function (feature) {
+        ReducerManager.prototype.addFeature = function (feature) {
             this.addFeatures([feature]);
         };
         /**
          * @param {?} features
          * @return {?}
          */
-        ReducerManager.prototype.addFeatures = /**
-         * @param {?} features
-         * @return {?}
-         */
-        function (features) {
+        ReducerManager.prototype.addFeatures = function (features) {
             /** @type {?} */
-            var reducers = features.reduce((/**
+            var reducers = features.reduce(( /**
              * @param {?} reducerDict
              * @param {?} __1
              * @return {?}
-             */
-            function (reducerDict, _a) {
+             */function (reducerDict, _a) {
                 var reducers = _a.reducers, reducerFactory = _a.reducerFactory, metaReducers = _a.metaReducers, initialState = _a.initialState, key = _a.key;
                 /** @type {?} */
                 var reducer = typeof reducers === 'function'
@@ -602,46 +774,32 @@
                     : createReducerFactory(reducerFactory, metaReducers)(reducers, initialState);
                 reducerDict[key] = reducer;
                 return reducerDict;
-            }), (/** @type {?} */ ({})));
+            }), ( /** @type {?} */({})));
             this.addReducers(reducers);
         };
         /**
          * @param {?} feature
          * @return {?}
          */
-        ReducerManager.prototype.removeFeature = /**
-         * @param {?} feature
-         * @return {?}
-         */
-        function (feature) {
+        ReducerManager.prototype.removeFeature = function (feature) {
             this.removeFeatures([feature]);
         };
         /**
          * @param {?} features
          * @return {?}
          */
-        ReducerManager.prototype.removeFeatures = /**
-         * @param {?} features
-         * @return {?}
-         */
-        function (features) {
-            this.removeReducers(features.map((/**
+        ReducerManager.prototype.removeFeatures = function (features) {
+            this.removeReducers(features.map(( /**
              * @param {?} p
              * @return {?}
-             */
-            function (p) { return p.key; })));
+             */function (p) { return p.key; })));
         };
         /**
          * @param {?} key
          * @param {?} reducer
          * @return {?}
          */
-        ReducerManager.prototype.addReducer = /**
-         * @param {?} key
-         * @param {?} reducer
-         * @return {?}
-         */
-        function (key, reducer) {
+        ReducerManager.prototype.addReducer = function (key, reducer) {
             var _a;
             this.addReducers((_a = {}, _a[key] = reducer, _a));
         };
@@ -649,41 +807,28 @@
          * @param {?} reducers
          * @return {?}
          */
-        ReducerManager.prototype.addReducers = /**
-         * @param {?} reducers
-         * @return {?}
-         */
-        function (reducers) {
-            this.reducers = __assign$1(__assign$1({}, this.reducers), reducers);
+        ReducerManager.prototype.addReducers = function (reducers) {
+            this.reducers = Object.assign(Object.assign({}, this.reducers), reducers);
             this.updateReducers(Object.keys(reducers));
         };
         /**
          * @param {?} featureKey
          * @return {?}
          */
-        ReducerManager.prototype.removeReducer = /**
-         * @param {?} featureKey
-         * @return {?}
-         */
-        function (featureKey) {
+        ReducerManager.prototype.removeReducer = function (featureKey) {
             this.removeReducers([featureKey]);
         };
         /**
          * @param {?} featureKeys
          * @return {?}
          */
-        ReducerManager.prototype.removeReducers = /**
-         * @param {?} featureKeys
-         * @return {?}
-         */
-        function (featureKeys) {
+        ReducerManager.prototype.removeReducers = function (featureKeys) {
             var _this = this;
-            featureKeys.forEach((/**
+            featureKeys.forEach(( /**
              * @param {?} key
              * @return {?}
-             */
-            function (key) {
-                _this.reducers = (/** @type {?} */ (omit(_this.reducers, key) /*TODO(#823)*/));
+             */function (key) {
+                _this.reducers = ( /** @type {?} */(omit(_this.reducers, key) /*TODO(#823)*/));
             }));
             this.updateReducers(featureKeys);
         };
@@ -692,14 +837,9 @@
          * @param {?} featureKeys
          * @return {?}
          */
-        ReducerManager.prototype.updateReducers = /**
-         * @private
-         * @param {?} featureKeys
-         * @return {?}
-         */
-        function (featureKeys) {
+        ReducerManager.prototype.updateReducers = function (featureKeys) {
             this.next(this.reducerFactory(this.reducers, this.initialState));
-            this.dispatcher.next((/** @type {?} */ ({
+            this.dispatcher.next(( /** @type {?} */({
                 type: UPDATE,
                 features: featureKeys,
             })));
@@ -707,24 +847,21 @@
         /**
          * @return {?}
          */
-        ReducerManager.prototype.ngOnDestroy = /**
-         * @return {?}
-         */
-        function () {
+        ReducerManager.prototype.ngOnDestroy = function () {
             this.complete();
         };
-        ReducerManager.decorators = [
-            { type: core.Injectable }
-        ];
-        /** @nocollapse */
-        ReducerManager.ctorParameters = function () { return [
-            { type: ReducerManagerDispatcher },
-            { type: undefined, decorators: [{ type: core.Inject, args: [INITIAL_STATE,] }] },
-            { type: undefined, decorators: [{ type: core.Inject, args: [INITIAL_REDUCERS,] }] },
-            { type: undefined, decorators: [{ type: core.Inject, args: [REDUCER_FACTORY,] }] }
-        ]; };
         return ReducerManager;
     }(rxjs.BehaviorSubject));
+    ReducerManager.decorators = [
+        { type: ngCore.Injectable }
+    ];
+    /** @nocollapse */
+    ReducerManager.ctorParameters = function () { return [
+        { type: ReducerManagerDispatcher },
+        { type: undefined, decorators: [{ type: ngCore.Inject, args: [INITIAL_STATE,] }] },
+        { type: undefined, decorators: [{ type: ngCore.Inject, args: [INITIAL_REDUCERS,] }] },
+        { type: undefined, decorators: [{ type: ngCore.Inject, args: [REDUCER_FACTORY,] }] }
+    ]; };
     if (false) {
         /**
          * @type {?}
@@ -754,80 +891,32 @@
         { provide: ReducerManagerDispatcher, useExisting: ActionsSubject },
     ];
 
-    var __extends$2 = (this && this.__extends) || (function () {
-        var extendStatics = function (d, b) {
-            extendStatics = Object.setPrototypeOf ||
-                ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
-                function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
-            return extendStatics(d, b);
-        };
-        return function (d, b) {
-            extendStatics(d, b);
-            function __() { this.constructor = d; }
-            d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
-        };
-    })();
     var ScannedActionsSubject = /** @class */ (function (_super) {
-        __extends$2(ScannedActionsSubject, _super);
+        __extends(ScannedActionsSubject, _super);
         function ScannedActionsSubject() {
             return _super !== null && _super.apply(this, arguments) || this;
         }
         /**
          * @return {?}
          */
-        ScannedActionsSubject.prototype.ngOnDestroy = /**
-         * @return {?}
-         */
-        function () {
+        ScannedActionsSubject.prototype.ngOnDestroy = function () {
             this.complete();
         };
-        ScannedActionsSubject.decorators = [
-            { type: core.Injectable }
-        ];
         return ScannedActionsSubject;
     }(rxjs.Subject));
+    ScannedActionsSubject.decorators = [
+        { type: ngCore.Injectable }
+    ];
     /** @type {?} */
     var SCANNED_ACTIONS_SUBJECT_PROVIDERS = [
         ScannedActionsSubject,
     ];
 
-    var __extends$3 = (this && this.__extends) || (function () {
-        var extendStatics = function (d, b) {
-            extendStatics = Object.setPrototypeOf ||
-                ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
-                function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
-            return extendStatics(d, b);
-        };
-        return function (d, b) {
-            extendStatics(d, b);
-            function __() { this.constructor = d; }
-            d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
-        };
-    })();
-    var __read$2 = (this && this.__read) || function (o, n) {
-        var m = typeof Symbol === "function" && o[Symbol.iterator];
-        if (!m) return o;
-        var i = m.call(o), r, ar = [], e;
-        try {
-            while ((n === void 0 || n-- > 0) && !(r = i.next()).done) ar.push(r.value);
-        }
-        catch (error) { e = { error: error }; }
-        finally {
-            try {
-                if (r && !r.done && (m = i["return"])) m.call(i);
-            }
-            finally { if (e) throw e.error; }
-        }
-        return ar;
-    };
     /**
      * @abstract
      */
-    var   /**
-     * @abstract
-     */
-    StateObservable = /** @class */ (function (_super) {
-        __extends$3(StateObservable, _super);
+    var StateObservable = /** @class */ (function (_super) {
+        __extends(StateObservable, _super);
         function StateObservable() {
             return _super !== null && _super.apply(this, arguments) || this;
         }
@@ -837,7 +926,13 @@
      * @template T
      */
     var State = /** @class */ (function (_super) {
-        __extends$3(State, _super);
+        __extends(State, _super);
+        /**
+         * @param {?} actions$
+         * @param {?} reducer$
+         * @param {?} scannedActions
+         * @param {?} initialState
+         */
         function State(actions$, reducer$, scannedActions, initialState) {
             var _this = _super.call(this, initialState) || this;
             /** @type {?} */
@@ -848,40 +943,36 @@
             var seed = { state: initialState };
             /** @type {?} */
             var stateAndAction$ = withLatestReducer$.pipe(operators.scan(reduceState, seed));
-            _this.stateSubscription = stateAndAction$.subscribe((/**
+            _this.stateSubscription = stateAndAction$.subscribe(( /**
              * @param {?} __0
              * @return {?}
-             */
-            function (_a) {
+             */function (_a) {
                 var state = _a.state, action = _a.action;
                 _this.next(state);
-                scannedActions.next((/** @type {?} */ (action)));
+                scannedActions.next(( /** @type {?} */(action)));
             }));
             return _this;
         }
         /**
          * @return {?}
          */
-        State.prototype.ngOnDestroy = /**
-         * @return {?}
-         */
-        function () {
+        State.prototype.ngOnDestroy = function () {
             this.stateSubscription.unsubscribe();
             this.complete();
         };
-        State.INIT = INIT;
-        State.decorators = [
-            { type: core.Injectable }
-        ];
-        /** @nocollapse */
-        State.ctorParameters = function () { return [
-            { type: ActionsSubject },
-            { type: ReducerObservable },
-            { type: ScannedActionsSubject },
-            { type: undefined, decorators: [{ type: core.Inject, args: [INITIAL_STATE,] }] }
-        ]; };
         return State;
     }(rxjs.BehaviorSubject));
+    State.INIT = INIT;
+    State.decorators = [
+        { type: ngCore.Injectable }
+    ];
+    /** @nocollapse */
+    State.ctorParameters = function () { return [
+        { type: ActionsSubject },
+        { type: ReducerObservable },
+        { type: ScannedActionsSubject },
+        { type: undefined, decorators: [{ type: ngCore.Inject, args: [INITIAL_STATE,] }] }
+    ]; };
     if (false) {
         /** @type {?} */
         State.INIT;
@@ -899,7 +990,7 @@
      */
     function reduceState(stateActionPair, _a) {
         if (stateActionPair === void 0) { stateActionPair = { state: undefined }; }
-        var _b = __read$2(_a, 2), action = _b[0], reducer = _b[1];
+        var _b = __read(_a, 2), action = _b[0], reducer = _b[1];
         var state = stateActionPair.state;
         return { state: reducer(state, action), action: action };
     }
@@ -909,44 +1000,16 @@
         { provide: StateObservable, useExisting: State },
     ];
 
-    var __extends$4 = (this && this.__extends) || (function () {
-        var extendStatics = function (d, b) {
-            extendStatics = Object.setPrototypeOf ||
-                ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
-                function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
-            return extendStatics(d, b);
-        };
-        return function (d, b) {
-            extendStatics(d, b);
-            function __() { this.constructor = d; }
-            d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
-        };
-    })();
-    var __read$3 = (this && this.__read) || function (o, n) {
-        var m = typeof Symbol === "function" && o[Symbol.iterator];
-        if (!m) return o;
-        var i = m.call(o), r, ar = [], e;
-        try {
-            while ((n === void 0 || n-- > 0) && !(r = i.next()).done) ar.push(r.value);
-        }
-        catch (error) { e = { error: error }; }
-        finally {
-            try {
-                if (r && !r.done && (m = i["return"])) m.call(i);
-            }
-            finally { if (e) throw e.error; }
-        }
-        return ar;
-    };
-    var __spread$2 = (this && this.__spread) || function () {
-        for (var ar = [], i = 0; i < arguments.length; i++) ar = ar.concat(__read$3(arguments[i]));
-        return ar;
-    };
     /**
      * @template T
      */
     var Store = /** @class */ (function (_super) {
-        __extends$4(Store, _super);
+        __extends(Store, _super);
+        /**
+         * @param {?} state$
+         * @param {?} actionsObserver
+         * @param {?} reducerManager
+         */
         function Store(state$, actionsObserver, reducerManager) {
             var _this = _super.call(this) || this;
             _this.actionsObserver = actionsObserver;
@@ -960,30 +1023,19 @@
          * @param {...?} paths
          * @return {?}
          */
-        Store.prototype.select = /**
-         * @template Props, K
-         * @param {?} pathOrMapFn
-         * @param {...?} paths
-         * @return {?}
-         */
-        function (pathOrMapFn) {
+        Store.prototype.select = function (pathOrMapFn) {
             var paths = [];
             for (var _i = 1; _i < arguments.length; _i++) {
                 paths[_i - 1] = arguments[_i];
             }
-            return ((/** @type {?} */ (select))).call.apply(((/** @type {?} */ (select))), __spread$2([null, pathOrMapFn], paths))(this);
+            return (( /** @type {?} */(select))).call.apply((( /** @type {?} */(select))), __spread([null, pathOrMapFn], paths))(this);
         };
         /**
          * @template R
          * @param {?} operator
          * @return {?}
          */
-        Store.prototype.lift = /**
-         * @template R
-         * @param {?} operator
-         * @return {?}
-         */
-        function (operator) {
+        Store.prototype.lift = function (operator) {
             /** @type {?} */
             var store = new Store(this, this.actionsObserver, this.reducerManager);
             store.operator = operator;
@@ -994,43 +1046,27 @@
          * @param {?} action
          * @return {?}
          */
-        Store.prototype.dispatch = /**
-         * @template V
-         * @param {?} action
-         * @return {?}
-         */
-        function (action) {
+        Store.prototype.dispatch = function (action) {
             this.actionsObserver.next(action);
         };
         /**
          * @param {?} action
          * @return {?}
          */
-        Store.prototype.next = /**
-         * @param {?} action
-         * @return {?}
-         */
-        function (action) {
+        Store.prototype.next = function (action) {
             this.actionsObserver.next(action);
         };
         /**
          * @param {?} err
          * @return {?}
          */
-        Store.prototype.error = /**
-         * @param {?} err
-         * @return {?}
-         */
-        function (err) {
+        Store.prototype.error = function (err) {
             this.actionsObserver.error(err);
         };
         /**
          * @return {?}
          */
-        Store.prototype.complete = /**
-         * @return {?}
-         */
-        function () {
+        Store.prototype.complete = function () {
             this.actionsObserver.complete();
         };
         /**
@@ -1039,13 +1075,7 @@
          * @param {?} reducer
          * @return {?}
          */
-        Store.prototype.addReducer = /**
-         * @template State, Actions
-         * @param {?} key
-         * @param {?} reducer
-         * @return {?}
-         */
-        function (key, reducer) {
+        Store.prototype.addReducer = function (key, reducer) {
             this.reducerManager.addReducer(key, reducer);
         };
         /**
@@ -1053,25 +1083,20 @@
          * @param {?} key
          * @return {?}
          */
-        Store.prototype.removeReducer = /**
-         * @template Key
-         * @param {?} key
-         * @return {?}
-         */
-        function (key) {
+        Store.prototype.removeReducer = function (key) {
             this.reducerManager.removeReducer(key);
         };
-        Store.decorators = [
-            { type: core.Injectable }
-        ];
-        /** @nocollapse */
-        Store.ctorParameters = function () { return [
-            { type: StateObservable },
-            { type: ActionsSubject },
-            { type: ReducerManager }
-        ]; };
         return Store;
     }(rxjs.Observable));
+    Store.decorators = [
+        { type: ngCore.Injectable }
+    ];
+    /** @nocollapse */
+    Store.ctorParameters = function () { return [
+        { type: StateObservable },
+        { type: ActionsSubject },
+        { type: ReducerManager }
+    ]; };
     if (false) {
         /**
          * @type {?}
@@ -1098,24 +1123,22 @@
         for (var _i = 2; _i < arguments.length; _i++) {
             paths[_i - 2] = arguments[_i];
         }
-        return (/**
+        return ( /**
          * @param {?} source$
          * @return {?}
-         */
-        function selectOperator(source$) {
+         */function selectOperator(source$) {
             /** @type {?} */
             var mapped$;
             if (typeof pathOrMapFn === 'string') {
                 /** @type {?} */
-                var pathSlices = __spread$2([(/** @type {?} */ (propsOrPath))], paths).filter(Boolean);
-                mapped$ = source$.pipe(operators.pluck.apply(void 0, __spread$2([pathOrMapFn], pathSlices)));
+                var pathSlices = __spread([( /** @type {?} */(propsOrPath))], paths).filter(Boolean);
+                mapped$ = source$.pipe(operators.pluck.apply(void 0, __spread([pathOrMapFn], pathSlices)));
             }
             else if (typeof pathOrMapFn === 'function') {
-                mapped$ = source$.pipe(operators.map((/**
+                mapped$ = source$.pipe(operators.map(( /**
                  * @param {?} source
                  * @return {?}
-                 */
-                function (source) { return pathOrMapFn(source, (/** @type {?} */ (propsOrPath))); })));
+                 */function (source) { return pathOrMapFn(source, ( /** @type {?} */(propsOrPath))); })));
             }
             else {
                 throw new TypeError("Unexpected type '" + typeof pathOrMapFn + "' in select operator," +
@@ -1146,26 +1169,6 @@
         return _ngrxMockEnvironment;
     }
 
-    var __read$4 = (this && this.__read) || function (o, n) {
-        var m = typeof Symbol === "function" && o[Symbol.iterator];
-        if (!m) return o;
-        var i = m.call(o), r, ar = [], e;
-        try {
-            while ((n === void 0 || n-- > 0) && !(r = i.next()).done) ar.push(r.value);
-        }
-        catch (error) { e = { error: error }; }
-        finally {
-            try {
-                if (r && !r.done && (m = i["return"])) m.call(i);
-            }
-            finally { if (e) throw e.error; }
-        }
-        return ar;
-    };
-    var __spread$3 = (this && this.__spread) || function () {
-        for (var ar = [], i = 0; i < arguments.length; i++) ar = ar.concat(__read$4(arguments[i]));
-        return ar;
-    };
     /**
      * @record
      * @template State, Result, ProjectorFn
@@ -1276,7 +1279,7 @@
                 return overrideResult.result;
             }
             if (!lastArguments) {
-                lastResult = projectionFn.apply(null, (/** @type {?} */ (arguments)));
+                lastResult = projectionFn.apply(null, ( /** @type {?} */(arguments)));
                 lastArguments = arguments;
                 return lastResult;
             }
@@ -1284,7 +1287,7 @@
                 return lastResult;
             }
             /** @type {?} */
-            var newResult = projectionFn.apply(null, (/** @type {?} */ (arguments)));
+            var newResult = projectionFn.apply(null, ( /** @type {?} */(arguments)));
             lastArguments = arguments;
             if (isResultEqual(lastResult, newResult)) {
                 return lastResult;
@@ -1303,7 +1306,7 @@
         for (var _i = 0; _i < arguments.length; _i++) {
             input[_i] = arguments[_i];
         }
-        return createSelectorFactory(defaultMemoize).apply(void 0, __spread$3(input));
+        return createSelectorFactory(defaultMemoize).apply(void 0, __spread(input));
     }
     /**
      * @param {?} state
@@ -1315,22 +1318,18 @@
     function defaultStateFn(state, selectors, props, memoizedProjector) {
         if (props === undefined) {
             /** @type {?} */
-            var args_1 = ((/** @type {?} */ (selectors))).map((/**
+            var args_1 = (( /** @type {?} */(selectors))).map(( /**
              * @param {?} fn
              * @return {?}
-             */
-            function (fn) { return fn(state); }));
+             */function (fn) { return fn(state); }));
             return memoizedProjector.memoized.apply(null, args_1);
         }
         /** @type {?} */
-        var args = ((/** @type {?} */ (selectors))).map((/**
+        var args = (( /** @type {?} */(selectors))).map(( /**
          * @param {?} fn
          * @return {?}
-         */
-        function (fn) {
-            return fn(state, props);
-        }));
-        return memoizedProjector.memoized.apply(null, __spread$3(args, [props]));
+         */function (fn) { return fn(state, props); }));
+        return memoizedProjector.memoized.apply(null, __spread(args, [props]));
     }
     /**
      * @param {?} memoize
@@ -1341,11 +1340,10 @@
         if (options === void 0) { options = {
             stateFn: defaultStateFn,
         }; }
-        return (/**
+        return ( /**
          * @param {...?} input
          * @return {?}
-         */
-        function () {
+         */function () {
             var input = [];
             for (var _i = 0; _i < arguments.length; _i++) {
                 input[_i] = arguments[_i];
@@ -1353,27 +1351,23 @@
             /** @type {?} */
             var args = input;
             if (Array.isArray(args[0])) {
-                var _a = __read$4(args), head = _a[0], tail = _a.slice(1);
-                args = __spread$3(head, tail);
+                var _a = __read(args), head = _a[0], tail = _a.slice(1);
+                args = __spread(head, tail);
             }
             /** @type {?} */
             var selectors = args.slice(0, args.length - 1);
             /** @type {?} */
             var projector = args[args.length - 1];
             /** @type {?} */
-            var memoizedSelectors = selectors.filter((/**
+            var memoizedSelectors = selectors.filter(( /**
              * @param {?} selector
              * @return {?}
-             */
-            function (selector) {
-                return selector.release && typeof selector.release === 'function';
-            }));
+             */function (selector) { return selector.release && typeof selector.release === 'function'; }));
             /** @type {?} */
-            var memoizedProjector = memoize((/**
+            var memoizedProjector = memoize(( /**
              * @param {...?} selectors
              * @return {?}
-             */
-            function () {
+             */function () {
                 var selectors = [];
                 for (var _i = 0; _i < arguments.length; _i++) {
                     selectors[_i] = arguments[_i];
@@ -1381,12 +1375,11 @@
                 return projector.apply(null, selectors);
             }));
             /** @type {?} */
-            var memoizedState = defaultMemoize((/**
+            var memoizedState = defaultMemoize(( /**
              * @param {?} state
              * @param {?} props
              * @return {?}
-             */
-            function (state, props) {
+             */function (state, props) {
                 return options.stateFn.apply(null, [
                     state,
                     selectors,
@@ -1400,11 +1393,10 @@
             function release() {
                 memoizedState.reset();
                 memoizedProjector.reset();
-                memoizedSelectors.forEach((/**
+                memoizedSelectors.forEach(( /**
                  * @param {?} selector
                  * @return {?}
-                 */
-                function (selector) { return selector.release(); }));
+                 */function (selector) { return selector.release(); }));
             }
             return Object.assign(memoizedState.memoized, {
                 release: release,
@@ -1419,14 +1411,13 @@
      * @return {?}
      */
     function createFeatureSelector(featureName) {
-        return createSelector((/**
+        return createSelector(( /**
          * @param {?} state
          * @return {?}
-         */
-        function (state) {
+         */function (state) {
             /** @type {?} */
             var featureState = state[featureName];
-            if (!isNgrxMockEnvironment() && core.isDevMode() && !(featureName in state)) {
+            if (!isNgrxMockEnvironment() && ngCore.isDevMode() && !(featureName in state)) {
                 console.warn("@ngrx/store: The feature name \"" + featureName + "\" does " +
                     'not exist in the state, therefore createFeatureSelector ' +
                     'cannot access it.  Be sure it is imported in a loaded module ' +
@@ -1436,11 +1427,10 @@
                     'state, this development-only warning message can be ignored.');
             }
             return featureState;
-        }), (/**
+        }), ( /**
          * @param {?} featureState
          * @return {?}
-         */
-        function (featureState) { return featureState; }));
+         */function (featureState) { return featureState; }));
     }
 
     /**
@@ -1552,12 +1542,11 @@
      * @return {?}
      */
     function immutabilityCheckMetaReducer(reducer, checks) {
-        return (/**
+        return ( /**
          * @param {?} state
          * @param {?} action
          * @return {?}
-         */
-        function (state, action) {
+         */function (state, action) {
             /** @type {?} */
             var act = checks.action(action) ? freeze(action) : action;
             /** @type {?} */
@@ -1573,11 +1562,10 @@
         Object.freeze(target);
         /** @type {?} */
         var targetIsFunction = isFunction(target);
-        Object.getOwnPropertyNames(target).forEach((/**
+        Object.getOwnPropertyNames(target).forEach(( /**
          * @param {?} prop
          * @return {?}
-         */
-        function (prop) {
+         */function (prop) {
             // Ignore Ivy properties, ref: https://github.com/ngrx/platform/issues/2109#issuecomment-582689060
             if (prop.startsWith('ɵ')) {
                 return;
@@ -1597,38 +1585,17 @@
         return target;
     }
 
-    var __read$5 = (this && this.__read) || function (o, n) {
-        var m = typeof Symbol === "function" && o[Symbol.iterator];
-        if (!m) return o;
-        var i = m.call(o), r, ar = [], e;
-        try {
-            while ((n === void 0 || n-- > 0) && !(r = i.next()).done) ar.push(r.value);
-        }
-        catch (error) { e = { error: error }; }
-        finally {
-            try {
-                if (r && !r.done && (m = i["return"])) m.call(i);
-            }
-            finally { if (e) throw e.error; }
-        }
-        return ar;
-    };
-    var __spread$4 = (this && this.__spread) || function () {
-        for (var ar = [], i = 0; i < arguments.length; i++) ar = ar.concat(__read$5(arguments[i]));
-        return ar;
-    };
     /**
      * @param {?} reducer
      * @param {?} checks
      * @return {?}
      */
     function serializationCheckMetaReducer(reducer, checks) {
-        return (/**
+        return ( /**
          * @param {?} state
          * @param {?} action
          * @return {?}
-         */
-        function (state, action) {
+         */function (state, action) {
             if (checks.action(action)) {
                 /** @type {?} */
                 var unserializableAction = getUnserializable(action);
@@ -1660,17 +1627,16 @@
         }
         /** @type {?} */
         var keys = Object.keys(target);
-        return keys.reduce((/**
+        return keys.reduce(( /**
          * @param {?} result
          * @param {?} key
          * @return {?}
-         */
-        function (result, key) {
+         */function (result, key) {
             if (result) {
                 return result;
             }
             /** @type {?} */
-            var value = ((/** @type {?} */ (target)))[key];
+            var value = (( /** @type {?} */(target)))[key];
             // Ignore Ivy components
             if (isComponent(value)) {
                 return result;
@@ -1684,10 +1650,10 @@
                 return false;
             }
             if (isPlainObject(value)) {
-                return getUnserializable(value, __spread$4(path, [key]));
+                return getUnserializable(value, __spread(path, [key]));
             }
             return {
-                path: __spread$4(path, [key]),
+                path: __spread(path, [key]),
                 value: value,
             };
         }), false);
@@ -1721,13 +1687,12 @@
      * @return {?}
      */
     function inNgZoneAssertMetaReducer(reducer, checks) {
-        return (/**
+        return ( /**
          * @param {?} state
          * @param {?} action
          * @return {?}
-         */
-        function (state, action) {
-            if (checks.action(action) && !core.NgZone.isInAngularZone()) {
+         */function (state, action) {
+            if (checks.action(action) && !ngCore.NgZone.isInAngularZone()) {
                 throw new Error("Action '" + action.type + "' running outside NgZone. " + RUNTIME_CHECK_URL + "#strictactionwithinngzone");
             }
             return reducer(state, action);
@@ -1740,40 +1705,13 @@
      * @suppress {checkTypes,constantProperty,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
      */
 
-    var __assign$2 = (this && this.__assign) || function () {
-        __assign$2 = Object.assign || function(t) {
-            for (var s, i = 1, n = arguments.length; i < n; i++) {
-                s = arguments[i];
-                for (var p in s) if (Object.prototype.hasOwnProperty.call(s, p))
-                    t[p] = s[p];
-            }
-            return t;
-        };
-        return __assign$2.apply(this, arguments);
-    };
-    var __read$6 = (this && this.__read) || function (o, n) {
-        var m = typeof Symbol === "function" && o[Symbol.iterator];
-        if (!m) return o;
-        var i = m.call(o), r, ar = [], e;
-        try {
-            while ((n === void 0 || n-- > 0) && !(r = i.next()).done) ar.push(r.value);
-        }
-        catch (error) { e = { error: error }; }
-        finally {
-            try {
-                if (r && !r.done && (m = i["return"])) m.call(i);
-            }
-            finally { if (e) throw e.error; }
-        }
-        return ar;
-    };
     /**
      * @param {?=} runtimeChecks
      * @return {?}
      */
     function createActiveRuntimeChecks(runtimeChecks) {
-        if (core.isDevMode()) {
-            return __assign$2({ strictStateSerializability: false, strictActionSerializability: false, strictStateImmutability: true, strictActionImmutability: true, strictActionWithinNgZone: false, strictActionTypeUniqueness: false }, runtimeChecks);
+        if (ngCore.isDevMode()) {
+            return Object.assign({ strictStateSerializability: false, strictActionSerializability: false, strictStateImmutability: true, strictActionImmutability: true, strictActionWithinNgZone: false, strictActionTypeUniqueness: false }, runtimeChecks);
         }
         return {
             strictStateSerializability: false,
@@ -1790,27 +1728,20 @@
      */
     function createSerializationCheckMetaReducer(_a) {
         var strictActionSerializability = _a.strictActionSerializability, strictStateSerializability = _a.strictStateSerializability;
-        return (/**
+        return ( /**
          * @param {?} reducer
          * @return {?}
-         */
-        function (reducer) {
-            return strictActionSerializability || strictStateSerializability
-                ? serializationCheckMetaReducer(reducer, {
-                    action: (/**
-                     * @param {?} action
-                     * @return {?}
-                     */
-                    function (action) {
-                        return strictActionSerializability && !ignoreNgrxAction(action);
-                    }),
-                    state: (/**
-                     * @return {?}
-                     */
-                    function () { return strictStateSerializability; }),
-                })
-                : reducer;
-        });
+         */function (reducer) { return strictActionSerializability || strictStateSerializability
+            ? serializationCheckMetaReducer(reducer, {
+                action: ( /**
+                 * @param {?} action
+                 * @return {?}
+                 */function (action) { return strictActionSerializability && !ignoreNgrxAction(action); }),
+                state: ( /**
+                 * @return {?}
+                 */function () { return strictStateSerializability; }),
+            })
+            : reducer; });
     }
     /**
      * @param {?} __0
@@ -1818,27 +1749,20 @@
      */
     function createImmutabilityCheckMetaReducer(_a) {
         var strictActionImmutability = _a.strictActionImmutability, strictStateImmutability = _a.strictStateImmutability;
-        return (/**
+        return ( /**
          * @param {?} reducer
          * @return {?}
-         */
-        function (reducer) {
-            return strictActionImmutability || strictStateImmutability
-                ? immutabilityCheckMetaReducer(reducer, {
-                    action: (/**
-                     * @param {?} action
-                     * @return {?}
-                     */
-                    function (action) {
-                        return strictActionImmutability && !ignoreNgrxAction(action);
-                    }),
-                    state: (/**
-                     * @return {?}
-                     */
-                    function () { return strictStateImmutability; }),
-                })
-                : reducer;
-        });
+         */function (reducer) { return strictActionImmutability || strictStateImmutability
+            ? immutabilityCheckMetaReducer(reducer, {
+                action: ( /**
+                 * @param {?} action
+                 * @return {?}
+                 */function (action) { return strictActionImmutability && !ignoreNgrxAction(action); }),
+                state: ( /**
+                 * @return {?}
+                 */function () { return strictStateImmutability; }),
+            })
+            : reducer; });
     }
     /**
      * @param {?} action
@@ -1853,23 +1777,17 @@
      */
     function createInNgZoneCheckMetaReducer(_a) {
         var strictActionWithinNgZone = _a.strictActionWithinNgZone;
-        return (/**
+        return ( /**
          * @param {?} reducer
          * @return {?}
-         */
-        function (reducer) {
-            return strictActionWithinNgZone
-                ? inNgZoneAssertMetaReducer(reducer, {
-                    action: (/**
-                     * @param {?} action
-                     * @return {?}
-                     */
-                    function (action) {
-                        return strictActionWithinNgZone && !ignoreNgrxAction(action);
-                    }),
-                })
-                : reducer;
-        });
+         */function (reducer) { return strictActionWithinNgZone
+            ? inNgZoneAssertMetaReducer(reducer, {
+                action: ( /**
+                 * @param {?} action
+                 * @return {?}
+                 */function (action) { return strictActionWithinNgZone && !ignoreNgrxAction(action); }),
+            })
+            : reducer; });
     }
     /**
      * @param {?=} runtimeChecks
@@ -1941,103 +1859,105 @@
         }
         /** @type {?} */
         var duplicates = Object.entries(REGISTERED_ACTION_TYPES)
-            .filter((/**
-         * @param {?} __0
-         * @return {?}
-         */
-        function (_a) {
-            var _b = __read$6(_a, 2), registrations = _b[1];
+            .filter(( /**
+     * @param {?} __0
+     * @return {?}
+     */function (_a) {
+            var _b = __read(_a, 2), registrations = _b[1];
             return registrations > 1;
         }))
-            .map((/**
-         * @param {?} __0
-         * @return {?}
-         */
-        function (_a) {
-            var _b = __read$6(_a, 1), type = _b[0];
+            .map(( /**
+     * @param {?} __0
+     * @return {?}
+     */function (_a) {
+            var _b = __read(_a, 1), type = _b[0];
             return type;
         }));
         if (duplicates.length) {
             throw new Error("Action types are registered more than once, " + duplicates
-                .map((/**
-             * @param {?} type
-             * @return {?}
-             */
-            function (type) { return "\"" + type + "\""; }))
+                .map(( /**
+         * @param {?} type
+         * @return {?}
+         */function (type) { return "\"" + type + "\""; }))
                 .join(', ') + ". " + RUNTIME_CHECK_URL + "#strictactiontypeuniqueness");
         }
     }
 
-    var __assign$3 = (this && this.__assign) || function () {
-        __assign$3 = Object.assign || function(t) {
-            for (var s, i = 1, n = arguments.length; i < n; i++) {
-                s = arguments[i];
-                for (var p in s) if (Object.prototype.hasOwnProperty.call(s, p))
-                    t[p] = s[p];
-            }
-            return t;
-        };
-        return __assign$3.apply(this, arguments);
-    };
+    /**
+     * @fileoverview added by tsickle
+     * Generated from: src/store_module.ts
+     * @suppress {checkTypes,constantProperty,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
+     */
     var StoreRootModule = /** @class */ (function () {
+        /**
+         * @param {?} actions$
+         * @param {?} reducer$
+         * @param {?} scannedActions$
+         * @param {?} store
+         * @param {?} guard
+         * @param {?} actionCheck
+         */
         function StoreRootModule(actions$, reducer$, scannedActions$, store, guard, actionCheck) {
         }
-        StoreRootModule.decorators = [
-            { type: core.NgModule, args: [{},] }
-        ];
-        /** @nocollapse */
-        StoreRootModule.ctorParameters = function () { return [
-            { type: ActionsSubject },
-            { type: ReducerObservable },
-            { type: ScannedActionsSubject },
-            { type: Store },
-            { type: undefined, decorators: [{ type: core.Optional }, { type: core.Inject, args: [_ROOT_STORE_GUARD,] }] },
-            { type: undefined, decorators: [{ type: core.Optional }, { type: core.Inject, args: [_ACTION_TYPE_UNIQUENESS_CHECK,] }] }
-        ]; };
         return StoreRootModule;
     }());
+    StoreRootModule.decorators = [
+        { type: ngCore.NgModule, args: [{},] }
+    ];
+    /** @nocollapse */
+    StoreRootModule.ctorParameters = function () { return [
+        { type: ActionsSubject },
+        { type: ReducerObservable },
+        { type: ScannedActionsSubject },
+        { type: Store },
+        { type: undefined, decorators: [{ type: ngCore.Optional }, { type: ngCore.Inject, args: [_ROOT_STORE_GUARD,] }] },
+        { type: undefined, decorators: [{ type: ngCore.Optional }, { type: ngCore.Inject, args: [_ACTION_TYPE_UNIQUENESS_CHECK,] }] }
+    ]; };
     var StoreFeatureModule = /** @class */ (function () {
+        /**
+         * @param {?} features
+         * @param {?} featureReducers
+         * @param {?} reducerManager
+         * @param {?} root
+         * @param {?} actionCheck
+         */
         function StoreFeatureModule(features, featureReducers, reducerManager, root, actionCheck) {
             this.features = features;
             this.featureReducers = featureReducers;
             this.reducerManager = reducerManager;
             /** @type {?} */
-            var feats = features.map((/**
+            var feats = features.map(( /**
              * @param {?} feature
              * @param {?} index
              * @return {?}
-             */
-            function (feature, index) {
+             */function (feature, index) {
                 /** @type {?} */
                 var featureReducerCollection = featureReducers.shift();
                 /** @type {?} */
-                var reducers = (/** @type {?} */ (featureReducerCollection /*TODO(#823)*/))[index];
-                return __assign$3(__assign$3({}, feature), { reducers: reducers, initialState: _initialStateFactory(feature.initialState) });
+                var reducers = ( /** @type {?} */(featureReducerCollection /*TODO(#823)*/))[index];
+                return Object.assign(Object.assign({}, feature), { reducers: reducers, initialState: _initialStateFactory(feature.initialState) });
             }));
             reducerManager.addFeatures(feats);
         }
         /**
          * @return {?}
          */
-        StoreFeatureModule.prototype.ngOnDestroy = /**
-         * @return {?}
-         */
-        function () {
+        StoreFeatureModule.prototype.ngOnDestroy = function () {
             this.reducerManager.removeFeatures(this.features);
         };
-        StoreFeatureModule.decorators = [
-            { type: core.NgModule, args: [{},] }
-        ];
-        /** @nocollapse */
-        StoreFeatureModule.ctorParameters = function () { return [
-            { type: Array, decorators: [{ type: core.Inject, args: [_STORE_FEATURES,] }] },
-            { type: Array, decorators: [{ type: core.Inject, args: [FEATURE_REDUCERS,] }] },
-            { type: ReducerManager },
-            { type: StoreRootModule },
-            { type: undefined, decorators: [{ type: core.Optional }, { type: core.Inject, args: [_ACTION_TYPE_UNIQUENESS_CHECK,] }] }
-        ]; };
         return StoreFeatureModule;
     }());
+    StoreFeatureModule.decorators = [
+        { type: ngCore.NgModule, args: [{},] }
+    ];
+    /** @nocollapse */
+    StoreFeatureModule.ctorParameters = function () { return [
+        { type: Array, decorators: [{ type: ngCore.Inject, args: [_STORE_FEATURES,] }] },
+        { type: Array, decorators: [{ type: ngCore.Inject, args: [FEATURE_REDUCERS,] }] },
+        { type: ReducerManager },
+        { type: StoreRootModule },
+        { type: undefined, decorators: [{ type: ngCore.Optional }, { type: ngCore.Inject, args: [_ACTION_TYPE_UNIQUENESS_CHECK,] }] }
+    ]; };
     if (false) {
         /**
          * @type {?}
@@ -2085,12 +2005,7 @@
          * @param {?=} config
          * @return {?}
          */
-        StoreModule.forRoot = /**
-         * @param {?} reducers
-         * @param {?=} config
-         * @return {?}
-         */
-        function (reducers, config) {
+        StoreModule.forRoot = function (reducers, config) {
             if (config === void 0) { config = {}; }
             return {
                 ngModule: StoreRootModule,
@@ -2098,7 +2013,7 @@
                     {
                         provide: _ROOT_STORE_GUARD,
                         useFactory: _provideForRootGuard,
-                        deps: [[Store, new core.Optional(), new core.SkipSelf()]],
+                        deps: [[Store, new ngCore.Optional(), new ngCore.SkipSelf()]],
                     },
                     { provide: _INITIAL_STATE, useValue: config.initialState },
                     {
@@ -2109,11 +2024,11 @@
                     { provide: _INITIAL_REDUCERS, useValue: reducers },
                     {
                         provide: _STORE_REDUCERS,
-                        useExisting: reducers instanceof core.InjectionToken ? reducers : _INITIAL_REDUCERS,
+                        useExisting: reducers instanceof ngCore.InjectionToken ? reducers : _INITIAL_REDUCERS,
                     },
                     {
                         provide: INITIAL_REDUCERS,
-                        deps: [core.Injector, _INITIAL_REDUCERS, [new core.Inject(_STORE_REDUCERS)]],
+                        deps: [ngCore.Injector, _INITIAL_REDUCERS, [new ngCore.Inject(_STORE_REDUCERS)]],
                         useFactory: _createStoreReducers,
                     },
                     {
@@ -2152,13 +2067,7 @@
          * @param {?=} config
          * @return {?}
          */
-        StoreModule.forFeature = /**
-         * @param {?} featureName
-         * @param {?} reducers
-         * @param {?=} config
-         * @return {?}
-         */
-        function (featureName, reducers, config) {
+        StoreModule.forFeature = function (featureName, reducers, config) {
             if (config === void 0) { config = {}; }
             return {
                 ngModule: StoreFeatureModule,
@@ -2173,35 +2082,35 @@
                         multi: true,
                         useValue: {
                             key: featureName,
-                            reducerFactory: !(config instanceof core.InjectionToken) && config.reducerFactory
+                            reducerFactory: !(config instanceof ngCore.InjectionToken) && config.reducerFactory
                                 ? config.reducerFactory
                                 : combineReducers,
-                            metaReducers: !(config instanceof core.InjectionToken) && config.metaReducers
+                            metaReducers: !(config instanceof ngCore.InjectionToken) && config.metaReducers
                                 ? config.metaReducers
                                 : [],
-                            initialState: !(config instanceof core.InjectionToken) && config.initialState
+                            initialState: !(config instanceof ngCore.InjectionToken) && config.initialState
                                 ? config.initialState
                                 : undefined,
                         },
                     },
                     {
                         provide: _STORE_FEATURES,
-                        deps: [core.Injector, _FEATURE_CONFIGS, STORE_FEATURES],
+                        deps: [ngCore.Injector, _FEATURE_CONFIGS, STORE_FEATURES],
                         useFactory: _createFeatureStore,
                     },
                     { provide: _FEATURE_REDUCERS, multi: true, useValue: reducers },
                     {
                         provide: _FEATURE_REDUCERS_TOKEN,
                         multi: true,
-                        useExisting: reducers instanceof core.InjectionToken ? reducers : _FEATURE_REDUCERS,
+                        useExisting: reducers instanceof ngCore.InjectionToken ? reducers : _FEATURE_REDUCERS,
                     },
                     {
                         provide: FEATURE_REDUCERS,
                         multi: true,
                         deps: [
-                            core.Injector,
+                            ngCore.Injector,
                             _FEATURE_REDUCERS,
-                            [new core.Inject(_FEATURE_REDUCERS_TOKEN)],
+                            [new ngCore.Inject(_FEATURE_REDUCERS_TOKEN)],
                         ],
                         useFactory: _createFeatureReducers,
                     },
@@ -2209,18 +2118,18 @@
                 ],
             };
         };
-        StoreModule.decorators = [
-            { type: core.NgModule, args: [{},] }
-        ];
         return StoreModule;
     }());
+    StoreModule.decorators = [
+        { type: ngCore.NgModule, args: [{},] }
+    ];
     /**
      * @param {?} injector
      * @param {?} reducers
      * @return {?}
      */
     function _createStoreReducers(injector, reducers) {
-        return reducers instanceof core.InjectionToken ? injector.get(reducers) : reducers;
+        return reducers instanceof ngCore.InjectionToken ? injector.get(reducers) : reducers;
     }
     /**
      * @param {?} injector
@@ -2229,13 +2138,12 @@
      * @return {?}
      */
     function _createFeatureStore(injector, configs, featureStores) {
-        return featureStores.map((/**
+        return featureStores.map(( /**
          * @param {?} feat
          * @param {?} index
          * @return {?}
-         */
-        function (feat, index) {
-            if (configs[index] instanceof core.InjectionToken) {
+         */function (feat, index) {
+            if (configs[index] instanceof ngCore.InjectionToken) {
                 /** @type {?} */
                 var conf = injector.get(configs[index]);
                 return {
@@ -2257,12 +2165,11 @@
      */
     function _createFeatureReducers(injector, reducerCollection) {
         /** @type {?} */
-        var reducers = reducerCollection.map((/**
+        var reducers = reducerCollection.map(( /**
          * @param {?} reducer
          * @return {?}
-         */
-        function (reducer) {
-            return reducer instanceof core.InjectionToken ? injector.get(reducer) : reducer;
+         */function (reducer) {
+            return reducer instanceof ngCore.InjectionToken ? injector.get(reducer) : reducer;
         }));
         return reducers;
     }
@@ -2295,37 +2202,6 @@
         return 'guarded';
     }
 
-    var __read$7 = (this && this.__read) || function (o, n) {
-        var m = typeof Symbol === "function" && o[Symbol.iterator];
-        if (!m) return o;
-        var i = m.call(o), r, ar = [], e;
-        try {
-            while ((n === void 0 || n-- > 0) && !(r = i.next()).done) ar.push(r.value);
-        }
-        catch (error) { e = { error: error }; }
-        finally {
-            try {
-                if (r && !r.done && (m = i["return"])) m.call(i);
-            }
-            finally { if (e) throw e.error; }
-        }
-        return ar;
-    };
-    var __spread$5 = (this && this.__spread) || function () {
-        for (var ar = [], i = 0; i < arguments.length; i++) ar = ar.concat(__read$7(arguments[i]));
-        return ar;
-    };
-    var __values = (this && this.__values) || function(o) {
-        var s = typeof Symbol === "function" && Symbol.iterator, m = s && o[s], i = 0;
-        if (m) return m.call(o);
-        if (o && typeof o.length === "number") return {
-            next: function () {
-                if (o && i >= o.length) o = void 0;
-                return { value: o && o[i++], done: !o };
-            }
-        };
-        throw new TypeError(s ? "Object is not iterable." : "Symbol.iterator is not defined.");
-    };
     /**
      * @fileoverview added by tsickle
      * Generated from: src/reducer_creator.ts
@@ -2363,14 +2239,13 @@
             args[_i] = arguments[_i];
         }
         /** @type {?} */
-        var reducer = (/** @type {?} */ (args.pop()));
+        var reducer = ( /** @type {?} */(args.pop()));
         /** @type {?} */
-        var types = args.reduce((/**
+        var types = args.reduce(( /**
          * @param {?} result
          * @param {?} creator
          * @return {?}
-         */
-        function (result, creator) { return __spread$5(result, [((/** @type {?} */ (creator))).type]); }), (/** @type {?} */ ([])));
+         */function (result, creator) { return __spread(result, [(( /** @type {?} */(creator))).type]); }), ( /** @type {?} */([])));
         return { reducer: reducer, types: types };
     }
     /**
@@ -2421,16 +2296,13 @@
             var _loop_2 = function (type) {
                 if (map.has(type)) {
                     /** @type {?} */
-                    var existingReducer_1 = (/** @type {?} */ (map.get(type)));
+                    var existingReducer_1 = ( /** @type {?} */(map.get(type)));
                     /** @type {?} */
-                    var newReducer = (/**
+                    var newReducer = ( /**
                      * @param {?} state
                      * @param {?} action
                      * @return {?}
-                     */
-                    function (state, action) {
-                        return on_1.reducer(existingReducer_1(state, action), action);
-                    });
+                     */function (state, action) { return on_1.reducer(existingReducer_1(state, action), action); });
                     map.set(type, newReducer);
                 }
                 else {
@@ -2464,18 +2336,41 @@
             }
             finally { if (e_1) throw e_1.error; }
         }
-        return (/**
+        return ( /**
          * @param {?=} state
          * @param {?=} action
          * @return {?}
-         */
-        function (state, action) {
+         */function (state, action) {
             if (state === void 0) { state = initialState; }
             /** @type {?} */
             var reducer = map.get(action.type);
             return reducer ? reducer(state, action) : state;
         });
     }
+
+    /**
+     * @fileoverview added by tsickle
+     * Generated from: src/index.ts
+     * @suppress {checkTypes,constantProperty,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
+     */
+
+    /**
+     * @fileoverview added by tsickle
+     * Generated from: public_api.ts
+     * @suppress {checkTypes,constantProperty,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
+     */
+
+    /**
+     * @fileoverview added by tsickle
+     * Generated from: index.ts
+     * @suppress {checkTypes,constantProperty,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
+     */
+
+    /**
+     * @fileoverview added by tsickle
+     * Generated from: ngrx-store.ts
+     * @suppress {checkTypes,constantProperty,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
+     */
 
     exports.ActionsSubject = ActionsSubject;
     exports.FEATURE_REDUCERS = FEATURE_REDUCERS;

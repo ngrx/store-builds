@@ -11,6 +11,7 @@ var __values = (this && this.__values) || function(o) {
     throw new TypeError(s ? "Object is not iterable." : "Symbol.iterator is not defined.");
 };
 exports.__esModule = true;
+exports.findPropertyInAstObject = void 0;
 // https://github.com/angular/angular-cli/blob/master/packages/schematics/angular/utility/json-utils.ts
 function findPropertyInAstObject(node, propertyName) {
     var e_1, _a;
