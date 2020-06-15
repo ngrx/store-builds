@@ -1,1 +1,1 @@
-ba0818ef feat(component-store): make library compatible with ViewEngine (#2580)
+71286671 fix(component): detect zone.js using instanceof comparison (#2547)
