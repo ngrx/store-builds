@@ -1,1 +1,1 @@
-71286671 fix(component): detect zone.js using instanceof comparison (#2547)
+e3b178d0 docs(component-store): fix movies$ observable assignment (#2587)
