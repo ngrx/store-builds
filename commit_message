@@ -1,1 +1,1 @@
-e3b178d0 docs(component-store): fix movies$ observable assignment (#2587)
+4796c97f fix(entity): remove incorrect ComparerStr type (#2584)
