@@ -1,1 +1,1 @@
-58073ab2 perf(component-store): push updates to queueScheduler and single selectors to asapSchedulers (#2586)
+1ae3332d build: update Angular deps to latest v10 rc for examples (#2588)
