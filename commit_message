@@ -1,1 +1,1 @@
-c1efc5ea ci: include all package dependencies when running affected builds (#2599)
+9e3252bb chore(component-store): remove globalThis leftovers (#2597)
