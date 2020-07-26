@@ -173,7 +173,7 @@ function visitDecorator(sourceFile, decoratorName, callback) {
             return;
         }
         var _a = __read(expression.arguments, 1), arg = _a[0];
-        if (!ts.isObjectLiteralExpression(arg)) {
+        if (!arg || !ts.isObjectLiteralExpression(arg)) {
             return;
         }
         callback(classDeclarationNode, arg);
