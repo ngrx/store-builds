@@ -8,12 +8,14 @@ import { observeOn, withLatestFrom, scan, pluck, map, distinctUntilChanged } fro
  * @suppress {checkTypes,constantProperty,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
  */
 /** @type {?} */
-let REGISTERED_ACTION_TYPES = {};
+const REGISTERED_ACTION_TYPES = {};
 /**
  * @return {?}
  */
 function resetRegisteredActionTypes() {
-    REGISTERED_ACTION_TYPES = {};
+    for (const key of Object.keys(REGISTERED_ACTION_TYPES)) {
+        delete REGISTERED_ACTION_TYPES[key];
+    }
 }
 
 /**

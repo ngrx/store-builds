@@ -307,7 +307,20 @@
      * @return {?}
      */
     function resetRegisteredActionTypes() {
-        REGISTERED_ACTION_TYPES = {};
+        var e_1, _a;
+        try {
+            for (var _b = __values(Object.keys(REGISTERED_ACTION_TYPES)), _c = _b.next(); !_c.done; _c = _b.next()) {
+                var key = _c.value;
+                delete REGISTERED_ACTION_TYPES[key];
+            }
+        }
+        catch (e_1_1) { e_1 = { error: e_1_1 }; }
+        finally {
+            try {
+                if (_c && !_c.done && (_a = _b.return)) _a.call(_b);
+            }
+            finally { if (e_1) throw e_1.error; }
+        }
     }
 
     /**
