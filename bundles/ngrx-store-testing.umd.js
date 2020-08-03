@@ -161,15 +161,19 @@
             return { value: op[0] ? op[1] : void 0, done: true };
         }
     }
-    function __createBinding(o, m, k, k2) {
+    var __createBinding = Object.create ? (function (o, m, k, k2) {
+        if (k2 === undefined)
+            k2 = k;
+        Object.defineProperty(o, k2, { enumerable: true, get: function () { return m[k]; } });
+    }) : (function (o, m, k, k2) {
         if (k2 === undefined)
             k2 = k;
         o[k2] = m[k];
-    }
+    });
     function __exportStar(m, exports) {
         for (var p in m)
             if (p !== "default" && !exports.hasOwnProperty(p))
-                exports[p] = m[p];
+                __createBinding(exports, m, p);
     }
     function __values(o) {
         var s = typeof Symbol === "function" && Symbol.iterator, m = s && o[s], i = 0;
@@ -268,6 +272,11 @@
         return cooked;
     }
     ;
+    var __setModuleDefault = Object.create ? (function (o, v) {
+        Object.defineProperty(o, "default", { enumerable: true, value: v });
+    }) : function (o, v) {
+        o["default"] = v;
+    };
     function __importStar(mod) {
         if (mod && mod.__esModule)
             return mod;
@@ -275,8 +284,8 @@
         if (mod != null)
             for (var k in mod)
                 if (Object.hasOwnProperty.call(mod, k))
-                    result[k] = mod[k];
-        result.default = mod;
+                    __createBinding(result, mod, k);
+        __setModuleDefault(result, mod);
         return result;
     }
     function __importDefault(mod) {
