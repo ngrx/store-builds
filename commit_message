@@ -1,1 +1,1 @@
-50fa6360 refactor(component): remove barrels from exporting to the public API (#2657)
+82bae2f7 docs: generate API docs for component-store, update docs deps (#2658)
