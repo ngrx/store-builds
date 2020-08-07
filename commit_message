@@ -1,1 +1,1 @@
-a860b5d1 docs: update angular, fix breakages (#2652)
+50fa6360 refactor(component): remove barrels from exporting to the public API (#2657)
