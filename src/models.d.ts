@@ -36,6 +36,8 @@ export declare const arraysAreNotAllowedMsg = "arrays are not allowed in action 
 declare type ArraysAreNotAllowed = typeof arraysAreNotAllowedMsg;
 export declare const typePropertyIsNotAllowedMsg = "type property is not allowed in action creators";
 declare type TypePropertyIsNotAllowed = typeof typePropertyIsNotAllowedMsg;
+export declare const emptyObjectsAreNotAllowedMsg = "empty objects are not allowed in action creators";
+declare type EmptyObjectsAreNotAllowed = typeof emptyObjectsAreNotAllowedMsg;
 export declare type FunctionIsNotAllowed<T, ErrorMessage extends string> = T extends Function ? ErrorMessage : T;
 /**
  * A function that returns an object in the shape of the `Action` interface.  Configured using `createAction`.
@@ -43,7 +45,7 @@ export declare type FunctionIsNotAllowed<T, ErrorMessage extends string> = T ext
 export declare type Creator<P extends any[] = any[], R extends object = object> = FunctionWithParametersType<P, R>;
 export declare type NotAllowedCheck<T extends object> = T extends any[] ? ArraysAreNotAllowed : T extends {
     type: any;
-} ? TypePropertyIsNotAllowed : unknown;
+} ? TypePropertyIsNotAllowed : keyof T extends never ? EmptyObjectsAreNotAllowed : unknown;
 /**
  * See `Creator`.
  */

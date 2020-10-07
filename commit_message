@@ -1,1 +1,1 @@
-5cfeffea docs(component-store): fix code formatting (#2726)
+63510a88 fix(store): prevent unexpected behavior of {} as a props type (#2728)
