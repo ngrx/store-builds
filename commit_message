@@ -1,1 +1,1 @@
-bc190156 docs(router-store): add router state interface to serialization example (#2729)
+37354aa5 fix(schematics): prevent ng-add from rewriting other workspace cli options (#2731)
