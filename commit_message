@@ -1,1 +1,1 @@
-63510a88 fix(store): prevent unexpected behavior of {} as a props type (#2728)
+bc190156 docs(router-store): add router state interface to serialization example (#2729)
