@@ -1,1 +1,1 @@
-e02d0d48 refactor: use consistent naming of injection tokens across packages (#2737)
+207da445 ci: build dependencies for affected projects (#2766)
