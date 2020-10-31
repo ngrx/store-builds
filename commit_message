@@ -1,1 +1,1 @@
-207da445 ci: build dependencies for affected projects (#2766)
+b54b9b6f fix(component-store): adjust updater to accept partials (#2765)
