@@ -1,1 +1,1 @@
-b54b9b6f fix(component-store): adjust updater to accept partials (#2765)
+a942ac69 docs(component-store): Fix "Combining Selectors" (#2770)
