@@ -208,6 +208,49 @@ class MockReducerManager extends BehaviorSubject {
     addFeatures(feature) {
         /* noop */
     }
+    /**
+     * @param {?} feature
+     * @return {?}
+     */
+    removeFeature(feature) {
+        /* noop */
+    }
+    /**
+     * @param {?} features
+     * @return {?}
+     */
+    removeFeatures(features) {
+        /* noop */
+    }
+    /**
+     * @param {?} key
+     * @param {?} reducer
+     * @return {?}
+     */
+    addReducer(key, reducer) {
+        /* noop */
+    }
+    /**
+     * @param {?} reducers
+     * @return {?}
+     */
+    addReducers(reducers) {
+        /* noop */
+    }
+    /**
+     * @param {?} featureKey
+     * @return {?}
+     */
+    removeReducer(featureKey) {
+        /* noop */
+    }
+    /**
+     * @param {?} featureKeys
+     * @return {?}
+     */
+    removeReducers(featureKeys) {
+        /* noop */
+    }
 }
 MockReducerManager.decorators = [
     { type: Injectable }

@@ -520,6 +520,49 @@
         MockReducerManager.prototype.addFeatures = function (feature) {
             /* noop */
         };
+        /**
+         * @param {?} feature
+         * @return {?}
+         */
+        MockReducerManager.prototype.removeFeature = function (feature) {
+            /* noop */
+        };
+        /**
+         * @param {?} features
+         * @return {?}
+         */
+        MockReducerManager.prototype.removeFeatures = function (features) {
+            /* noop */
+        };
+        /**
+         * @param {?} key
+         * @param {?} reducer
+         * @return {?}
+         */
+        MockReducerManager.prototype.addReducer = function (key, reducer) {
+            /* noop */
+        };
+        /**
+         * @param {?} reducers
+         * @return {?}
+         */
+        MockReducerManager.prototype.addReducers = function (reducers) {
+            /* noop */
+        };
+        /**
+         * @param {?} featureKey
+         * @return {?}
+         */
+        MockReducerManager.prototype.removeReducer = function (featureKey) {
+            /* noop */
+        };
+        /**
+         * @param {?} featureKeys
+         * @return {?}
+         */
+        MockReducerManager.prototype.removeReducers = function (featureKeys) {
+            /* noop */
+        };
         return MockReducerManager;
     }(rxjs.BehaviorSubject));
     MockReducerManager.decorators = [
