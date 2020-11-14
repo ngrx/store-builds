@@ -1,1 +1,1 @@
-a489b48d fix(store): add noop for all methods in MockReducerManager (#2777)
+89064230 refactor(example-app): use router store in RouterEffects (#2772)
