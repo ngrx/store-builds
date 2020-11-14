@@ -1,1 +1,1 @@
-c47114c6 feat(effects): add support for provideMockActions outside of the TestBed (#2762)
+5219ff51 feat(effects): allow usage of empty forRoot array multiple times (#2774)
