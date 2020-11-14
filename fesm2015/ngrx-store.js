@@ -277,9 +277,37 @@ const _ACTION_TYPE_UNIQUENESS_CHECK = new InjectionToken('@ngrx/store Check if A
  * @suppress {checkTypes,constantProperty,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
  */
 /**
- * @param {?} reducers
- * @param {?=} initialState
- * @return {?}
+ * \@description
+ * Combines reducers for individual features into a single reducer.
+ *
+ * You can use this function to delegate handling of state transitions to multiple reducers, each acting on their
+ * own sub-state within the root state.
+ *
+ * \@usageNotes
+ *
+ * **Example combining two feature reducers into one "root" reducer**
+ *
+ * ```ts
+ * export const reducer = combineReducers({
+ *   featureA: featureAReducer,
+ *   featureB: featureBReducer
+ * });
+ * ```
+ *
+ * You can also override the initial states of the sub-features:
+ * ```ts
+ * export const reducer = combineReducers({
+ *   featureA: featureAReducer,
+ *   featureB: featureBReducer
+ * }, {
+ *   featureA: { counterA: 13 },
+ *   featureB: { counterB: 37 }
+ * });
+ * ```
+ * @param {?} reducers An object mapping keys of the root state to their corresponding feature reducer.
+ * @param {?=} initialState Provides a state value if the current state is `undefined`, as it is initially.
+ * @return {?} A reducer function.
+ *
  */
 function combineReducers(reducers, initialState = {}) {
     /** @type {?} */
