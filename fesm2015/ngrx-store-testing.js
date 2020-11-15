@@ -1,4 +1,4 @@
-import { Injectable, InjectionToken, Inject } from '@angular/core';
+import { Injectable, InjectionToken, Inject, Injector } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
 import { Store, createSelector, ActionsSubject, ReducerManager, INITIAL_STATE, setNgrxMockEnvironment, StateObservable } from '@ngrx/store';
 import { TestBed } from '@angular/core/testing';
@@ -275,22 +275,142 @@ if (false) {
     MockStoreConfig.prototype.selectors;
 }
 /**
+ * \@description
+ * Creates mock store providers.
+ *
+ * \@usageNotes
+ *
+ * **With `TestBed.configureTestingModule`**
+ *
+ * ```typescript
+ * describe('Books Component', () => {
+ *   let store: MockStore;
+ *
+ *   beforeEach(() => {
+ *     TestBed.configureTestingModule({
+ *       providers: [
+ *         provideMockStore({
+ *           initialState: { books: { entities: [] } },
+ *           selectors: [
+ *             { selector: selectAllBooks, value: ['Book 1', 'Book 2'] },
+ *             { selector: selectVisibleBooks, value: ['Book 1'] },
+ *           ],
+ *         }),
+ *       ],
+ *     });
+ *
+ *     store = TestBed.inject(MockStore);
+ *   });
+ * });
+ * ```
+ *
+ * **With `Injector.create`**
+ *
+ * ```typescript
+ * describe('Counter Component', () => {
+ *   let injector: Injector;
+ *   let store: MockStore;
+ *
+ *   beforeEach(() => {
+ *     injector = Injector.create({
+ *       providers: [
+ *         provideMockStore({ initialState: { counter: 0 } }),
+ *       ],
+ *     });
+ *     store = injector.get(MockStore);
+ *   });
+ * });
+ * ```
  * @template T
- * @param {?=} config
- * @return {?}
+ * @param {?=} config `MockStoreConfig<T>` to provide the values for `INITIAL_STATE` and `MOCK_SELECTORS` tokens.
+ * By default, `initialState` and `selectors` are not defined.
+ * @return {?} Mock store providers that can be used with both `TestBed.configureTestingModule` and `Injector.create`.
+ *
  */
 function provideMockStore(config = {}) {
     setNgrxMockEnvironment(true);
     return [
-        ActionsSubject,
-        MockState,
-        MockStore,
+        {
+            provide: ActionsSubject,
+            useFactory: (/**
+             * @return {?}
+             */
+            () => new ActionsSubject()),
+            deps: [],
+        },
+        { provide: MockState, useFactory: (/**
+             * @return {?}
+             */
+            () => new MockState()), deps: [] },
+        {
+            provide: MockReducerManager,
+            useFactory: (/**
+             * @return {?}
+             */
+            () => new MockReducerManager()),
+            deps: [],
+        },
         { provide: INITIAL_STATE, useValue: config.initialState || {} },
         { provide: MOCK_SELECTORS, useValue: config.selectors },
-        { provide: StateObservable, useClass: MockState },
-        { provide: ReducerManager, useClass: MockReducerManager },
+        { provide: StateObservable, useExisting: MockState },
+        { provide: ReducerManager, useExisting: MockReducerManager },
+        {
+            provide: MockStore,
+            useFactory: mockStoreFactory,
+            deps: [
+                MockState,
+                ActionsSubject,
+                ReducerManager,
+                INITIAL_STATE,
+                MOCK_SELECTORS,
+            ],
+        },
         { provide: Store, useExisting: MockStore },
     ];
+}
+/**
+ * @template T
+ * @param {?} mockState
+ * @param {?} actionsSubject
+ * @param {?} reducerManager
+ * @param {?} initialState
+ * @param {?} mockSelectors
+ * @return {?}
+ */
+function mockStoreFactory(mockState, actionsSubject, reducerManager, initialState, mockSelectors) {
+    return new MockStore(mockState, actionsSubject, reducerManager, initialState, mockSelectors);
+}
+/**
+ * \@description
+ * Creates mock store with all necessary dependencies outside of the `TestBed`.
+ *
+ * \@usageNotes
+ *
+ * ```typescript
+ * describe('Books Effects', () => {
+ *   let store: MockStore;
+ *
+ *   beforeEach(() => {
+ *     store = getMockStore({
+ *       initialState: { books: { entities: ['Book 1', 'Book 2', 'Book 3'] } },
+ *       selectors: [
+ *         { selector: selectAllBooks, value: ['Book 1', 'Book 2'] },
+ *         { selector: selectVisibleBooks, value: ['Book 1'] },
+ *       ],
+ *     });
+ *   });
+ * });
+ * ```
+ * @template T
+ * @param {?=} config `MockStoreConfig<T>` to provide the values for `INITIAL_STATE` and `MOCK_SELECTORS` tokens.
+ * By default, `initialState` and `selectors` are not defined.
+ * @return {?} `MockStore<T>`
+ *
+ */
+function getMockStore(config = {}) {
+    /** @type {?} */
+    const injector = Injector.create({ providers: provideMockStore(config) });
+    return injector.get(MockStore);
 }
 
 /**
@@ -305,5 +425,5 @@ function provideMockStore(config = {}) {
  * @suppress {checkTypes,constantProperty,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
  */
 
-export { MockReducerManager, MockState, MockStore, provideMockStore, MOCK_SELECTORS as ɵa };
+export { MockReducerManager, MockState, MockStore, getMockStore, provideMockStore, MOCK_SELECTORS as ɵa };
 //# sourceMappingURL=ngrx-store-testing.js.map
