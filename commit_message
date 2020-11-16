@@ -1,1 +1,1 @@
-16505829 feat(store): add support for provideMockStore outside of the TestBed (#2759)
+daf18898 fix(schematics): add schematics to devDependencies (#2784)
