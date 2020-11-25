@@ -1,1 +1,1 @@
-ecedadb8 feat(component-store): add patchState method (#2788)
+0aefe685 build: fix warning during UMD bundling (#2795)
