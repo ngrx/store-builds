@@ -1,1 +1,1 @@
-4f705499 chore: update to Angular 11 (#2794)
+6a065fef refactor(component): replace deprecated async with waitForAsync (#2816)
