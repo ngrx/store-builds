@@ -1,1 +1,1 @@
-6a065fef refactor(component): replace deprecated async with waitForAsync (#2816)
+705ae44c test(effects): add test cases for effect factory (#2818)
