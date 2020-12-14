@@ -1968,14 +1968,17 @@ function OnReducer() { }
  * Associates actions with a given state change function.
  * A state change function must be provided as the last parameter.
  *
+ * \@example
+ * on(AuthApiActions.loginSuccess, (state, { user }) => ({ ...state, user }))
+ * @template C, S, OR, AR
  * @param {...?} args `ActionCreator`'s followed by a state change function.
  *
- * **To maintain type-safety**: pass 10 or less `ActionCreator`'s.
  * @return {?} an association of action types with a state change function.
+ *
  */
 function on(...args) {
     /** @type {?} */
-    const reducer = (/** @type {?} */ (args.pop()));
+    const reducer = (/** @type {?} */ (((/** @type {?} */ (args.pop())))));
     /** @type {?} */
     const types = args.reduce((/**
      * @param {?} result
