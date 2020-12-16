@@ -1,1 +1,1 @@
-7f4e5ef4 docs(component-store): add docs for tapResponse operator (#2815)
+17571e5b feat(store): add object-style StoreModule.forFeature overload (#2821)

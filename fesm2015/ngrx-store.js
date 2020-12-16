@@ -1740,6 +1740,18 @@ if (false) {
     /** @type {?|undefined} */
     RootStoreConfig.prototype.runtimeChecks;
 }
+/**
+ * An object with the name and the reducer for the feature.
+ * @record
+ * @template T, V
+ */
+function FeatureSlice() { }
+if (false) {
+    /** @type {?} */
+    FeatureSlice.prototype.name;
+    /** @type {?} */
+    FeatureSlice.prototype.reducer;
+}
 class StoreModule {
     /**
      * @param {?} reducers
@@ -1802,12 +1814,26 @@ class StoreModule {
         };
     }
     /**
-     * @param {?} featureName
-     * @param {?} reducers
+     * @param {?} featureNameOrSlice
+     * @param {?=} reducersOrConfig
      * @param {?=} config
      * @return {?}
      */
-    static forFeature(featureName, reducers, config = {}) {
+    static forFeature(featureNameOrSlice, reducersOrConfig, config = {}) {
+        var _a;
+        /** @type {?} */
+        let featureName;
+        /** @type {?} */
+        let reducers;
+        if (typeof featureNameOrSlice === 'string') {
+            featureName = featureNameOrSlice;
+            reducers = (/** @type {?} */ (reducersOrConfig));
+        }
+        else {
+            featureName = featureNameOrSlice.name;
+            reducers = featureNameOrSlice.reducer;
+            config = (_a = ((/** @type {?} */ (reducersOrConfig)))) !== null && _a !== void 0 ? _a : {};
+        }
         return {
             ngModule: StoreFeatureModule,
             providers: [
@@ -2095,5 +2121,5 @@ function createReducer(initialState, ...ons) {
  * @suppress {checkTypes,constantProperty,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
  */
 
-export { ActionsSubject, FEATURE_REDUCERS, INIT, INITIAL_REDUCERS, INITIAL_STATE, META_REDUCERS, REDUCER_FACTORY, ReducerManager, ReducerManagerDispatcher, ReducerObservable, STORE_FEATURES, ScannedActionsSubject, State, StateObservable, Store, StoreFeatureModule, StoreModule, StoreRootModule, UPDATE, USER_PROVIDED_META_REDUCERS, USER_RUNTIME_CHECKS, combineReducers, compose, createAction, createFeatureSelector, createReducer, createReducerFactory, createSelector, createSelectorFactory, defaultMemoize, defaultStateFn, isNgrxMockEnvironment, on, props, reduceState, resultMemoize, select, setNgrxMockEnvironment, union, STORE_PROVIDERS as ɵb, createActiveRuntimeChecks as ɵba, createSerializationCheckMetaReducer as ɵbb, createImmutabilityCheckMetaReducer as ɵbc, createInNgZoneCheckMetaReducer as ɵbd, provideRuntimeChecks as ɵbe, checkForActionTypeUniqueness as ɵbf, _runtimeChecksFactory as ɵbg, _actionTypeUniquenessCheck as ɵbh, ACTIONS_SUBJECT_PROVIDERS as ɵc, REDUCER_MANAGER_PROVIDERS as ɵd, SCANNED_ACTIONS_SUBJECT_PROVIDERS as ɵe, isEqualCheck as ɵf, STATE_PROVIDERS as ɵg, _ROOT_STORE_GUARD as ɵh, _INITIAL_STATE as ɵi, _REDUCER_FACTORY as ɵj, _INITIAL_REDUCERS as ɵk, _STORE_REDUCERS as ɵl, _FEATURE_REDUCERS as ɵm, _FEATURE_CONFIGS as ɵn, _STORE_FEATURES as ɵo, _FEATURE_REDUCERS_TOKEN as ɵp, _RESOLVED_META_REDUCERS as ɵq, _USER_RUNTIME_CHECKS as ɵr, _ACTIVE_RUNTIME_CHECKS as ɵs, _ACTION_TYPE_UNIQUENESS_CHECK as ɵt, _createStoreReducers as ɵu, _createFeatureStore as ɵv, _createFeatureReducers as ɵw, _initialStateFactory as ɵx, _concatMetaReducers as ɵy, _provideForRootGuard as ɵz };
+export { ActionsSubject, FEATURE_REDUCERS, INIT, INITIAL_REDUCERS, INITIAL_STATE, META_REDUCERS, REDUCER_FACTORY, ReducerManager, ReducerManagerDispatcher, ReducerObservable, STORE_FEATURES, ScannedActionsSubject, State, StateObservable, Store, StoreFeatureModule, StoreModule, StoreRootModule, UPDATE, USER_PROVIDED_META_REDUCERS, USER_RUNTIME_CHECKS, combineReducers, compose, createAction, createFeatureSelector, createReducer, createReducerFactory, createSelector, createSelectorFactory, defaultMemoize, defaultStateFn, isNgrxMockEnvironment, on, props, reduceState, resultMemoize, select, setNgrxMockEnvironment, union, STORE_PROVIDERS as ɵb, checkForActionTypeUniqueness as ɵba, _runtimeChecksFactory as ɵbb, _actionTypeUniquenessCheck as ɵbc, ACTIONS_SUBJECT_PROVIDERS as ɵc, REDUCER_MANAGER_PROVIDERS as ɵd, SCANNED_ACTIONS_SUBJECT_PROVIDERS as ɵe, isEqualCheck as ɵf, STATE_PROVIDERS as ɵg, _ROOT_STORE_GUARD as ɵh, _INITIAL_STATE as ɵi, _REDUCER_FACTORY as ɵj, _INITIAL_REDUCERS as ɵk, _STORE_REDUCERS as ɵl, _STORE_FEATURES as ɵm, _RESOLVED_META_REDUCERS as ɵn, _USER_RUNTIME_CHECKS as ɵo, _ACTIVE_RUNTIME_CHECKS as ɵp, _ACTION_TYPE_UNIQUENESS_CHECK as ɵq, _createStoreReducers as ɵr, _initialStateFactory as ɵs, _concatMetaReducers as ɵt, _provideForRootGuard as ɵu, createActiveRuntimeChecks as ɵv, createSerializationCheckMetaReducer as ɵw, createImmutabilityCheckMetaReducer as ɵx, createInNgZoneCheckMetaReducer as ɵy, provideRuntimeChecks as ɵz };
 //# sourceMappingURL=ngrx-store.js.map
