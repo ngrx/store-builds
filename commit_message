@@ -1,1 +1,1 @@
-14328916 docs: add version 11 migration guide (#2792)
+cad3f60a fix(router-store): ingore slash when comparing routes (#2834)
