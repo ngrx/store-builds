@@ -1,1 +1,1 @@
-6da71585 chore: upgrade Angular peer dependency version when updating major versions (#2844)
+3a1f3595 feat(router-store): add selectParamFromRouterState selector (#2771)
