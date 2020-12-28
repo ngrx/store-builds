@@ -1,1 +1,1 @@
-f63d2816 fix: update Angular peer dependencies to version 11 (#2843)
+6da71585 chore: upgrade Angular peer dependency version when updating major versions (#2844)
