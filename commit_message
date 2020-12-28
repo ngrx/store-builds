@@ -1,1 +1,1 @@
-cad3f60a fix(router-store): ingore slash when comparing routes (#2834)
+a2ab8bef chore: update jest and ts-jest (#2832)
