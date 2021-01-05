@@ -2380,7 +2380,7 @@
      *
      * \@example
      * on(AuthApiActions.loginSuccess, (state, { user }) => ({ ...state, user }))
-     * @template C, S, OR, AR
+     * @template Creators, State, Reducer
      * @param {...?} args `ActionCreator`'s followed by a state change function.
      *
      * @return {?} an association of action types with a state change function.

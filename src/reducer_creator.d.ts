@@ -18,7 +18,7 @@ export interface OnReducer<S, C extends ActionCreator[]> {
  * @example
  * on(AuthApiActions.loginSuccess, (state, { user }) => ({ ...state, user }))
  */
-export declare function on<C extends ActionCreator[], S, OR extends OnReducer<S, C> = OnReducer<S, C>, AR extends ActionReducer<S> = ActionReducer<S>>(...args: [...C, OR]): On<S>;
+export declare function on<Creators extends ActionCreator[], State, Reducer extends OnReducer<State, Creators>>(...args: [...creators: Creators, reducer: Reducer]): On<State>;
 /**
  * @description
  * Creates a reducer function to handle state transitions.

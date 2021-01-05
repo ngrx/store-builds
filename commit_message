@@ -1,1 +1,1 @@
-918f1844 perf(router-store): optimize selectQueryParams, selectQueryParam and selectFragment selectors (#2764)
+9dde2031 refactor(store): remove ActionReducer from 'on' generics and use labeled tuple for arguments (#2857)
