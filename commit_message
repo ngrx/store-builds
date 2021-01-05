@@ -1,1 +1,1 @@
-7c293204 feat(component-store): allow more than 4 selects (#2841)
+918f1844 perf(router-store): optimize selectQueryParams, selectQueryParam and selectFragment selectors (#2764)
