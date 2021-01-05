@@ -1,1 +1,1 @@
-9dde2031 refactor(store): remove ActionReducer from 'on' generics and use labeled tuple for arguments (#2857)
+3b86da69 chore: release 11.0.0-beta.0
