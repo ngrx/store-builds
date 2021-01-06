@@ -22,18 +22,10 @@ export interface StoreConfig<T, V extends Action = Action> {
 export interface RootStoreConfig<T, V extends Action = Action> extends StoreConfig<T, V> {
     runtimeChecks?: Partial<RuntimeChecks>;
 }
-/**
- * An object with the name and the reducer for the feature.
- */
-export interface FeatureSlice<T, V extends Action = Action> {
-    name: string;
-    reducer: ActionReducer<T, V>;
-}
 export declare class StoreModule {
     static forRoot<T, V extends Action = Action>(reducers: ActionReducerMap<T, V> | InjectionToken<ActionReducerMap<T, V>>, config?: RootStoreConfig<T, V>): ModuleWithProviders<StoreRootModule>;
     static forFeature<T, V extends Action = Action>(featureName: string, reducers: ActionReducerMap<T, V> | InjectionToken<ActionReducerMap<T, V>>, config?: StoreConfig<T, V> | InjectionToken<StoreConfig<T, V>>): ModuleWithProviders<StoreFeatureModule>;
     static forFeature<T, V extends Action = Action>(featureName: string, reducer: ActionReducer<T, V> | InjectionToken<ActionReducer<T, V>>, config?: StoreConfig<T, V> | InjectionToken<StoreConfig<T, V>>): ModuleWithProviders<StoreFeatureModule>;
-    static forFeature<T, V extends Action = Action>(slice: FeatureSlice<T, V>, config?: StoreConfig<T, V> | InjectionToken<StoreConfig<T, V>>): ModuleWithProviders<StoreFeatureModule>;
 }
 export declare function _createStoreReducers(injector: Injector, reducers: ActionReducerMap<any, any>): unknown;
 export declare function _createFeatureStore(injector: Injector, configs: StoreConfig<any, any>[] | InjectionToken<StoreConfig<any, any>>[], featureStores: StoreFeature<any, any>[]): (StoreFeature<any, any> | {

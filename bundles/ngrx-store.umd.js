@@ -2121,18 +2121,6 @@
         /** @type {?|undefined} */
         RootStoreConfig.prototype.runtimeChecks;
     }
-    /**
-     * An object with the name and the reducer for the feature.
-     * @record
-     * @template T, V
-     */
-    function FeatureSlice() { }
-    if (false) {
-        /** @type {?} */
-        FeatureSlice.prototype.name;
-        /** @type {?} */
-        FeatureSlice.prototype.reducer;
-    }
     var StoreModule = /** @class */ (function () {
         function StoreModule() {
         }
@@ -2198,27 +2186,13 @@
             };
         };
         /**
-         * @param {?} featureNameOrSlice
-         * @param {?=} reducersOrConfig
+         * @param {?} featureName
+         * @param {?} reducers
          * @param {?=} config
          * @return {?}
          */
-        StoreModule.forFeature = function (featureNameOrSlice, reducersOrConfig, config) {
+        StoreModule.forFeature = function (featureName, reducers, config) {
             if (config === void 0) { config = {}; }
-            var _a;
-            /** @type {?} */
-            var featureName;
-            /** @type {?} */
-            var reducers;
-            if (typeof featureNameOrSlice === 'string') {
-                featureName = featureNameOrSlice;
-                reducers = ( /** @type {?} */(reducersOrConfig));
-            }
-            else {
-                featureName = featureNameOrSlice.name;
-                reducers = featureNameOrSlice.reducer;
-                config = (_a = (( /** @type {?} */(reducersOrConfig)))) !== null && _a !== void 0 ? _a : {};
-            }
             return {
                 ngModule: StoreFeatureModule,
                 providers: [
@@ -2579,9 +2553,14 @@
     exports.setNgrxMockEnvironment = setNgrxMockEnvironment;
     exports.union = union;
     exports.ɵb = STORE_PROVIDERS;
-    exports.ɵba = checkForActionTypeUniqueness;
-    exports.ɵbb = _runtimeChecksFactory;
-    exports.ɵbc = _actionTypeUniquenessCheck;
+    exports.ɵba = createActiveRuntimeChecks;
+    exports.ɵbb = createSerializationCheckMetaReducer;
+    exports.ɵbc = createImmutabilityCheckMetaReducer;
+    exports.ɵbd = createInNgZoneCheckMetaReducer;
+    exports.ɵbe = provideRuntimeChecks;
+    exports.ɵbf = checkForActionTypeUniqueness;
+    exports.ɵbg = _runtimeChecksFactory;
+    exports.ɵbh = _actionTypeUniquenessCheck;
     exports.ɵc = ACTIONS_SUBJECT_PROVIDERS;
     exports.ɵd = REDUCER_MANAGER_PROVIDERS;
     exports.ɵe = SCANNED_ACTIONS_SUBJECT_PROVIDERS;
@@ -2592,20 +2571,20 @@
     exports.ɵj = _REDUCER_FACTORY;
     exports.ɵk = _INITIAL_REDUCERS;
     exports.ɵl = _STORE_REDUCERS;
-    exports.ɵm = _STORE_FEATURES;
-    exports.ɵn = _RESOLVED_META_REDUCERS;
-    exports.ɵo = _USER_RUNTIME_CHECKS;
-    exports.ɵp = _ACTIVE_RUNTIME_CHECKS;
-    exports.ɵq = _ACTION_TYPE_UNIQUENESS_CHECK;
-    exports.ɵr = _createStoreReducers;
-    exports.ɵs = _initialStateFactory;
-    exports.ɵt = _concatMetaReducers;
-    exports.ɵu = _provideForRootGuard;
-    exports.ɵv = createActiveRuntimeChecks;
-    exports.ɵw = createSerializationCheckMetaReducer;
-    exports.ɵx = createImmutabilityCheckMetaReducer;
-    exports.ɵy = createInNgZoneCheckMetaReducer;
-    exports.ɵz = provideRuntimeChecks;
+    exports.ɵm = _FEATURE_REDUCERS;
+    exports.ɵn = _FEATURE_CONFIGS;
+    exports.ɵo = _STORE_FEATURES;
+    exports.ɵp = _FEATURE_REDUCERS_TOKEN;
+    exports.ɵq = _RESOLVED_META_REDUCERS;
+    exports.ɵr = _USER_RUNTIME_CHECKS;
+    exports.ɵs = _ACTIVE_RUNTIME_CHECKS;
+    exports.ɵt = _ACTION_TYPE_UNIQUENESS_CHECK;
+    exports.ɵu = _createStoreReducers;
+    exports.ɵv = _createFeatureStore;
+    exports.ɵw = _createFeatureReducers;
+    exports.ɵx = _initialStateFactory;
+    exports.ɵy = _concatMetaReducers;
+    exports.ɵz = _provideForRootGuard;
 
     Object.defineProperty(exports, '__esModule', { value: true });
 
