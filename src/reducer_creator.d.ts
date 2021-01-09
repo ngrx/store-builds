@@ -15,8 +15,10 @@ export interface OnReducer<S, C extends ActionCreator[]> {
  *
  * @returns an association of action types with a state change function.
  *
- * @example
+ * @usageNotes
+ * ```ts
  * on(AuthApiActions.loginSuccess, (state, { user }) => ({ ...state, user }))
+ * ```
  */
 export declare function on<Creators extends ActionCreator[], State, Reducer extends OnReducer<State, Creators>>(...args: [...creators: Creators, reducer: Reducer]): On<State>;
 /**

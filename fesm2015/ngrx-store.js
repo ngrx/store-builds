@@ -2042,8 +2042,10 @@ function OnReducer() { }
  * Associates actions with a given state change function.
  * A state change function must be provided as the last parameter.
  *
- * \@example
+ * \@usageNotes
+ * ```ts
  * on(AuthApiActions.loginSuccess, (state, { user }) => ({ ...state, user }))
+ * ```
  * @template Creators, State, Reducer
  * @param {...?} args `ActionCreator`'s followed by a state change function.
  *
