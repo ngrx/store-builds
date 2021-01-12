@@ -1,1 +1,1 @@
-ce28b442 feat(store-devtools): pass entire error object to the error handler (#2853)
+7f893b57 test(store): fix failing tests (#2875)
