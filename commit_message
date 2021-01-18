@@ -1,1 +1,1 @@
-92c28cbf docs(store-devtools): add breaking change to migration (#2879)
+a9468e1a feat(store): add object-style StoreModule.forFeature overload w/fixes (#2885)

@@ -2121,6 +2121,18 @@
         /** @type {?|undefined} */
         RootStoreConfig.prototype.runtimeChecks;
     }
+    /**
+     * An object with the name and the reducer for the feature.
+     * @record
+     * @template T, V
+     */
+    function FeatureSlice() { }
+    if (false) {
+        /** @type {?} */
+        FeatureSlice.prototype.name;
+        /** @type {?} */
+        FeatureSlice.prototype.reducer;
+    }
     var StoreModule = /** @class */ (function () {
         function StoreModule() {
         }
@@ -2186,12 +2198,12 @@
             };
         };
         /**
-         * @param {?} featureName
-         * @param {?} reducers
+         * @param {?} featureNameOrSlice
+         * @param {?=} reducersOrConfig
          * @param {?=} config
          * @return {?}
          */
-        StoreModule.forFeature = function (featureName, reducers, config) {
+        StoreModule.forFeature = function (featureNameOrSlice, reducersOrConfig, config) {
             if (config === void 0) { config = {}; }
             return {
                 ngModule: StoreFeatureModule,
@@ -2199,13 +2211,15 @@
                     {
                         provide: _FEATURE_CONFIGS,
                         multi: true,
-                        useValue: config,
+                        useValue: typeof featureNameOrSlice === 'string' ? config : {},
                     },
                     {
                         provide: STORE_FEATURES,
                         multi: true,
                         useValue: {
-                            key: featureName,
+                            key: typeof featureNameOrSlice === 'string'
+                                ? featureNameOrSlice
+                                : featureNameOrSlice.name,
                             reducerFactory: !(config instanceof ngCore.InjectionToken) && config.reducerFactory
                                 ? config.reducerFactory
                                 : combineReducers,
@@ -2222,11 +2236,19 @@
                         deps: [ngCore.Injector, _FEATURE_CONFIGS, STORE_FEATURES],
                         useFactory: _createFeatureStore,
                     },
-                    { provide: _FEATURE_REDUCERS, multi: true, useValue: reducers },
+                    {
+                        provide: _FEATURE_REDUCERS,
+                        multi: true,
+                        useValue: typeof featureNameOrSlice === 'string'
+                            ? reducersOrConfig
+                            : featureNameOrSlice.reducer,
+                    },
                     {
                         provide: _FEATURE_REDUCERS_TOKEN,
                         multi: true,
-                        useExisting: reducers instanceof ngCore.InjectionToken ? reducers : _FEATURE_REDUCERS,
+                        useExisting: reducersOrConfig instanceof ngCore.InjectionToken
+                            ? reducersOrConfig
+                            : _FEATURE_REDUCERS,
                     },
                     {
                         provide: FEATURE_REDUCERS,
