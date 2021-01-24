@@ -1,5 +1,9 @@
 import { ActionCreator, ActionReducer, ActionType, Action } from './models';
-export interface On<S> {
+/**
+ * Return type of the `on` fn.
+ * Contains the action reducer coupled to one or more action types.
+ */
+export interface ReducerTypes<S> {
     reducer: ActionReducer<S>;
     types: string[];
 }
@@ -20,7 +24,7 @@ export interface OnReducer<S, C extends ActionCreator[]> {
  * on(AuthApiActions.loginSuccess, (state, { user }) => ({ ...state, user }))
  * ```
  */
-export declare function on<Creators extends ActionCreator[], State, Reducer extends OnReducer<State, Creators>>(...args: [...creators: Creators, reducer: Reducer]): On<State>;
+export declare function on<Creators extends ActionCreator[], State, Reducer extends OnReducer<State, Creators>>(...args: [...creators: Creators, reducer: Reducer]): ReducerTypes<State>;
 /**
  * @description
  * Creates a reducer function to handle state transitions.
@@ -69,4 +73,4 @@ export declare function on<Creators extends ActionCreator[], State, Reducer exte
  * }
  * ```
  */
-export declare function createReducer<S, A extends Action = Action>(initialState: S, ...ons: On<S>[]): ActionReducer<S, A>;
+export declare function createReducer<S, A extends Action = Action>(initialState: S, ...ons: ReducerTypes<S>[]): ActionReducer<S, A>;

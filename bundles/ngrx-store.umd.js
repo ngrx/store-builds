@@ -2354,15 +2354,17 @@
      * @suppress {checkTypes,constantProperty,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
      */
     /**
+     * Return type of the `on` fn.
+     * Contains the action reducer coupled to one or more action types.
      * @record
      * @template S
      */
-    function On() { }
+    function ReducerTypes() { }
     if (false) {
         /** @type {?} */
-        On.prototype.reducer;
+        ReducerTypes.prototype.reducer;
         /** @type {?} */
-        On.prototype.types;
+        ReducerTypes.prototype.types;
     }
     /**
      * @record

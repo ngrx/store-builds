@@ -50,7 +50,7 @@ export declare type NotAllowedCheck<T extends object> = T extends any[] ? Arrays
  * See `Creator`.
  */
 export declare type ActionCreator<T extends string = string, C extends Creator = Creator> = C & TypedAction<T>;
-export interface Props<T> {
+export interface ActionCreatorProps<T> {
     _as: 'props';
     _p: T;
 }
