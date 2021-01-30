@@ -1,1 +1,1 @@
-d4894843 fix(router-store): cast return type as RouterReducerState (#2887)
+251b83a6 refactor(store-devtools): replace deprecated empty() function (#2895)
