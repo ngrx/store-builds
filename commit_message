@@ -1,1 +1,1 @@
-bb70e6cc fix(data): make entity param partial when is not optimistic (#2899)
+9c54bfb1 docs: add missing this in ComponentStore example (#2901)
