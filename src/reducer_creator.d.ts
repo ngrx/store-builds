@@ -1,14 +1,19 @@
 import { ActionCreator, ActionReducer, ActionType, Action } from './models';
+declare type ExtractActionTypes<Creators extends readonly ActionCreator[]> = {
+    [Key in keyof Creators]: Creators[Key] extends ActionCreator<infer T> ? T : never;
+};
 /**
  * Return type of the `on` fn.
  * Contains the action reducer coupled to one or more action types.
  */
-export interface ReducerTypes<S> {
-    reducer: ActionReducer<S>;
-    types: string[];
+export interface ReducerTypes<State, Creators extends readonly ActionCreator[]> {
+    reducer: OnReducer<State, Creators>;
+    types: ExtractActionTypes<Creators>;
 }
-export interface OnReducer<S, C extends ActionCreator[]> {
-    (state: S, action: ActionType<C[number]>): S;
+export interface OnReducer<State, Creators extends readonly ActionCreator[]> {
+    (state: State, action: ActionType<Creators[number]>): {
+        [P in keyof State]: State[P];
+    };
 }
 /**
  * @description
@@ -24,7 +29,7 @@ export interface OnReducer<S, C extends ActionCreator[]> {
  * on(AuthApiActions.loginSuccess, (state, { user }) => ({ ...state, user }))
  * ```
  */
-export declare function on<Creators extends ActionCreator[], State, Reducer extends OnReducer<State, Creators>>(...args: [...creators: Creators, reducer: Reducer]): ReducerTypes<State>;
+export declare function on<State, Creators extends readonly ActionCreator[]>(...args: [...creators: Creators, reducer: OnReducer<State, Creators>]): ReducerTypes<State, Creators>;
 /**
  * @description
  * Creates a reducer function to handle state transitions.
@@ -73,4 +78,5 @@ export declare function on<Creators extends ActionCreator[], State, Reducer exte
  * }
  * ```
  */
-export declare function createReducer<S, A extends Action = Action>(initialState: S, ...ons: ReducerTypes<S>[]): ActionReducer<S, A>;
+export declare function createReducer<S, A extends Action = Action>(initialState: S, ...ons: ReducerTypes<S, ActionCreator[]>[]): ActionReducer<S, A>;
+export {};

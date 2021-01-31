@@ -1,1 +1,1 @@
-6d46ac4a fix(data): type overloaded add for is optimistic true | undefined (#2906)
+ba8315fd refactor(store): improve on-function typing (#2894)

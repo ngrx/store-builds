@@ -2047,7 +2047,7 @@ function _provideForRootGuard(store) {
  * Return type of the `on` fn.
  * Contains the action reducer coupled to one or more action types.
  * @record
- * @template S
+ * @template State, Creators
  */
 function ReducerTypes() { }
 if (false) {
@@ -2058,7 +2058,7 @@ if (false) {
 }
 /**
  * @record
- * @template S, C
+ * @template State, Creators
  */
 function OnReducer() { }
 /**
@@ -2070,22 +2070,23 @@ function OnReducer() { }
  * ```ts
  * on(AuthApiActions.loginSuccess, (state, { user }) => ({ ...state, user }))
  * ```
- * @template Creators, State, Reducer
+ * @template State, Creators
  * @param {...?} args `ActionCreator`'s followed by a state change function.
  *
  * @return {?} an association of action types with a state change function.
  *
  */
 function on(...args) {
+    // This could be refactored when TS releases the version with this fix:
+    // https://github.com/microsoft/TypeScript/pull/41544
     /** @type {?} */
-    const reducer = (/** @type {?} */ (((/** @type {?} */ (args.pop())))));
+    const reducer = (/** @type {?} */ (args.pop()));
     /** @type {?} */
-    const types = args.reduce((/**
-     * @param {?} result
+    const types = (/** @type {?} */ (((/** @type {?} */ (((/** @type {?} */ (((/** @type {?} */ (args)))))).map((/**
      * @param {?} creator
      * @return {?}
      */
-    (result, creator) => [...result, ((/** @type {?} */ (creator))).type]), (/** @type {?} */ ([])));
+    (creator) => creator.type)))))));
     return { reducer, types };
 }
 /**
@@ -2142,9 +2143,9 @@ function createReducer(initialState, ...ons) {
     const map = new Map();
     for (let on of ons) {
         for (let type of on.types) {
-            if (map.has(type)) {
-                /** @type {?} */
-                const existingReducer = (/** @type {?} */ (map.get(type)));
+            /** @type {?} */
+            const existingReducer = map.get(type);
+            if (existingReducer) {
                 /** @type {?} */
                 const newReducer = (/**
                  * @param {?} state

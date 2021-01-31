@@ -2357,7 +2357,7 @@
      * Return type of the `on` fn.
      * Contains the action reducer coupled to one or more action types.
      * @record
-     * @template S
+     * @template State, Creators
      */
     function ReducerTypes() { }
     if (false) {
@@ -2368,7 +2368,7 @@
     }
     /**
      * @record
-     * @template S, C
+     * @template State, Creators
      */
     function OnReducer() { }
     /**
@@ -2380,7 +2380,7 @@
      * ```ts
      * on(AuthApiActions.loginSuccess, (state, { user }) => ({ ...state, user }))
      * ```
-     * @template Creators, State, Reducer
+     * @template State, Creators
      * @param {...?} args `ActionCreator`'s followed by a state change function.
      *
      * @return {?} an association of action types with a state change function.
@@ -2391,14 +2391,15 @@
         for (var _i = 0; _i < arguments.length; _i++) {
             args[_i] = arguments[_i];
         }
+        // This could be refactored when TS releases the version with this fix:
+        // https://github.com/microsoft/TypeScript/pull/41544
         /** @type {?} */
-        var reducer = ( /** @type {?} */((( /** @type {?} */(args.pop())))));
+        var reducer = ( /** @type {?} */(args.pop()));
         /** @type {?} */
-        var types = args.reduce(( /**
-         * @param {?} result
+        var types = ( /** @type {?} */((( /** @type {?} */((( /** @type {?} */((( /** @type {?} */(args)))))).map(( /**
          * @param {?} creator
          * @return {?}
-         */function (result, creator) { return __spread(result, [(( /** @type {?} */(creator))).type]); }), ( /** @type {?} */([])));
+         */function (creator) { return creator.type; })))))));
         return { reducer: reducer, types: types };
     }
     /**
@@ -2461,15 +2462,15 @@
         var _loop_1 = function (on_1) {
             var e_2, _a;
             var _loop_2 = function (type) {
-                if (map.has(type)) {
-                    /** @type {?} */
-                    var existingReducer_1 = ( /** @type {?} */(map.get(type)));
+                /** @type {?} */
+                var existingReducer = map.get(type);
+                if (existingReducer) {
                     /** @type {?} */
                     var newReducer = ( /**
                      * @param {?} state
                      * @param {?} action
                      * @return {?}
-                     */function (state, action) { return on_1.reducer(existingReducer_1(state, action), action); });
+                     */function (state, action) { return on_1.reducer(existingReducer(state, action), action); });
                     map.set(type, newReducer);
                 }
                 else {
