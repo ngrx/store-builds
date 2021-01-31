@@ -1,1 +1,1 @@
-9c54bfb1 docs: add missing this in ComponentStore example (#2901)
+6d46ac4a fix(data): type overloaded add for is optimistic true | undefined (#2906)
