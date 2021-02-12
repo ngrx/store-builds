@@ -2211,15 +2211,15 @@
                     {
                         provide: _FEATURE_CONFIGS,
                         multi: true,
-                        useValue: featureNameOrSlice instanceof Object ? {} : config,
+                        useValue: typeof featureNameOrSlice === 'string' ? config : {},
                     },
                     {
                         provide: STORE_FEATURES,
                         multi: true,
                         useValue: {
-                            key: featureNameOrSlice instanceof Object
-                                ? featureNameOrSlice.name
-                                : featureNameOrSlice,
+                            key: typeof featureNameOrSlice === 'string'
+                                ? featureNameOrSlice
+                                : featureNameOrSlice.name,
                             reducerFactory: !(config instanceof ngCore.InjectionToken) && config.reducerFactory
                                 ? config.reducerFactory
                                 : combineReducers,
@@ -2239,9 +2239,9 @@
                     {
                         provide: _FEATURE_REDUCERS,
                         multi: true,
-                        useValue: featureNameOrSlice instanceof Object
-                            ? featureNameOrSlice.reducer
-                            : reducersOrConfig,
+                        useValue: typeof featureNameOrSlice === 'string'
+                            ? reducersOrConfig
+                            : featureNameOrSlice.reducer,
                     },
                     {
                         provide: _FEATURE_REDUCERS_TOKEN,

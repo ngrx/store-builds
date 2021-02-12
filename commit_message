@@ -1,1 +1,1 @@
-2bea205c fix(store): forFeature using instanceof instead of typeof (#2922)
+775c7945 fix(schematics): add index file (#2923)
