@@ -1,1 +1,1 @@
-05cbaf04 docs: update footer copyright year to 2021 (#2916)
+2bea205c fix(store): forFeature using instanceof instead of typeof (#2922)
