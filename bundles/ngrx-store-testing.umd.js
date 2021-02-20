@@ -1,7 +1,7 @@
 (function (global, factory) {
     typeof exports === 'object' && typeof module !== 'undefined' ? factory(exports, require('@angular/core'), require('rxjs'), require('@ngrx/store'), require('@angular/core/testing')) :
     typeof define === 'function' && define.amd ? define('@ngrx/store/testing', ['exports', '@angular/core', 'rxjs', '@ngrx/store', '@angular/core/testing'], factory) :
-    (global = global || self, factory((global.ngrx = global.ngrx || {}, global.ngrx.store = global.ngrx.store || {}, global.ngrx.store.testing = {}), global.ng.core, global.rxjs, global.ngrx.store, global.ng.core.testing));
+    (global = typeof globalThis !== 'undefined' ? globalThis : global || self, factory((global.ngrx = global.ngrx || {}, global.ngrx.store = global.ngrx.store || {}, global.ngrx.store.testing = {}), global.ng.core, global.rxjs, global.ngrx.store, global.ng.core.testing));
 }(this, (function (exports, core, rxjs, store, testing) { 'use strict';
 
     /*! *****************************************************************************
@@ -305,13 +305,10 @@
         return value;
     }
 
-    /**
-     * @template T
-     */
     var MockState = /** @class */ (function (_super) {
         __extends(MockState, _super);
         function MockState() {
-            return _super.call(this, ( /** @type {?} */({}))) || this;
+            return _super.call(this, {}) || this;
         }
         return MockState;
     }(rxjs.BehaviorSubject));
@@ -321,40 +318,21 @@
     /** @nocollapse */
     MockState.ctorParameters = function () { return []; };
 
-    /**
-     * @fileoverview added by tsickle
-     * Generated from: tokens.ts
-     * @suppress {checkTypes,constantProperty,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
-     */
-    /** @type {?} */
     var MOCK_SELECTORS = new core.InjectionToken('@ngrx/store Mock Selectors');
 
     if (typeof afterEach === 'function') {
-        afterEach(( /**
-         * @return {?}
-         */function () {
+        afterEach(function () {
             try {
-                /** @type {?} */
                 var mockStore = testing.TestBed.inject(MockStore);
                 if (mockStore) {
                     mockStore.resetSelectors();
                 }
             }
             catch (_a) { }
-        }));
+        });
     }
-    /**
-     * @template T
-     */
     var MockStore = /** @class */ (function (_super) {
         __extends(MockStore, _super);
-        /**
-         * @param {?} state$
-         * @param {?} actionsObserver
-         * @param {?} reducerManager
-         * @param {?} initialState
-         * @param {?=} mockSelectors
-         */
         function MockStore(state$, actionsObserver, reducerManager, initialState, mockSelectors) {
             var e_1, _b;
             if (mockSelectors === void 0) { mockSelectors = []; }
@@ -380,36 +358,18 @@
             }
             return _this;
         }
-        /**
-         * @param {?} nextState
-         * @return {?}
-         */
         MockStore.prototype.setState = function (nextState) {
             this.state$.next(nextState);
             this.lastState = nextState;
         };
-        /**
-         * @template Selector, Value, Result
-         * @param {?} selector
-         * @param {?} value
-         * @return {?}
-         */
         MockStore.prototype.overrideSelector = function (selector, value) {
             this.selectors.set(selector, value);
-            /** @type {?} */
             var resultSelector = typeof selector === 'string'
-                ? store.createSelector(( /**
-                 * @return {?}
-                 */function () { }), ( /**
-                 * @return {?}
-                 */function () { return value; }))
+                ? store.createSelector(function () { }, function () { return value; })
                 : selector;
             resultSelector.setResult(value);
-            return ( /** @type {?} */(resultSelector));
+            return resultSelector;
         };
-        /**
-         * @return {?}
-         */
         MockStore.prototype.resetSelectors = function () {
             var e_2, _b;
             try {
@@ -430,32 +390,20 @@
             }
             this.selectors.clear();
         };
-        /**
-         * @param {?} selector
-         * @param {?=} prop
-         * @return {?}
-         */
         MockStore.prototype.select = function (selector, prop) {
             if (typeof selector === 'string' && this.selectors.has(selector)) {
                 return new rxjs.BehaviorSubject(this.selectors.get(selector)).asObservable();
             }
             return _super.prototype.select.call(this, selector, prop);
         };
-        /**
-         * @return {?}
-         */
         MockStore.prototype.addReducer = function () {
             /* noop */
         };
-        /**
-         * @return {?}
-         */
         MockStore.prototype.removeReducer = function () {
             /* noop */
         };
         /**
          * Refreshes the existing state.
-         * @return {?}
          */
         MockStore.prototype.refreshState = function () {
             if (this.lastState)
@@ -474,92 +422,33 @@
         { type: undefined, decorators: [{ type: core.Inject, args: [store.INITIAL_STATE,] }] },
         { type: Array, decorators: [{ type: core.Inject, args: [MOCK_SELECTORS,] }] }
     ]; };
-    if (false) {
-        /**
-         * @type {?}
-         * @private
-         */
-        MockStore.prototype.selectors;
-        /** @type {?} */
-        MockStore.prototype.scannedActions$;
-        /**
-         * @type {?}
-         * @private
-         */
-        MockStore.prototype.lastState;
-        /**
-         * @type {?}
-         * @private
-         */
-        MockStore.prototype.state$;
-        /**
-         * @type {?}
-         * @private
-         */
-        MockStore.prototype.initialState;
-    }
 
     var MockReducerManager = /** @class */ (function (_super) {
         __extends(MockReducerManager, _super);
         function MockReducerManager() {
-            return _super.call(this, ( /**
-             * @return {?}
-             */function () { return undefined; })) || this;
+            return _super.call(this, function () { return undefined; }) || this;
         }
-        /**
-         * @param {?} feature
-         * @return {?}
-         */
         MockReducerManager.prototype.addFeature = function (feature) {
             /* noop */
         };
-        /**
-         * @param {?} feature
-         * @return {?}
-         */
         MockReducerManager.prototype.addFeatures = function (feature) {
             /* noop */
         };
-        /**
-         * @param {?} feature
-         * @return {?}
-         */
         MockReducerManager.prototype.removeFeature = function (feature) {
             /* noop */
         };
-        /**
-         * @param {?} features
-         * @return {?}
-         */
         MockReducerManager.prototype.removeFeatures = function (features) {
             /* noop */
         };
-        /**
-         * @param {?} key
-         * @param {?} reducer
-         * @return {?}
-         */
         MockReducerManager.prototype.addReducer = function (key, reducer) {
             /* noop */
         };
-        /**
-         * @param {?} reducers
-         * @return {?}
-         */
         MockReducerManager.prototype.addReducers = function (reducers) {
             /* noop */
         };
-        /**
-         * @param {?} featureKey
-         * @return {?}
-         */
         MockReducerManager.prototype.removeReducer = function (featureKey) {
             /* noop */
         };
-        /**
-         * @param {?} featureKeys
-         * @return {?}
-         */
         MockReducerManager.prototype.removeReducers = function (featureKeys) {
             /* noop */
         };
@@ -572,26 +461,14 @@
     MockReducerManager.ctorParameters = function () { return []; };
 
     /**
-     * @fileoverview added by tsickle
-     * Generated from: testing.ts
-     * @suppress {checkTypes,constantProperty,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
-     */
-    /**
-     * @record
-     * @template T
-     */
-    function MockStoreConfig() { }
-    if (false) {
-        /** @type {?|undefined} */
-        MockStoreConfig.prototype.initialState;
-        /** @type {?|undefined} */
-        MockStoreConfig.prototype.selectors;
-    }
-    /**
-     * \@description
+     * @description
      * Creates mock store providers.
      *
-     * \@usageNotes
+     * @param config `MockStoreConfig<T>` to provide the values for `INITIAL_STATE` and `MOCK_SELECTORS` tokens.
+     * By default, `initialState` and `selectors` are not defined.
+     * @returns Mock store providers that can be used with both `TestBed.configureTestingModule` and `Injector.create`.
+     *
+     * @usageNotes
      *
      * **With `TestBed.configureTestingModule`**
      *
@@ -634,11 +511,6 @@
      *   });
      * });
      * ```
-     * @template T
-     * @param {?=} config `MockStoreConfig<T>` to provide the values for `INITIAL_STATE` and `MOCK_SELECTORS` tokens.
-     * By default, `initialState` and `selectors` are not defined.
-     * @return {?} Mock store providers that can be used with both `TestBed.configureTestingModule` and `Injector.create`.
-     *
      */
     function provideMockStore(config) {
         if (config === void 0) { config = {}; }
@@ -646,19 +518,13 @@
         return [
             {
                 provide: store.ActionsSubject,
-                useFactory: ( /**
-                 * @return {?}
-                 */function () { return new store.ActionsSubject(); }),
+                useFactory: function () { return new store.ActionsSubject(); },
                 deps: [],
             },
-            { provide: MockState, useFactory: ( /**
-                     * @return {?}
-                     */function () { return new MockState(); }), deps: [] },
+            { provide: MockState, useFactory: function () { return new MockState(); }, deps: [] },
             {
                 provide: MockReducerManager,
-                useFactory: ( /**
-                 * @return {?}
-                 */function () { return new MockReducerManager(); }),
+                useFactory: function () { return new MockReducerManager(); },
                 deps: [],
             },
             { provide: store.INITIAL_STATE, useValue: config.initialState || {} },
@@ -679,23 +545,18 @@
             { provide: store.Store, useExisting: MockStore },
         ];
     }
-    /**
-     * @template T
-     * @param {?} mockState
-     * @param {?} actionsSubject
-     * @param {?} reducerManager
-     * @param {?} initialState
-     * @param {?} mockSelectors
-     * @return {?}
-     */
     function mockStoreFactory(mockState, actionsSubject, reducerManager, initialState, mockSelectors) {
         return new MockStore(mockState, actionsSubject, reducerManager, initialState, mockSelectors);
     }
     /**
-     * \@description
+     * @description
      * Creates mock store with all necessary dependencies outside of the `TestBed`.
      *
-     * \@usageNotes
+     * @param config `MockStoreConfig<T>` to provide the values for `INITIAL_STATE` and `MOCK_SELECTORS` tokens.
+     * By default, `initialState` and `selectors` are not defined.
+     * @returns `MockStore<T>`
+     *
+     * @usageNotes
      *
      * ```typescript
      * describe('Books Effects', () => {
@@ -712,29 +573,15 @@
      *   });
      * });
      * ```
-     * @template T
-     * @param {?=} config `MockStoreConfig<T>` to provide the values for `INITIAL_STATE` and `MOCK_SELECTORS` tokens.
-     * By default, `initialState` and `selectors` are not defined.
-     * @return {?} `MockStore<T>`
-     *
      */
     function getMockStore(config) {
         if (config === void 0) { config = {}; }
-        /** @type {?} */
         var injector = core.Injector.create({ providers: provideMockStore(config) });
         return injector.get(MockStore);
     }
 
     /**
-     * @fileoverview added by tsickle
-     * Generated from: public_api.ts
-     * @suppress {checkTypes,constantProperty,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
-     */
-
-    /**
-     * @fileoverview added by tsickle
-     * Generated from: ngrx-store-testing.ts
-     * @suppress {checkTypes,constantProperty,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
+     * Generated bundle index. Do not edit.
      */
 
     exports.MockReducerManager = MockReducerManager;

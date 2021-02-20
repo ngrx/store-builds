@@ -5,9 +5,11 @@ var config_1 = require("./config");
 function getProject(host, options) {
     var workspace = config_1.getWorkspace(host);
     if (!options.project) {
+        var defaultProject = workspace
+            .defaultProject;
         options.project =
-            workspace.defaultProject !== undefined
-                ? workspace.defaultProject
+            defaultProject !== undefined
+                ? defaultProject
                 : Object.keys(workspace.projects)[0];
     }
     return workspace.projects[options.project];
