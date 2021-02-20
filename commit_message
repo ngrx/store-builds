@@ -1,1 +1,1 @@
-1cdabb46 docs(component-store): fix to call `addMovie()` with not string but interface Movie (#2936)
+dc66292d refactor(schematics): replace deprecated TestBed.get method (#2932)
