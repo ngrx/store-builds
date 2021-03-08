@@ -31,7 +31,7 @@ var __spread = (this && this.__spread) || function () {
     return ar;
 };
 exports.__esModule = true;
-exports.containsProperty = exports.replaceImport = exports.insertImport = exports.addBootstrapToModule = exports.addExportToModule = exports.addProviderToModule = exports.addImportToModule = exports.addDeclarationToModule = exports.getDecoratorMetadata = exports.getContentOfKeyLiteral = exports.insertAfterLastOccurrence = exports.getSourceNodes = exports.findNodes = void 0;
+exports.containsProperty = exports.replaceImport = exports.insertImport = exports.addBootstrapToModule = exports.addExportToModule = exports.addProviderToComponent = exports.addProviderToModule = exports.addImportToModule = exports.addDeclarationToModule = exports.getDecoratorMetadata = exports.getContentOfKeyLiteral = exports.insertAfterLastOccurrence = exports.getSourceNodes = exports.findNodes = void 0;
 /* istanbul ignore file */
 /**
  * @license
@@ -410,6 +410,125 @@ function _addSymbolToNgModuleMetadata(source, ngModulePath, metadataField, symbo
     var importInsert = insertImport(source, ngModulePath, symbolName.replace(/\..*$/, ''), importPath);
     return [insert, importInsert];
 }
+function _addSymbolToComponentMetadata(source, componentPath, metadataField, symbolName, importPath) {
+    var nodes = getDecoratorMetadata(source, 'Component', '@angular/core');
+    var node = nodes[0]; // tslint:disable-line:no-any
+    // Find the decorator declaration.
+    if (!node) {
+        return [];
+    }
+    // Get all the children property assignment of object literals.
+    var matchingProperties = node.properties
+        .filter(function (prop) { return prop.kind == ts.SyntaxKind.PropertyAssignment; })
+        // Filter out every fields that's not "metadataField". Also handles string literals
+        // (but not expressions).
+        .filter(function (prop) {
+        var name = prop.name;
+        switch (name.kind) {
+            case ts.SyntaxKind.Identifier:
+                return name.getText(source) == metadataField;
+            case ts.SyntaxKind.StringLiteral:
+                return name.text == metadataField;
+        }
+        return false;
+    });
+    // Get the last node of the array literal.
+    if (!matchingProperties) {
+        return [];
+    }
+    if (matchingProperties.length == 0) {
+        // We haven't found the field in the metadata declaration. Insert a new field.
+        var expr = node;
+        var position_2;
+        var toInsert_2;
+        if (expr.properties.length == 0) {
+            position_2 = expr.getEnd() - 1;
+            toInsert_2 = "  " + metadataField + ": [" + symbolName + "]\n";
+        }
+        else {
+            node = expr.properties[expr.properties.length - 1];
+            position_2 = node.getEnd();
+            // Get the indentation of the last element, if any.
+            var text = node.getFullText(source);
+            var matches = text.match(/^\r?\n\s*/);
+            if (matches.length > 0) {
+                toInsert_2 = "," + matches[0] + metadataField + ": [" + symbolName + "]";
+            }
+            else {
+                toInsert_2 = ", " + metadataField + ": [" + symbolName + "]";
+            }
+        }
+        var newMetadataProperty = new change_1.InsertChange(componentPath, position_2, toInsert_2);
+        var newMetadataImport = insertImport(source, componentPath, symbolName.replace(/\..*$/, ''), importPath);
+        return [newMetadataProperty, newMetadataImport];
+    }
+    var assignment = matchingProperties[0];
+    // If it's not an array, nothing we can do really.
+    if (assignment.initializer.kind !== ts.SyntaxKind.ArrayLiteralExpression) {
+        return [];
+    }
+    var arrLiteral = assignment.initializer;
+    if (arrLiteral.elements.length == 0) {
+        // Forward the property.
+        node = arrLiteral;
+    }
+    else {
+        node = arrLiteral.elements;
+    }
+    if (!node) {
+        console.log('No component found. Please add your new class to your component.');
+        return [];
+    }
+    if (Array.isArray(node)) {
+        var nodeArray = node;
+        var symbolsArray = nodeArray.map(function (node) { return node.getText(); });
+        if (symbolsArray.includes(symbolName)) {
+            return [];
+        }
+        node = node[node.length - 1];
+    }
+    var toInsert;
+    var position = node.getEnd();
+    if (node.kind == ts.SyntaxKind.ObjectLiteralExpression) {
+        // We haven't found the field in the metadata declaration. Insert a new
+        // field.
+        var expr = node;
+        if (expr.properties.length == 0) {
+            position = expr.getEnd() - 1;
+            toInsert = "  " + metadataField + ": [" + symbolName + "]\n";
+        }
+        else {
+            node = expr.properties[expr.properties.length - 1];
+            position = node.getEnd();
+            // Get the indentation of the last element, if any.
+            var text = node.getFullText(source);
+            if (text.match('^\r?\r?\n')) {
+                toInsert = "," + text.match(/^\r?\n\s+/)[0] + metadataField + ": [" + symbolName + "]";
+            }
+            else {
+                toInsert = ", " + metadataField + ": [" + symbolName + "]";
+            }
+        }
+    }
+    else if (node.kind == ts.SyntaxKind.ArrayLiteralExpression) {
+        // We found the field but it's empty. Insert it just before the `]`.
+        position--;
+        toInsert = "" + symbolName;
+    }
+    else {
+        // Get the indentation of the last element, if any.
+        var text = node.getFullText(source);
+        if (text.match(/^\r?\n/)) {
+            toInsert = "," + text.match(/^\r?\n(\r?)\s+/)[0] + symbolName;
+        }
+        else {
+            toInsert = ", " + symbolName;
+        }
+    }
+    var insert = new change_1.InsertChange(componentPath, position, toInsert);
+    var importInsert = insertImport(source, componentPath, symbolName.replace(/\..*$/, ''), importPath);
+    return [insert, importInsert];
+}
 /**
  * Custom function to insert a declaration (component, pipe, directive)
  * into NgModule declarations. It also imports the component.
@@ -433,6 +552,13 @@ function addProviderToModule(source, modulePath, classifiedName, importPath) {
     return _addSymbolToNgModuleMetadata(source, modulePath, 'providers', classifiedName, importPath);
 }
 exports.addProviderToModule = addProviderToModule;
+/**
+ * Custom function to insert a provider into Component. It also imports it.
+ */
+function addProviderToComponent(source, componentPath, classifiedName, importPath) {
+    return _addSymbolToComponentMetadata(source, componentPath, 'providers', classifiedName, importPath);
+}
+exports.addProviderToComponent = addProviderToComponent;
 /**
  * Custom function to insert an export into NgModule. It also imports it.
  */
