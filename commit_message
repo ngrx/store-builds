@@ -1,1 +1,1 @@
-be69a63f test(data): fix tests (#2955)
+8930e22e feat(component-store): add ability for patchState to accept Observable (#2937)
