@@ -11,9 +11,9 @@ export interface ReducerTypes<State, Creators extends readonly ActionCreator[]> 
     types: ExtractActionTypes<Creators>;
 }
 export interface OnReducer<State, Creators extends readonly ActionCreator[]> {
-    (state: State, action: ActionType<Creators[number]>): {
+    (state: State, action: ActionType<Creators[number]>): State extends object ? {
         [P in keyof State]: State[P];
-    };
+    } : State;
 }
 /**
  * @description
