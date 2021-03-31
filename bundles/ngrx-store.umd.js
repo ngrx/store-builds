@@ -501,7 +501,7 @@
     /**
      * Runtime checks currently in use
      */
-    var _ACTIVE_RUNTIME_CHECKS = new ngCore.InjectionToken('@ngrx/store Internal Runtime Checks');
+    var ACTIVE_RUNTIME_CHECKS = new ngCore.InjectionToken('@ngrx/store Internal Runtime Checks');
     var _ACTION_TYPE_UNIQUENESS_CHECK = new ngCore.InjectionToken('@ngrx/store Check if Action types are unique');
 
     /**
@@ -1254,26 +1254,26 @@
                 deps: [_USER_RUNTIME_CHECKS],
             },
             {
-                provide: _ACTIVE_RUNTIME_CHECKS,
+                provide: ACTIVE_RUNTIME_CHECKS,
                 deps: [USER_RUNTIME_CHECKS],
                 useFactory: createActiveRuntimeChecks,
             },
             {
                 provide: META_REDUCERS,
                 multi: true,
-                deps: [_ACTIVE_RUNTIME_CHECKS],
+                deps: [ACTIVE_RUNTIME_CHECKS],
                 useFactory: createImmutabilityCheckMetaReducer,
             },
             {
                 provide: META_REDUCERS,
                 multi: true,
-                deps: [_ACTIVE_RUNTIME_CHECKS],
+                deps: [ACTIVE_RUNTIME_CHECKS],
                 useFactory: createSerializationCheckMetaReducer,
             },
             {
                 provide: META_REDUCERS,
                 multi: true,
-                deps: [_ACTIVE_RUNTIME_CHECKS],
+                deps: [ACTIVE_RUNTIME_CHECKS],
                 useFactory: createInNgZoneCheckMetaReducer,
             },
         ];
@@ -1283,7 +1283,7 @@
             {
                 provide: _ACTION_TYPE_UNIQUENESS_CHECK,
                 multi: true,
-                deps: [_ACTIVE_RUNTIME_CHECKS],
+                deps: [ACTIVE_RUNTIME_CHECKS],
                 useFactory: _actionTypeUniquenessCheck,
             },
         ];
@@ -1658,6 +1658,7 @@
      * Generated bundle index. Do not edit.
      */
 
+    exports.ACTIVE_RUNTIME_CHECKS = ACTIVE_RUNTIME_CHECKS;
     exports.ActionsSubject = ActionsSubject;
     exports.FEATURE_REDUCERS = FEATURE_REDUCERS;
     exports.INIT = INIT;
@@ -1698,14 +1699,13 @@
     exports.setNgrxMockEnvironment = setNgrxMockEnvironment;
     exports.union = union;
     exports.ɵb = STORE_PROVIDERS;
-    exports.ɵba = createActiveRuntimeChecks;
-    exports.ɵbb = createSerializationCheckMetaReducer;
-    exports.ɵbc = createImmutabilityCheckMetaReducer;
-    exports.ɵbd = createInNgZoneCheckMetaReducer;
-    exports.ɵbe = provideRuntimeChecks;
-    exports.ɵbf = checkForActionTypeUniqueness;
-    exports.ɵbg = _runtimeChecksFactory;
-    exports.ɵbh = _actionTypeUniquenessCheck;
+    exports.ɵba = createSerializationCheckMetaReducer;
+    exports.ɵbb = createImmutabilityCheckMetaReducer;
+    exports.ɵbc = createInNgZoneCheckMetaReducer;
+    exports.ɵbd = provideRuntimeChecks;
+    exports.ɵbe = checkForActionTypeUniqueness;
+    exports.ɵbf = _runtimeChecksFactory;
+    exports.ɵbg = _actionTypeUniquenessCheck;
     exports.ɵc = ACTIONS_SUBJECT_PROVIDERS;
     exports.ɵd = REDUCER_MANAGER_PROVIDERS;
     exports.ɵe = SCANNED_ACTIONS_SUBJECT_PROVIDERS;
@@ -1722,14 +1722,14 @@
     exports.ɵp = _FEATURE_REDUCERS_TOKEN;
     exports.ɵq = _RESOLVED_META_REDUCERS;
     exports.ɵr = _USER_RUNTIME_CHECKS;
-    exports.ɵs = _ACTIVE_RUNTIME_CHECKS;
-    exports.ɵt = _ACTION_TYPE_UNIQUENESS_CHECK;
-    exports.ɵu = _createStoreReducers;
-    exports.ɵv = _createFeatureStore;
-    exports.ɵw = _createFeatureReducers;
-    exports.ɵx = _initialStateFactory;
-    exports.ɵy = _concatMetaReducers;
-    exports.ɵz = _provideForRootGuard;
+    exports.ɵs = _ACTION_TYPE_UNIQUENESS_CHECK;
+    exports.ɵt = _createStoreReducers;
+    exports.ɵu = _createFeatureStore;
+    exports.ɵv = _createFeatureReducers;
+    exports.ɵw = _initialStateFactory;
+    exports.ɵx = _concatMetaReducers;
+    exports.ɵy = _provideForRootGuard;
+    exports.ɵz = createActiveRuntimeChecks;
 
     Object.defineProperty(exports, '__esModule', { value: true });
 

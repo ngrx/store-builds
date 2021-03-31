@@ -1,1 +1,1 @@
-0bb49409 docs: fix typo in entity tracker docs (#2981)
+987cfeed feat(router-store) warn about DefaultRouterStateSerializer for runtime checks enabled (#2940)

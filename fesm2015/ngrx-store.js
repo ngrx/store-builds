@@ -182,7 +182,7 @@ const _USER_RUNTIME_CHECKS = new InjectionToken('@ngrx/store Internal User Runti
 /**
  * Runtime checks currently in use
  */
-const _ACTIVE_RUNTIME_CHECKS = new InjectionToken('@ngrx/store Internal Runtime Checks');
+const ACTIVE_RUNTIME_CHECKS = new InjectionToken('@ngrx/store Internal Runtime Checks');
 const _ACTION_TYPE_UNIQUENESS_CHECK = new InjectionToken('@ngrx/store Check if Action types are unique');
 
 /**
@@ -866,26 +866,26 @@ function provideRuntimeChecks(runtimeChecks) {
             deps: [_USER_RUNTIME_CHECKS],
         },
         {
-            provide: _ACTIVE_RUNTIME_CHECKS,
+            provide: ACTIVE_RUNTIME_CHECKS,
             deps: [USER_RUNTIME_CHECKS],
             useFactory: createActiveRuntimeChecks,
         },
         {
             provide: META_REDUCERS,
             multi: true,
-            deps: [_ACTIVE_RUNTIME_CHECKS],
+            deps: [ACTIVE_RUNTIME_CHECKS],
             useFactory: createImmutabilityCheckMetaReducer,
         },
         {
             provide: META_REDUCERS,
             multi: true,
-            deps: [_ACTIVE_RUNTIME_CHECKS],
+            deps: [ACTIVE_RUNTIME_CHECKS],
             useFactory: createSerializationCheckMetaReducer,
         },
         {
             provide: META_REDUCERS,
             multi: true,
-            deps: [_ACTIVE_RUNTIME_CHECKS],
+            deps: [ACTIVE_RUNTIME_CHECKS],
             useFactory: createInNgZoneCheckMetaReducer,
         },
     ];
@@ -895,7 +895,7 @@ function checkForActionTypeUniqueness() {
         {
             provide: _ACTION_TYPE_UNIQUENESS_CHECK,
             multi: true,
-            deps: [_ACTIVE_RUNTIME_CHECKS],
+            deps: [ACTIVE_RUNTIME_CHECKS],
             useFactory: _actionTypeUniquenessCheck,
         },
     ];
@@ -1219,5 +1219,5 @@ function createReducer(initialState, ...ons) {
  * Generated bundle index. Do not edit.
  */
 
-export { ActionsSubject, FEATURE_REDUCERS, INIT, INITIAL_REDUCERS, INITIAL_STATE, META_REDUCERS, REDUCER_FACTORY, ReducerManager, ReducerManagerDispatcher, ReducerObservable, STORE_FEATURES, ScannedActionsSubject, State, StateObservable, Store, StoreFeatureModule, StoreModule, StoreRootModule, UPDATE, USER_PROVIDED_META_REDUCERS, USER_RUNTIME_CHECKS, combineReducers, compose, createAction, createFeatureSelector, createReducer, createReducerFactory, createSelector, createSelectorFactory, defaultMemoize, defaultStateFn, isNgrxMockEnvironment, on, props, reduceState, resultMemoize, select, setNgrxMockEnvironment, union, STORE_PROVIDERS as ɵb, createActiveRuntimeChecks as ɵba, createSerializationCheckMetaReducer as ɵbb, createImmutabilityCheckMetaReducer as ɵbc, createInNgZoneCheckMetaReducer as ɵbd, provideRuntimeChecks as ɵbe, checkForActionTypeUniqueness as ɵbf, _runtimeChecksFactory as ɵbg, _actionTypeUniquenessCheck as ɵbh, ACTIONS_SUBJECT_PROVIDERS as ɵc, REDUCER_MANAGER_PROVIDERS as ɵd, SCANNED_ACTIONS_SUBJECT_PROVIDERS as ɵe, isEqualCheck as ɵf, STATE_PROVIDERS as ɵg, _ROOT_STORE_GUARD as ɵh, _INITIAL_STATE as ɵi, _REDUCER_FACTORY as ɵj, _INITIAL_REDUCERS as ɵk, _STORE_REDUCERS as ɵl, _FEATURE_REDUCERS as ɵm, _FEATURE_CONFIGS as ɵn, _STORE_FEATURES as ɵo, _FEATURE_REDUCERS_TOKEN as ɵp, _RESOLVED_META_REDUCERS as ɵq, _USER_RUNTIME_CHECKS as ɵr, _ACTIVE_RUNTIME_CHECKS as ɵs, _ACTION_TYPE_UNIQUENESS_CHECK as ɵt, _createStoreReducers as ɵu, _createFeatureStore as ɵv, _createFeatureReducers as ɵw, _initialStateFactory as ɵx, _concatMetaReducers as ɵy, _provideForRootGuard as ɵz };
+export { ACTIVE_RUNTIME_CHECKS, ActionsSubject, FEATURE_REDUCERS, INIT, INITIAL_REDUCERS, INITIAL_STATE, META_REDUCERS, REDUCER_FACTORY, ReducerManager, ReducerManagerDispatcher, ReducerObservable, STORE_FEATURES, ScannedActionsSubject, State, StateObservable, Store, StoreFeatureModule, StoreModule, StoreRootModule, UPDATE, USER_PROVIDED_META_REDUCERS, USER_RUNTIME_CHECKS, combineReducers, compose, createAction, createFeatureSelector, createReducer, createReducerFactory, createSelector, createSelectorFactory, defaultMemoize, defaultStateFn, isNgrxMockEnvironment, on, props, reduceState, resultMemoize, select, setNgrxMockEnvironment, union, STORE_PROVIDERS as ɵb, createSerializationCheckMetaReducer as ɵba, createImmutabilityCheckMetaReducer as ɵbb, createInNgZoneCheckMetaReducer as ɵbc, provideRuntimeChecks as ɵbd, checkForActionTypeUniqueness as ɵbe, _runtimeChecksFactory as ɵbf, _actionTypeUniquenessCheck as ɵbg, ACTIONS_SUBJECT_PROVIDERS as ɵc, REDUCER_MANAGER_PROVIDERS as ɵd, SCANNED_ACTIONS_SUBJECT_PROVIDERS as ɵe, isEqualCheck as ɵf, STATE_PROVIDERS as ɵg, _ROOT_STORE_GUARD as ɵh, _INITIAL_STATE as ɵi, _REDUCER_FACTORY as ɵj, _INITIAL_REDUCERS as ɵk, _STORE_REDUCERS as ɵl, _FEATURE_REDUCERS as ɵm, _FEATURE_CONFIGS as ɵn, _STORE_FEATURES as ɵo, _FEATURE_REDUCERS_TOKEN as ɵp, _RESOLVED_META_REDUCERS as ɵq, _USER_RUNTIME_CHECKS as ɵr, _ACTION_TYPE_UNIQUENESS_CHECK as ɵs, _createStoreReducers as ɵt, _createFeatureStore as ɵu, _createFeatureReducers as ɵv, _initialStateFactory as ɵw, _concatMetaReducers as ɵx, _provideForRootGuard as ɵy, createActiveRuntimeChecks as ɵz };
 //# sourceMappingURL=ngrx-store.js.map
