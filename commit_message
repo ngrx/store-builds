@@ -1,1 +1,1 @@
-4af64594 docs(ComponentStore): complete documentation for patchState (#2987)
+5ca85aac build: don't include un-needed files in the distributed packages (#2990)
