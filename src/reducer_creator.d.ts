@@ -11,9 +11,7 @@ export interface ReducerTypes<State, Creators extends readonly ActionCreator[]> 
     types: ExtractActionTypes<Creators>;
 }
 export interface OnReducer<State, Creators extends readonly ActionCreator[]> {
-    (state: State, action: ActionType<Creators[number]>): State extends object ? {
-        [P in keyof State]: State[P];
-    } : State;
+    (state: State, action: ActionType<Creators[number]>): State;
 }
 /**
  * @description
@@ -29,7 +27,10 @@ export interface OnReducer<State, Creators extends readonly ActionCreator[]> {
  * on(AuthApiActions.loginSuccess, (state, { user }) => ({ ...state, user }))
  * ```
  */
-export declare function on<State, Creators extends readonly ActionCreator[]>(...args: [...creators: Creators, reducer: OnReducer<State, Creators>]): ReducerTypes<State, Creators>;
+export declare function on<State, Creators extends readonly ActionCreator[]>(...args: [
+    ...creators: Creators,
+    reducer: OnReducer<State extends infer S ? S : never, Creators>
+]): ReducerTypes<State, Creators>;
 /**
  * @description
  * Creates a reducer function to handle state transitions.

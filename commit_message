@@ -1,1 +1,1 @@
-cdb5bd5b refactor(example-app): remove store generic (#2994)
+7da57bc2 fix(store): adjust types to allow a generic reducer (#2996)
