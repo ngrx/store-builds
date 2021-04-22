@@ -31,6 +31,9 @@ export interface StoreFeature<T, V extends Action = Action> {
     metaReducers?: MetaReducer<T, V>[];
 }
 export declare type Selector<T, V> = (state: T) => V;
+/**
+ * @deprecated Selectors with props are deprecated, for more info see {@link https://github.com/ngrx/platform/issues/2980 Github Issue}
+ */
 export declare type SelectorWithProps<State, Props, Result> = (state: State, props: Props) => Result;
 export declare const arraysAreNotAllowedMsg = "arrays are not allowed in action creators";
 declare type ArraysAreNotAllowed = typeof arraysAreNotAllowedMsg;

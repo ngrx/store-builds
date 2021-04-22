@@ -9,6 +9,9 @@ export declare class Store<T = object> extends Observable<T> implements Observer
     private reducerManager;
     constructor(state$: StateObservable, actionsObserver: ActionsSubject, reducerManager: ReducerManager);
     select<K>(mapFn: (state: T) => K): Observable<K>;
+    /**
+     * @deprecated Selectors with props are deprecated, for more info see {@link https://github.com/ngrx/platform/issues/2980 Github Issue}
+     */
     select<K, Props = any>(mapFn: (state: T, props: Props) => K, props: Props): Observable<K>;
     select<a extends keyof T>(key: a): Observable<T[a]>;
     select<a extends keyof T, b extends keyof T[a]>(key1: a, key2: b): Observable<T[a][b]>;
@@ -26,7 +29,11 @@ export declare class Store<T = object> extends Observable<T> implements Observer
     removeReducer<Key extends Extract<keyof T, string>>(key: Key): void;
 }
 export declare const STORE_PROVIDERS: Provider[];
-export declare function select<T, Props, K>(mapFn: (state: T, props: Props) => K, props?: Props): (source$: Observable<T>) => Observable<K>;
+export declare function select<T, K>(mapFn: (state: T) => K): (source$: Observable<T>) => Observable<K>;
+/**
+ * @deprecated Selectors with props are deprecated, for more info see {@link https://github.com/ngrx/platform/issues/2980 Github Issue}
+ */
+export declare function select<T, Props, K>(mapFn: (state: T, props: Props) => K, props: Props): (source$: Observable<T>) => Observable<K>;
 export declare function select<T, a extends keyof T>(key: a): (source$: Observable<T>) => Observable<T[a]>;
 export declare function select<T, a extends keyof T, b extends keyof T[a]>(key1: a, key2: b): (source$: Observable<T>) => Observable<T[a][b]>;
 export declare function select<T, a extends keyof T, b extends keyof T[a], c extends keyof T[a][b]>(key1: a, key2: b, key3: c): (source$: Observable<T>) => Observable<T[a][b][c]>;
