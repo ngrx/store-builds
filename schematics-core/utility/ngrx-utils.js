@@ -26,9 +26,10 @@ var __read = (this && this.__read) || function (o, n) {
     }
     return ar;
 };
-var __spread = (this && this.__spread) || function () {
-    for (var ar = [], i = 0; i < arguments.length; i++) ar = ar.concat(__read(arguments[i]));
-    return ar;
+var __spreadArray = (this && this.__spreadArray) || function (to, from) {
+    for (var i = 0, il = from.length, j = to.length; i < il; i++, j++)
+        to[j] = from[i];
+    return to;
 };
 exports.__esModule = true;
 exports.omit = exports.addReducerImportToNgModule = exports.addReducerToActionReducerMap = exports.addReducerToStateInterface = exports.addReducerToState = void 0;
@@ -205,7 +206,7 @@ function addReducerImportToNgModule(options) {
             ? stringUtils.pluralize(options.name)
             : stringUtils.camelize(options.name);
         var _b = __read(ast_utils_1.addImportToModule(source, modulePath, "StoreModule.forFeature(from" + stringUtils.classify(options.name) + "." + state + "FeatureKey, from" + stringUtils.classify(options.name) + ".reducer)", relativePath), 1), storeNgModuleImport = _b[0];
-        var changes = __spread(commonImports, [reducerImport, storeNgModuleImport]);
+        var changes = __spreadArray(__spreadArray([], __read(commonImports)), [reducerImport, storeNgModuleImport]);
         var recorder = host.beginUpdate(modulePath);
         try {
             for (var changes_2 = __values(changes), changes_2_1 = changes_2.next(); !changes_2_1.done; changes_2_1 = changes_2.next()) {

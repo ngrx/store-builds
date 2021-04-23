@@ -19,9 +19,10 @@ var __read = (this && this.__read) || function (o, n) {
     }
     return ar;
 };
-var __spread = (this && this.__spread) || function () {
-    for (var ar = [], i = 0; i < arguments.length; i++) ar = ar.concat(__read(arguments[i]));
-    return ar;
+var __spreadArray = (this && this.__spreadArray) || function (to, from) {
+    for (var i = 0, il = from.length, j = to.length; i < il; i++, j++)
+        to[j] = from[i];
+    return to;
 };
 exports.__esModule = true;
 var ts = require("typescript");
@@ -36,8 +37,8 @@ function updateMetaReducersToken() {
                 return schematics_core_1.createReplaceChange(sourceFile, node, META_REDUCERS, 'USER_PROVIDED_META_REDUCERS');
             };
             var changes = [];
-            changes.push.apply(changes, __spread(findMetaReducersImportStatements(sourceFile, createChange, context.logger)));
-            changes.push.apply(changes, __spread(findMetaReducersAssignment(sourceFile, createChange)));
+            changes.push.apply(changes, __spreadArray([], __read(findMetaReducersImportStatements(sourceFile, createChange, context.logger))));
+            changes.push.apply(changes, __spreadArray([], __read(findMetaReducersAssignment(sourceFile, createChange))));
             return schematics_core_1.commitChanges(tree, sourceFile.fileName, changes);
         });
     };

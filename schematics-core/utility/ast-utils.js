@@ -26,9 +26,10 @@ var __read = (this && this.__read) || function (o, n) {
     }
     return ar;
 };
-var __spread = (this && this.__spread) || function () {
-    for (var ar = [], i = 0; i < arguments.length; i++) ar = ar.concat(__read(arguments[i]));
-    return ar;
+var __spreadArray = (this && this.__spreadArray) || function (to, from) {
+    for (var i = 0, il = from.length, j = to.length; i < il; i++, j++)
+        to[j] = from[i];
+    return to;
 };
 exports.__esModule = true;
 exports.containsProperty = exports.replaceImport = exports.insertImport = exports.addBootstrapToModule = exports.addExportToModule = exports.addProviderToComponent = exports.addProviderToModule = exports.addImportToModule = exports.addDeclarationToModule = exports.getDecoratorMetadata = exports.getContentOfKeyLiteral = exports.insertAfterLastOccurrence = exports.getSourceNodes = exports.findNodes = void 0;
@@ -99,7 +100,7 @@ function getSourceNodes(sourceFile) {
         if (node) {
             result.push(node);
             if (node.getChildCount(sourceFile) >= 0) {
-                nodes.unshift.apply(nodes, __spread(node.getChildren()));
+                nodes.unshift.apply(nodes, __spreadArray([], __read(node.getChildren())));
             }
         }
     }

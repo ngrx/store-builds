@@ -4,6 +4,28 @@
     (global = typeof globalThis !== 'undefined' ? globalThis : global || self, factory((global.ngrx = global.ngrx || {}, global.ngrx.store = {}), global.ng.core, global.rxjs, global.rxjs.operators));
 }(this, (function (exports, ngCore, rxjs, operators) { 'use strict';
 
+    function _interopNamespace(e) {
+        if (e && e.__esModule) return e;
+        var n = Object.create(null);
+        if (e) {
+            Object.keys(e).forEach(function (k) {
+                if (k !== 'default') {
+                    var d = Object.getOwnPropertyDescriptor(e, k);
+                    Object.defineProperty(n, k, d.get ? d : {
+                        enumerable: true,
+                        get: function () {
+                            return e[k];
+                        }
+                    });
+                }
+            });
+        }
+        n['default'] = e;
+        return Object.freeze(n);
+    }
+
+    var ngCore__namespace = /*#__PURE__*/_interopNamespace(ngCore);
+
     /*! *****************************************************************************
     Copyright (c) Microsoft Corporation.
 
@@ -23,11 +45,13 @@
         extendStatics = Object.setPrototypeOf ||
             ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
             function (d, b) { for (var p in b)
-                if (b.hasOwnProperty(p))
+                if (Object.prototype.hasOwnProperty.call(b, p))
                     d[p] = b[p]; };
         return extendStatics(d, b);
     };
     function __extends(d, b) {
+        if (typeof b !== "function" && b !== null)
+            throw new TypeError("Class extends value " + String(b) + " is not a constructor or null");
         extendStatics(d, b);
         function __() { this.constructor = d; }
         d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
@@ -170,10 +194,10 @@
             k2 = k;
         o[k2] = m[k];
     });
-    function __exportStar(m, exports) {
+    function __exportStar(m, o) {
         for (var p in m)
-            if (p !== "default" && !exports.hasOwnProperty(p))
-                __createBinding(exports, m, p);
+            if (p !== "default" && !Object.prototype.hasOwnProperty.call(o, p))
+                __createBinding(o, m, p);
     }
     function __values(o) {
         var s = typeof Symbol === "function" && Symbol.iterator, m = s && o[s], i = 0;
@@ -213,11 +237,13 @@
         }
         return ar;
     }
+    /** @deprecated */
     function __spread() {
         for (var ar = [], i = 0; i < arguments.length; i++)
             ar = ar.concat(__read(arguments[i]));
         return ar;
     }
+    /** @deprecated */
     function __spreadArrays() {
         for (var s = 0, i = 0, il = arguments.length; i < il; i++)
             s += arguments[i].length;
@@ -226,7 +252,11 @@
                 r[k] = a[j];
         return r;
     }
-    ;
+    function __spreadArray(to, from) {
+        for (var i = 0, il = from.length, j = to.length; i < il; i++, j++)
+            to[j] = from[i];
+        return to;
+    }
     function __await(v) {
         return this instanceof __await ? (this.v = v, this) : new __await(v);
     }
@@ -283,7 +313,7 @@
         var result = {};
         if (mod != null)
             for (var k in mod)
-                if (Object.hasOwnProperty.call(mod, k))
+                if (k !== "default" && Object.prototype.hasOwnProperty.call(mod, k))
                     __createBinding(result, mod, k);
         __setModuleDefault(result, mod);
         return result;
@@ -291,18 +321,21 @@
     function __importDefault(mod) {
         return (mod && mod.__esModule) ? mod : { default: mod };
     }
-    function __classPrivateFieldGet(receiver, privateMap) {
-        if (!privateMap.has(receiver)) {
-            throw new TypeError("attempted to get private field on non-instance");
-        }
-        return privateMap.get(receiver);
+    function __classPrivateFieldGet(receiver, state, kind, f) {
+        if (kind === "a" && !f)
+            throw new TypeError("Private accessor was defined without a getter");
+        if (typeof state === "function" ? receiver !== state || !f : !state.has(receiver))
+            throw new TypeError("Cannot read private member from an object whose class did not declare it");
+        return kind === "m" ? f : kind === "a" ? f.call(receiver) : f ? f.value : state.get(receiver);
     }
-    function __classPrivateFieldSet(receiver, privateMap, value) {
-        if (!privateMap.has(receiver)) {
-            throw new TypeError("attempted to set private field on non-instance");
-        }
-        privateMap.set(receiver, value);
-        return value;
+    function __classPrivateFieldSet(receiver, state, value, kind, f) {
+        if (kind === "m")
+            throw new TypeError("Private method is not writable");
+        if (kind === "a" && !f)
+            throw new TypeError("Private accessor was defined without a setter");
+        if (typeof state === "function" ? receiver !== state || !f : !state.has(receiver))
+            throw new TypeError("Cannot write private member to an object whose class did not declare it");
+        return (kind === "a" ? f.call(receiver, value) : f ? f.value = value : state.set(receiver, value)), value;
     }
 
     var REGISTERED_ACTION_TYPES = {};
@@ -403,7 +436,7 @@
                 for (var _i = 0; _i < arguments.length; _i++) {
                     args[_i] = arguments[_i];
                 }
-                return (Object.assign(Object.assign({}, config.apply(void 0, __spread(args))), { type: type }));
+                return (Object.assign(Object.assign({}, config.apply(void 0, __spreadArray([], __read(args)))), { type: type }));
             });
         }
         var as = config ? config._as : 'empty';
@@ -587,7 +620,7 @@
     }
     function createReducerFactory(reducerFactory, metaReducers) {
         if (Array.isArray(metaReducers) && metaReducers.length > 0) {
-            reducerFactory = compose.apply(null, __spread(metaReducers, [
+            reducerFactory = compose.apply(null, __spreadArray(__spreadArray([], __read(metaReducers)), [
                 reducerFactory,
             ]));
         }
@@ -601,7 +634,7 @@
     }
     function createFeatureReducerFactory(metaReducers) {
         var reducerFactory = Array.isArray(metaReducers) && metaReducers.length > 0
-            ? compose.apply(void 0, __spread(metaReducers)) : function (r) { return r; };
+            ? compose.apply(void 0, __spreadArray([], __read(metaReducers))) : function (r) { return r; };
         return function (reducer, initialState) {
             reducer = reducerFactory(reducer);
             return function (state, action) {
@@ -783,7 +816,7 @@
             for (var _i = 1; _i < arguments.length; _i++) {
                 paths[_i - 1] = arguments[_i];
             }
-            return select.call.apply(select, __spread([null, pathOrMapFn], paths))(this);
+            return select.call.apply(select, __spreadArray([null, pathOrMapFn], __read(paths)))(this);
         };
         Store.prototype.lift = function (operator) {
             var store = new Store(this, this.actionsObserver, this.reducerManager);
@@ -828,8 +861,8 @@
         return function selectOperator(source$) {
             var mapped$;
             if (typeof pathOrMapFn === 'string') {
-                var pathSlices = __spread([propsOrPath], paths).filter(Boolean);
-                mapped$ = source$.pipe(operators.pluck.apply(void 0, __spread([pathOrMapFn], pathSlices)));
+                var pathSlices = __spreadArray([propsOrPath], __read(paths)).filter(Boolean);
+                mapped$ = source$.pipe(operators.pluck.apply(void 0, __spreadArray([pathOrMapFn], __read(pathSlices))));
             }
             else if (typeof pathOrMapFn === 'function') {
                 mapped$ = source$.pipe(operators.map(function (source) { return pathOrMapFn(source, propsOrPath); }));
@@ -910,7 +943,7 @@
         for (var _i = 0; _i < arguments.length; _i++) {
             input[_i] = arguments[_i];
         }
-        return createSelectorFactory(defaultMemoize).apply(void 0, __spread(input));
+        return createSelectorFactory(defaultMemoize).apply(void 0, __spreadArray([], __read(input)));
     }
     function defaultStateFn(state, selectors, props, memoizedProjector) {
         if (props === undefined) {
@@ -918,7 +951,7 @@
             return memoizedProjector.memoized.apply(null, args_1);
         }
         var args = selectors.map(function (fn) { return fn(state, props); });
-        return memoizedProjector.memoized.apply(null, __spread(args, [props]));
+        return memoizedProjector.memoized.apply(null, __spreadArray(__spreadArray([], __read(args)), [props]));
     }
     /**
      *
@@ -1010,7 +1043,7 @@
             var args = input;
             if (Array.isArray(args[0])) {
                 var _a = __read(args), head = _a[0], tail = _a.slice(1);
-                args = __spread(head, tail);
+                args = __spreadArray(__spreadArray([], __read(head)), __read(tail));
             }
             var selectors = args.slice(0, args.length - 1);
             var projector = args[args.length - 1];
@@ -1172,10 +1205,10 @@
                 return false;
             }
             if (isPlainObject(value)) {
-                return getUnserializable(value, __spread(path, [key]));
+                return getUnserializable(value, __spreadArray(__spreadArray([], __read(path)), [key]));
             }
             return {
-                path: __spread(path, [key]),
+                path: __spreadArray(__spreadArray([], __read(path)), [key]),
                 value: value,
             };
         }, false);
@@ -1193,7 +1226,7 @@
 
     function inNgZoneAssertMetaReducer(reducer, checks) {
         return function (state, action) {
-            if (checks.action(action) && !ngCore.NgZone.isInAngularZone()) {
+            if (checks.action(action) && !ngCore__namespace.NgZone.isInAngularZone()) {
                 throw new Error("Action '" + action.type + "' running outside NgZone. " + RUNTIME_CHECK_URL + "#strictactionwithinngzone");
             }
             return reducer(state, action);
@@ -1603,7 +1636,7 @@
         }
         var map = new Map();
         var _loop_1 = function (on_1) {
-            var e_2, _a;
+            var e_2, _b;
             var _loop_2 = function (type) {
                 var existingReducer = map.get(type);
                 if (existingReducer) {
@@ -1615,15 +1648,15 @@
                 }
             };
             try {
-                for (var _b = (e_2 = void 0, __values(on_1.types)), _c = _b.next(); !_c.done; _c = _b.next()) {
-                    var type = _c.value;
+                for (var _c = (e_2 = void 0, __values(on_1.types)), _d = _c.next(); !_d.done; _d = _c.next()) {
+                    var type = _d.value;
                     _loop_2(type);
                 }
             }
             catch (e_2_1) { e_2 = { error: e_2_1 }; }
             finally {
                 try {
-                    if (_c && !_c.done && (_a = _b.return)) _a.call(_b);
+                    if (_d && !_d.done && (_b = _c.return)) _b.call(_c);
                 }
                 finally { if (e_2) throw e_2.error; }
             }

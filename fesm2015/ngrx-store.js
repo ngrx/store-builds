@@ -1,4 +1,5 @@
-import { Injectable, InjectionToken, Inject, isDevMode, NgZone, NgModule, Optional, SkipSelf, Injector } from '@angular/core';
+import * as ngCore from '@angular/core';
+import { Injectable, InjectionToken, Inject, isDevMode, NgModule, Optional, SkipSelf, Injector } from '@angular/core';
 import { BehaviorSubject, Observable, Subject, queueScheduler } from 'rxjs';
 import { observeOn, withLatestFrom, scan, pluck, map, distinctUntilChanged } from 'rxjs/operators';
 
@@ -808,7 +809,7 @@ function throwIfUnserializable(unserializable, context) {
 
 function inNgZoneAssertMetaReducer(reducer, checks) {
     return function (state, action) {
-        if (checks.action(action) && !NgZone.isInAngularZone()) {
+        if (checks.action(action) && !ngCore.NgZone.isInAngularZone()) {
             throw new Error(`Action '${action.type}' running outside NgZone. ${RUNTIME_CHECK_URL}#strictactionwithinngzone`);
         }
         return reducer(state, action);
