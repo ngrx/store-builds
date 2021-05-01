@@ -98,9 +98,11 @@ function createAction(type, config) {
     }
 }
 function props() {
+    // eslint-disable-next-line @typescript-eslint/no-non-null-assertion, @typescript-eslint/naming-convention
     return { _as: 'props', _p: undefined };
 }
 function union(creators) {
+    // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
     return undefined;
 }
 function defineType(type, creator) {
@@ -413,6 +415,7 @@ const STATE_PROVIDERS = [
     { provide: StateObservable, useExisting: State },
 ];
 
+/* eslint-disable @typescript-eslint/naming-convention */
 class Store extends Observable {
     constructor(state$, actionsObserver, reducerManager) {
         super();
@@ -499,7 +502,7 @@ function resultMemoize(projectionFn, isResultEqual) {
 }
 function defaultMemoize(projectionFn, isArgumentsEqual = isEqualCheck, isResultEqual = isEqualCheck) {
     let lastArguments = null;
-    // tslint:disable-next-line:no-any anything could be the result.
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any, , , , ,
     let lastResult = null;
     let overrideResult;
     function reset() {
@@ -512,7 +515,8 @@ function defaultMemoize(projectionFn, isArgumentsEqual = isEqualCheck, isResultE
     function clearResult() {
         overrideResult = undefined;
     }
-    // tslint:disable-next-line:no-any anything could be the result.
+    /* eslint-disable prefer-rest-params, prefer-spread */
+    // disabled because of the use of `arguments`
     function memoized() {
         if (overrideResult !== undefined) {
             return overrideResult.result;
@@ -664,7 +668,7 @@ function createFeatureSelector(featureName) {
     return createSelector((state) => {
         const featureState = state[featureName];
         if (!isNgrxMockEnvironment() && isDevMode() && !(featureName in state)) {
-            console.warn(`@ngrx/store: The feature name \"${featureName}\" does ` +
+            console.warn(`@ngrx/store: The feature name "${featureName}" does ` +
                 'not exist in the state, therefore createFeatureSelector ' +
                 'cannot access it.  Be sure it is imported in a loaded module ' +
                 `using StoreModule.forRoot('${featureName}', ...) or ` +
@@ -940,11 +944,13 @@ class StoreFeatureModule {
         this.reducerManager = reducerManager;
         const feats = features.map((feature, index) => {
             const featureReducerCollection = featureReducers.shift();
+            // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
             const reducers = featureReducerCollection /*TODO(#823)*/[index];
             return Object.assign(Object.assign({}, feature), { reducers, initialState: _initialStateFactory(feature.initialState) });
         });
         reducerManager.addFeatures(feats);
     }
+    // eslint-disable-next-line @angular-eslint/contextual-lifecycle
     ngOnDestroy() {
         this.reducerManager.removeFeatures(this.features);
     }
@@ -1192,8 +1198,8 @@ function on(...args) {
  */
 function createReducer(initialState, ...ons) {
     const map = new Map();
-    for (let on of ons) {
-        for (let type of on.types) {
+    for (const on of ons) {
+        for (const type of on.types) {
             const existingReducer = map.get(type);
             if (existingReducer) {
                 const newReducer = (state, action) => on.reducer(existingReducer(state, action), action);

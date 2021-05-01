@@ -113,7 +113,7 @@ function addReducerToStateInterface(source, reducersPath, options) {
         // Get the indentation of the last element, if any.
         var text = node.getFullText(source);
         var matches = text.match(/^\r?\n+(\s*)/);
-        if (matches.length > 0) {
+        if (matches && matches.length > 0) {
             toInsert = "" + matches[1] + keyInsert + "\n";
         }
         else {
@@ -163,7 +163,7 @@ function addReducerToActionReducerMap(source, reducersPath, options) {
         // Get the indentation of the last element, if any.
         var text = node.getFullText(source);
         var matches = text.match(/^\r?\n+(\s*)/);
-        if (matches.length > 0) {
+        if (matches && matches.length > 0) {
             toInsert = "\n" + matches[1] + keyInsert;
         }
         else {

@@ -23,6 +23,7 @@ if (typeof afterEach === 'function') {
             if (mockStore) {
                 mockStore.resetSelectors();
             }
+            // eslint-disable-next-line no-empty
         }
         catch (_a) { }
     });

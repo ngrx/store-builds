@@ -450,9 +450,11 @@
         }
     }
     function props() {
+        // eslint-disable-next-line @typescript-eslint/no-non-null-assertion, @typescript-eslint/naming-convention
         return { _as: 'props', _p: undefined };
     }
     function union(creators) {
+        // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
         return undefined;
     }
     function defineType(type, creator) {
@@ -901,7 +903,7 @@
         if (isArgumentsEqual === void 0) { isArgumentsEqual = isEqualCheck; }
         if (isResultEqual === void 0) { isResultEqual = isEqualCheck; }
         var lastArguments = null;
-        // tslint:disable-next-line:no-any anything could be the result.
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any, , , , ,
         var lastResult = null;
         var overrideResult;
         function reset() {
@@ -915,7 +917,8 @@
         function clearResult() {
             overrideResult = undefined;
         }
-        // tslint:disable-next-line:no-any anything could be the result.
+        /* eslint-disable prefer-rest-params, prefer-spread */
+        // disabled because of the use of `arguments`
         function memoized() {
             if (overrideResult !== undefined) {
                 return overrideResult.result;
@@ -1368,11 +1371,13 @@
             this.reducerManager = reducerManager;
             var feats = features.map(function (feature, index) {
                 var featureReducerCollection = featureReducers.shift();
+                // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
                 var reducers = featureReducerCollection /*TODO(#823)*/[index];
                 return Object.assign(Object.assign({}, feature), { reducers: reducers, initialState: _initialStateFactory(feature.initialState) });
             });
             reducerManager.addFeatures(feats);
         }
+        // eslint-disable-next-line @angular-eslint/contextual-lifecycle
         StoreFeatureModule.prototype.ngOnDestroy = function () {
             this.reducerManager.removeFeatures(this.features);
         };

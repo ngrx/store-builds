@@ -55,10 +55,12 @@ function findMetaReducersImportStatements(sourceFile, createChange, logger) {
         .filter(function (p) {
         canRunSchematics = Boolean(p.importClause &&
             p.importClause.namedBindings &&
+            // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
             p.importClause.namedBindings.elements);
         return canRunSchematics;
     })
         .map(function (p) {
+        // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
         return p.importClause.namedBindings.elements.filter(isMetaReducersImportSpecifier);
     })
         .reduce(function (imports, curr) { return imports.concat(curr); }, []);

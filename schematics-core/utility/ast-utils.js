@@ -257,7 +257,7 @@ function getDecoratorMetadata(source, identifier, module) {
 exports.getDecoratorMetadata = getDecoratorMetadata;
 function _addSymbolToNgModuleMetadata(source, ngModulePath, metadataField, symbolName, importPath) {
     var nodes = getDecoratorMetadata(source, 'NgModule', '@angular/core');
-    var node = nodes[0]; // tslint:disable-line:no-any
+    var node = nodes[0]; // eslint-disable-line @typescript-eslint/no-explicit-any
     // Find the decorator declaration.
     if (!node) {
         return [];
@@ -413,7 +413,7 @@ function _addSymbolToNgModuleMetadata(source, ngModulePath, metadataField, symbo
 }
 function _addSymbolToComponentMetadata(source, componentPath, metadataField, symbolName, importPath) {
     var nodes = getDecoratorMetadata(source, 'Component', '@angular/core');
-    var node = nodes[0]; // tslint:disable-line:no-any
+    var node = nodes[0]; // eslint-disable-line @typescript-eslint/no-explicit-any
     // Find the decorator declaration.
     if (!node) {
         return [];
@@ -657,8 +657,12 @@ function replaceImport(sourceFile, path, importFrom, importAsIs, importToBe) {
         return '';
     };
     var changes = imports.map(function (p) {
-        var importSpecifiers = p.importClause.namedBindings
-            .elements;
+        var _a;
+        var namedImports = (_a = p === null || p === void 0 ? void 0 : p.importClause) === null || _a === void 0 ? void 0 : _a.namedBindings;
+        if (!namedImports) {
+            return [];
+        }
+        var importSpecifiers = namedImports.elements;
         var isAlreadyImported = importSpecifiers
             .map(importText)
             .includes(importToBe);

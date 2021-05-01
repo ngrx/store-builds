@@ -8,6 +8,6 @@ export declare function isNumber(target: any): target is number;
 export declare function isObjectLike(target: any): target is object;
 export declare function isObject(target: any): target is object;
 export declare function isPlainObject(target: any): target is object;
-export declare function isFunction(target: any): target is Function;
-export declare function isComponent(target: any): any;
+export declare function isFunction(target: any): target is () => void;
+export declare function isComponent(target: any): boolean;
 export declare function hasOwnProperty(target: object, propertyName: string): boolean;
