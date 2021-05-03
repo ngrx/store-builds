@@ -1,1 +1,1 @@
-a9e7fb17 chore: migrate to eslint (#3001)
+cd145e7e ci: dont lint in parallel (#3011)
