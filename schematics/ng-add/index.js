@@ -37,6 +37,11 @@ var __values = (this && this.__values) || function(o) {
     };
     throw new TypeError(s ? "Object is not iterable." : "Symbol.iterator is not defined.");
 };
+var __spreadArray = (this && this.__spreadArray) || function (to, from) {
+    for (var i = 0, il = from.length, j = to.length; i < il; i++, j++)
+        to[j] = from[i];
+    return to;
+};
 exports.__esModule = true;
 var schematics_1 = require("@angular-devkit/schematics");
 var tasks_1 = require("@angular-devkit/schematics/tasks");
@@ -103,6 +108,31 @@ function addNgRxStoreToPackageJson() {
         return host;
     };
 }
+function addNgRxESLintPlugin() {
+    return function (host, context) {
+        var _a;
+        var eslintConfigPath = '.eslintrc.json';
+        var docs = 'https://github.com/timdeschryver/eslint-plugin-ngrx/#eslint-plugin-ngrx';
+        var eslint = (_a = host.read(eslintConfigPath)) === null || _a === void 0 ? void 0 : _a.toString('utf-8');
+        if (!eslint) {
+            return host;
+        }
+        schematics_core_1.addPackageToPackageJson(host, 'devDependencies', 'eslint-plugin-ngrx', '^1.0.0');
+        context.addTask(new tasks_1.NodePackageInstallTask());
+        try {
+            var json = JSON.parse(eslint);
+            json.plugins = __spreadArray(__spreadArray([], __read((json.plugins || []))), ['ngrx']);
+            json["extends"] = __spreadArray(__spreadArray([], __read((json["extends"] || []))), ['plugin:ngrx/recommended']);
+            host.overwrite(eslintConfigPath, JSON.stringify(json, null, 2));
+            context.logger.info("\nThe NgRx ESLint Plugin is installed and configured with the recommended config.\n\nIf you want to change the configuration, please see " + docs + ".\n");
+            return host;
+        }
+        catch (err) {
+            context.logger.warn("\nSomething went wrong while adding the NgRx ESLint Plugin.\nThe NgRx ESLint Plugin is installed but not configured.\n\nPlease see " + docs + " to configure the NgRx ESLint Plugin.\n\nDetails:\n" + err.message + "\n");
+        }
+        return host;
+    };
+}
 function default_1(options) {
     return function (host, context) {
         options.path = schematics_core_1.getProjectPath(host, options);
@@ -129,6 +159,7 @@ function default_1(options) {
         return schematics_1.chain([
             schematics_1.branchAndMerge(schematics_1.chain([addImportToNgModule(options), schematics_1.mergeWith(templateSource)])),
             options && options.skipPackageJson ? schematics_1.noop() : addNgRxStoreToPackageJson(),
+            options && options.skipESLintPlugin ? schematics_1.noop() : addNgRxESLintPlugin(),
         ])(host, context);
     };
 }

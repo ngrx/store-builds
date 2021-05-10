@@ -1,1 +1,1 @@
-df760f8c docs(effects): cleanup module imports in example (#3013)
+5259890d feat(store): register eslint-plugin-ngrx with ng add (#3014)
