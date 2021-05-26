@@ -1,1 +1,1 @@
-a02ea9ff feat(entity): new `setMany` adapter (#3026) (#3029)
+5102a340 fix(store): add ESLint plugin to TS overrides when possible (#3032)

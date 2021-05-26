@@ -121,8 +121,14 @@ function addNgRxESLintPlugin() {
         context.addTask(new tasks_1.NodePackageInstallTask());
         try {
             var json = JSON.parse(eslint);
-            json.plugins = __spreadArray(__spreadArray([], __read((json.plugins || []))), ['ngrx']);
-            json["extends"] = __spreadArray(__spreadArray([], __read((json["extends"] || []))), ['plugin:ngrx/recommended']);
+            if (json.overrides) {
+                json.overrides
+                    .filter(function (override) { var _a; return (_a = override.files) === null || _a === void 0 ? void 0 : _a.some(function (file) { return file.endsWith('*.ts'); }); })
+                    .forEach(configureESLintPlugin);
+            }
+            else {
+                configureESLintPlugin(json);
+            }
             host.overwrite(eslintConfigPath, JSON.stringify(json, null, 2));
             context.logger.info("\nThe NgRx ESLint Plugin is installed and configured with the recommended config.\n\nIf you want to change the configuration, please see " + docs + ".\n");
             return host;
@@ -132,6 +138,10 @@ function addNgRxESLintPlugin() {
         }
         return host;
     };
+}
+function configureESLintPlugin(json) {
+    json.plugins = __spreadArray(__spreadArray([], __read((json.plugins || []))), ['ngrx']);
+    json["extends"] = __spreadArray(__spreadArray([], __read((json["extends"] || []))), ['plugin:ngrx/recommended']);
 }
 function default_1(options) {
     return function (host, context) {
@@ -152,7 +162,7 @@ function default_1(options) {
             options.stateInterface = schematics_core_1.stringUtils.classify(options.stateInterface);
         }
         var templateSource = schematics_1.apply(schematics_1.url('./files'), [
-            schematics_1.filter(function (_) { return (options.minimal ? false : true); }),
+            schematics_1.filter(function () { return (options.minimal ? false : true); }),
             schematics_1.applyTemplates(__assign(__assign(__assign({}, schematics_core_1.stringUtils), options), { environmentsPath: environmentsPath })),
             schematics_1.move(parsedPath.path),
         ]);
