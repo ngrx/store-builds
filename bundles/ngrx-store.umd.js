@@ -877,6 +877,52 @@
         };
     }
 
+    function capitalize(text) {
+        return (text.charAt(0).toUpperCase() + text.substr(1));
+    }
+
+    var RUNTIME_CHECK_URL = 'https://ngrx.io/guide/store/configuration/runtime-checks';
+    function isUndefined(target) {
+        return target === undefined;
+    }
+    function isNull(target) {
+        return target === null;
+    }
+    function isArray(target) {
+        return Array.isArray(target);
+    }
+    function isString(target) {
+        return typeof target === 'string';
+    }
+    function isBoolean(target) {
+        return typeof target === 'boolean';
+    }
+    function isNumber(target) {
+        return typeof target === 'number';
+    }
+    function isObjectLike(target) {
+        return typeof target === 'object' && target !== null;
+    }
+    function isObject(target) {
+        return isObjectLike(target) && !isArray(target);
+    }
+    function isPlainObject(target) {
+        if (!isObject(target)) {
+            return false;
+        }
+        var targetPrototype = Object.getPrototypeOf(target);
+        return targetPrototype === Object.prototype || targetPrototype === null;
+    }
+    function isFunction(target) {
+        return typeof target === 'function';
+    }
+    function isComponent(target) {
+        return isFunction(target) && target.hasOwnProperty('ɵcmp');
+    }
+    function hasOwnProperty(target, propertyName) {
+        return Object.prototype.hasOwnProperty.call(target, propertyName);
+    }
+
     var _ngrxMockEnvironment = false;
     function setNgrxMockEnvironment(value) {
         _ngrxMockEnvironment = value;
@@ -1095,46 +1141,26 @@
         }, function (featureState) { return featureState; });
     }
 
-    var RUNTIME_CHECK_URL = 'https://ngrx.io/guide/store/configuration/runtime-checks';
-    function isUndefined(target) {
-        return target === undefined;
+    function createFeature(_a) {
+        var _b;
+        var name = _a.name, reducer = _a.reducer;
+        var featureSelector = createFeatureSelector(name);
+        var nestedSelectors = createNestedSelectors(featureSelector, reducer);
+        return Object.assign((_b = { name: name,
+                reducer: reducer }, _b["select" + capitalize(name) + "State"] = featureSelector, _b), nestedSelectors);
     }
-    function isNull(target) {
-        return target === null;
+    function createNestedSelectors(featureSelector, reducer) {
+        var initialState = getInitialState(reducer);
+        var nestedKeys = (isPlainObject(initialState)
+            ? Object.keys(initialState)
+            : []);
+        return nestedKeys.reduce(function (nestedSelectors, nestedKey) {
+            var _a;
+            return (Object.assign(Object.assign({}, nestedSelectors), (_a = {}, _a["select" + capitalize(nestedKey)] = createSelector(featureSelector, function (parentState) { return parentState === null || parentState === void 0 ? void 0 : parentState[nestedKey]; }), _a)));
+        }, {});
     }
-    function isArray(target) {
-        return Array.isArray(target);
-    }
-    function isString(target) {
-        return typeof target === 'string';
-    }
-    function isBoolean(target) {
-        return typeof target === 'boolean';
-    }
-    function isNumber(target) {
-        return typeof target === 'number';
-    }
-    function isObjectLike(target) {
-        return typeof target === 'object' && target !== null;
-    }
-    function isObject(target) {
-        return isObjectLike(target) && !isArray(target);
-    }
-    function isPlainObject(target) {
-        if (!isObject(target)) {
-            return false;
-        }
-        var targetPrototype = Object.getPrototypeOf(target);
-        return targetPrototype === Object.prototype || targetPrototype === null;
-    }
-    function isFunction(target) {
-        return typeof target === 'function';
-    }
-    function isComponent(target) {
-        return isFunction(target) && target.hasOwnProperty('ɵcmp');
-    }
-    function hasOwnProperty(target, propertyName) {
-        return Object.prototype.hasOwnProperty.call(target, propertyName);
+    function getInitialState(reducer) {
+        return reducer(undefined, { type: '@ngrx/feature/init' });
     }
 
     function immutabilityCheckMetaReducer(reducer, checks) {
@@ -1721,6 +1747,7 @@
     exports.combineReducers = combineReducers;
     exports.compose = compose;
     exports.createAction = createAction;
+    exports.createFeature = createFeature;
     exports.createFeatureSelector = createFeatureSelector;
     exports.createReducer = createReducer;
     exports.createReducerFactory = createReducerFactory;

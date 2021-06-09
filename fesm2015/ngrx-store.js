@@ -478,6 +478,52 @@ function select(pathOrMapFn, propsOrPath, ...paths) {
     };
 }
 
+function capitalize(text) {
+    return (text.charAt(0).toUpperCase() + text.substr(1));
+}
+
+const RUNTIME_CHECK_URL = 'https://ngrx.io/guide/store/configuration/runtime-checks';
+function isUndefined(target) {
+    return target === undefined;
+}
+function isNull(target) {
+    return target === null;
+}
+function isArray(target) {
+    return Array.isArray(target);
+}
+function isString(target) {
+    return typeof target === 'string';
+}
+function isBoolean(target) {
+    return typeof target === 'boolean';
+}
+function isNumber(target) {
+    return typeof target === 'number';
+}
+function isObjectLike(target) {
+    return typeof target === 'object' && target !== null;
+}
+function isObject(target) {
+    return isObjectLike(target) && !isArray(target);
+}
+function isPlainObject(target) {
+    if (!isObject(target)) {
+        return false;
+    }
+    const targetPrototype = Object.getPrototypeOf(target);
+    return targetPrototype === Object.prototype || targetPrototype === null;
+}
+function isFunction(target) {
+    return typeof target === 'function';
+}
+function isComponent(target) {
+    return isFunction(target) && target.hasOwnProperty('ɵcmp');
+}
+function hasOwnProperty(target, propertyName) {
+    return Object.prototype.hasOwnProperty.call(target, propertyName);
+}
+
 let _ngrxMockEnvironment = false;
 function setNgrxMockEnvironment(value) {
     _ngrxMockEnvironment = value;
@@ -680,46 +726,21 @@ function createFeatureSelector(featureName) {
     }, (featureState) => featureState);
 }
 
-const RUNTIME_CHECK_URL = 'https://ngrx.io/guide/store/configuration/runtime-checks';
-function isUndefined(target) {
-    return target === undefined;
+function createFeature({ name, reducer, }) {
+    const featureSelector = createFeatureSelector(name);
+    const nestedSelectors = createNestedSelectors(featureSelector, reducer);
+    return Object.assign({ name,
+        reducer, [`select${capitalize(name)}State`]: featureSelector }, nestedSelectors);
 }
-function isNull(target) {
-    return target === null;
+function createNestedSelectors(featureSelector, reducer) {
+    const initialState = getInitialState(reducer);
+    const nestedKeys = (isPlainObject(initialState)
+        ? Object.keys(initialState)
+        : []);
+    return nestedKeys.reduce((nestedSelectors, nestedKey) => (Object.assign(Object.assign({}, nestedSelectors), { [`select${capitalize(nestedKey)}`]: createSelector(featureSelector, (parentState) => parentState === null || parentState === void 0 ? void 0 : parentState[nestedKey]) })), {});
 }
-function isArray(target) {
-    return Array.isArray(target);
-}
-function isString(target) {
-    return typeof target === 'string';
-}
-function isBoolean(target) {
-    return typeof target === 'boolean';
-}
-function isNumber(target) {
-    return typeof target === 'number';
-}
-function isObjectLike(target) {
-    return typeof target === 'object' && target !== null;
-}
-function isObject(target) {
-    return isObjectLike(target) && !isArray(target);
-}
-function isPlainObject(target) {
-    if (!isObject(target)) {
-        return false;
-    }
-    const targetPrototype = Object.getPrototypeOf(target);
-    return targetPrototype === Object.prototype || targetPrototype === null;
-}
-function isFunction(target) {
-    return typeof target === 'function';
-}
-function isComponent(target) {
-    return isFunction(target) && target.hasOwnProperty('ɵcmp');
-}
-function hasOwnProperty(target, propertyName) {
-    return Object.prototype.hasOwnProperty.call(target, propertyName);
+function getInitialState(reducer) {
+    return reducer(undefined, { type: '@ngrx/feature/init' });
 }
 
 function immutabilityCheckMetaReducer(reducer, checks) {
@@ -1226,5 +1247,5 @@ function createReducer(initialState, ...ons) {
  * Generated bundle index. Do not edit.
  */
 
-export { ACTIVE_RUNTIME_CHECKS, ActionsSubject, FEATURE_REDUCERS, INIT, INITIAL_REDUCERS, INITIAL_STATE, META_REDUCERS, REDUCER_FACTORY, ReducerManager, ReducerManagerDispatcher, ReducerObservable, STORE_FEATURES, ScannedActionsSubject, State, StateObservable, Store, StoreFeatureModule, StoreModule, StoreRootModule, UPDATE, USER_PROVIDED_META_REDUCERS, USER_RUNTIME_CHECKS, combineReducers, compose, createAction, createFeatureSelector, createReducer, createReducerFactory, createSelector, createSelectorFactory, defaultMemoize, defaultStateFn, isNgrxMockEnvironment, on, props, reduceState, resultMemoize, select, setNgrxMockEnvironment, union, STORE_PROVIDERS as ɵb, createSerializationCheckMetaReducer as ɵba, createImmutabilityCheckMetaReducer as ɵbb, createInNgZoneCheckMetaReducer as ɵbc, provideRuntimeChecks as ɵbd, checkForActionTypeUniqueness as ɵbe, _runtimeChecksFactory as ɵbf, _actionTypeUniquenessCheck as ɵbg, ACTIONS_SUBJECT_PROVIDERS as ɵc, REDUCER_MANAGER_PROVIDERS as ɵd, SCANNED_ACTIONS_SUBJECT_PROVIDERS as ɵe, isEqualCheck as ɵf, STATE_PROVIDERS as ɵg, _ROOT_STORE_GUARD as ɵh, _INITIAL_STATE as ɵi, _REDUCER_FACTORY as ɵj, _INITIAL_REDUCERS as ɵk, _STORE_REDUCERS as ɵl, _FEATURE_REDUCERS as ɵm, _FEATURE_CONFIGS as ɵn, _STORE_FEATURES as ɵo, _FEATURE_REDUCERS_TOKEN as ɵp, _RESOLVED_META_REDUCERS as ɵq, _USER_RUNTIME_CHECKS as ɵr, _ACTION_TYPE_UNIQUENESS_CHECK as ɵs, _createStoreReducers as ɵt, _createFeatureStore as ɵu, _createFeatureReducers as ɵv, _initialStateFactory as ɵw, _concatMetaReducers as ɵx, _provideForRootGuard as ɵy, createActiveRuntimeChecks as ɵz };
+export { ACTIVE_RUNTIME_CHECKS, ActionsSubject, FEATURE_REDUCERS, INIT, INITIAL_REDUCERS, INITIAL_STATE, META_REDUCERS, REDUCER_FACTORY, ReducerManager, ReducerManagerDispatcher, ReducerObservable, STORE_FEATURES, ScannedActionsSubject, State, StateObservable, Store, StoreFeatureModule, StoreModule, StoreRootModule, UPDATE, USER_PROVIDED_META_REDUCERS, USER_RUNTIME_CHECKS, combineReducers, compose, createAction, createFeature, createFeatureSelector, createReducer, createReducerFactory, createSelector, createSelectorFactory, defaultMemoize, defaultStateFn, isNgrxMockEnvironment, on, props, reduceState, resultMemoize, select, setNgrxMockEnvironment, union, STORE_PROVIDERS as ɵb, createSerializationCheckMetaReducer as ɵba, createImmutabilityCheckMetaReducer as ɵbb, createInNgZoneCheckMetaReducer as ɵbc, provideRuntimeChecks as ɵbd, checkForActionTypeUniqueness as ɵbe, _runtimeChecksFactory as ɵbf, _actionTypeUniquenessCheck as ɵbg, ACTIONS_SUBJECT_PROVIDERS as ɵc, REDUCER_MANAGER_PROVIDERS as ɵd, SCANNED_ACTIONS_SUBJECT_PROVIDERS as ɵe, isEqualCheck as ɵf, STATE_PROVIDERS as ɵg, _ROOT_STORE_GUARD as ɵh, _INITIAL_STATE as ɵi, _REDUCER_FACTORY as ɵj, _INITIAL_REDUCERS as ɵk, _STORE_REDUCERS as ɵl, _FEATURE_REDUCERS as ɵm, _FEATURE_CONFIGS as ɵn, _STORE_FEATURES as ɵo, _FEATURE_REDUCERS_TOKEN as ɵp, _RESOLVED_META_REDUCERS as ɵq, _USER_RUNTIME_CHECKS as ɵr, _ACTION_TYPE_UNIQUENESS_CHECK as ɵs, _createStoreReducers as ɵt, _createFeatureStore as ɵu, _createFeatureReducers as ɵv, _initialStateFactory as ɵw, _concatMetaReducers as ɵx, _provideForRootGuard as ɵy, createActiveRuntimeChecks as ɵz };
 //# sourceMappingURL=ngrx-store.js.map
