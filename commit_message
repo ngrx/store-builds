@@ -1,1 +1,1 @@
-5102a340 fix(store): add ESLint plugin to TS overrides when possible (#3032)
+698bd29b feat(store-devtools): add autoPause option (#2941)
