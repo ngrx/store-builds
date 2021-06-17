@@ -28,7 +28,7 @@ exports.__esModule = true;
 var ts = require("typescript");
 var core_1 = require("@angular-devkit/core");
 var schematics_1 = require("@angular-devkit/schematics");
-var schematics_core_1 = require("@ngrx/store/schematics-core");
+var schematics_core_1 = require("../../schematics-core");
 var META_REDUCERS = 'META_REDUCERS';
 function updateMetaReducersToken() {
     return function (tree, context) {

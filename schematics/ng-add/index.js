@@ -43,11 +43,11 @@ var __spreadArray = (this && this.__spreadArray) || function (to, from) {
     return to;
 };
 exports.__esModule = true;
+var ts = require("typescript");
+var core_1 = require("@angular-devkit/core");
 var schematics_1 = require("@angular-devkit/schematics");
 var tasks_1 = require("@angular-devkit/schematics/tasks");
-var schematics_core_1 = require("@ngrx/store/schematics-core");
-var core_1 = require("@angular-devkit/core");
-var ts = require("typescript");
+var schematics_core_1 = require("../../schematics-core");
 function addImportToNgModule(options) {
     return function (host) {
         var e_1, _a;

@@ -23,7 +23,7 @@ var __spreadArray = (this && this.__spreadArray) || function (to, from) {
 exports.__esModule = true;
 var ts = require("typescript");
 var schematics_1 = require("@angular-devkit/schematics");
-var schematics_core_1 = require("@ngrx/store/schematics-core");
+var schematics_core_1 = require("../../schematics-core");
 function replaceWithRuntimeChecks() {
     return function (tree) {
         // only add runtime checks when ngrx-store-freeze is used
