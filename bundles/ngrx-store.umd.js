@@ -1141,13 +1141,75 @@
         }, function (featureState) { return featureState; });
     }
 
-    function createFeature(_a) {
-        var _b;
-        var name = _a.name, reducer = _a.reducer;
+    /**
+     * @description
+     * A function that accepts a feature name and a feature reducer, and creates
+     * a feature selector and a selector for each feature state property.
+     *
+     * @param featureConfig An object that contains a feature name and a feature reducer.
+     * @returns An object that contains a feature name, a feature reducer,
+     * a feature selector, a the selector for each feature state property.
+     *
+     * @usageNotes
+     *
+     * **With Application State**
+     *
+     * ```ts
+     * interface AppState {
+     *   products: ProductsState;
+     * }
+     *
+     * interface ProductsState {
+     *   products: Product[];
+     *   selectedId: string | null;
+     * }
+     *
+     * const initialState: ProductsState = {
+     *   products: [],
+     *   selectedId: null,
+     * };
+     *
+     * // AppState is passed as a generic argument
+     * const productsFeature = createFeature<AppState>({
+     *   name: 'products',
+     *   reducer: createReducer(
+     *     initialState,
+     *     on(ProductsApiActions.loadSuccess(state, { products }) => ({
+     *       ...state,
+     *       products,
+     *     }),
+     *   ),
+     * });
+     *
+     * const {
+     *   selectProductsState, // type: MemoizedSelector<AppState, ProductsState>
+     *   selectProducts, // type: MemoizedSelector<AppState, Product[]>
+     *   selectSelectedId, // type: MemoizedSelector<AppState, string | null>
+     * } = productsFeature;
+     * ```
+     *
+     * **Without Application State**
+     *
+     * ```ts
+     * const productsFeature = createFeature({
+     *   name: 'products',
+     *   reducer: createReducer(initialState),
+     * });
+     *
+     * const {
+     *   selectProductsState, // type: MemoizedSelector<Record<string, any>, ProductsState>
+     *   selectProducts, // type: MemoizedSelector<Record<string, any>, Product[]>
+     *   selectSelectedId, // type: MemoizedSelector<Record<string, any, string | null>
+     * } = productsFeature;
+     * ```
+     */
+    function createFeature(featureConfig) {
+        var _a;
+        var name = featureConfig.name, reducer = featureConfig.reducer;
         var featureSelector = createFeatureSelector(name);
         var nestedSelectors = createNestedSelectors(featureSelector, reducer);
-        return Object.assign((_b = { name: name,
-                reducer: reducer }, _b["select" + capitalize(name) + "State"] = featureSelector, _b), nestedSelectors);
+        return Object.assign((_a = { name: name,
+                reducer: reducer }, _a["select" + capitalize(name) + "State"] = featureSelector, _a), nestedSelectors);
     }
     function createNestedSelectors(featureSelector, reducer) {
         var initialState = getInitialState(reducer);
