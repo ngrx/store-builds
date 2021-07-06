@@ -12,6 +12,7 @@ export declare class ReducerManager extends BehaviorSubject<ActionReducer<any, a
     private initialState;
     private reducers;
     private reducerFactory;
+    get currentReducers(): ActionReducerMap<any, any>;
     constructor(dispatcher: ReducerManagerDispatcher, initialState: any, reducers: ActionReducerMap<any, any>, reducerFactory: ActionReducerFactory<any, any>);
     addFeature(feature: StoreFeature<any, any>): void;
     addFeatures(features: StoreFeature<any, any>[]): void;

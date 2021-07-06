@@ -1,1 +1,1 @@
-97643eb7 chore: release 12.2.0
+bf2bd1a6 feat(store): make reducers accessible from ReducerManager (#3064)

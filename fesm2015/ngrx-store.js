@@ -302,6 +302,9 @@ class ReducerManager extends BehaviorSubject {
         this.reducers = reducers;
         this.reducerFactory = reducerFactory;
     }
+    get currentReducers() {
+        return this.reducers;
+    }
     addFeature(feature) {
         this.addFeatures([feature]);
     }

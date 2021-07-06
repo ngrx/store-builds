@@ -671,6 +671,13 @@
             _this.reducerFactory = reducerFactory;
             return _this;
         }
+        Object.defineProperty(ReducerManager.prototype, "currentReducers", {
+            get: function () {
+                return this.reducers;
+            },
+            enumerable: false,
+            configurable: true
+        });
         ReducerManager.prototype.addFeature = function (feature) {
             this.addFeatures([feature]);
         };
