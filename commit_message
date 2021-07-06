@@ -1,1 +1,1 @@
-bf2bd1a6 feat(store): make reducers accessible from ReducerManager (#3064)
+a6c199fe fix(data): immutably delete an entity (#3040)
