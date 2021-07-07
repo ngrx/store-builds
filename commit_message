@@ -1,1 +1,1 @@
-a6c199fe fix(data): immutably delete an entity (#3040)
+e630b522 docs(store): add note about using createFeatureSelector with no generic supplied to Store (#3063)
