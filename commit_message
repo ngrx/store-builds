@@ -1,1 +1,1 @@
-e630b522 docs(store): add note about using createFeatureSelector with no generic supplied to Store (#3063)
+fb7d69ac chore: update ts-snippet to 5.0.2 (#3062)
