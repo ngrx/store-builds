@@ -1,1 +1,1 @@
-a39b2783 fix(store): make readonly usage consistent (#3050) (#3069)
+3e02e379 fix(component-store): accept error type in tapResponse with strict generic checks (#3068)
