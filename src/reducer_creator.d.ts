@@ -79,5 +79,5 @@ export declare function on<State, Creators extends readonly ActionCreator[]>(...
  * }
  * ```
  */
-export declare function createReducer<S, A extends Action = Action>(initialState: S, ...ons: ReducerTypes<S, ActionCreator[]>[]): ActionReducer<S, A>;
+export declare function createReducer<S, A extends Action = Action>(initialState: S, ...ons: ReducerTypes<S, readonly ActionCreator[]>[]): ActionReducer<S, A>;
 export {};
