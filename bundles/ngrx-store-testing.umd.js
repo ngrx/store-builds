@@ -323,10 +323,17 @@
         }
         return MockState;
     }(rxjs.BehaviorSubject));
+    /** @type {!Array<{type: !Function, args: (undefined|!Array<?>)}>} */
     MockState.decorators = [
         { type: core.Injectable }
     ];
-    /** @nocollapse */
+    /**
+     * @type {function(): !Array<(null|{
+     *   type: ?,
+     *   decorators: (undefined|!Array<{type: !Function, args: (undefined|!Array<?>)}>),
+     * })>}
+     * @nocollapse
+     */
     MockState.ctorParameters = function () { return []; };
 
     var MOCK_SELECTORS = new core.InjectionToken('@ngrx/store Mock Selectors');
@@ -423,10 +430,17 @@
         };
         return MockStore;
     }(store.Store));
+    /** @type {!Array<{type: !Function, args: (undefined|!Array<?>)}>} */
     MockStore.decorators = [
         { type: core.Injectable }
     ];
-    /** @nocollapse */
+    /**
+     * @type {function(): !Array<(null|{
+     *   type: ?,
+     *   decorators: (undefined|!Array<{type: !Function, args: (undefined|!Array<?>)}>),
+     * })>}
+     * @nocollapse
+     */
     MockStore.ctorParameters = function () { return [
         { type: MockState },
         { type: store.ActionsSubject },
@@ -466,10 +480,17 @@
         };
         return MockReducerManager;
     }(rxjs.BehaviorSubject));
+    /** @type {!Array<{type: !Function, args: (undefined|!Array<?>)}>} */
     MockReducerManager.decorators = [
         { type: core.Injectable }
     ];
-    /** @nocollapse */
+    /**
+     * @type {function(): !Array<(null|{
+     *   type: ?,
+     *   decorators: (undefined|!Array<{type: !Function, args: (undefined|!Array<?>)}>),
+     * })>}
+     * @nocollapse
+     */
     MockReducerManager.ctorParameters = function () { return []; };
 
     /**

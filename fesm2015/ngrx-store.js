@@ -139,10 +139,17 @@ class ActionsSubject extends BehaviorSubject {
         super.complete();
     }
 }
+/** @type {!Array<{type: !Function, args: (undefined|!Array<?>)}>} */
 ActionsSubject.decorators = [
     { type: Injectable }
 ];
-/** @nocollapse */
+/**
+ * @type {function(): !Array<(null|{
+ *   type: ?,
+ *   decorators: (undefined|!Array<{type: !Function, args: (undefined|!Array<?>)}>),
+ * })>}
+ * @nocollapse
+ */
 ActionsSubject.ctorParameters = () => [];
 const ACTIONS_SUBJECT_PROVIDERS = [ActionsSubject];
 
@@ -351,10 +358,17 @@ class ReducerManager extends BehaviorSubject {
         this.complete();
     }
 }
+/** @type {!Array<{type: !Function, args: (undefined|!Array<?>)}>} */
 ReducerManager.decorators = [
     { type: Injectable }
 ];
-/** @nocollapse */
+/**
+ * @type {function(): !Array<(null|{
+ *   type: ?,
+ *   decorators: (undefined|!Array<{type: !Function, args: (undefined|!Array<?>)}>),
+ * })>}
+ * @nocollapse
+ */
 ReducerManager.ctorParameters = () => [
     { type: ReducerManagerDispatcher },
     { type: undefined, decorators: [{ type: Inject, args: [INITIAL_STATE,] }] },
@@ -372,6 +386,7 @@ class ScannedActionsSubject extends Subject {
         this.complete();
     }
 }
+/** @type {!Array<{type: !Function, args: (undefined|!Array<?>)}>} */
 ScannedActionsSubject.decorators = [
     { type: Injectable }
 ];
@@ -399,10 +414,17 @@ class State extends BehaviorSubject {
     }
 }
 State.INIT = INIT;
+/** @type {!Array<{type: !Function, args: (undefined|!Array<?>)}>} */
 State.decorators = [
     { type: Injectable }
 ];
-/** @nocollapse */
+/**
+ * @type {function(): !Array<(null|{
+ *   type: ?,
+ *   decorators: (undefined|!Array<{type: !Function, args: (undefined|!Array<?>)}>),
+ * })>}
+ * @nocollapse
+ */
 State.ctorParameters = () => [
     { type: ActionsSubject },
     { type: ReducerObservable },
@@ -453,10 +475,17 @@ class Store extends Observable {
         this.reducerManager.removeReducer(key);
     }
 }
+/** @type {!Array<{type: !Function, args: (undefined|!Array<?>)}>} */
 Store.decorators = [
     { type: Injectable }
 ];
-/** @nocollapse */
+/**
+ * @type {function(): !Array<(null|{
+ *   type: ?,
+ *   decorators: (undefined|!Array<{type: !Function, args: (undefined|!Array<?>)}>),
+ * })>}
+ * @nocollapse
+ */
 Store.ctorParameters = () => [
     { type: StateObservable },
     { type: ActionsSubject },
@@ -1012,10 +1041,17 @@ function _actionTypeUniquenessCheck(config) {
 class StoreRootModule {
     constructor(actions$, reducer$, scannedActions$, store, guard, actionCheck) { }
 }
+/** @type {!Array<{type: !Function, args: (undefined|!Array<?>)}>} */
 StoreRootModule.decorators = [
     { type: NgModule, args: [{},] }
 ];
-/** @nocollapse */
+/**
+ * @type {function(): !Array<(null|{
+ *   type: ?,
+ *   decorators: (undefined|!Array<{type: !Function, args: (undefined|!Array<?>)}>),
+ * })>}
+ * @nocollapse
+ */
 StoreRootModule.ctorParameters = () => [
     { type: ActionsSubject },
     { type: ReducerObservable },
@@ -1042,10 +1078,17 @@ class StoreFeatureModule {
         this.reducerManager.removeFeatures(this.features);
     }
 }
+/** @type {!Array<{type: !Function, args: (undefined|!Array<?>)}>} */
 StoreFeatureModule.decorators = [
     { type: NgModule, args: [{},] }
 ];
-/** @nocollapse */
+/**
+ * @type {function(): !Array<(null|{
+ *   type: ?,
+ *   decorators: (undefined|!Array<{type: !Function, args: (undefined|!Array<?>)}>),
+ * })>}
+ * @nocollapse
+ */
 StoreFeatureModule.ctorParameters = () => [
     { type: Array, decorators: [{ type: Inject, args: [_STORE_FEATURES,] }] },
     { type: Array, decorators: [{ type: Inject, args: [FEATURE_REDUCERS,] }] },
@@ -1170,6 +1213,7 @@ class StoreModule {
         };
     }
 }
+/** @type {!Array<{type: !Function, args: (undefined|!Array<?>)}>} */
 StoreModule.decorators = [
     { type: NgModule, args: [{},] }
 ];

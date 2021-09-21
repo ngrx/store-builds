@@ -8,10 +8,17 @@ class MockState extends BehaviorSubject {
         super({});
     }
 }
+/** @type {!Array<{type: !Function, args: (undefined|!Array<?>)}>} */
 MockState.decorators = [
     { type: Injectable }
 ];
-/** @nocollapse */
+/**
+ * @type {function(): !Array<(null|{
+ *   type: ?,
+ *   decorators: (undefined|!Array<{type: !Function, args: (undefined|!Array<?>)}>),
+ * })>}
+ * @nocollapse
+ */
 MockState.ctorParameters = () => [];
 
 const MOCK_SELECTORS = new InjectionToken('@ngrx/store Mock Selectors');
@@ -82,10 +89,17 @@ class MockStore extends Store {
             this.setState(Object.assign({}, this.lastState));
     }
 }
+/** @type {!Array<{type: !Function, args: (undefined|!Array<?>)}>} */
 MockStore.decorators = [
     { type: Injectable }
 ];
-/** @nocollapse */
+/**
+ * @type {function(): !Array<(null|{
+ *   type: ?,
+ *   decorators: (undefined|!Array<{type: !Function, args: (undefined|!Array<?>)}>),
+ * })>}
+ * @nocollapse
+ */
 MockStore.ctorParameters = () => [
     { type: MockState },
     { type: ActionsSubject },
@@ -123,10 +137,17 @@ class MockReducerManager extends BehaviorSubject {
         /* noop */
     }
 }
+/** @type {!Array<{type: !Function, args: (undefined|!Array<?>)}>} */
 MockReducerManager.decorators = [
     { type: Injectable }
 ];
-/** @nocollapse */
+/**
+ * @type {function(): !Array<(null|{
+ *   type: ?,
+ *   decorators: (undefined|!Array<{type: !Function, args: (undefined|!Array<?>)}>),
+ * })>}
+ * @nocollapse
+ */
 MockReducerManager.ctorParameters = () => [];
 
 /**

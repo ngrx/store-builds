@@ -490,10 +490,17 @@
         };
         return ActionsSubject;
     }(rxjs.BehaviorSubject));
+    /** @type {!Array<{type: !Function, args: (undefined|!Array<?>)}>} */
     ActionsSubject.decorators = [
         { type: ngCore.Injectable }
     ];
-    /** @nocollapse */
+    /**
+     * @type {function(): !Array<(null|{
+     *   type: ?,
+     *   decorators: (undefined|!Array<{type: !Function, args: (undefined|!Array<?>)}>),
+     * })>}
+     * @nocollapse
+     */
     ActionsSubject.ctorParameters = function () { return []; };
     var ACTIONS_SUBJECT_PROVIDERS = [ActionsSubject];
 
@@ -728,10 +735,17 @@
         };
         return ReducerManager;
     }(rxjs.BehaviorSubject));
+    /** @type {!Array<{type: !Function, args: (undefined|!Array<?>)}>} */
     ReducerManager.decorators = [
         { type: ngCore.Injectable }
     ];
-    /** @nocollapse */
+    /**
+     * @type {function(): !Array<(null|{
+     *   type: ?,
+     *   decorators: (undefined|!Array<{type: !Function, args: (undefined|!Array<?>)}>),
+     * })>}
+     * @nocollapse
+     */
     ReducerManager.ctorParameters = function () { return [
         { type: ReducerManagerDispatcher },
         { type: undefined, decorators: [{ type: ngCore.Inject, args: [INITIAL_STATE,] }] },
@@ -754,6 +768,7 @@
         };
         return ScannedActionsSubject;
     }(rxjs.Subject));
+    /** @type {!Array<{type: !Function, args: (undefined|!Array<?>)}>} */
     ScannedActionsSubject.decorators = [
         { type: ngCore.Injectable }
     ];
@@ -790,10 +805,17 @@
         return State;
     }(rxjs.BehaviorSubject));
     State.INIT = INIT;
+    /** @type {!Array<{type: !Function, args: (undefined|!Array<?>)}>} */
     State.decorators = [
         { type: ngCore.Injectable }
     ];
-    /** @nocollapse */
+    /**
+     * @type {function(): !Array<(null|{
+     *   type: ?,
+     *   decorators: (undefined|!Array<{type: !Function, args: (undefined|!Array<?>)}>),
+     * })>}
+     * @nocollapse
+     */
     State.ctorParameters = function () { return [
         { type: ActionsSubject },
         { type: ReducerObservable },
@@ -852,10 +874,17 @@
         };
         return Store;
     }(rxjs.Observable));
+    /** @type {!Array<{type: !Function, args: (undefined|!Array<?>)}>} */
     Store.decorators = [
         { type: ngCore.Injectable }
     ];
-    /** @nocollapse */
+    /**
+     * @type {function(): !Array<(null|{
+     *   type: ?,
+     *   decorators: (undefined|!Array<{type: !Function, args: (undefined|!Array<?>)}>),
+     * })>}
+     * @nocollapse
+     */
     Store.ctorParameters = function () { return [
         { type: StateObservable },
         { type: ActionsSubject },
@@ -1215,8 +1244,7 @@
         var name = featureConfig.name, reducer = featureConfig.reducer;
         var featureSelector = createFeatureSelector(name);
         var nestedSelectors = createNestedSelectors(featureSelector, reducer);
-        return Object.assign((_a = { name: name,
-                reducer: reducer }, _a["select" + capitalize(name) + "State"] = featureSelector, _a), nestedSelectors);
+        return Object.assign((_a = { name: name, reducer: reducer }, _a["select" + capitalize(name) + "State"] = featureSelector, _a), nestedSelectors);
     }
     function createNestedSelectors(featureSelector, reducer) {
         var initialState = getInitialState(reducer);
@@ -1447,10 +1475,17 @@
         }
         return StoreRootModule;
     }());
+    /** @type {!Array<{type: !Function, args: (undefined|!Array<?>)}>} */
     StoreRootModule.decorators = [
         { type: ngCore.NgModule, args: [{},] }
     ];
-    /** @nocollapse */
+    /**
+     * @type {function(): !Array<(null|{
+     *   type: ?,
+     *   decorators: (undefined|!Array<{type: !Function, args: (undefined|!Array<?>)}>),
+     * })>}
+     * @nocollapse
+     */
     StoreRootModule.ctorParameters = function () { return [
         { type: ActionsSubject },
         { type: ReducerObservable },
@@ -1478,10 +1513,17 @@
         };
         return StoreFeatureModule;
     }());
+    /** @type {!Array<{type: !Function, args: (undefined|!Array<?>)}>} */
     StoreFeatureModule.decorators = [
         { type: ngCore.NgModule, args: [{},] }
     ];
-    /** @nocollapse */
+    /**
+     * @type {function(): !Array<(null|{
+     *   type: ?,
+     *   decorators: (undefined|!Array<{type: !Function, args: (undefined|!Array<?>)}>),
+     * })>}
+     * @nocollapse
+     */
     StoreFeatureModule.ctorParameters = function () { return [
         { type: Array, decorators: [{ type: ngCore.Inject, args: [_STORE_FEATURES,] }] },
         { type: Array, decorators: [{ type: ngCore.Inject, args: [FEATURE_REDUCERS,] }] },
@@ -1611,6 +1653,7 @@
         };
         return StoreModule;
     }());
+    /** @type {!Array<{type: !Function, args: (undefined|!Array<?>)}>} */
     StoreModule.decorators = [
         { type: ngCore.NgModule, args: [{},] }
     ];
