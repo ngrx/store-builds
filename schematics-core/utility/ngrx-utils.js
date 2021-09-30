@@ -32,7 +32,7 @@ var __spreadArray = (this && this.__spreadArray) || function (to, from) {
     return to;
 };
 exports.__esModule = true;
-exports.omit = exports.addReducerImportToNgModule = exports.addReducerToActionReducerMap = exports.addReducerToStateInterface = exports.addReducerToState = void 0;
+exports.getPrefix = exports.omit = exports.addReducerImportToNgModule = exports.addReducerToActionReducerMap = exports.addReducerToStateInterface = exports.addReducerToState = void 0;
 var ts = require("typescript");
 var stringUtils = require("./strings");
 var change_1 = require("./change");
@@ -237,4 +237,10 @@ function omit(object, keyToRemove) {
     }, {});
 }
 exports.omit = omit;
+function getPrefix(options) {
+    return options.creators
+        ? stringUtils.camelize(options.prefix || 'load')
+        : stringUtils.capitalize(options.prefix || 'load');
+}
+exports.getPrefix = getPrefix;
 //# sourceMappingURL=ngrx-utils.js.map
