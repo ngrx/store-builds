@@ -4,7 +4,7 @@ import { ActionsSubject } from './actions_subject';
 import { Action, ActionReducer, FunctionIsNotAllowed } from './models';
 import { ReducerManager } from './reducer_manager';
 import { StateObservable } from './state';
-export declare class Store<T = object> extends Observable<T> implements Observer<Action> {
+export declare class Store<T = Record<string, unknown>> extends Observable<T> implements Observer<Action> {
     private actionsObserver;
     private reducerManager;
     constructor(state$: StateObservable, actionsObserver: ActionsSubject, reducerManager: ReducerManager);

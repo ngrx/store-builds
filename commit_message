@@ -1,1 +1,1 @@
-9d73b0df docs(entity): fix code snippet for selectCurrentUser selector (#3166)
+605fd02e refactor(store): use Record as Store generic (#3158)
