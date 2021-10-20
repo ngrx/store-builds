@@ -199,4 +199,7 @@ export declare function createSelectorFactory<T = any, Props = any, V = any>(mem
  */
 export declare function createSelectorFactory<T = any, Props = any, V = any>(memoize: MemoizeFn, options: SelectorFactoryConfig<T, V>): (...input: any[]) => MemoizedSelectorWithProps<T, Props, V>;
 export declare function createFeatureSelector<T>(featureName: string): MemoizedSelector<object, T>;
+/**
+ * @deprecated  Feature selectors with a root state are deprecated, for more info see {@link https://github.com/ngrx/platform/issues/3179 Github Issue}
+ */
 export declare function createFeatureSelector<T, V>(featureName: keyof T): MemoizedSelector<T, V>;

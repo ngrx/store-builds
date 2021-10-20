@@ -1,1 +1,1 @@
-20afb21b fix(router-store): google upstream (#3177)
+a6fe92df docs(store): deprecate createFeatureSelector with root state (#3190)
