@@ -35,20 +35,32 @@ export declare type Selector<T, V> = (state: T) => V;
  * @deprecated Selectors with props are deprecated, for more info see {@link https://github.com/ngrx/platform/issues/2980 Github Issue}
  */
 export declare type SelectorWithProps<State, Props, Result> = (state: State, props: Props) => Result;
-export declare const arraysAreNotAllowedMsg = "arrays are not allowed in action creators";
+export declare const arraysAreNotAllowedMsg = "action creator cannot return an array";
 declare type ArraysAreNotAllowed = typeof arraysAreNotAllowedMsg;
-export declare const typePropertyIsNotAllowedMsg = "type property is not allowed in action creators";
+export declare const typePropertyIsNotAllowedMsg = "action creator cannot return an object with a property named `type`";
 declare type TypePropertyIsNotAllowed = typeof typePropertyIsNotAllowedMsg;
-export declare const emptyObjectsAreNotAllowedMsg = "empty objects are not allowed in action creators";
+export declare const emptyObjectsAreNotAllowedMsg = "action creator cannot return an empty object";
 declare type EmptyObjectsAreNotAllowed = typeof emptyObjectsAreNotAllowedMsg;
+export declare const arraysAreNotAllowedInProps = "action creator props cannot be an array";
+declare type ArraysAreNotAllowedInProps = typeof arraysAreNotAllowedInProps;
+export declare const typePropertyIsNotAllowedInProps = "action creator props cannot have a property named `type`";
+declare type TypePropertyIsNotAllowedInProps = typeof typePropertyIsNotAllowedInProps;
+export declare const emptyObjectsAreNotAllowedInProps = "action creator props cannot be an empty object";
+declare type EmptyObjectsAreNotAllowedInProps = typeof emptyObjectsAreNotAllowedInProps;
+export declare const primitivesAreNotAllowedInProps = "action creator props cannot be a primitive value";
+declare type PrimitivesAreNotAllowedInProps = typeof primitivesAreNotAllowedInProps;
 export declare type FunctionIsNotAllowed<T, ErrorMessage extends string> = T extends Function ? ErrorMessage : T;
 /**
  * A function that returns an object in the shape of the `Action` interface.  Configured using `createAction`.
  */
 export declare type Creator<P extends any[] = any[], R extends object = object> = FunctionWithParametersType<P, R>;
+export declare type Primitive = string | number | bigint | boolean | symbol | null | undefined;
 export declare type NotAllowedCheck<T extends object> = T extends any[] ? ArraysAreNotAllowed : T extends {
     type: any;
 } ? TypePropertyIsNotAllowed : keyof T extends never ? EmptyObjectsAreNotAllowed : unknown;
+export declare type NotAllowedInPropsCheck<T> = T extends object ? T extends any[] ? ArraysAreNotAllowedInProps : T extends {
+    type: any;
+} ? TypePropertyIsNotAllowedInProps : keyof T extends never ? EmptyObjectsAreNotAllowedInProps : unknown : T extends Primitive ? PrimitivesAreNotAllowedInProps : never;
 /**
  * See `Creator`.
  */

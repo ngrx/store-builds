@@ -17,7 +17,9 @@ export declare class StoreFeatureModule implements OnDestroy {
 export interface StoreConfig<T, V extends Action = Action> {
     initialState?: InitialState<T>;
     reducerFactory?: ActionReducerFactory<T, V>;
-    metaReducers?: MetaReducer<T, V>[];
+    metaReducers?: MetaReducer<{
+        [P in keyof T]: T[P];
+    }, V>[];
 }
 export interface RootStoreConfig<T, V extends Action = Action> extends StoreConfig<T, V> {
     runtimeChecks?: Partial<RuntimeChecks>;
