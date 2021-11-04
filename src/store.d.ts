@@ -4,6 +4,7 @@ import { ActionsSubject } from './actions_subject';
 import { Action, ActionReducer, FunctionIsNotAllowed } from './models';
 import { ReducerManager } from './reducer_manager';
 import { StateObservable } from './state';
+import * as i0 from "@angular/core";
 export declare class Store<T = object> extends Observable<T> implements Observer<Action> {
     private actionsObserver;
     private reducerManager;
@@ -27,6 +28,8 @@ export declare class Store<T = object> extends Observable<T> implements Observer
     complete(): void;
     addReducer<State, Actions extends Action = Action>(key: string, reducer: ActionReducer<State, Actions>): void;
     removeReducer<Key extends Extract<keyof T, string>>(key: Key): void;
+    static ɵfac: i0.ɵɵFactoryDeclaration<Store<any>, never>;
+    static ɵprov: i0.ɵɵInjectableDeclaration<Store<any>>;
 }
 export declare const STORE_PROVIDERS: Provider[];
 export declare function select<T, K>(mapFn: (state: T) => K): (source$: Observable<T>) => Observable<K>;

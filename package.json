@@ -1,6 +1,6 @@
 {
   "name": "@ngrx/store",
-  "version": "12.5.1",
+  "version": "13.0.0-beta.0",
   "description": "RxJS powered Redux for Angular apps",
   "repository": {
     "type": "git",
@@ -21,8 +21,8 @@
   },
   "homepage": "https://github.com/ngrx/platform#readme",
   "peerDependencies": {
-    "@angular/core": "^12.0.0",
-    "rxjs": "^6.5.3 || ^7.0.0"
+    "@angular/core": "^13.0.0-rc.0",
+    "rxjs": "^6.5.3 || ^7.4.0"
   },
   "schematics": "./schematics/collection.json",
   "ng-update": {
@@ -48,6 +48,5 @@
   "es2015": "fesm2015/ngrx-store.js",
   "esm2015": "esm2015/ngrx-store.js",
   "fesm2015": "fesm2015/ngrx-store.js",
-  "typings": "ngrx-store.d.ts",
-  "metadata": "ngrx-store.metadata.json"
+  "typings": "ngrx-store.d.ts"
 }

@@ -2,6 +2,7 @@ import { OnDestroy, Provider } from '@angular/core';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { ActionsSubject } from './actions_subject';
 import { ActionReducer, ActionReducerFactory, ActionReducerMap, StoreFeature } from './models';
+import * as i0 from "@angular/core";
 export declare abstract class ReducerObservable extends Observable<ActionReducer<any, any>> {
 }
 export declare abstract class ReducerManagerDispatcher extends ActionsSubject {
@@ -26,5 +27,7 @@ export declare class ReducerManager extends BehaviorSubject<ActionReducer<any, a
     removeReducers(featureKeys: string[]): void;
     private updateReducers;
     ngOnDestroy(): void;
+    static ɵfac: i0.ɵɵFactoryDeclaration<ReducerManager, never>;
+    static ɵprov: i0.ɵɵInjectableDeclaration<ReducerManager>;
 }
 export declare const REDUCER_MANAGER_PROVIDERS: Provider[];

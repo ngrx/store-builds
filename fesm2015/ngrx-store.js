@@ -1,4 +1,4 @@
-import * as ngCore from '@angular/core';
+import * as i0 from '@angular/core';
 import { Injectable, InjectionToken, Inject, isDevMode, NgModule, Optional, SkipSelf, Injector } from '@angular/core';
 import { BehaviorSubject, Observable, Subject, queueScheduler } from 'rxjs';
 import { observeOn, withLatestFrom, scan, pluck, map, distinctUntilChanged } from 'rxjs/operators';
@@ -139,18 +139,11 @@ class ActionsSubject extends BehaviorSubject {
         super.complete();
     }
 }
-/** @type {!Array<{type: !Function, args: (undefined|!Array<?>)}>} */
-ActionsSubject.decorators = [
-    { type: Injectable }
-];
-/**
- * @type {function(): !Array<(null|{
- *   type: ?,
- *   decorators: (undefined|!Array<{type: !Function, args: (undefined|!Array<?>)}>),
- * })>}
- * @nocollapse
- */
-ActionsSubject.ctorParameters = () => [];
+/** @nocollapse */ ActionsSubject.ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "12.2.6", ngImport: i0, type: ActionsSubject, deps: [], target: i0.ɵɵFactoryTarget.Injectable });
+/** @nocollapse */ ActionsSubject.ɵprov = i0.ɵɵngDeclareInjectable({ minVersion: "12.0.0", version: "12.2.6", ngImport: i0, type: ActionsSubject });
+i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "12.2.6", ngImport: i0, type: ActionsSubject, decorators: [{
+            type: Injectable
+        }], ctorParameters: function () { return []; } });
 const ACTIONS_SUBJECT_PROVIDERS = [ActionsSubject];
 
 const _ROOT_STORE_GUARD = new InjectionToken('@ngrx/store Internal Root Guard');
@@ -358,23 +351,20 @@ class ReducerManager extends BehaviorSubject {
         this.complete();
     }
 }
-/** @type {!Array<{type: !Function, args: (undefined|!Array<?>)}>} */
-ReducerManager.decorators = [
-    { type: Injectable }
-];
-/**
- * @type {function(): !Array<(null|{
- *   type: ?,
- *   decorators: (undefined|!Array<{type: !Function, args: (undefined|!Array<?>)}>),
- * })>}
- * @nocollapse
- */
-ReducerManager.ctorParameters = () => [
-    { type: ReducerManagerDispatcher },
-    { type: undefined, decorators: [{ type: Inject, args: [INITIAL_STATE,] }] },
-    { type: undefined, decorators: [{ type: Inject, args: [INITIAL_REDUCERS,] }] },
-    { type: undefined, decorators: [{ type: Inject, args: [REDUCER_FACTORY,] }] }
-];
+/** @nocollapse */ ReducerManager.ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "12.2.6", ngImport: i0, type: ReducerManager, deps: [{ token: ReducerManagerDispatcher }, { token: INITIAL_STATE }, { token: INITIAL_REDUCERS }, { token: REDUCER_FACTORY }], target: i0.ɵɵFactoryTarget.Injectable });
+/** @nocollapse */ ReducerManager.ɵprov = i0.ɵɵngDeclareInjectable({ minVersion: "12.0.0", version: "12.2.6", ngImport: i0, type: ReducerManager });
+i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "12.2.6", ngImport: i0, type: ReducerManager, decorators: [{
+            type: Injectable
+        }], ctorParameters: function () { return [{ type: ReducerManagerDispatcher }, { type: undefined, decorators: [{
+                    type: Inject,
+                    args: [INITIAL_STATE]
+                }] }, { type: undefined, decorators: [{
+                    type: Inject,
+                    args: [INITIAL_REDUCERS]
+                }] }, { type: undefined, decorators: [{
+                    type: Inject,
+                    args: [REDUCER_FACTORY]
+                }] }]; } });
 const REDUCER_MANAGER_PROVIDERS = [
     ReducerManager,
     { provide: ReducerObservable, useExisting: ReducerManager },
@@ -386,10 +376,11 @@ class ScannedActionsSubject extends Subject {
         this.complete();
     }
 }
-/** @type {!Array<{type: !Function, args: (undefined|!Array<?>)}>} */
-ScannedActionsSubject.decorators = [
-    { type: Injectable }
-];
+/** @nocollapse */ ScannedActionsSubject.ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "12.2.6", ngImport: i0, type: ScannedActionsSubject, deps: null, target: i0.ɵɵFactoryTarget.Injectable });
+/** @nocollapse */ ScannedActionsSubject.ɵprov = i0.ɵɵngDeclareInjectable({ minVersion: "12.0.0", version: "12.2.6", ngImport: i0, type: ScannedActionsSubject });
+i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "12.2.6", ngImport: i0, type: ScannedActionsSubject, decorators: [{
+            type: Injectable
+        }] });
 const SCANNED_ACTIONS_SUBJECT_PROVIDERS = [
     ScannedActionsSubject,
 ];
@@ -414,23 +405,14 @@ class State extends BehaviorSubject {
     }
 }
 State.INIT = INIT;
-/** @type {!Array<{type: !Function, args: (undefined|!Array<?>)}>} */
-State.decorators = [
-    { type: Injectable }
-];
-/**
- * @type {function(): !Array<(null|{
- *   type: ?,
- *   decorators: (undefined|!Array<{type: !Function, args: (undefined|!Array<?>)}>),
- * })>}
- * @nocollapse
- */
-State.ctorParameters = () => [
-    { type: ActionsSubject },
-    { type: ReducerObservable },
-    { type: ScannedActionsSubject },
-    { type: undefined, decorators: [{ type: Inject, args: [INITIAL_STATE,] }] }
-];
+/** @nocollapse */ State.ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "12.2.6", ngImport: i0, type: State, deps: [{ token: ActionsSubject }, { token: ReducerObservable }, { token: ScannedActionsSubject }, { token: INITIAL_STATE }], target: i0.ɵɵFactoryTarget.Injectable });
+/** @nocollapse */ State.ɵprov = i0.ɵɵngDeclareInjectable({ minVersion: "12.0.0", version: "12.2.6", ngImport: i0, type: State });
+i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "12.2.6", ngImport: i0, type: State, decorators: [{
+            type: Injectable
+        }], ctorParameters: function () { return [{ type: ActionsSubject }, { type: ReducerObservable }, { type: ScannedActionsSubject }, { type: undefined, decorators: [{
+                    type: Inject,
+                    args: [INITIAL_STATE]
+                }] }]; } });
 function reduceState(stateActionPair = { state: undefined }, [action, reducer]) {
     const { state } = stateActionPair;
     return { state: reducer(state, action), action };
@@ -475,22 +457,11 @@ class Store extends Observable {
         this.reducerManager.removeReducer(key);
     }
 }
-/** @type {!Array<{type: !Function, args: (undefined|!Array<?>)}>} */
-Store.decorators = [
-    { type: Injectable }
-];
-/**
- * @type {function(): !Array<(null|{
- *   type: ?,
- *   decorators: (undefined|!Array<{type: !Function, args: (undefined|!Array<?>)}>),
- * })>}
- * @nocollapse
- */
-Store.ctorParameters = () => [
-    { type: StateObservable },
-    { type: ActionsSubject },
-    { type: ReducerManager }
-];
+/** @nocollapse */ Store.ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "12.2.6", ngImport: i0, type: Store, deps: [{ token: StateObservable }, { token: ActionsSubject }, { token: ReducerManager }], target: i0.ɵɵFactoryTarget.Injectable });
+/** @nocollapse */ Store.ɵprov = i0.ɵɵngDeclareInjectable({ minVersion: "12.0.0", version: "12.2.6", ngImport: i0, type: Store });
+i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "12.2.6", ngImport: i0, type: Store, decorators: [{
+            type: Injectable
+        }], ctorParameters: function () { return [{ type: StateObservable }, { type: ActionsSubject }, { type: ReducerManager }]; } });
 const STORE_PROVIDERS = [Store];
 function select(pathOrMapFn, propsOrPath, ...paths) {
     return function selectOperator(source$) {
@@ -929,7 +900,7 @@ function throwIfUnserializable(unserializable, context) {
 
 function inNgZoneAssertMetaReducer(reducer, checks) {
     return function (state, action) {
-        if (checks.action(action) && !ngCore.NgZone.isInAngularZone()) {
+        if (checks.action(action) && !i0.NgZone.isInAngularZone()) {
             throw new Error(`Action '${action.type}' running outside NgZone. ${RUNTIME_CHECK_URL}#strictactionwithinngzone`);
         }
         return reducer(state, action);
@@ -1041,25 +1012,23 @@ function _actionTypeUniquenessCheck(config) {
 class StoreRootModule {
     constructor(actions$, reducer$, scannedActions$, store, guard, actionCheck) { }
 }
-/** @type {!Array<{type: !Function, args: (undefined|!Array<?>)}>} */
-StoreRootModule.decorators = [
-    { type: NgModule, args: [{},] }
-];
-/**
- * @type {function(): !Array<(null|{
- *   type: ?,
- *   decorators: (undefined|!Array<{type: !Function, args: (undefined|!Array<?>)}>),
- * })>}
- * @nocollapse
- */
-StoreRootModule.ctorParameters = () => [
-    { type: ActionsSubject },
-    { type: ReducerObservable },
-    { type: ScannedActionsSubject },
-    { type: Store },
-    { type: undefined, decorators: [{ type: Optional }, { type: Inject, args: [_ROOT_STORE_GUARD,] }] },
-    { type: undefined, decorators: [{ type: Optional }, { type: Inject, args: [_ACTION_TYPE_UNIQUENESS_CHECK,] }] }
-];
+/** @nocollapse */ StoreRootModule.ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "12.2.6", ngImport: i0, type: StoreRootModule, deps: [{ token: ActionsSubject }, { token: ReducerObservable }, { token: ScannedActionsSubject }, { token: Store }, { token: _ROOT_STORE_GUARD, optional: true }, { token: _ACTION_TYPE_UNIQUENESS_CHECK, optional: true }], target: i0.ɵɵFactoryTarget.NgModule });
+/** @nocollapse */ StoreRootModule.ɵmod = i0.ɵɵngDeclareNgModule({ minVersion: "12.0.0", version: "12.2.6", ngImport: i0, type: StoreRootModule });
+/** @nocollapse */ StoreRootModule.ɵinj = i0.ɵɵngDeclareInjector({ minVersion: "12.0.0", version: "12.2.6", ngImport: i0, type: StoreRootModule });
+i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "12.2.6", ngImport: i0, type: StoreRootModule, decorators: [{
+            type: NgModule,
+            args: [{}]
+        }], ctorParameters: function () { return [{ type: ActionsSubject }, { type: ReducerObservable }, { type: ScannedActionsSubject }, { type: Store }, { type: undefined, decorators: [{
+                    type: Optional
+                }, {
+                    type: Inject,
+                    args: [_ROOT_STORE_GUARD]
+                }] }, { type: undefined, decorators: [{
+                    type: Optional
+                }, {
+                    type: Inject,
+                    args: [_ACTION_TYPE_UNIQUENESS_CHECK]
+                }] }]; } });
 class StoreFeatureModule {
     constructor(features, featureReducers, reducerManager, root, actionCheck) {
         this.features = features;
@@ -1078,24 +1047,24 @@ class StoreFeatureModule {
         this.reducerManager.removeFeatures(this.features);
     }
 }
-/** @type {!Array<{type: !Function, args: (undefined|!Array<?>)}>} */
-StoreFeatureModule.decorators = [
-    { type: NgModule, args: [{},] }
-];
-/**
- * @type {function(): !Array<(null|{
- *   type: ?,
- *   decorators: (undefined|!Array<{type: !Function, args: (undefined|!Array<?>)}>),
- * })>}
- * @nocollapse
- */
-StoreFeatureModule.ctorParameters = () => [
-    { type: Array, decorators: [{ type: Inject, args: [_STORE_FEATURES,] }] },
-    { type: Array, decorators: [{ type: Inject, args: [FEATURE_REDUCERS,] }] },
-    { type: ReducerManager },
-    { type: StoreRootModule },
-    { type: undefined, decorators: [{ type: Optional }, { type: Inject, args: [_ACTION_TYPE_UNIQUENESS_CHECK,] }] }
-];
+/** @nocollapse */ StoreFeatureModule.ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "12.2.6", ngImport: i0, type: StoreFeatureModule, deps: [{ token: _STORE_FEATURES }, { token: FEATURE_REDUCERS }, { token: ReducerManager }, { token: StoreRootModule }, { token: _ACTION_TYPE_UNIQUENESS_CHECK, optional: true }], target: i0.ɵɵFactoryTarget.NgModule });
+/** @nocollapse */ StoreFeatureModule.ɵmod = i0.ɵɵngDeclareNgModule({ minVersion: "12.0.0", version: "12.2.6", ngImport: i0, type: StoreFeatureModule });
+/** @nocollapse */ StoreFeatureModule.ɵinj = i0.ɵɵngDeclareInjector({ minVersion: "12.0.0", version: "12.2.6", ngImport: i0, type: StoreFeatureModule });
+i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "12.2.6", ngImport: i0, type: StoreFeatureModule, decorators: [{
+            type: NgModule,
+            args: [{}]
+        }], ctorParameters: function () { return [{ type: undefined, decorators: [{
+                    type: Inject,
+                    args: [_STORE_FEATURES]
+                }] }, { type: undefined, decorators: [{
+                    type: Inject,
+                    args: [FEATURE_REDUCERS]
+                }] }, { type: ReducerManager }, { type: StoreRootModule }, { type: undefined, decorators: [{
+                    type: Optional
+                }, {
+                    type: Inject,
+                    args: [_ACTION_TYPE_UNIQUENESS_CHECK]
+                }] }]; } });
 class StoreModule {
     static forRoot(reducers, config = {}) {
         return {
@@ -1152,7 +1121,7 @@ class StoreModule {
             ],
         };
     }
-    static forFeature(featureNameOrSlice, reducersOrConfig, config = {}) {
+    static forFeature(featureNameOrSlice, reducers, config = {}) {
         return {
             ngModule: StoreFeatureModule,
             providers: [
@@ -1189,14 +1158,12 @@ class StoreModule {
                     multi: true,
                     useValue: featureNameOrSlice instanceof Object
                         ? featureNameOrSlice.reducer
-                        : reducersOrConfig,
+                        : reducers,
                 },
                 {
                     provide: _FEATURE_REDUCERS_TOKEN,
                     multi: true,
-                    useExisting: reducersOrConfig instanceof InjectionToken
-                        ? reducersOrConfig
-                        : _FEATURE_REDUCERS,
+                    useExisting: reducers instanceof InjectionToken ? reducers : _FEATURE_REDUCERS,
                 },
                 {
                     provide: FEATURE_REDUCERS,
@@ -1213,10 +1180,13 @@ class StoreModule {
         };
     }
 }
-/** @type {!Array<{type: !Function, args: (undefined|!Array<?>)}>} */
-StoreModule.decorators = [
-    { type: NgModule, args: [{},] }
-];
+/** @nocollapse */ StoreModule.ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "12.2.6", ngImport: i0, type: StoreModule, deps: [], target: i0.ɵɵFactoryTarget.NgModule });
+/** @nocollapse */ StoreModule.ɵmod = i0.ɵɵngDeclareNgModule({ minVersion: "12.0.0", version: "12.2.6", ngImport: i0, type: StoreModule });
+/** @nocollapse */ StoreModule.ɵinj = i0.ɵɵngDeclareInjector({ minVersion: "12.0.0", version: "12.2.6", ngImport: i0, type: StoreModule });
+i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "12.2.6", ngImport: i0, type: StoreModule, decorators: [{
+            type: NgModule,
+            args: [{}]
+        }] });
 function _createStoreReducers(injector, reducers) {
     return reducers instanceof InjectionToken ? injector.get(reducers) : reducers;
 }
@@ -1357,5 +1327,5 @@ function createReducer(initialState, ...ons) {
  * Generated bundle index. Do not edit.
  */
 
-export { ACTIVE_RUNTIME_CHECKS, ActionsSubject, FEATURE_REDUCERS, INIT, INITIAL_REDUCERS, INITIAL_STATE, META_REDUCERS, REDUCER_FACTORY, ReducerManager, ReducerManagerDispatcher, ReducerObservable, STORE_FEATURES, ScannedActionsSubject, State, StateObservable, Store, StoreFeatureModule, StoreModule, StoreRootModule, UPDATE, USER_PROVIDED_META_REDUCERS, USER_RUNTIME_CHECKS, combineReducers, compose, createAction, createFeature, createFeatureSelector, createReducer, createReducerFactory, createSelector, createSelectorFactory, defaultMemoize, defaultStateFn, isNgrxMockEnvironment, on, props, reduceState, resultMemoize, select, setNgrxMockEnvironment, union, STORE_PROVIDERS as ɵb, createSerializationCheckMetaReducer as ɵba, createImmutabilityCheckMetaReducer as ɵbb, createInNgZoneCheckMetaReducer as ɵbc, provideRuntimeChecks as ɵbd, checkForActionTypeUniqueness as ɵbe, _runtimeChecksFactory as ɵbf, _actionTypeUniquenessCheck as ɵbg, ACTIONS_SUBJECT_PROVIDERS as ɵc, REDUCER_MANAGER_PROVIDERS as ɵd, SCANNED_ACTIONS_SUBJECT_PROVIDERS as ɵe, isEqualCheck as ɵf, STATE_PROVIDERS as ɵg, _ROOT_STORE_GUARD as ɵh, _INITIAL_STATE as ɵi, _REDUCER_FACTORY as ɵj, _INITIAL_REDUCERS as ɵk, _STORE_REDUCERS as ɵl, _FEATURE_REDUCERS as ɵm, _FEATURE_CONFIGS as ɵn, _STORE_FEATURES as ɵo, _FEATURE_REDUCERS_TOKEN as ɵp, _RESOLVED_META_REDUCERS as ɵq, _USER_RUNTIME_CHECKS as ɵr, _ACTION_TYPE_UNIQUENESS_CHECK as ɵs, _createStoreReducers as ɵt, _createFeatureStore as ɵu, _createFeatureReducers as ɵv, _initialStateFactory as ɵw, _concatMetaReducers as ɵx, _provideForRootGuard as ɵy, createActiveRuntimeChecks as ɵz };
+export { ACTIVE_RUNTIME_CHECKS, ActionsSubject, FEATURE_REDUCERS, INIT, INITIAL_REDUCERS, INITIAL_STATE, META_REDUCERS, REDUCER_FACTORY, ReducerManager, ReducerManagerDispatcher, ReducerObservable, STORE_FEATURES, ScannedActionsSubject, State, StateObservable, Store, StoreFeatureModule, StoreModule, StoreRootModule, UPDATE, USER_PROVIDED_META_REDUCERS, USER_RUNTIME_CHECKS, combineReducers, compose, createAction, createFeature, createFeatureSelector, createReducer, createReducerFactory, createSelector, createSelectorFactory, defaultMemoize, defaultStateFn, isNgrxMockEnvironment, on, props, reduceState, resultMemoize, select, setNgrxMockEnvironment, union };
 //# sourceMappingURL=ngrx-store.js.map

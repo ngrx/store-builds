@@ -2,7 +2,30 @@
     typeof exports === 'object' && typeof module !== 'undefined' ? factory(exports, require('@angular/core'), require('rxjs'), require('@ngrx/store'), require('@angular/core/testing')) :
     typeof define === 'function' && define.amd ? define('@ngrx/store/testing', ['exports', '@angular/core', 'rxjs', '@ngrx/store', '@angular/core/testing'], factory) :
     (global = typeof globalThis !== 'undefined' ? globalThis : global || self, factory((global.ngrx = global.ngrx || {}, global.ngrx.store = global.ngrx.store || {}, global.ngrx.store.testing = {}), global.ng.core, global.rxjs, global.ngrx.store, global.ng.core.testing));
-}(this, (function (exports, core, rxjs, store, testing) { 'use strict';
+}(this, (function (exports, i0, rxjs, i2, testing) { 'use strict';
+
+    function _interopNamespace(e) {
+        if (e && e.__esModule) return e;
+        var n = Object.create(null);
+        if (e) {
+            Object.keys(e).forEach(function (k) {
+                if (k !== 'default') {
+                    var d = Object.getOwnPropertyDescriptor(e, k);
+                    Object.defineProperty(n, k, d.get ? d : {
+                        enumerable: true,
+                        get: function () {
+                            return e[k];
+                        }
+                    });
+                }
+            });
+        }
+        n['default'] = e;
+        return Object.freeze(n);
+    }
+
+    var i0__namespace = /*#__PURE__*/_interopNamespace(i0);
+    var i2__namespace = /*#__PURE__*/_interopNamespace(i2);
 
     /*! *****************************************************************************
     Copyright (c) Microsoft Corporation.
@@ -230,10 +253,16 @@
                 r[k] = a[j];
         return r;
     }
-    function __spreadArray(to, from) {
-        for (var i = 0, il = from.length, j = to.length; i < il; i++, j++)
-            to[j] = from[i];
-        return to;
+    function __spreadArray(to, from, pack) {
+        if (pack || arguments.length === 2)
+            for (var i = 0, l = from.length, ar; i < l; i++) {
+                if (ar || !(i in from)) {
+                    if (!ar)
+                        ar = Array.prototype.slice.call(from, 0, i);
+                    ar[i] = from[i];
+                }
+            }
+        return to.concat(ar || Array.prototype.slice.call(from));
     }
     function __await(v) {
         return this instanceof __await ? (this.v = v, this) : new __await(v);
@@ -323,20 +352,13 @@
         }
         return MockState;
     }(rxjs.BehaviorSubject));
-    /** @type {!Array<{type: !Function, args: (undefined|!Array<?>)}>} */
-    MockState.decorators = [
-        { type: core.Injectable }
-    ];
-    /**
-     * @type {function(): !Array<(null|{
-     *   type: ?,
-     *   decorators: (undefined|!Array<{type: !Function, args: (undefined|!Array<?>)}>),
-     * })>}
-     * @nocollapse
-     */
-    MockState.ctorParameters = function () { return []; };
+    /** @nocollapse */ MockState.ɵfac = i0__namespace.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "12.2.6", ngImport: i0__namespace, type: MockState, deps: [], target: i0__namespace.ɵɵFactoryTarget.Injectable });
+    /** @nocollapse */ MockState.ɵprov = i0__namespace.ɵɵngDeclareInjectable({ minVersion: "12.0.0", version: "12.2.6", ngImport: i0__namespace, type: MockState });
+    i0__namespace.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "12.2.6", ngImport: i0__namespace, type: MockState, decorators: [{
+                type: i0.Injectable
+            }], ctorParameters: function () { return []; } });
 
-    var MOCK_SELECTORS = new core.InjectionToken('@ngrx/store Mock Selectors');
+    var MOCK_SELECTORS = new i0.InjectionToken('@ngrx/store Mock Selectors');
 
     if (typeof afterEach === 'function') {
         afterEach(function () {
@@ -384,7 +406,7 @@
         MockStore.prototype.overrideSelector = function (selector, value) {
             this.selectors.set(selector, value);
             var resultSelector = typeof selector === 'string'
-                ? store.createSelector(function () { }, function () { return value; })
+                ? i2.createSelector(function () { }, function () { return value; })
                 : selector;
             resultSelector.setResult(value);
             return resultSelector;
@@ -429,25 +451,20 @@
                 this.setState(Object.assign({}, this.lastState));
         };
         return MockStore;
-    }(store.Store));
-    /** @type {!Array<{type: !Function, args: (undefined|!Array<?>)}>} */
-    MockStore.decorators = [
-        { type: core.Injectable }
-    ];
-    /**
-     * @type {function(): !Array<(null|{
-     *   type: ?,
-     *   decorators: (undefined|!Array<{type: !Function, args: (undefined|!Array<?>)}>),
-     * })>}
-     * @nocollapse
-     */
-    MockStore.ctorParameters = function () { return [
-        { type: MockState },
-        { type: store.ActionsSubject },
-        { type: store.ReducerManager },
-        { type: undefined, decorators: [{ type: core.Inject, args: [store.INITIAL_STATE,] }] },
-        { type: Array, decorators: [{ type: core.Inject, args: [MOCK_SELECTORS,] }] }
-    ]; };
+    }(i2.Store));
+    /** @nocollapse */ MockStore.ɵfac = i0__namespace.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "12.2.6", ngImport: i0__namespace, type: MockStore, deps: [{ token: MockState }, { token: i2__namespace.ActionsSubject }, { token: i2__namespace.ReducerManager }, { token: i2.INITIAL_STATE }, { token: MOCK_SELECTORS }], target: i0__namespace.ɵɵFactoryTarget.Injectable });
+    /** @nocollapse */ MockStore.ɵprov = i0__namespace.ɵɵngDeclareInjectable({ minVersion: "12.0.0", version: "12.2.6", ngImport: i0__namespace, type: MockStore });
+    i0__namespace.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "12.2.6", ngImport: i0__namespace, type: MockStore, decorators: [{
+                type: i0.Injectable
+            }], ctorParameters: function () {
+            return [{ type: MockState }, { type: i2__namespace.ActionsSubject }, { type: i2__namespace.ReducerManager }, { type: undefined, decorators: [{
+                            type: i0.Inject,
+                            args: [i2.INITIAL_STATE]
+                        }] }, { type: undefined, decorators: [{
+                            type: i0.Inject,
+                            args: [MOCK_SELECTORS]
+                        }] }];
+        } });
 
     var MockReducerManager = /** @class */ (function (_super) {
         __extends(MockReducerManager, _super);
@@ -480,18 +497,11 @@
         };
         return MockReducerManager;
     }(rxjs.BehaviorSubject));
-    /** @type {!Array<{type: !Function, args: (undefined|!Array<?>)}>} */
-    MockReducerManager.decorators = [
-        { type: core.Injectable }
-    ];
-    /**
-     * @type {function(): !Array<(null|{
-     *   type: ?,
-     *   decorators: (undefined|!Array<{type: !Function, args: (undefined|!Array<?>)}>),
-     * })>}
-     * @nocollapse
-     */
-    MockReducerManager.ctorParameters = function () { return []; };
+    /** @nocollapse */ MockReducerManager.ɵfac = i0__namespace.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "12.2.6", ngImport: i0__namespace, type: MockReducerManager, deps: [], target: i0__namespace.ɵɵFactoryTarget.Injectable });
+    /** @nocollapse */ MockReducerManager.ɵprov = i0__namespace.ɵɵngDeclareInjectable({ minVersion: "12.0.0", version: "12.2.6", ngImport: i0__namespace, type: MockReducerManager });
+    i0__namespace.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "12.2.6", ngImport: i0__namespace, type: MockReducerManager, decorators: [{
+                type: i0.Injectable
+            }], ctorParameters: function () { return []; } });
 
     /**
      * @description
@@ -547,11 +557,11 @@
      */
     function provideMockStore(config) {
         if (config === void 0) { config = {}; }
-        store.setNgrxMockEnvironment(true);
+        i2.setNgrxMockEnvironment(true);
         return [
             {
-                provide: store.ActionsSubject,
-                useFactory: function () { return new store.ActionsSubject(); },
+                provide: i2.ActionsSubject,
+                useFactory: function () { return new i2.ActionsSubject(); },
                 deps: [],
             },
             { provide: MockState, useFactory: function () { return new MockState(); }, deps: [] },
@@ -560,22 +570,22 @@
                 useFactory: function () { return new MockReducerManager(); },
                 deps: [],
             },
-            { provide: store.INITIAL_STATE, useValue: config.initialState || {} },
+            { provide: i2.INITIAL_STATE, useValue: config.initialState || {} },
             { provide: MOCK_SELECTORS, useValue: config.selectors },
-            { provide: store.StateObservable, useExisting: MockState },
-            { provide: store.ReducerManager, useExisting: MockReducerManager },
+            { provide: i2.StateObservable, useExisting: MockState },
+            { provide: i2.ReducerManager, useExisting: MockReducerManager },
             {
                 provide: MockStore,
                 useFactory: mockStoreFactory,
                 deps: [
                     MockState,
-                    store.ActionsSubject,
-                    store.ReducerManager,
-                    store.INITIAL_STATE,
+                    i2.ActionsSubject,
+                    i2.ReducerManager,
+                    i2.INITIAL_STATE,
                     MOCK_SELECTORS,
                 ],
             },
-            { provide: store.Store, useExisting: MockStore },
+            { provide: i2.Store, useExisting: MockStore },
         ];
     }
     function mockStoreFactory(mockState, actionsSubject, reducerManager, initialState, mockSelectors) {
@@ -609,7 +619,7 @@
      */
     function getMockStore(config) {
         if (config === void 0) { config = {}; }
-        var injector = core.Injector.create({ providers: provideMockStore(config) });
+        var injector = i0.Injector.create({ providers: provideMockStore(config) });
         return injector.get(MockStore);
     }
 
@@ -622,7 +632,6 @@
     exports.MockStore = MockStore;
     exports.getMockStore = getMockStore;
     exports.provideMockStore = provideMockStore;
-    exports.ɵa = MOCK_SELECTORS;
 
     Object.defineProperty(exports, '__esModule', { value: true });
 
