@@ -19,22 +19,22 @@ function findModuleFromOptions(host, options) {
     if (!options.module) {
         var pathToCheck = (options.path || '') +
             (options.flat ? '' : '/' + core_1.strings.dasherize(options.name));
-        return core_1.normalize(findModule(host, pathToCheck));
+        return (0, core_1.normalize)(findModule(host, pathToCheck));
     }
     else {
-        var modulePath = core_1.normalize('/' + options.path + '/' + options.module);
-        var moduleBaseName = core_1.normalize(modulePath).split('/').pop();
+        var modulePath = (0, core_1.normalize)('/' + options.path + '/' + options.module);
+        var moduleBaseName = (0, core_1.normalize)(modulePath).split('/').pop();
         if (host.exists(modulePath)) {
-            return core_1.normalize(modulePath);
+            return (0, core_1.normalize)(modulePath);
         }
         else if (host.exists(modulePath + '.ts')) {
-            return core_1.normalize(modulePath + '.ts');
+            return (0, core_1.normalize)(modulePath + '.ts');
         }
         else if (host.exists(modulePath + '.module.ts')) {
-            return core_1.normalize(modulePath + '.module.ts');
+            return (0, core_1.normalize)(modulePath + '.module.ts');
         }
         else if (host.exists(modulePath + '/' + moduleBaseName + '.module.ts')) {
-            return core_1.normalize(modulePath + '/' + moduleBaseName + '.module.ts');
+            return (0, core_1.normalize)(modulePath + '/' + moduleBaseName + '.module.ts');
         }
         else {
             throw new Error("Specified module path " + modulePath + " does not exist");
@@ -52,7 +52,7 @@ function findModule(host, generateDir) {
     while (dir) {
         var matches = dir.subfiles.filter(function (p) { return moduleRe.test(p) && !routingModuleRe.test(p); });
         if (matches.length == 1) {
-            return core_1.join(dir.path, matches[0]);
+            return (0, core_1.join)(dir.path, matches[0]);
         }
         else if (matches.length > 1) {
             throw new Error('More than one module matches. Use skip-import option to skip importing ' +
@@ -70,7 +70,7 @@ exports.findModule = findModule;
 function buildRelativePath(from, to) {
     var _a = parsePath(from), fromPath = _a.path, fromFileName = _a.filename, fromDirectory = _a.directory;
     var _b = parsePath(to), toPath = _b.path, toFileName = _b.filename, toDirectory = _b.directory;
-    var relativePath = core_1.relative(fromDirectory, toDirectory);
+    var relativePath = (0, core_1.relative)(fromDirectory, toDirectory);
     var fixedRelativePath = relativePath.startsWith('.')
         ? relativePath
         : "./" + relativePath;
@@ -82,9 +82,9 @@ function buildRelativePath(from, to) {
 }
 exports.buildRelativePath = buildRelativePath;
 function parsePath(path) {
-    var pathNormalized = core_1.normalize(path);
-    var filename = core_1.extname(pathNormalized) ? core_1.basename(pathNormalized) : '';
-    var directory = filename ? core_1.dirname(pathNormalized) : pathNormalized;
+    var pathNormalized = (0, core_1.normalize)(path);
+    var filename = (0, core_1.extname)(pathNormalized) ? (0, core_1.basename)(pathNormalized) : '';
+    var directory = filename ? (0, core_1.dirname)(pathNormalized) : pathNormalized;
     return {
         path: pathNormalized,
         filename: filename,

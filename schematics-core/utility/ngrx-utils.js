@@ -26,10 +26,14 @@ var __read = (this && this.__read) || function (o, n) {
     }
     return ar;
 };
-var __spreadArray = (this && this.__spreadArray) || function (to, from) {
-    for (var i = 0, il = from.length, j = to.length; i < il; i++, j++)
-        to[j] = from[i];
-    return to;
+var __spreadArray = (this && this.__spreadArray) || function (to, from, pack) {
+    if (pack || arguments.length === 2) for (var i = 0, l = from.length, ar; i < l; i++) {
+        if (ar || !(i in from)) {
+            if (!ar) ar = Array.prototype.slice.call(from, 0, i);
+            ar[i] = from[i];
+        }
+    }
+    return to.concat(ar || Array.prototype.slice.call(from));
 };
 exports.__esModule = true;
 exports.getPrefix = exports.omit = exports.addReducerImportToNgModule = exports.addReducerToActionReducerMap = exports.addReducerToStateInterface = exports.addReducerToState = void 0;
@@ -46,7 +50,7 @@ function addReducerToState(options) {
         if (!options.reducers) {
             return host;
         }
-        var reducersPath = core_1.normalize("/" + options.path + "/" + options.reducers);
+        var reducersPath = (0, core_1.normalize)("/" + options.path + "/" + options.reducers);
         if (!host.exists(reducersPath)) {
             throw new Error("Specified reducers path " + reducersPath + " does not exist");
         }
@@ -61,8 +65,8 @@ function addReducerToState(options) {
             (options.group ? 'reducers/' : '') +
             stringUtils.dasherize(options.name) +
             '.reducer';
-        var relativePath = find_module_1.buildRelativePath(reducersPath, reducerPath);
-        var reducerImport = ast_utils_1.insertImport(source, reducersPath, "* as from" + stringUtils.classify(options.name), relativePath, true);
+        var relativePath = (0, find_module_1.buildRelativePath)(reducersPath, reducerPath);
+        var reducerImport = (0, ast_utils_1.insertImport)(source, reducersPath, "* as from" + stringUtils.classify(options.name), relativePath, true);
         var stateInterfaceInsert = addReducerToStateInterface(source, reducersPath, options);
         var reducerMapInsert = addReducerToActionReducerMap(source, reducersPath, options);
         var changes = [reducerImport, stateInterfaceInsert, reducerMapInsert];
@@ -193,20 +197,20 @@ function addReducerImportToNgModule(options) {
         var sourceText = text.toString('utf-8');
         var source = ts.createSourceFile(modulePath, sourceText, ts.ScriptTarget.Latest, true);
         var commonImports = [
-            ast_utils_1.insertImport(source, modulePath, 'StoreModule', '@ngrx/store'),
+            (0, ast_utils_1.insertImport)(source, modulePath, 'StoreModule', '@ngrx/store'),
         ];
         var reducerPath = "/" + options.path + "/" +
             (options.flat ? '' : stringUtils.dasherize(options.name) + '/') +
             (options.group ? 'reducers/' : '') +
             stringUtils.dasherize(options.name) +
             '.reducer';
-        var relativePath = find_module_1.buildRelativePath(modulePath, reducerPath);
-        var reducerImport = ast_utils_1.insertImport(source, modulePath, "* as from" + stringUtils.classify(options.name), relativePath, true);
+        var relativePath = (0, find_module_1.buildRelativePath)(modulePath, reducerPath);
+        var reducerImport = (0, ast_utils_1.insertImport)(source, modulePath, "* as from" + stringUtils.classify(options.name), relativePath, true);
         var state = options.plural
             ? stringUtils.pluralize(options.name)
             : stringUtils.camelize(options.name);
-        var _b = __read(ast_utils_1.addImportToModule(source, modulePath, "StoreModule.forFeature(from" + stringUtils.classify(options.name) + "." + state + "FeatureKey, from" + stringUtils.classify(options.name) + ".reducer)", relativePath), 1), storeNgModuleImport = _b[0];
-        var changes = __spreadArray(__spreadArray([], __read(commonImports)), [reducerImport, storeNgModuleImport]);
+        var _b = __read((0, ast_utils_1.addImportToModule)(source, modulePath, "StoreModule.forFeature(from" + stringUtils.classify(options.name) + "." + state + "FeatureKey, from" + stringUtils.classify(options.name) + ".reducer)", relativePath), 1), storeNgModuleImport = _b[0];
+        var changes = __spreadArray(__spreadArray([], __read(commonImports), false), [reducerImport, storeNgModuleImport], false);
         var recorder = host.beginUpdate(modulePath);
         try {
             for (var changes_2 = __values(changes), changes_2_1 = changes_2.next(); !changes_2_1.done; changes_2_1 = changes_2.next()) {

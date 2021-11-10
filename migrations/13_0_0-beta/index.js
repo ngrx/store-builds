@@ -5,7 +5,7 @@ var schematics_1 = require("@angular-devkit/schematics");
 var schematics_core_1 = require("../../schematics-core");
 function updateCreateFeatureSelectorGenerics() {
     return function (tree) {
-        schematics_core_1.visitTSSourceFiles(tree, function (sourceFile) {
+        (0, schematics_core_1.visitTSSourceFiles)(tree, function (sourceFile) {
             var runMigration = sourceFile.statements
                 .filter(ts.isImportDeclaration)
                 .filter(function (importDeclaration) {
@@ -22,7 +22,7 @@ function updateCreateFeatureSelectorGenerics() {
                 return;
             var changes = [];
             ts.forEachChild(sourceFile, crawl);
-            return schematics_core_1.commitChanges(tree, sourceFile.fileName, changes);
+            return (0, schematics_core_1.commitChanges)(tree, sourceFile.fileName, changes);
             function crawl(node) {
                 var _a;
                 ts.forEachChild(node, crawl);
@@ -40,7 +40,7 @@ function updateCreateFeatureSelectorGenerics() {
     };
 }
 function default_1() {
-    return schematics_1.chain([updateCreateFeatureSelectorGenerics()]);
+    return (0, schematics_1.chain)([updateCreateFeatureSelectorGenerics()]);
 }
 exports["default"] = default_1;
 //# sourceMappingURL=index.js.map

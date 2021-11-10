@@ -21,7 +21,7 @@
   },
   "homepage": "https://github.com/ngrx/platform#readme",
   "peerDependencies": {
-    "@angular/core": "^13.0.0-rc.0",
+    "@angular/core": "^13.0.0",
     "rxjs": "^6.5.3 || ^7.4.0"
   },
   "schematics": "./schematics/collection.json",
@@ -43,10 +43,31 @@
   "dependencies": {
     "tslib": "^2.0.0"
   },
-  "main": "bundles/ngrx-store.umd.js",
-  "module": "fesm2015/ngrx-store.js",
-  "es2015": "fesm2015/ngrx-store.js",
-  "esm2015": "esm2015/ngrx-store.js",
-  "fesm2015": "fesm2015/ngrx-store.js",
-  "typings": "ngrx-store.d.ts"
+  "module": "fesm2015/ngrx-store.mjs",
+  "es2020": "fesm2020/ngrx-store.mjs",
+  "esm2020": "esm2020/ngrx-store.mjs",
+  "fesm2020": "fesm2020/ngrx-store.mjs",
+  "fesm2015": "fesm2015/ngrx-store.mjs",
+  "typings": "ngrx-store.d.ts",
+  "exports": {
+    "./package.json": {
+      "default": "./package.json"
+    },
+    ".": {
+      "types": "./ngrx-store.d.ts",
+      "esm2020": "./esm2020/ngrx-store.mjs",
+      "es2020": "./fesm2020/ngrx-store.mjs",
+      "es2015": "./fesm2015/ngrx-store.mjs",
+      "node": "./fesm2015/ngrx-store.mjs",
+      "default": "./fesm2020/ngrx-store.mjs"
+    },
+    "./testing": {
+      "types": "./testing/ngrx-store-testing.d.ts",
+      "esm2020": "./esm2020/testing/ngrx-store-testing.mjs",
+      "es2020": "./fesm2020/ngrx-store-testing.mjs",
+      "es2015": "./fesm2015/ngrx-store-testing.mjs",
+      "node": "./fesm2015/ngrx-store-testing.mjs",
+      "default": "./fesm2020/ngrx-store-testing.mjs"
+    }
+  }
 }

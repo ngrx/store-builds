@@ -37,10 +37,14 @@ var __values = (this && this.__values) || function(o) {
     };
     throw new TypeError(s ? "Object is not iterable." : "Symbol.iterator is not defined.");
 };
-var __spreadArray = (this && this.__spreadArray) || function (to, from) {
-    for (var i = 0, il = from.length, j = to.length; i < il; i++, j++)
-        to[j] = from[i];
-    return to;
+var __spreadArray = (this && this.__spreadArray) || function (to, from, pack) {
+    if (pack || arguments.length === 2) for (var i = 0, l = from.length, ar; i < l; i++) {
+        if (ar || !(i in from)) {
+            if (!ar) ar = Array.prototype.slice.call(from, 0, i);
+            ar[i] = from[i];
+        }
+    }
+    return to.concat(ar || Array.prototype.slice.call(from));
 };
 exports.__esModule = true;
 var ts = require("typescript");
@@ -70,15 +74,15 @@ function addImportToNgModule(options) {
             : "{\n      metaReducers\n    }";
         var storeModuleSetup = "StoreModule.forRoot(" + storeModuleReducers + ", " + storeModuleConfig + ")";
         var statePath = "/" + options.path + "/" + options.statePath;
-        var relativePath = schematics_core_1.buildRelativePath(modulePath, statePath);
-        var _b = __read(schematics_core_1.addImportToModule(source, modulePath, storeModuleSetup, relativePath), 1), storeNgModuleImport = _b[0];
+        var relativePath = (0, schematics_core_1.buildRelativePath)(modulePath, statePath);
+        var _b = __read((0, schematics_core_1.addImportToModule)(source, modulePath, storeModuleSetup, relativePath), 1), storeNgModuleImport = _b[0];
         var changes = [
-            schematics_core_1.insertImport(source, modulePath, 'StoreModule', '@ngrx/store'),
+            (0, schematics_core_1.insertImport)(source, modulePath, 'StoreModule', '@ngrx/store'),
             storeNgModuleImport,
         ];
         if (!options.minimal) {
             changes = changes.concat([
-                schematics_core_1.insertImport(source, modulePath, 'reducers, metaReducers', relativePath),
+                (0, schematics_core_1.insertImport)(source, modulePath, 'reducers, metaReducers', relativePath),
             ]);
         }
         var recorder = host.beginUpdate(modulePath);
@@ -103,7 +107,7 @@ function addImportToNgModule(options) {
 }
 function addNgRxStoreToPackageJson() {
     return function (host, context) {
-        schematics_core_1.addPackageToPackageJson(host, 'dependencies', '@ngrx/store', schematics_core_1.platformVersion);
+        (0, schematics_core_1.addPackageToPackageJson)(host, 'dependencies', '@ngrx/store', schematics_core_1.platformVersion);
         context.addTask(new tasks_1.NodePackageInstallTask());
         return host;
     };
@@ -117,7 +121,7 @@ function addNgRxESLintPlugin() {
         if (!eslint) {
             return host;
         }
-        schematics_core_1.addPackageToPackageJson(host, 'devDependencies', 'eslint-plugin-ngrx', '^1.0.0');
+        (0, schematics_core_1.addPackageToPackageJson)(host, 'devDependencies', 'eslint-plugin-ngrx', '^1.0.0');
         context.addTask(new tasks_1.NodePackageInstallTask());
         try {
             var json = JSON.parse(eslint);
@@ -140,19 +144,19 @@ function addNgRxESLintPlugin() {
     };
 }
 function configureESLintPlugin(json) {
-    json.plugins = __spreadArray(__spreadArray([], __read((json.plugins || []))), ['ngrx']);
-    json["extends"] = __spreadArray(__spreadArray([], __read((json["extends"] || []))), ['plugin:ngrx/recommended']);
+    json.plugins = __spreadArray(__spreadArray([], __read((json.plugins || [])), false), ['ngrx'], false);
+    json["extends"] = __spreadArray(__spreadArray([], __read((json["extends"] || [])), false), ['plugin:ngrx/recommended'], false);
 }
 function default_1(options) {
     return function (host, context) {
-        options.path = schematics_core_1.getProjectPath(host, options);
-        var parsedPath = schematics_core_1.parseName(options.path, '');
+        options.path = (0, schematics_core_1.getProjectPath)(host, options);
+        var parsedPath = (0, schematics_core_1.parseName)(options.path, '');
         options.path = parsedPath.path;
         var statePath = "/" + options.path + "/" + options.statePath + "/index.ts";
-        var srcPath = core_1.dirname(options.path);
-        var environmentsPath = schematics_core_1.buildRelativePath(statePath, "/" + srcPath + "/environments/environment");
+        var srcPath = (0, core_1.dirname)(options.path);
+        var environmentsPath = (0, schematics_core_1.buildRelativePath)(statePath, "/" + srcPath + "/environments/environment");
         if (options.module) {
-            options.module = schematics_core_1.findModuleFromOptions(host, {
+            options.module = (0, schematics_core_1.findModuleFromOptions)(host, {
                 name: '',
                 module: options.module,
                 path: options.path
@@ -161,15 +165,15 @@ function default_1(options) {
         if (options.stateInterface && options.stateInterface !== 'State') {
             options.stateInterface = schematics_core_1.stringUtils.classify(options.stateInterface);
         }
-        var templateSource = schematics_1.apply(schematics_1.url('./files'), [
-            schematics_1.filter(function () { return (options.minimal ? false : true); }),
-            schematics_1.applyTemplates(__assign(__assign(__assign({}, schematics_core_1.stringUtils), options), { environmentsPath: environmentsPath })),
-            schematics_1.move(parsedPath.path),
+        var templateSource = (0, schematics_1.apply)((0, schematics_1.url)('./files'), [
+            (0, schematics_1.filter)(function () { return (options.minimal ? false : true); }),
+            (0, schematics_1.applyTemplates)(__assign(__assign(__assign({}, schematics_core_1.stringUtils), options), { environmentsPath: environmentsPath })),
+            (0, schematics_1.move)(parsedPath.path),
         ]);
-        return schematics_1.chain([
-            schematics_1.branchAndMerge(schematics_1.chain([addImportToNgModule(options), schematics_1.mergeWith(templateSource)])),
-            options && options.skipPackageJson ? schematics_1.noop() : addNgRxStoreToPackageJson(),
-            options && options.skipESLintPlugin ? schematics_1.noop() : addNgRxESLintPlugin(),
+        return (0, schematics_1.chain)([
+            (0, schematics_1.branchAndMerge)((0, schematics_1.chain)([addImportToNgModule(options), (0, schematics_1.mergeWith)(templateSource)])),
+            options && options.skipPackageJson ? (0, schematics_1.noop)() : addNgRxStoreToPackageJson(),
+            options && options.skipESLintPlugin ? (0, schematics_1.noop)() : addNgRxESLintPlugin(),
         ])(host, context);
     };
 }

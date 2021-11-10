@@ -26,10 +26,14 @@ var __read = (this && this.__read) || function (o, n) {
     }
     return ar;
 };
-var __spreadArray = (this && this.__spreadArray) || function (to, from) {
-    for (var i = 0, il = from.length, j = to.length; i < il; i++, j++)
-        to[j] = from[i];
-    return to;
+var __spreadArray = (this && this.__spreadArray) || function (to, from, pack) {
+    if (pack || arguments.length === 2) for (var i = 0, l = from.length, ar; i < l; i++) {
+        if (ar || !(i in from)) {
+            if (!ar) ar = Array.prototype.slice.call(from, 0, i);
+            ar[i] = from[i];
+        }
+    }
+    return to.concat(ar || Array.prototype.slice.call(from));
 };
 exports.__esModule = true;
 exports.containsProperty = exports.replaceImport = exports.insertImport = exports.addBootstrapToModule = exports.addExportToModule = exports.addProviderToComponent = exports.addProviderToModule = exports.addImportToModule = exports.addDeclarationToModule = exports.getDecoratorMetadata = exports.getContentOfKeyLiteral = exports.insertAfterLastOccurrence = exports.getSourceNodes = exports.findNodes = void 0;
@@ -100,7 +104,7 @@ function getSourceNodes(sourceFile) {
         if (node) {
             result.push(node);
             if (node.getChildCount(sourceFile) >= 0) {
-                nodes.unshift.apply(nodes, __spreadArray([], __read(node.getChildren())));
+                nodes.unshift.apply(nodes, __spreadArray([], __read(node.getChildren()), false));
             }
         }
     }
@@ -674,15 +678,15 @@ function replaceImport(sourceFile, path, importFrom, importAsIs, importToBe) {
             }
             // identifier has not been imported, simply replace the old text with the new text
             if (!isAlreadyImported) {
-                return change_1.createReplaceChange(sourceFile, specifier, importAsIs, importToBe);
+                return (0, change_1.createReplaceChange)(sourceFile, specifier, importAsIs, importToBe);
             }
             var nextIdentifier = importSpecifiers[index + 1];
             // identifer is not the last, also clean up the comma
             if (nextIdentifier) {
-                return change_1.createRemoveChange(sourceFile, specifier, specifier.getStart(sourceFile), nextIdentifier.getStart(sourceFile));
+                return (0, change_1.createRemoveChange)(sourceFile, specifier, specifier.getStart(sourceFile), nextIdentifier.getStart(sourceFile));
             }
             // there are no imports following, just remove it
-            return change_1.createRemoveChange(sourceFile, specifier, specifier.getStart(sourceFile), specifier.getEnd());
+            return (0, change_1.createRemoveChange)(sourceFile, specifier, specifier.getStart(sourceFile), specifier.getEnd());
         });
         return importChanges.filter(Boolean);
     });

@@ -19,10 +19,14 @@ var __read = (this && this.__read) || function (o, n) {
     }
     return ar;
 };
-var __spreadArray = (this && this.__spreadArray) || function (to, from) {
-    for (var i = 0, il = from.length, j = to.length; i < il; i++, j++)
-        to[j] = from[i];
-    return to;
+var __spreadArray = (this && this.__spreadArray) || function (to, from, pack) {
+    if (pack || arguments.length === 2) for (var i = 0, l = from.length, ar; i < l; i++) {
+        if (ar || !(i in from)) {
+            if (!ar) ar = Array.prototype.slice.call(from, 0, i);
+            ar[i] = from[i];
+        }
+    }
+    return to.concat(ar || Array.prototype.slice.call(from));
 };
 exports.__esModule = true;
 var ts = require("typescript");
@@ -32,19 +36,19 @@ var schematics_core_1 = require("../../schematics-core");
 var META_REDUCERS = 'META_REDUCERS';
 function updateMetaReducersToken() {
     return function (tree, context) {
-        schematics_core_1.visitTSSourceFiles(tree, function (sourceFile) {
+        (0, schematics_core_1.visitTSSourceFiles)(tree, function (sourceFile) {
             var createChange = function (node) {
-                return schematics_core_1.createReplaceChange(sourceFile, node, META_REDUCERS, 'USER_PROVIDED_META_REDUCERS');
+                return (0, schematics_core_1.createReplaceChange)(sourceFile, node, META_REDUCERS, 'USER_PROVIDED_META_REDUCERS');
             };
             var changes = [];
-            changes.push.apply(changes, __spreadArray([], __read(findMetaReducersImportStatements(sourceFile, createChange, context.logger))));
-            changes.push.apply(changes, __spreadArray([], __read(findMetaReducersAssignment(sourceFile, createChange))));
-            return schematics_core_1.commitChanges(tree, sourceFile.fileName, changes);
+            changes.push.apply(changes, __spreadArray([], __read(findMetaReducersImportStatements(sourceFile, createChange, context.logger)), false));
+            changes.push.apply(changes, __spreadArray([], __read(findMetaReducersAssignment(sourceFile, createChange)), false));
+            return (0, schematics_core_1.commitChanges)(tree, sourceFile.fileName, changes);
         });
     };
 }
 function default_1() {
-    return schematics_1.chain([updateMetaReducersToken()]);
+    return (0, schematics_1.chain)([updateMetaReducersToken()]);
 }
 exports["default"] = default_1;
 function findMetaReducersImportStatements(sourceFile, createChange, logger) {

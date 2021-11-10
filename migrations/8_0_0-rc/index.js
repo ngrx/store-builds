@@ -15,10 +15,14 @@ var __read = (this && this.__read) || function (o, n) {
     }
     return ar;
 };
-var __spreadArray = (this && this.__spreadArray) || function (to, from) {
-    for (var i = 0, il = from.length, j = to.length; i < il; i++, j++)
-        to[j] = from[i];
-    return to;
+var __spreadArray = (this && this.__spreadArray) || function (to, from, pack) {
+    if (pack || arguments.length === 2) for (var i = 0, l = from.length, ar; i < l; i++) {
+        if (ar || !(i in from)) {
+            if (!ar) ar = Array.prototype.slice.call(from, 0, i);
+            ar[i] = from[i];
+        }
+    }
+    return to.concat(ar || Array.prototype.slice.call(from));
 };
 exports.__esModule = true;
 var ts = require("typescript");
@@ -27,8 +31,8 @@ var schematics_core_1 = require("../../schematics-core");
 function replaceWithRuntimeChecks() {
     return function (tree) {
         // only add runtime checks when ngrx-store-freeze is used
-        schematics_core_1.visitTSSourceFiles(tree, removeUsages) &&
-            schematics_core_1.visitTSSourceFiles(tree, insertRuntimeChecks);
+        (0, schematics_core_1.visitTSSourceFiles)(tree, removeUsages) &&
+            (0, schematics_core_1.visitTSSourceFiles)(tree, insertRuntimeChecks);
     };
 }
 function removeNgRxStoreFreezePackage() {
@@ -54,7 +58,7 @@ function removeNgRxStoreFreezePackage() {
     };
 }
 function default_1() {
-    return schematics_1.chain([removeNgRxStoreFreezePackage(), replaceWithRuntimeChecks()]);
+    return (0, schematics_1.chain)([removeNgRxStoreFreezePackage(), replaceWithRuntimeChecks()]);
 }
 exports["default"] = default_1;
 function removeUsages(sourceFile, tree, ngrxStoreFreezeIsUsed) {
@@ -67,8 +71,8 @@ function removeUsages(sourceFile, tree, ngrxStoreFreezeIsUsed) {
         return ngrxStoreFreezeIsUsed;
     }
     var usageReplacements = findStoreFreezeUsagesToRemove(sourceFile);
-    var changes = __spreadArray(__spreadArray([], __read(importRemovements)), __read(usageReplacements));
-    return schematics_core_1.commitChanges(tree, sourceFile.fileName, changes);
+    var changes = __spreadArray(__spreadArray([], __read(importRemovements), false), __read(usageReplacements), false);
+    return (0, schematics_core_1.commitChanges)(tree, sourceFile.fileName, changes);
 }
 function insertRuntimeChecks(sourceFile, tree) {
     if (sourceFile.fileName.endsWith('.spec.ts') ||
@@ -76,7 +80,7 @@ function insertRuntimeChecks(sourceFile, tree) {
         return;
     }
     var changes = findRuntimeCHecksToInsert(sourceFile);
-    return schematics_core_1.commitChanges(tree, sourceFile.fileName, changes);
+    return (0, schematics_core_1.commitChanges)(tree, sourceFile.fileName, changes);
 }
 function findStoreFreezeImportsToRemove(sourceFile) {
     var imports = sourceFile.statements

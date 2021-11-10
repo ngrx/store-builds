@@ -1,12 +1,15 @@
 {
   "name": "@ngrx/store/testing",
   "typings": "ngrx-store-testing.d.ts",
-  "main": "../bundles/ngrx-store-testing.umd.js",
-  "module": "../fesm2015/ngrx-store-testing.js",
-  "es2015": "../fesm2015/ngrx-store-testing.js",
+  "main": "../bundles/core-testing.umd.js",
+  "module": "../fesm2015/ngrx-store-testing.mjs",
+  "es2015": "../fesm2015/testing.js",
   "esm5": "../esm5/testing/testing.js",
-  "esm2015": "../esm2015/testing/ngrx-store-testing.js",
+  "esm2015": "../esm2015/testing/testing.js",
   "fesm5": "../fesm5/testing.js",
-  "fesm2015": "../fesm2015/ngrx-store-testing.js",
+  "fesm2015": "../fesm2015/ngrx-store-testing.mjs",
+  "es2020": "../fesm2020/ngrx-store-testing.mjs",
+  "esm2020": "../esm2020/testing/ngrx-store-testing.mjs",
+  "fesm2020": "../fesm2020/ngrx-store-testing.mjs",
   "sideEffects": false
 }

@@ -10,9 +10,9 @@ class MockState extends BehaviorSubject {
         super({});
     }
 }
-/** @nocollapse */ MockState.ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "12.2.6", ngImport: i0, type: MockState, deps: [], target: i0.ɵɵFactoryTarget.Injectable });
-/** @nocollapse */ MockState.ɵprov = i0.ɵɵngDeclareInjectable({ minVersion: "12.0.0", version: "12.2.6", ngImport: i0, type: MockState });
-i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "12.2.6", ngImport: i0, type: MockState, decorators: [{
+/** @nocollapse */ /** @nocollapse */ MockState.ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "13.0.0", ngImport: i0, type: MockState, deps: [], target: i0.ɵɵFactoryTarget.Injectable });
+/** @nocollapse */ /** @nocollapse */ MockState.ɵprov = i0.ɵɵngDeclareInjectable({ minVersion: "12.0.0", version: "13.0.0", ngImport: i0, type: MockState });
+i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "13.0.0", ngImport: i0, type: MockState, decorators: [{
             type: Injectable
         }], ctorParameters: function () { return []; } });
 
@@ -84,17 +84,19 @@ class MockStore extends Store {
             this.setState(Object.assign({}, this.lastState));
     }
 }
-/** @nocollapse */ MockStore.ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "12.2.6", ngImport: i0, type: MockStore, deps: [{ token: MockState }, { token: i2.ActionsSubject }, { token: i2.ReducerManager }, { token: INITIAL_STATE }, { token: MOCK_SELECTORS }], target: i0.ɵɵFactoryTarget.Injectable });
-/** @nocollapse */ MockStore.ɵprov = i0.ɵɵngDeclareInjectable({ minVersion: "12.0.0", version: "12.2.6", ngImport: i0, type: MockStore });
-i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "12.2.6", ngImport: i0, type: MockStore, decorators: [{
+/** @nocollapse */ /** @nocollapse */ MockStore.ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "13.0.0", ngImport: i0, type: MockStore, deps: [{ token: MockState }, { token: i2.ActionsSubject }, { token: i2.ReducerManager }, { token: INITIAL_STATE }, { token: MOCK_SELECTORS }], target: i0.ɵɵFactoryTarget.Injectable });
+/** @nocollapse */ /** @nocollapse */ MockStore.ɵprov = i0.ɵɵngDeclareInjectable({ minVersion: "12.0.0", version: "13.0.0", ngImport: i0, type: MockStore });
+i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "13.0.0", ngImport: i0, type: MockStore, decorators: [{
             type: Injectable
-        }], ctorParameters: function () { return [{ type: MockState }, { type: i2.ActionsSubject }, { type: i2.ReducerManager }, { type: undefined, decorators: [{
-                    type: Inject,
-                    args: [INITIAL_STATE]
-                }] }, { type: undefined, decorators: [{
-                    type: Inject,
-                    args: [MOCK_SELECTORS]
-                }] }]; } });
+        }], ctorParameters: function () {
+        return [{ type: MockState }, { type: i2.ActionsSubject }, { type: i2.ReducerManager }, { type: undefined, decorators: [{
+                        type: Inject,
+                        args: [INITIAL_STATE]
+                    }] }, { type: undefined, decorators: [{
+                        type: Inject,
+                        args: [MOCK_SELECTORS]
+                    }] }];
+    } });
 
 class MockReducerManager extends BehaviorSubject {
     constructor() {
@@ -125,9 +127,9 @@ class MockReducerManager extends BehaviorSubject {
         /* noop */
     }
 }
-/** @nocollapse */ MockReducerManager.ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "12.2.6", ngImport: i0, type: MockReducerManager, deps: [], target: i0.ɵɵFactoryTarget.Injectable });
-/** @nocollapse */ MockReducerManager.ɵprov = i0.ɵɵngDeclareInjectable({ minVersion: "12.0.0", version: "12.2.6", ngImport: i0, type: MockReducerManager });
-i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "12.2.6", ngImport: i0, type: MockReducerManager, decorators: [{
+/** @nocollapse */ /** @nocollapse */ MockReducerManager.ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "13.0.0", ngImport: i0, type: MockReducerManager, deps: [], target: i0.ɵɵFactoryTarget.Injectable });
+/** @nocollapse */ /** @nocollapse */ MockReducerManager.ɵprov = i0.ɵɵngDeclareInjectable({ minVersion: "12.0.0", version: "13.0.0", ngImport: i0, type: MockReducerManager });
+i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "13.0.0", ngImport: i0, type: MockReducerManager, decorators: [{
             type: Injectable
         }], ctorParameters: function () { return []; } });
 
@@ -254,4 +256,4 @@ function getMockStore(config = {}) {
  */
 
 export { MockReducerManager, MockState, MockStore, getMockStore, provideMockStore };
-//# sourceMappingURL=ngrx-store-testing.js.map
+//# sourceMappingURL=ngrx-store-testing.mjs.map

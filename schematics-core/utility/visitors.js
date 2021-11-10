@@ -96,8 +96,8 @@ function visitTemplates(tree, visitor) {
                     }
                     else if (n.name.text === 'templateUrl' &&
                         ts.isStringLiteralLike(n.initializer)) {
-                        var parts = core_1.normalize(source.fileName).split('/').slice(0, -1);
-                        var templatePath = core_1.resolve(core_1.normalize(parts.join('/')), core_1.normalize(n.initializer.text));
+                        var parts = (0, core_1.normalize)(source.fileName).split('/').slice(0, -1);
+                        var templatePath = (0, core_1.resolve)((0, core_1.normalize)(parts.join('/')), (0, core_1.normalize)(n.initializer.text));
                         if (!tree.exists(templatePath)) {
                             return;
                         }
