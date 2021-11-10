@@ -1,1 +1,1 @@
-996f1e82 feat: update Angular packages to version 13.0.0 (#3184)
+52b828e7 fix(data): set loaded to true on queryManySuccess (#3228)
