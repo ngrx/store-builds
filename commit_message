@@ -1,1 +1,1 @@
-52b828e7 fix(data): set loaded to true on queryManySuccess (#3228)
+367d9b42 feat(store): use variadic tuple types for createSelector (#3023)
