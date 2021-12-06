@@ -1,1 +1,1 @@
-4b9815c0 docs: generate API docs for component, update dgeni deps (#3258)
+d24dde15 fix(component): fixes recursive rendering (#3255)
