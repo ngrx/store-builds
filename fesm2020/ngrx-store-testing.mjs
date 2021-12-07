@@ -3,7 +3,6 @@ import { Injectable, InjectionToken, Inject, Injector } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
 import * as i2 from '@ngrx/store';
 import { Store, createSelector, INITIAL_STATE, setNgrxMockEnvironment, ActionsSubject, StateObservable, ReducerManager } from '@ngrx/store';
-import { TestBed } from '@angular/core/testing';
 
 class MockState extends BehaviorSubject {
     constructor() {
@@ -18,18 +17,6 @@ i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "13.0.0", ngImpor
 
 const MOCK_SELECTORS = new InjectionToken('@ngrx/store Mock Selectors');
 
-if (typeof afterEach === 'function') {
-    afterEach(() => {
-        try {
-            const mockStore = TestBed.inject(MockStore);
-            if (mockStore) {
-                mockStore.resetSelectors();
-            }
-            // eslint-disable-next-line no-empty
-        }
-        catch { }
-    });
-}
 class MockStore extends Store {
     constructor(state$, actionsObserver, reducerManager, initialState, mockSelectors = []) {
         super(state$, actionsObserver, reducerManager);
