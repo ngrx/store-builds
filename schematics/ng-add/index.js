@@ -37,15 +37,6 @@ var __values = (this && this.__values) || function(o) {
     };
     throw new TypeError(s ? "Object is not iterable." : "Symbol.iterator is not defined.");
 };
-var __spreadArray = (this && this.__spreadArray) || function (to, from, pack) {
-    if (pack || arguments.length === 2) for (var i = 0, l = from.length, ar; i < l; i++) {
-        if (ar || !(i in from)) {
-            if (!ar) ar = Array.prototype.slice.call(from, 0, i);
-            ar[i] = from[i];
-        }
-    }
-    return to.concat(ar || Array.prototype.slice.call(from));
-};
 exports.__esModule = true;
 var ts = require("typescript");
 var core_1 = require("@angular-devkit/core");
@@ -114,24 +105,29 @@ function addNgRxStoreToPackageJson() {
 }
 function addNgRxESLintPlugin() {
     return function (host, context) {
-        var _a;
+        var _a, _b;
         var eslintConfigPath = '.eslintrc.json';
         var docs = 'https://github.com/timdeschryver/eslint-plugin-ngrx/#eslint-plugin-ngrx';
         var eslint = (_a = host.read(eslintConfigPath)) === null || _a === void 0 ? void 0 : _a.toString('utf-8');
         if (!eslint) {
             return host;
         }
-        (0, schematics_core_1.addPackageToPackageJson)(host, 'devDependencies', 'eslint-plugin-ngrx', '^1.0.0');
+        (0, schematics_core_1.addPackageToPackageJson)(host, 'devDependencies', 'eslint-plugin-ngrx', '^2.0.0');
         context.addTask(new tasks_1.NodePackageInstallTask());
         try {
             var json = JSON.parse(eslint);
             if (json.overrides) {
-                json.overrides
-                    .filter(function (override) { var _a; return (_a = override.files) === null || _a === void 0 ? void 0 : _a.some(function (file) { return file.endsWith('*.ts'); }); })
-                    .forEach(configureESLintPlugin);
+                if (!json.overrides.some(function (override) {
+                    var _a;
+                    return (_a = override["extends"]) === null || _a === void 0 ? void 0 : _a.some(function (extend) {
+                        return extend.startsWith('plugin:ngrx');
+                    });
+                })) {
+                    json.overrides.push(configureESLintPlugin());
+                }
             }
-            else {
-                configureESLintPlugin(json);
+            else if (!((_b = json["extends"]) === null || _b === void 0 ? void 0 : _b.some(function (extend) { return extend.startsWith('plugin:ngrx'); }))) {
+                json.overrides = [configureESLintPlugin()];
             }
             host.overwrite(eslintConfigPath, JSON.stringify(json, null, 2));
             context.logger.info("\nThe NgRx ESLint Plugin is installed and configured with the recommended config.\n\nIf you want to change the configuration, please see " + docs + ".\n");
@@ -143,9 +139,11 @@ function addNgRxESLintPlugin() {
         return host;
     };
 }
-function configureESLintPlugin(json) {
-    json.plugins = __spreadArray(__spreadArray([], __read((json.plugins || [])), false), ['ngrx'], false);
-    json["extends"] = __spreadArray(__spreadArray([], __read((json["extends"] || [])), false), ['plugin:ngrx/recommended'], false);
+function configureESLintPlugin() {
+    return {
+        files: ['*.ts'],
+        "extends": ["plugin:ngrx/recommended"]
+    };
 }
 function default_1(options) {
     return function (host, context) {

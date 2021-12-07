@@ -1,1 +1,1 @@
-06400850 fix(store): remove afterEach hook in mock store (#3245)
+df211feb fix(store): update installation of the NgRx ESLint Plugin (#3259)
