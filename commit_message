@@ -1,1 +1,1 @@
-a21c14a5 build(example): update example angular deps to 13 (#3269)
+875adb3a style(example): turns on strict Angular compiler flags (#3280)
