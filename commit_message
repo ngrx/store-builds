@@ -1,1 +1,1 @@
-c194adca docs(entity): remove partial update notes for upsert methods (#3291)
+17fe494c fix(entity): add default options to entity adapter when undefined is passed (#3287)
