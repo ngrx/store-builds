@@ -1,1 +1,1 @@
-17fe494c fix(entity): add default options to entity adapter when undefined is passed (#3287)
+d166340c docs: include tsconfig.json for v13 StackBlitz examples (#3299)
