@@ -1,1 +1,1 @@
-5b54ac49 docs(store): include version in command for v13 update (#3306)
+3a9e1da4 refactor: replace deprecated throwError usages (#3312)
