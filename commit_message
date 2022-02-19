@@ -1,1 +1,1 @@
-c3d14228 style(example-app): fix lint warning (#3323)
+15d34afe ci: run all tests in CI instead of only affected projects (#3324)
