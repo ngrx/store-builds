@@ -1,1 +1,1 @@
-b55b0e49 feat(store-devtools): add REDUX_DEVTOOLS_EXTENSION injection token to public API (#3338)
+bf2fc272 chore: serve example apps in dev mode (#3347)
