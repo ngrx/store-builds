@@ -1,1 +1,1 @@
-e4739bf9 docs(store): fix reducer import in reducer guide (#3351)
+44076f7c docs(store): remove reducer wrapper function (#3353)
