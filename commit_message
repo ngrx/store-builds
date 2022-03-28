@@ -1,1 +1,1 @@
-38bce884 fix(component-store): memoization not working when passing selectors directly to select (#3356)
+a3fdfb47 chore: release 13.1.0
