@@ -1,1 +1,1 @@
-56aedfd9 feat(data): add ability to configure trailing slashes (#3357)
+38bce884 fix(component-store): memoization not working when passing selectors directly to select (#3356)
