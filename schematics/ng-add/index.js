@@ -120,13 +120,13 @@ function addNgRxESLintPlugin() {
                 if (!json.overrides.some(function (override) {
                     var _a;
                     return (_a = override["extends"]) === null || _a === void 0 ? void 0 : _a.some(function (extend) {
-                        return extend.startsWith('plugin:ngrx');
+                        return extend.startsWith('plugin:@ngrx');
                     });
                 })) {
                     json.overrides.push(configureESLintPlugin());
                 }
             }
-            else if (!((_b = json["extends"]) === null || _b === void 0 ? void 0 : _b.some(function (extend) { return extend.startsWith('plugin:ngrx'); }))) {
+            else if (!((_b = json["extends"]) === null || _b === void 0 ? void 0 : _b.some(function (extend) { return extend.startsWith('plugin:@ngrx'); }))) {
                 json.overrides = [configureESLintPlugin()];
             }
             host.overwrite(eslintConfigPath, JSON.stringify(json, null, 2));
@@ -142,7 +142,7 @@ function addNgRxESLintPlugin() {
 function configureESLintPlugin() {
     return {
         files: ['*.ts'],
-        "extends": ["plugin:ngrx/recommended"]
+        "extends": ["plugin:@ngrx/recommended"]
     };
 }
 function default_1(options) {
