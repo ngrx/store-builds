@@ -105,44 +105,12 @@ function addNgRxStoreToPackageJson() {
 }
 function addNgRxESLintPlugin() {
     return function (host, context) {
-        var _a, _b;
-        var eslintConfigPath = '.eslintrc.json';
-        var docs = 'https://github.com/timdeschryver/eslint-plugin-ngrx/#eslint-plugin-ngrx';
-        var eslint = (_a = host.read(eslintConfigPath)) === null || _a === void 0 ? void 0 : _a.toString('utf-8');
-        if (!eslint) {
-            return host;
-        }
-        (0, schematics_core_1.addPackageToPackageJson)(host, 'devDependencies', 'eslint-plugin-ngrx', '^2.0.0');
-        context.addTask(new tasks_1.NodePackageInstallTask());
-        try {
-            var json = JSON.parse(eslint);
-            if (json.overrides) {
-                if (!json.overrides.some(function (override) {
-                    var _a;
-                    return (_a = override["extends"]) === null || _a === void 0 ? void 0 : _a.some(function (extend) {
-                        return extend.startsWith('plugin:@ngrx');
-                    });
-                })) {
-                    json.overrides.push(configureESLintPlugin());
-                }
-            }
-            else if (!((_b = json["extends"]) === null || _b === void 0 ? void 0 : _b.some(function (extend) { return extend.startsWith('plugin:@ngrx'); }))) {
-                json.overrides = [configureESLintPlugin()];
-            }
-            host.overwrite(eslintConfigPath, JSON.stringify(json, null, 2));
-            context.logger.info("\nThe NgRx ESLint Plugin is installed and configured with the recommended config.\n\nIf you want to change the configuration, please see " + docs + ".\n");
-            return host;
-        }
-        catch (err) {
-            context.logger.warn("\nSomething went wrong while adding the NgRx ESLint Plugin.\nThe NgRx ESLint Plugin is installed but not configured.\n\nPlease see " + docs + " to configure the NgRx ESLint Plugin.\n\nDetails:\n" + err.message + "\n");
-        }
+        (0, schematics_core_1.addPackageToPackageJson)(host, 'devDependencies', '@ngrx/eslint-plugin', schematics_core_1.platformVersion);
+        var installTaskId = context.addTask(new tasks_1.NodePackageInstallTask());
+        context.addTask(new tasks_1.RunSchematicTask('@ngrx/eslint-plugin', 'ng-add', {}), [
+            installTaskId,
+        ]);
         return host;
-    };
-}
-function configureESLintPlugin() {
-    return {
-        files: ['*.ts'],
-        "extends": ["plugin:@ngrx/recommended"]
     };
 }
 function default_1(options) {

@@ -1,1 +1,1 @@
-ae0041bf feat(eslint-plugin): add NgRx ESLint Plugin (#3373)
+bf2672e2 feat(store): install and configure the @ngrx/eslint-plugin on ng-add (#3386)
