@@ -118,6 +118,73 @@ function defineType(type, creator) {
     });
 }
 
+function capitalize(text) {
+    return (text.charAt(0).toUpperCase() + text.substr(1));
+}
+
+/**
+ * @description
+ * A function that creates a group of action creators with the same source.
+ *
+ * @param config An object that contains a source and dictionary of events.
+ * An event is a key-value pair of an event name and event props.
+ * @returns A dictionary of action creators.
+ * The name of each action creator is created by camel casing the event name.
+ * The type of each action is created using the "[Source] Event Name" pattern.
+ *
+ * @usageNotes
+ *
+ * ```ts
+ * const authApiActions = createActionGroup({
+ *   source: 'Auth API',
+ *   events: {
+ *     // defining events with payload using the `props` function
+ *     'Login Success': props<{ userId: number; token: string }>(),
+ *     'Login Failure': props<{ error: string }>(),
+ *
+ *     // defining an event without payload using the `emptyProps` function
+ *     'Logout Success': emptyProps(),
+ *
+ *     // defining an event with payload using the props factory
+ *     'Logout Failure': (error: Error) => ({ error }),
+ *   },
+ * });
+ *
+ * // action type: "[Auth API] Login Success"
+ * authApiActions.loginSuccess({ userId: 10, token: 'ngrx' });
+ *
+ * // action type: "[Auth API] Login Failure"
+ * authApiActions.loginFailure({ error: 'Login Failure!' });
+ *
+ * // action type: "[Auth API] Logout Success"
+ * authApiActions.logoutSuccess();
+ *
+ * // action type: "[Auth API] Logout Failure";
+ * authApiActions.logoutFailure(new Error('Logout Failure!'));
+ * ```
+ */
+function createActionGroup(config) {
+    const { source, events } = config;
+    return Object.keys(events).reduce((actionGroup, eventName) => ({
+        ...actionGroup,
+        [toActionName(eventName)]: createAction(toActionType(source, eventName), events[eventName]),
+    }), {});
+}
+function emptyProps() {
+    return props();
+}
+function toActionName(eventName) {
+    return eventName
+        .trim()
+        .toLowerCase()
+        .split(' ')
+        .map((word, i) => (i === 0 ? word : capitalize(word)))
+        .join('');
+}
+function toActionType(source, eventName) {
+    return `[${source}] ${eventName}`;
+}
+
 const INIT = '@ngrx/store/init';
 class ActionsSubject extends BehaviorSubject {
     constructor() {
@@ -485,10 +552,6 @@ function select(pathOrMapFn, propsOrPath, ...paths) {
         }
         return mapped$.pipe(distinctUntilChanged());
     };
-}
-
-function capitalize(text) {
-    return (text.charAt(0).toUpperCase() + text.substr(1));
 }
 
 const RUNTIME_CHECK_URL = 'https://ngrx.io/guide/store/configuration/runtime-checks';
@@ -1352,5 +1415,5 @@ function createReducer(initialState, ...ons) {
  * Generated bundle index. Do not edit.
  */
 
-export { ACTIVE_RUNTIME_CHECKS, ActionsSubject, FEATURE_REDUCERS, INIT, INITIAL_REDUCERS, INITIAL_STATE, META_REDUCERS, REDUCER_FACTORY, ReducerManager, ReducerManagerDispatcher, ReducerObservable, STORE_FEATURES, ScannedActionsSubject, State, StateObservable, Store, StoreFeatureModule, StoreModule, StoreRootModule, UPDATE, USER_PROVIDED_META_REDUCERS, USER_RUNTIME_CHECKS, combineReducers, compose, createAction, createFeature, createFeatureSelector, createReducer, createReducerFactory, createSelector, createSelectorFactory, defaultMemoize, defaultStateFn, isNgrxMockEnvironment, on, props, reduceState, resultMemoize, select, setNgrxMockEnvironment, union };
+export { ACTIVE_RUNTIME_CHECKS, ActionsSubject, FEATURE_REDUCERS, INIT, INITIAL_REDUCERS, INITIAL_STATE, META_REDUCERS, REDUCER_FACTORY, ReducerManager, ReducerManagerDispatcher, ReducerObservable, STORE_FEATURES, ScannedActionsSubject, State, StateObservable, Store, StoreFeatureModule, StoreModule, StoreRootModule, UPDATE, USER_PROVIDED_META_REDUCERS, USER_RUNTIME_CHECKS, combineReducers, compose, createAction, createActionGroup, createFeature, createFeatureSelector, createReducer, createReducerFactory, createSelector, createSelectorFactory, defaultMemoize, defaultStateFn, emptyProps, isNgrxMockEnvironment, on, props, reduceState, resultMemoize, select, setNgrxMockEnvironment, union };
 //# sourceMappingURL=ngrx-store.mjs.map
