@@ -106,7 +106,7 @@ exports.underscore = underscore;
  ```
  */
 function capitalize(str) {
-    return str.charAt(0).toUpperCase() + str.substr(1);
+    return str.charAt(0).toUpperCase() + str.substring(1);
 }
 exports.capitalize = capitalize;
 /**
