@@ -10,7 +10,7 @@ var __values = (this && this.__values) || function(o) {
     };
     throw new TypeError(s ? "Object is not iterable." : "Symbol.iterator is not defined.");
 };
-exports.__esModule = true;
+Object.defineProperty(exports, "__esModule", { value: true });
 exports.commitChanges = exports.createChangeRecorder = exports.createRemoveChange = exports.createReplaceChange = exports.ReplaceChange = exports.RemoveChange = exports.InsertChange = exports.NoopChange = void 0;
 /**
  * An operation that does nothing.
@@ -38,7 +38,7 @@ var InsertChange = /** @class */ (function () {
         if (pos < 0) {
             throw new Error('Negative positions are invalid');
         }
-        this.description = "Inserted " + toAdd + " into position " + pos + " of " + path;
+        this.description = "Inserted ".concat(toAdd, " into position ").concat(pos, " of ").concat(path);
         this.order = pos;
     }
     /**
@@ -49,7 +49,7 @@ var InsertChange = /** @class */ (function () {
         return host.read(this.path).then(function (content) {
             var prefix = content.substring(0, _this.pos);
             var suffix = content.substring(_this.pos);
-            return host.write(_this.path, "" + prefix + _this.toAdd + suffix);
+            return host.write(_this.path, "".concat(prefix).concat(_this.toAdd).concat(suffix));
         });
     };
     return InsertChange;
@@ -66,7 +66,7 @@ var RemoveChange = /** @class */ (function () {
         if (pos < 0 || end < 0) {
             throw new Error('Negative positions are invalid');
         }
-        this.description = "Removed text in position " + pos + " to " + end + " of " + path;
+        this.description = "Removed text in position ".concat(pos, " to ").concat(end, " of ").concat(path);
         this.order = pos;
     }
     RemoveChange.prototype.apply = function (host) {
@@ -75,7 +75,7 @@ var RemoveChange = /** @class */ (function () {
             var prefix = content.substring(0, _this.pos);
             var suffix = content.substring(_this.end);
             // TODO: throw error if toRemove doesn't match removed string.
-            return host.write(_this.path, "" + prefix + suffix);
+            return host.write(_this.path, "".concat(prefix).concat(suffix));
         });
     };
     return RemoveChange;
@@ -93,7 +93,7 @@ var ReplaceChange = /** @class */ (function () {
         if (pos < 0) {
             throw new Error('Negative positions are invalid');
         }
-        this.description = "Replaced " + oldText + " into position " + pos + " of " + path + " with " + newText;
+        this.description = "Replaced ".concat(oldText, " into position ").concat(pos, " of ").concat(path, " with ").concat(newText);
         this.order = pos;
     }
     ReplaceChange.prototype.apply = function (host) {
@@ -103,10 +103,10 @@ var ReplaceChange = /** @class */ (function () {
             var suffix = content.substring(_this.pos + _this.oldText.length);
             var text = content.substring(_this.pos, _this.pos + _this.oldText.length);
             if (text !== _this.oldText) {
-                return Promise.reject(new Error("Invalid replace: \"" + text + "\" != \"" + _this.oldText + "\"."));
+                return Promise.reject(new Error("Invalid replace: \"".concat(text, "\" != \"").concat(_this.oldText, "\".")));
             }
             // TODO: throw error if oldText doesn't match removed string.
-            return host.write(_this.path, "" + prefix + _this.newText + suffix);
+            return host.write(_this.path, "".concat(prefix).concat(_this.newText).concat(suffix));
         });
     };
     return ReplaceChange;
@@ -143,7 +143,7 @@ function createChangeRecorder(tree, path, changes) {
     catch (e_1_1) { e_1 = { error: e_1_1 }; }
     finally {
         try {
-            if (changes_1_1 && !changes_1_1.done && (_a = changes_1["return"])) _a.call(changes_1);
+            if (changes_1_1 && !changes_1_1.done && (_a = changes_1.return)) _a.call(changes_1);
         }
         finally { if (e_1) throw e_1.error; }
     }

@@ -35,7 +35,7 @@ var __spreadArray = (this && this.__spreadArray) || function (to, from, pack) {
     }
     return to.concat(ar || Array.prototype.slice.call(from));
 };
-exports.__esModule = true;
+Object.defineProperty(exports, "__esModule", { value: true });
 exports.getPrefix = exports.omit = exports.addReducerImportToNgModule = exports.addReducerToActionReducerMap = exports.addReducerToStateInterface = exports.addReducerToState = void 0;
 var ts = require("typescript");
 var stringUtils = require("./strings");
@@ -50,23 +50,23 @@ function addReducerToState(options) {
         if (!options.reducers) {
             return host;
         }
-        var reducersPath = (0, core_1.normalize)("/" + options.path + "/" + options.reducers);
+        var reducersPath = (0, core_1.normalize)("/".concat(options.path, "/").concat(options.reducers));
         if (!host.exists(reducersPath)) {
-            throw new Error("Specified reducers path " + reducersPath + " does not exist");
+            throw new Error("Specified reducers path ".concat(reducersPath, " does not exist"));
         }
         var text = host.read(reducersPath);
         if (text === null) {
-            throw new schematics_1.SchematicsException("File " + reducersPath + " does not exist.");
+            throw new schematics_1.SchematicsException("File ".concat(reducersPath, " does not exist."));
         }
         var sourceText = text.toString('utf-8');
         var source = ts.createSourceFile(reducersPath, sourceText, ts.ScriptTarget.Latest, true);
-        var reducerPath = "/" + options.path + "/" +
+        var reducerPath = "/".concat(options.path, "/") +
             (options.flat ? '' : stringUtils.dasherize(options.name) + '/') +
             (options.group ? 'reducers/' : '') +
             stringUtils.dasherize(options.name) +
             '.reducer';
         var relativePath = (0, find_module_1.buildRelativePath)(reducersPath, reducerPath);
-        var reducerImport = (0, ast_utils_1.insertImport)(source, reducersPath, "* as from" + stringUtils.classify(options.name), relativePath, true);
+        var reducerImport = (0, ast_utils_1.insertImport)(source, reducersPath, "* as from".concat(stringUtils.classify(options.name)), relativePath, true);
         var stateInterfaceInsert = addReducerToStateInterface(source, reducersPath, options);
         var reducerMapInsert = addReducerToActionReducerMap(source, reducersPath, options);
         var changes = [reducerImport, stateInterfaceInsert, reducerMapInsert];
@@ -82,7 +82,7 @@ function addReducerToState(options) {
         catch (e_1_1) { e_1 = { error: e_1_1 }; }
         finally {
             try {
-                if (changes_1_1 && !changes_1_1.done && (_a = changes_1["return"])) _a.call(changes_1);
+                if (changes_1_1 && !changes_1_1.done && (_a = changes_1.return)) _a.call(changes_1);
             }
             finally { if (e_1) throw e_1.error; }
         }
@@ -103,13 +103,13 @@ function addReducerToStateInterface(source, reducersPath, options) {
     var state = options.plural
         ? stringUtils.pluralize(options.name)
         : stringUtils.camelize(options.name);
-    var keyInsert = "[from" + stringUtils.classify(options.name) + "." + stringUtils.camelize(state) + "FeatureKey]: from" + stringUtils.classify(options.name) + ".State;";
+    var keyInsert = "[from".concat(stringUtils.classify(options.name), ".").concat(stringUtils.camelize(state), "FeatureKey]: from").concat(stringUtils.classify(options.name), ".State;");
     var expr = node;
     var position;
     var toInsert;
     if (expr.members.length === 0) {
         position = expr.getEnd() - 1;
-        toInsert = "  " + keyInsert + "\n";
+        toInsert = "  ".concat(keyInsert, "\n");
     }
     else {
         node = expr.members[expr.members.length - 1];
@@ -118,10 +118,10 @@ function addReducerToStateInterface(source, reducersPath, options) {
         var text = node.getFullText(source);
         var matches = text.match(/^\r?\n+(\s*)/);
         if (matches && matches.length > 0) {
-            toInsert = "" + matches[1] + keyInsert + "\n";
+            toInsert = "".concat(matches[1]).concat(keyInsert, "\n");
         }
         else {
-            toInsert = "\n" + keyInsert;
+            toInsert = "\n".concat(keyInsert);
         }
     }
     return new change_1.InsertChange(reducersPath, position, toInsert);
@@ -153,13 +153,13 @@ function addReducerToActionReducerMap(source, reducersPath, options) {
     var state = options.plural
         ? stringUtils.pluralize(options.name)
         : stringUtils.camelize(options.name);
-    var keyInsert = "[from" + stringUtils.classify(options.name) + "." + stringUtils.camelize(state) + "FeatureKey]: from" + stringUtils.classify(options.name) + ".reducer,";
+    var keyInsert = "[from".concat(stringUtils.classify(options.name), ".").concat(stringUtils.camelize(state), "FeatureKey]: from").concat(stringUtils.classify(options.name), ".reducer,");
     var expr = node;
     var position;
     var toInsert;
     if (expr.properties.length === 0) {
         position = expr.getEnd() - 1;
-        toInsert = "  " + keyInsert + "\n";
+        toInsert = "  ".concat(keyInsert, "\n");
     }
     else {
         node = expr.properties[expr.properties.length - 1];
@@ -168,10 +168,10 @@ function addReducerToActionReducerMap(source, reducersPath, options) {
         var text = node.getFullText(source);
         var matches = text.match(/^\r?\n+(\s*)/);
         if (matches && matches.length > 0) {
-            toInsert = "\n" + matches[1] + keyInsert;
+            toInsert = "\n".concat(matches[1]).concat(keyInsert);
         }
         else {
-            toInsert = "\n" + keyInsert;
+            toInsert = "\n".concat(keyInsert);
         }
     }
     return new change_1.InsertChange(reducersPath, position, toInsert);
@@ -188,28 +188,28 @@ function addReducerImportToNgModule(options) {
         }
         var modulePath = options.module;
         if (!host.exists(options.module)) {
-            throw new Error("Specified module path " + modulePath + " does not exist");
+            throw new Error("Specified module path ".concat(modulePath, " does not exist"));
         }
         var text = host.read(modulePath);
         if (text === null) {
-            throw new schematics_1.SchematicsException("File " + modulePath + " does not exist.");
+            throw new schematics_1.SchematicsException("File ".concat(modulePath, " does not exist."));
         }
         var sourceText = text.toString('utf-8');
         var source = ts.createSourceFile(modulePath, sourceText, ts.ScriptTarget.Latest, true);
         var commonImports = [
             (0, ast_utils_1.insertImport)(source, modulePath, 'StoreModule', '@ngrx/store'),
         ];
-        var reducerPath = "/" + options.path + "/" +
+        var reducerPath = "/".concat(options.path, "/") +
             (options.flat ? '' : stringUtils.dasherize(options.name) + '/') +
             (options.group ? 'reducers/' : '') +
             stringUtils.dasherize(options.name) +
             '.reducer';
         var relativePath = (0, find_module_1.buildRelativePath)(modulePath, reducerPath);
-        var reducerImport = (0, ast_utils_1.insertImport)(source, modulePath, "* as from" + stringUtils.classify(options.name), relativePath, true);
+        var reducerImport = (0, ast_utils_1.insertImport)(source, modulePath, "* as from".concat(stringUtils.classify(options.name)), relativePath, true);
         var state = options.plural
             ? stringUtils.pluralize(options.name)
             : stringUtils.camelize(options.name);
-        var _b = __read((0, ast_utils_1.addImportToModule)(source, modulePath, "StoreModule.forFeature(from" + stringUtils.classify(options.name) + "." + state + "FeatureKey, from" + stringUtils.classify(options.name) + ".reducer)", relativePath), 1), storeNgModuleImport = _b[0];
+        var _b = __read((0, ast_utils_1.addImportToModule)(source, modulePath, "StoreModule.forFeature(from".concat(stringUtils.classify(options.name), ".").concat(state, "FeatureKey, from").concat(stringUtils.classify(options.name), ".reducer)"), relativePath), 1), storeNgModuleImport = _b[0];
         var changes = __spreadArray(__spreadArray([], __read(commonImports), false), [reducerImport, storeNgModuleImport], false);
         var recorder = host.beginUpdate(modulePath);
         try {
@@ -223,7 +223,7 @@ function addReducerImportToNgModule(options) {
         catch (e_2_1) { e_2 = { error: e_2_1 }; }
         finally {
             try {
-                if (changes_2_1 && !changes_2_1.done && (_a = changes_2["return"])) _a.call(changes_2);
+                if (changes_2_1 && !changes_2_1.done && (_a = changes_2.return)) _a.call(changes_2);
             }
             finally { if (e_2) throw e_2.error; }
         }
@@ -242,9 +242,7 @@ function omit(object, keyToRemove) {
 }
 exports.omit = omit;
 function getPrefix(options) {
-    return options.creators
-        ? stringUtils.camelize(options.prefix || 'load')
-        : stringUtils.capitalize(options.prefix || 'load');
+    return stringUtils.camelize(options.prefix || 'load');
 }
 exports.getPrefix = getPrefix;
 //# sourceMappingURL=ngrx-utils.js.map

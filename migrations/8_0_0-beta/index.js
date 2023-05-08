@@ -28,7 +28,7 @@ var __spreadArray = (this && this.__spreadArray) || function (to, from, pack) {
     }
     return to.concat(ar || Array.prototype.slice.call(from));
 };
-exports.__esModule = true;
+Object.defineProperty(exports, "__esModule", { value: true });
 var ts = require("typescript");
 var core_1 = require("@angular-devkit/core");
 var schematics_1 = require("@angular-devkit/schematics");
@@ -50,7 +50,7 @@ function updateMetaReducersToken() {
 function default_1() {
     return (0, schematics_1.chain)([updateMetaReducersToken()]);
 }
-exports["default"] = default_1;
+exports.default = default_1;
 function findMetaReducersImportStatements(sourceFile, createChange, logger) {
     var canRunSchematics = false;
     var metaReducerImports = sourceFile.statements

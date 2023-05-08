@@ -1,5 +1,5 @@
 "use strict";
-exports.__esModule = true;
+Object.defineProperty(exports, "__esModule", { value: true });
 exports.updatePackage = void 0;
 var schematics_1 = require("@angular-devkit/schematics");
 function updatePackage(name) {
@@ -16,11 +16,11 @@ function updatePackage(name) {
         }
         var dependencyCategories = ['dependencies', 'devDependencies'];
         dependencyCategories.forEach(function (category) {
-            var packageName = "@ngrx/" + name;
+            var packageName = "@ngrx/".concat(name);
             if (pkg[category] && pkg[category][packageName]) {
                 var firstChar = pkg[category][packageName][0];
                 var suffix = match(firstChar, '^') || match(firstChar, '~');
-                pkg[category][packageName] = suffix + "6.0.0";
+                pkg[category][packageName] = "".concat(suffix, "6.0.0");
             }
         });
         tree.overwrite(pkgPath, JSON.stringify(pkg, null, 2));

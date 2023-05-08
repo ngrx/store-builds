@@ -13,7 +13,10 @@
       "type": "string",
       "format": "path",
       "description": "The path to create the state.",
-      "visible": false
+      "visible": false,
+      "$default": {
+        "$source": "workingDirectory"
+      }
     },
     "project": {
       "type": "string",
@@ -46,6 +49,11 @@
       "type": "boolean",
       "default": false,
       "description": "Do not register the NgRx ESLint Plugin."
+    },
+    "standalone": {
+      "type": "boolean",
+      "default": false,
+      "description": "Configure store for standalone application"
     }
   },
   "required": []

@@ -1,5 +1,5 @@
 "use strict";
-exports.__esModule = true;
+Object.defineProperty(exports, "__esModule", { value: true });
 exports.buildRelativePath = exports.findModule = exports.findModuleFromOptions = void 0;
 /**
  * @license
@@ -37,7 +37,7 @@ function findModuleFromOptions(host, options) {
             return (0, core_1.normalize)(modulePath + '/' + moduleBaseName + '.module.ts');
         }
         else {
-            throw new Error("Specified module path " + modulePath + " does not exist");
+            throw new Error("Specified module path ".concat(modulePath, " does not exist"));
         }
     }
 }
@@ -73,12 +73,12 @@ function buildRelativePath(from, to) {
     var relativePath = (0, core_1.relative)(fromDirectory, toDirectory);
     var fixedRelativePath = relativePath.startsWith('.')
         ? relativePath
-        : "./" + relativePath;
+        : "./".concat(relativePath);
     return !toFileName || toFileName === 'index.ts'
         ? fixedRelativePath
-        : "" + (fixedRelativePath.endsWith('/')
+        : "".concat(fixedRelativePath.endsWith('/')
             ? fixedRelativePath
-            : fixedRelativePath + '/') + convertToTypeScriptFileName(toFileName);
+            : fixedRelativePath + '/').concat(convertToTypeScriptFileName(toFileName));
 }
 exports.buildRelativePath = buildRelativePath;
 function parsePath(path) {
@@ -88,7 +88,7 @@ function parsePath(path) {
     return {
         path: pathNormalized,
         filename: filename,
-        directory: directory
+        directory: directory,
     };
 }
 /**

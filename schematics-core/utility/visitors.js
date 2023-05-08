@@ -5,7 +5,7 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
     function verb(n) { return function (v) { return step([n, v]); }; }
     function step(op) {
         if (f) throw new TypeError("Generator is already executing.");
-        while (_) try {
+        while (g && (g = 0, op[0] && (_ = 0)), _) try {
             if (f = 1, y && (t = op[0] & 2 ? y["return"] : op[0] ? y["throw"] || ((t = y["return"]) && t.call(y), 0) : y.next) && !(t = t.call(y, op[1])).done) return t;
             if (y = 0, t) op = [op[0] & 2, t.value];
             switch (op[0]) {
@@ -53,7 +53,7 @@ var __read = (this && this.__read) || function (o, n) {
     }
     return ar;
 };
-exports.__esModule = true;
+Object.defineProperty(exports, "__esModule", { value: true });
 exports.visitDecorator = exports.visitNgModules = exports.visitComponents = exports.visitNgModuleExports = exports.visitNgModuleImports = exports.visitTemplates = exports.visitTSSourceFiles = void 0;
 var ts = require("typescript");
 var core_1 = require("@angular-devkit/core");
@@ -69,7 +69,7 @@ function visitTSSourceFiles(tree, visitor) {
     catch (e_1_1) { e_1 = { error: e_1_1 }; }
     finally {
         try {
-            if (_c && !_c.done && (_a = _b["return"])) _a.call(_b);
+            if (_c && !_c.done && (_a = _b.return)) _a.call(_b);
         }
         finally { if (e_1) throw e_1.error; }
     }
@@ -90,7 +90,7 @@ function visitTemplates(tree, visitor) {
                             fileName: source.fileName,
                             content: n.initializer.text,
                             inline: true,
-                            start: templateStartIdx
+                            start: templateStartIdx,
                         }, tree);
                         return;
                     }
@@ -109,7 +109,7 @@ function visitTemplates(tree, visitor) {
                             fileName: templatePath,
                             content: fileContent.toString(),
                             inline: false,
-                            start: 0
+                            start: 0,
                         }, tree);
                         return;
                     }
@@ -156,11 +156,11 @@ function visitDecorator(sourceFile, decoratorName, callback) {
             ts.forEachChild(node, findClassDeclaration);
         }
         var classDeclarationNode = node;
-        if (!classDeclarationNode.decorators ||
-            !classDeclarationNode.decorators.length) {
+        var decorators = ts.getDecorators(classDeclarationNode);
+        if (!decorators || !decorators.length) {
             return;
         }
-        var componentDecorator = classDeclarationNode.decorators.find(function (d) {
+        var componentDecorator = decorators.find(function (d) {
             return (ts.isCallExpression(d.expression) &&
                 ts.isIdentifier(d.expression.expression) &&
                 d.expression.expression.text === decoratorName);
@@ -211,7 +211,7 @@ function visit(directory) {
                 return [3 /*break*/, 7];
             case 6:
                 try {
-                    if (_b && !_b.done && (_e = _a["return"])) _e.call(_a);
+                    if (_b && !_b.done && (_e = _a.return)) _e.call(_a);
                 }
                 finally { if (e_2) throw e_2.error; }
                 return [7 /*endfinally*/];
@@ -239,7 +239,7 @@ function visit(directory) {
                 return [3 /*break*/, 14];
             case 13:
                 try {
-                    if (_d && !_d.done && (_f = _c["return"])) _f.call(_c);
+                    if (_d && !_d.done && (_f = _c.return)) _f.call(_c);
                 }
                 finally { if (e_3) throw e_3.error; }
                 return [7 /*endfinally*/];

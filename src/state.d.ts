@@ -15,7 +15,7 @@ export declare class State<T> extends BehaviorSubject<any> implements OnDestroy 
     static ɵfac: i0.ɵɵFactoryDeclaration<State<any>, never>;
     static ɵprov: i0.ɵɵInjectableDeclaration<State<any>>;
 }
-export declare type StateActionPair<T, V extends Action = Action> = {
+export type StateActionPair<T, V extends Action = Action> = {
     state: T | undefined;
     action?: V;
 };

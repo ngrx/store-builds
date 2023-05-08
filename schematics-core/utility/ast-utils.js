@@ -35,7 +35,7 @@ var __spreadArray = (this && this.__spreadArray) || function (to, from, pack) {
     }
     return to.concat(ar || Array.prototype.slice.call(from));
 };
-exports.__esModule = true;
+Object.defineProperty(exports, "__esModule", { value: true });
 exports.containsProperty = exports.replaceImport = exports.insertImport = exports.addBootstrapToModule = exports.addExportToModule = exports.addProviderToComponent = exports.addProviderToModule = exports.addImportToModule = exports.addDeclarationToModule = exports.getDecoratorMetadata = exports.getContentOfKeyLiteral = exports.insertAfterLastOccurrence = exports.getSourceNodes = exports.findNodes = void 0;
 /* istanbul ignore file */
 /**
@@ -83,7 +83,7 @@ function findNodes(node, kind, max) {
         catch (e_1_1) { e_1 = { error: e_1_1 }; }
         finally {
             try {
-                if (_c && !_c.done && (_a = _b["return"])) _a.call(_b);
+                if (_c && !_c.done && (_a = _b.return)) _a.call(_b);
             }
             finally { if (e_1) throw e_1.error; }
         }
@@ -140,7 +140,7 @@ function insertAfterLastOccurrence(nodes, toInsert, file, fallbackPos, syntaxKin
         lastItem = findNodes(lastItem, syntaxKind).sort(nodesByPosition).pop();
     }
     if (!lastItem && fallbackPos == undefined) {
-        throw new Error("tried to insert " + toInsert + " as first occurence with no fallback position");
+        throw new Error("tried to insert ".concat(toInsert, " as first occurence with no fallback position"));
     }
     var lastItemPosition = lastItem ? lastItem.end : fallbackPos;
     return new change_1.InsertChange(file, lastItemPosition, toInsert);
@@ -221,7 +221,7 @@ function getDecoratorMetadata(source, identifier, module) {
         catch (e_2_1) { e_2 = { error: e_2_1 }; }
         finally {
             try {
-                if (_c && !_c.done && (_a = _b["return"])) _a.call(_b);
+                if (_c && !_c.done && (_a = _b.return)) _a.call(_b);
             }
             finally { if (e_2) throw e_2.error; }
         }
@@ -292,7 +292,7 @@ function _addSymbolToNgModuleMetadata(source, ngModulePath, metadataField, symbo
         var toInsert_1;
         if (expr.properties.length == 0) {
             position_1 = expr.getEnd() - 1;
-            toInsert_1 = "  " + metadataField + ": [" + symbolName + "]\n";
+            toInsert_1 = "  ".concat(metadataField, ": [").concat(symbolName, "]\n");
         }
         else {
             node = expr.properties[expr.properties.length - 1];
@@ -301,10 +301,10 @@ function _addSymbolToNgModuleMetadata(source, ngModulePath, metadataField, symbo
             var text = node.getFullText(source);
             var matches = text.match(/^\r?\n\s*/);
             if (matches.length > 0) {
-                toInsert_1 = "," + matches[0] + metadataField + ": [" + symbolName + "]";
+                toInsert_1 = ",".concat(matches[0]).concat(metadataField, ": [").concat(symbolName, "]");
             }
             else {
-                toInsert_1 = ", " + metadataField + ": [" + symbolName + "]";
+                toInsert_1 = ", ".concat(metadataField, ": [").concat(symbolName, "]");
             }
         }
         var newMetadataProperty = new change_1.InsertChange(ngModulePath, position_1, toInsert_1);
@@ -360,10 +360,10 @@ function _addSymbolToNgModuleMetadata(source, ngModulePath, metadataField, symbo
                     var text = lastEffect.getFullText(source);
                     var effectInsert = void 0;
                     if (text.match('^\r?\r?\n')) {
-                        effectInsert = "," + text.match(/^\r?\n\s+/)[0] + effectsSymbol;
+                        effectInsert = ",".concat(text.match(/^\r?\n\s+/)[0]).concat(effectsSymbol);
                     }
                     else {
-                        effectInsert = ", " + effectsSymbol;
+                        effectInsert = ", ".concat(effectsSymbol);
                     }
                     return [new change_1.InsertChange(ngModulePath, epos, effectInsert)];
                 }
@@ -381,7 +381,7 @@ function _addSymbolToNgModuleMetadata(source, ngModulePath, metadataField, symbo
         var expr = node;
         if (expr.properties.length == 0) {
             position = expr.getEnd() - 1;
-            toInsert = "  " + metadataField + ": [" + symbolName + "]\n";
+            toInsert = "  ".concat(metadataField, ": [").concat(symbolName, "]\n");
         }
         else {
             node = expr.properties[expr.properties.length - 1];
@@ -389,26 +389,26 @@ function _addSymbolToNgModuleMetadata(source, ngModulePath, metadataField, symbo
             // Get the indentation of the last element, if any.
             var text = node.getFullText(source);
             if (text.match('^\r?\r?\n')) {
-                toInsert = "," + text.match(/^\r?\n\s+/)[0] + metadataField + ": [" + symbolName + "]";
+                toInsert = ",".concat(text.match(/^\r?\n\s+/)[0]).concat(metadataField, ": [").concat(symbolName, "]");
             }
             else {
-                toInsert = ", " + metadataField + ": [" + symbolName + "]";
+                toInsert = ", ".concat(metadataField, ": [").concat(symbolName, "]");
             }
         }
     }
     else if (node.kind == ts.SyntaxKind.ArrayLiteralExpression) {
         // We found the field but it's empty. Insert it just before the `]`.
         position--;
-        toInsert = "" + symbolName;
+        toInsert = "".concat(symbolName);
     }
     else {
         // Get the indentation of the last element, if any.
         var text = node.getFullText(source);
         if (text.match(/^\r?\n/)) {
-            toInsert = "," + text.match(/^\r?\n(\r?)\s+/)[0] + symbolName;
+            toInsert = ",".concat(text.match(/^\r?\n(\r?)\s+/)[0]).concat(symbolName);
         }
         else {
-            toInsert = ", " + symbolName;
+            toInsert = ", ".concat(symbolName);
         }
     }
     var insert = new change_1.InsertChange(ngModulePath, position, toInsert);
@@ -448,7 +448,7 @@ function _addSymbolToComponentMetadata(source, componentPath, metadataField, sym
         var toInsert_2;
         if (expr.properties.length == 0) {
             position_2 = expr.getEnd() - 1;
-            toInsert_2 = "  " + metadataField + ": [" + symbolName + "]\n";
+            toInsert_2 = "  ".concat(metadataField, ": [").concat(symbolName, "]\n");
         }
         else {
             node = expr.properties[expr.properties.length - 1];
@@ -457,10 +457,10 @@ function _addSymbolToComponentMetadata(source, componentPath, metadataField, sym
             var text = node.getFullText(source);
             var matches = text.match(/^\r?\n\s*/);
             if (matches.length > 0) {
-                toInsert_2 = "," + matches[0] + metadataField + ": [" + symbolName + "]";
+                toInsert_2 = ",".concat(matches[0]).concat(metadataField, ": [").concat(symbolName, "]");
             }
             else {
-                toInsert_2 = ", " + metadataField + ": [" + symbolName + "]";
+                toInsert_2 = ", ".concat(metadataField, ": [").concat(symbolName, "]");
             }
         }
         var newMetadataProperty = new change_1.InsertChange(componentPath, position_2, toInsert_2);
@@ -500,7 +500,7 @@ function _addSymbolToComponentMetadata(source, componentPath, metadataField, sym
         var expr = node;
         if (expr.properties.length == 0) {
             position = expr.getEnd() - 1;
-            toInsert = "  " + metadataField + ": [" + symbolName + "]\n";
+            toInsert = "  ".concat(metadataField, ": [").concat(symbolName, "]\n");
         }
         else {
             node = expr.properties[expr.properties.length - 1];
@@ -508,26 +508,26 @@ function _addSymbolToComponentMetadata(source, componentPath, metadataField, sym
             // Get the indentation of the last element, if any.
             var text = node.getFullText(source);
             if (text.match('^\r?\r?\n')) {
-                toInsert = "," + text.match(/^\r?\n\s+/)[0] + metadataField + ": [" + symbolName + "]";
+                toInsert = ",".concat(text.match(/^\r?\n\s+/)[0]).concat(metadataField, ": [").concat(symbolName, "]");
             }
             else {
-                toInsert = ", " + metadataField + ": [" + symbolName + "]";
+                toInsert = ", ".concat(metadataField, ": [").concat(symbolName, "]");
             }
         }
     }
     else if (node.kind == ts.SyntaxKind.ArrayLiteralExpression) {
         // We found the field but it's empty. Insert it just before the `]`.
         position--;
-        toInsert = "" + symbolName;
+        toInsert = "".concat(symbolName);
     }
     else {
         // Get the indentation of the last element, if any.
         var text = node.getFullText(source);
         if (text.match(/^\r?\n/)) {
-            toInsert = "," + text.match(/^\r?\n(\r?)\s+/)[0] + symbolName;
+            toInsert = ",".concat(text.match(/^\r?\n(\r?)\s+/)[0]).concat(symbolName);
         }
         else {
-            toInsert = ", " + symbolName;
+            toInsert = ", ".concat(symbolName);
         }
     }
     var insert = new change_1.InsertChange(componentPath, position, toInsert);
@@ -619,7 +619,7 @@ function insertImport(source, fileToEdit, symbolName, fileName, isDefault) {
         if (importTextNodes.length === 0) {
             var fallbackPos_1 = findNodes(relevantImports[0], ts.SyntaxKind.CloseBraceToken)[0].getStart() ||
                 findNodes(relevantImports[0], ts.SyntaxKind.FromKeyword)[0].getStart();
-            return insertAfterLastOccurrence(imports_1, ", " + symbolName, fileToEdit, fallbackPos_1);
+            return insertAfterLastOccurrence(imports_1, ", ".concat(symbolName), fileToEdit, fallbackPos_1);
         }
         return new change_1.NoopChange();
     }
@@ -634,8 +634,8 @@ function insertImport(source, fileToEdit, symbolName, fileName, isDefault) {
     // if there are no imports or 'use strict' statement, insert import at beginning of file
     var insertAtBeginning = allImports.length === 0 && useStrict.length === 0;
     var separator = insertAtBeginning ? '' : ';\n';
-    var toInsert = separator + "import " + open + symbolName + close +
-        (" from '" + fileName + "'" + (insertAtBeginning ? ';\n' : ''));
+    var toInsert = "".concat(separator, "import ").concat(open).concat(symbolName).concat(close) +
+        " from '".concat(fileName, "'").concat(insertAtBeginning ? ';\n' : '');
     return insertAfterLastOccurrence(allImports, toInsert, fileToEdit, fallbackPos, ts.SyntaxKind.StringLiteral);
 }
 exports.insertImport = insertImport;
@@ -644,8 +644,8 @@ function replaceImport(sourceFile, path, importFrom, importAsIs, importToBe) {
         .filter(ts.isImportDeclaration)
         .filter(function (_a) {
         var moduleSpecifier = _a.moduleSpecifier;
-        return moduleSpecifier.getText(sourceFile) === "'" + importFrom + "'" ||
-            moduleSpecifier.getText(sourceFile) === "\"" + importFrom + "\"";
+        return moduleSpecifier.getText(sourceFile) === "'".concat(importFrom, "'") ||
+            moduleSpecifier.getText(sourceFile) === "\"".concat(importFrom, "\"");
     });
     if (imports.length === 0) {
         return [];

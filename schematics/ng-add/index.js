@@ -37,12 +37,13 @@ var __values = (this && this.__values) || function(o) {
     };
     throw new TypeError(s ? "Object is not iterable." : "Symbol.iterator is not defined.");
 };
-exports.__esModule = true;
+Object.defineProperty(exports, "__esModule", { value: true });
 var ts = require("typescript");
-var core_1 = require("@angular-devkit/core");
 var schematics_1 = require("@angular-devkit/schematics");
 var tasks_1 = require("@angular-devkit/schematics/tasks");
 var schematics_core_1 = require("../../schematics-core");
+var standalone_1 = require("@schematics/angular/private/standalone");
+var project_1 = require("../../schematics-core/utility/project");
 function addImportToNgModule(options) {
     return function (host) {
         var e_1, _a;
@@ -55,7 +56,7 @@ function addImportToNgModule(options) {
         }
         var text = host.read(modulePath);
         if (text === null) {
-            throw new schematics_1.SchematicsException("File " + modulePath + " does not exist.");
+            throw new schematics_1.SchematicsException("File ".concat(modulePath, " does not exist."));
         }
         var sourceText = text.toString('utf-8');
         var source = ts.createSourceFile(modulePath, sourceText, ts.ScriptTarget.Latest, true);
@@ -63,8 +64,8 @@ function addImportToNgModule(options) {
         var storeModuleConfig = options.minimal
             ? "{}"
             : "{\n      metaReducers\n    }";
-        var storeModuleSetup = "StoreModule.forRoot(" + storeModuleReducers + ", " + storeModuleConfig + ")";
-        var statePath = "/" + options.path + "/" + options.statePath;
+        var storeModuleSetup = "StoreModule.forRoot(".concat(storeModuleReducers, ", ").concat(storeModuleConfig, ")");
+        var statePath = "/".concat(options.path, "/").concat(options.statePath);
         var relativePath = (0, schematics_core_1.buildRelativePath)(modulePath, statePath);
         var _b = __read((0, schematics_core_1.addImportToModule)(source, modulePath, storeModuleSetup, relativePath), 1), storeNgModuleImport = _b[0];
         var changes = [
@@ -88,7 +89,7 @@ function addImportToNgModule(options) {
         catch (e_1_1) { e_1 = { error: e_1_1 }; }
         finally {
             try {
-                if (changes_1_1 && !changes_1_1.done && (_a = changes_1["return"])) _a.call(changes_1);
+                if (changes_1_1 && !changes_1_1.done && (_a = changes_1.return)) _a.call(changes_1);
             }
             finally { if (e_1) throw e_1.error; }
         }
@@ -105,12 +106,50 @@ function addNgRxStoreToPackageJson() {
 }
 function addNgRxESLintPlugin() {
     return function (host, context) {
-        (0, schematics_core_1.addPackageToPackageJson)(host, 'devDependencies', '@ngrx/eslint-plugin', schematics_core_1.platformVersion);
-        var installTaskId = context.addTask(new tasks_1.NodePackageInstallTask());
-        context.addTask(new tasks_1.RunSchematicTask('@ngrx/eslint-plugin', 'ng-add', {}), [
-            installTaskId,
-        ]);
+        var _a;
+        var eslint = (_a = host.read('.eslintrc.json')) === null || _a === void 0 ? void 0 : _a.toString('utf-8');
+        if (eslint) {
+            (0, schematics_core_1.addPackageToPackageJson)(host, 'devDependencies', '@ngrx/eslint-plugin', schematics_core_1.platformVersion);
+            var installTaskId = context.addTask(new tasks_1.NodePackageInstallTask());
+            context.addTask(new tasks_1.RunSchematicTask('@ngrx/eslint-plugin', 'ng-add', {}), [installTaskId]);
+        }
         return host;
+    };
+}
+function addStandaloneConfig(options) {
+    return function (host) {
+        var mainFile = (0, project_1.getProjectMainFile)(host, options);
+        if (host.exists(mainFile)) {
+            var storeProviderFn = 'provideStore';
+            if ((0, standalone_1.callsProvidersFunction)(host, mainFile, storeProviderFn)) {
+                // exit because the store config is already provided
+                return host;
+            }
+            var storeProviderOptions = options.minimal
+                ? []
+                : [
+                    ts.factory.createIdentifier('reducers'),
+                    ts.factory.createIdentifier('{ metaReducers }'),
+                ];
+            var patchedConfigFile = (0, standalone_1.addFunctionalProvidersToStandaloneBootstrap)(host, mainFile, storeProviderFn, '@ngrx/store', storeProviderOptions);
+            if (options.minimal) {
+                // no need to add imports if it is minimal
+                return host;
+            }
+            // insert reducers import into the patched file
+            var configFileContent = host.read(patchedConfigFile);
+            var source = ts.createSourceFile(patchedConfigFile, (configFileContent === null || configFileContent === void 0 ? void 0 : configFileContent.toString('utf-8')) || '', ts.ScriptTarget.Latest, true);
+            var statePath = "/".concat(options.path, "/").concat(options.statePath);
+            var relativePath = (0, schematics_core_1.buildRelativePath)("/".concat(patchedConfigFile), statePath);
+            var recorder = host.beginUpdate(patchedConfigFile);
+            var change = (0, schematics_core_1.insertImport)(source, patchedConfigFile, 'reducers, metaReducers', relativePath);
+            if (change instanceof schematics_core_1.InsertChange) {
+                recorder.insertLeft(change.pos, change.toAdd);
+            }
+            host.commitUpdate(recorder);
+            return host;
+        }
+        throw new schematics_1.SchematicsException("Main file not found for a project ".concat(options.project));
     };
 }
 function default_1(options) {
@@ -118,14 +157,11 @@ function default_1(options) {
         options.path = (0, schematics_core_1.getProjectPath)(host, options);
         var parsedPath = (0, schematics_core_1.parseName)(options.path, '');
         options.path = parsedPath.path;
-        var statePath = "/" + options.path + "/" + options.statePath + "/index.ts";
-        var srcPath = (0, core_1.dirname)(options.path);
-        var environmentsPath = (0, schematics_core_1.buildRelativePath)(statePath, "/" + srcPath + "/environments/environment");
-        if (options.module) {
+        if (options.module && !options.standalone) {
             options.module = (0, schematics_core_1.findModuleFromOptions)(host, {
                 name: '',
                 module: options.module,
-                path: options.path
+                path: options.path,
             });
         }
         if (options.stateInterface && options.stateInterface !== 'State') {
@@ -133,15 +169,18 @@ function default_1(options) {
         }
         var templateSource = (0, schematics_1.apply)((0, schematics_1.url)('./files'), [
             (0, schematics_1.filter)(function () { return (options.minimal ? false : true); }),
-            (0, schematics_1.applyTemplates)(__assign(__assign(__assign({}, schematics_core_1.stringUtils), options), { environmentsPath: environmentsPath })),
+            (0, schematics_1.applyTemplates)(__assign(__assign({}, schematics_core_1.stringUtils), options)),
             (0, schematics_1.move)(parsedPath.path),
         ]);
+        var configOrModuleUpdate = options.standalone
+            ? addStandaloneConfig(options)
+            : addImportToNgModule(options);
         return (0, schematics_1.chain)([
-            (0, schematics_1.branchAndMerge)((0, schematics_1.chain)([addImportToNgModule(options), (0, schematics_1.mergeWith)(templateSource)])),
+            (0, schematics_1.branchAndMerge)((0, schematics_1.chain)([configOrModuleUpdate, (0, schematics_1.mergeWith)(templateSource)])),
             options && options.skipPackageJson ? (0, schematics_1.noop)() : addNgRxStoreToPackageJson(),
             options && options.skipESLintPlugin ? (0, schematics_1.noop)() : addNgRxESLintPlugin(),
         ])(host, context);
     };
 }
-exports["default"] = default_1;
+exports.default = default_1;
 //# sourceMappingURL=index.js.map

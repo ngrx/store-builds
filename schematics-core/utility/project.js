@@ -1,7 +1,8 @@
 "use strict";
-exports.__esModule = true;
-exports.isLib = exports.getProjectPath = exports.getProject = void 0;
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.getProjectMainFile = exports.isLib = exports.getProjectPath = exports.getProject = void 0;
 var config_1 = require("./config");
+var schematics_1 = require("@angular-devkit/schematics");
 function getProject(host, options) {
     var workspace = (0, config_1.getWorkspace)(host);
     if (!options.project) {
@@ -22,7 +23,7 @@ function getProjectPath(host, options) {
     }
     if (options.path === undefined) {
         var projectDirName = project.projectType === 'application' ? 'app' : 'lib';
-        return (project.root ? "/" + project.root : '') + "/src/" + projectDirName;
+        return "".concat(project.root ? "/".concat(project.root) : '', "/src/").concat(projectDirName);
     }
     return options.path;
 }
@@ -32,4 +33,16 @@ function isLib(host, options) {
     return project.projectType === 'library';
 }
 exports.isLib = isLib;
+function getProjectMainFile(host, options) {
+    if (isLib(host, options)) {
+        throw new schematics_1.SchematicsException("Invalid project type");
+    }
+    var project = getProject(host, options);
+    var projectOptions = project.architect['build'].options;
+    if (!(projectOptions === null || projectOptions === void 0 ? void 0 : projectOptions.main)) {
+        throw new schematics_1.SchematicsException("Could not find the main file");
+    }
+    return projectOptions.main;
+}
+exports.getProjectMainFile = getProjectMainFile;
 //# sourceMappingURL=project.js.map

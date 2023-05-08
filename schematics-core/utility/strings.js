@@ -1,5 +1,5 @@
 "use strict";
-exports.__esModule = true;
+Object.defineProperty(exports, "__esModule", { value: true });
 exports.featurePath = exports.group = exports.pluralize = exports.capitalize = exports.underscore = exports.classify = exports.camelize = exports.dasherize = exports.decamelize = void 0;
 /**
  * @license
@@ -121,18 +121,18 @@ exports.capitalize = capitalize;
  ```
  */
 function pluralize(str) {
-    return camelize([/([^aeiou])y$/, /()fe?$/, /([^aeiou]o|[sxz]|[cs]h)$/].map(function (c, i) { return (str = str.replace(c, "$1" + ('iv'[i] || '') + "e")); }) && str + 's');
+    return camelize([/([^aeiou])y$/, /()fe?$/, /([^aeiou]o|[sxz]|[cs]h)$/].map(function (c, i) { return (str = str.replace(c, "$1".concat('iv'[i] || '', "e"))); }) && str + 's');
 }
 exports.pluralize = pluralize;
 function group(name, group) {
-    return group ? group + "/" + name : name;
+    return group ? "".concat(group, "/").concat(name) : name;
 }
 exports.group = group;
 function featurePath(group, flat, path, name) {
     if (group && !flat) {
-        return "../../" + path + "/" + name + "/";
+        return "../../".concat(path, "/").concat(name, "/");
     }
-    return group ? "../" + path + "/" : './';
+    return group ? "../".concat(path, "/") : './';
 }
 exports.featurePath = featurePath;
 //# sourceMappingURL=strings.js.map

@@ -1,5 +1,5 @@
 "use strict";
-exports.__esModule = true;
+Object.defineProperty(exports, "__esModule", { value: true });
 exports.getWorkspace = exports.getWorkspacePath = void 0;
 var schematics_1 = require("@angular-devkit/schematics");
 function getWorkspacePath(host) {
@@ -12,7 +12,7 @@ function getWorkspace(host) {
     var path = getWorkspacePath(host);
     var configBuffer = host.read(path);
     if (configBuffer === null) {
-        throw new schematics_1.SchematicsException("Could not find (" + path + ")");
+        throw new schematics_1.SchematicsException("Could not find (".concat(path, ")"));
     }
     var config = configBuffer.toString();
     return JSON.parse(config);

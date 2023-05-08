@@ -17,16 +17,16 @@ export declare const FEATURE_REDUCERS: InjectionToken<unknown>;
 /**
  * User-defined meta reducers from StoreModule.forRoot()
  */
-export declare const USER_PROVIDED_META_REDUCERS: InjectionToken<MetaReducer<any, import("./models").Action>[]>;
+export declare const USER_PROVIDED_META_REDUCERS: InjectionToken<MetaReducer[]>;
 /**
  * Meta reducers defined either internally by @ngrx/store or by library authors
  */
-export declare const META_REDUCERS: InjectionToken<MetaReducer<any, import("./models").Action>[]>;
+export declare const META_REDUCERS: InjectionToken<MetaReducer[]>;
 /**
  * Concats the user provided meta reducers and the meta reducers provided on the multi
  * injection token
  */
-export declare const _RESOLVED_META_REDUCERS: InjectionToken<MetaReducer<any, import("./models").Action>>;
+export declare const _RESOLVED_META_REDUCERS: InjectionToken<MetaReducer>;
 /**
  * Runtime checks defined by the user via an InjectionToken
  * Defaults to `_USER_RUNTIME_CHECKS`
@@ -41,3 +41,17 @@ export declare const _USER_RUNTIME_CHECKS: InjectionToken<RuntimeChecks>;
  */
 export declare const ACTIVE_RUNTIME_CHECKS: InjectionToken<RuntimeChecks>;
 export declare const _ACTION_TYPE_UNIQUENESS_CHECK: InjectionToken<void>;
+/**
+ * InjectionToken that registers the global Store.
+ * Mainly used to provide a hook that can be injected
+ * to ensure the root state is loaded before something
+ * that depends on it.
+ */
+export declare const ROOT_STORE_PROVIDER: InjectionToken<void>;
+/**
+ * InjectionToken that registers feature states.
+ * Mainly used to provide a hook that can be injected
+ * to ensure feature state is loaded before something
+ * that depends on it.
+ */
+export declare const FEATURE_STATE_PROVIDER: InjectionToken<void>;

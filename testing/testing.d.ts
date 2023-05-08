@@ -73,7 +73,7 @@ export declare function provideMockStore<T = any>(config?: MockStoreConfig<T>): 
  *   let store: MockStore;
  *
  *   beforeEach(() => {
- *     store = getMockStore({
+ *     store = createMockStore({
  *       initialState: { books: { entities: ['Book 1', 'Book 2', 'Book 3'] } },
  *       selectors: [
  *         { selector: selectAllBooks, value: ['Book 1', 'Book 2'] },
@@ -84,7 +84,7 @@ export declare function provideMockStore<T = any>(config?: MockStoreConfig<T>): 
  * });
  * ```
  */
-export declare function getMockStore<T>(config?: MockStoreConfig<T>): MockStore<T>;
+export declare function createMockStore<T>(config?: MockStoreConfig<T>): MockStore<T>;
 export { MockReducerManager } from './mock_reducer_manager';
 export { MockState } from './mock_state';
 export { MockStore } from './mock_store';

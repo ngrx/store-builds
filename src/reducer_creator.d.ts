@@ -1,5 +1,5 @@
 import { ActionCreator, ActionReducer, ActionType, Action } from './models';
-declare type ExtractActionTypes<Creators extends readonly ActionCreator[]> = {
+type ExtractActionTypes<Creators extends readonly ActionCreator[]> = {
     [Key in keyof Creators]: Creators[Key] extends ActionCreator<infer T> ? T : never;
 };
 /**
@@ -10,8 +10,11 @@ export interface ReducerTypes<State, Creators extends readonly ActionCreator[]> 
     reducer: OnReducer<State, Creators>;
     types: ExtractActionTypes<Creators>;
 }
-export interface OnReducer<State, Creators extends readonly ActionCreator[]> {
-    (state: State, action: ActionType<Creators[number]>): State;
+/**
+ *  Specialized Reducer that is aware of the Action type it needs to handle
+ */
+export interface OnReducer<State, Creators extends readonly ActionCreator[], InferredState = State, ResultState = unknown extends State ? InferredState : State> {
+    (state: unknown extends State ? InferredState : State, action: ActionType<Creators[number]>): ResultState;
 }
 /**
  * @description
@@ -27,10 +30,10 @@ export interface OnReducer<State, Creators extends readonly ActionCreator[]> {
  * on(AuthApiActions.loginSuccess, (state, { user }) => ({ ...state, user }))
  * ```
  */
-export declare function on<State, Creators extends readonly ActionCreator[]>(...args: [
+export declare function on<State, Creators extends readonly ActionCreator[], InferredState = State>(...args: [
     ...creators: Creators,
-    reducer: OnReducer<State extends infer S ? S : never, Creators>
-]): ReducerTypes<State, Creators>;
+    reducer: OnReducer<State extends infer S ? S : never, Creators, InferredState>
+]): ReducerTypes<unknown extends State ? InferredState : State, Creators>;
 /**
  * @description
  * Creates a reducer function to handle state transitions.
@@ -44,8 +47,7 @@ export declare function on<State, Creators extends readonly ActionCreator[]>(...
  * @usageNotes
  *
  * - Must be used with `ActionCreator`'s (returned by `createAction`). Cannot be used with class-based action creators.
- * - The returned `ActionReducer` should additionally be wrapped with another function, if you are using View Engine AOT.
- * In case you are using Ivy (or only JIT View Engine) the extra wrapper function is not required.
+ * - The returned `ActionReducer` does not require being wrapped with another function.
  *
  * **Declaring a reducer creator**
  *
@@ -60,24 +62,6 @@ export declare function on<State, Creators extends readonly ActionCreator[]>(...
  *   on(featureActions.actionThree, () => initialState);
  * );
  * ```
- *
- * **Declaring a reducer creator using a wrapper function (Only needed if using View Engine AOT)**
- *
- * ```ts
- * const featureReducer = createReducer(
- *   initialState,
- *   on(
- *     featureActions.actionOne,
- *     featureActions.actionTwo,
- *     (state, { updatedValue }) => ({ ...state, prop: updatedValue })
- *   ),
- *   on(featureActions.actionThree, () => initialState);
- * );
- *
- * export function reducer(state: State | undefined, action: Action) {
- *   return featureReducer(state, action);
- * }
- * ```
  */
-export declare function createReducer<S, A extends Action = Action>(initialState: S, ...ons: ReducerTypes<S, readonly ActionCreator[]>[]): ActionReducer<S, A>;
+export declare function createReducer<S, A extends Action = Action, R extends ActionReducer<S, A> = ActionReducer<S, A>>(initialState: S, ...ons: ReducerTypes<S, readonly ActionCreator[]>[]): R;
 export {};

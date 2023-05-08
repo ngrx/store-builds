@@ -24,7 +24,7 @@ var __spreadArray = (this && this.__spreadArray) || function (to, from, pack) {
     }
     return to.concat(ar || Array.prototype.slice.call(from));
 };
-exports.__esModule = true;
+Object.defineProperty(exports, "__esModule", { value: true });
 var ts = require("typescript");
 var schematics_1 = require("@angular-devkit/schematics");
 var schematics_core_1 = require("../../schematics-core");
@@ -60,7 +60,7 @@ function removeNgRxStoreFreezePackage() {
 function default_1() {
     return (0, schematics_1.chain)([removeNgRxStoreFreezePackage(), replaceWithRuntimeChecks()]);
 }
-exports["default"] = default_1;
+exports.default = default_1;
 function removeUsages(sourceFile, tree, ngrxStoreFreezeIsUsed) {
     if (sourceFile.fileName.endsWith('.spec.ts') ||
         sourceFile.fileName.endsWith('.test.ts')) {
@@ -107,7 +107,7 @@ function findStoreFreezeUsagesToRemove(sourceFile) {
         var elementsWithoutStoreFreeze = elements.filter(function (elemText) { return elemText !== 'storeFreeze'; });
         if (elements.length !== elementsWithoutStoreFreeze.length) {
             changes.push(new schematics_core_1.RemoveChange(sourceFile.fileName, node.getStart(sourceFile), node.getEnd()));
-            changes.push(new schematics_core_1.InsertChange(sourceFile.fileName, node.getStart(sourceFile), "[" + elementsWithoutStoreFreeze.join(', ') + "]"));
+            changes.push(new schematics_core_1.InsertChange(sourceFile.fileName, node.getStart(sourceFile), "[".concat(elementsWithoutStoreFreeze.join(', '), "]")));
         }
     }
 }
@@ -128,19 +128,19 @@ function findRuntimeCHecksToInsert(sourceFile) {
         var runtimeChecks = "runtimeChecks: { strictStateImmutability: true, strictActionImmutability: true }";
         // covers StoreModule.forRoot(ROOT_REDUCERS)
         if (node.arguments.length === 1) {
-            changes.push(new schematics_core_1.InsertChange(sourceFile.fileName, node.arguments[0].getEnd(), ", { " + runtimeChecks + "}"));
+            changes.push(new schematics_core_1.InsertChange(sourceFile.fileName, node.arguments[0].getEnd(), ", { ".concat(runtimeChecks, "}")));
         }
         else if (node.arguments.length === 2) {
             var storeConfig = node.arguments[1];
             if (ts.isObjectLiteralExpression(storeConfig)) {
                 // covers StoreModule.forRoot(ROOT_REDUCERS, {})
                 if (storeConfig.properties.length === 0) {
-                    changes.push(new schematics_core_1.InsertChange(sourceFile.fileName, storeConfig.getEnd() - 1, runtimeChecks + " "));
+                    changes.push(new schematics_core_1.InsertChange(sourceFile.fileName, storeConfig.getEnd() - 1, "".concat(runtimeChecks, " ")));
                 }
                 else {
                     // covers StoreModule.forRoot(ROOT_REDUCERS, { metaReducers })
                     var lastProperty = storeConfig.properties[storeConfig.properties.length - 1];
-                    changes.push(new schematics_core_1.InsertChange(sourceFile.fileName, lastProperty.getEnd(), ", " + runtimeChecks));
+                    changes.push(new schematics_core_1.InsertChange(sourceFile.fileName, lastProperty.getEnd(), ", ".concat(runtimeChecks)));
                 }
             }
         }
