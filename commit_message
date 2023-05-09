@@ -1,1 +1,1 @@
-b4431f7c chore: release 16.0.0-rc.1
+ad6e14ab fix(store-devtools): add state signal to StateObservable (#3889)
