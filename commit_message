@@ -1,1 +1,1 @@
-5843e7fc fix(component-store): use default equality function for selectSignal (#3884)
+b4431f7c chore: release 16.0.0-rc.1
