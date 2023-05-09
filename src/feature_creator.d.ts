@@ -1,11 +1,17 @@
-import { ActionReducer, Selector } from './models';
-import { FeatureSelector, NestedSelectors } from './feature_creator_models';
+import { ActionReducer, Primitive, Selector } from './models';
+import { MemoizedSelector } from './selector';
 export interface FeatureConfig<FeatureName extends string, FeatureState> {
     name: FeatureName;
     reducer: ActionReducer<FeatureState>;
 }
 type Feature<AppState extends Record<string, any>, FeatureName extends keyof AppState & string, FeatureState extends AppState[FeatureName]> = FeatureConfig<FeatureName, FeatureState> & BaseSelectors<AppState, FeatureName, FeatureState>;
 type FeatureWithExtraSelectors<FeatureName extends string, FeatureState, ExtraSelectors extends SelectorsDictionary> = string extends keyof ExtraSelectors ? Feature<Record<string, any>, FeatureName, FeatureState> : Omit<Feature<Record<string, any>, FeatureName, FeatureState>, keyof ExtraSelectors> & ExtraSelectors;
+type FeatureSelector<AppState extends Record<string, any>, FeatureName extends keyof AppState & string, FeatureState extends AppState[FeatureName]> = {
+    [K in FeatureName as `select${Capitalize<K>}State`]: MemoizedSelector<AppState, FeatureState, (featureState: FeatureState) => FeatureState>;
+};
+type NestedSelectors<AppState extends Record<string, any>, FeatureState> = FeatureState extends Primitive | unknown[] | Date ? {} : {
+    [K in keyof FeatureState & string as `select${Capitalize<K>}`]: MemoizedSelector<AppState, FeatureState[K], (featureState: FeatureState) => FeatureState[K]>;
+};
 type BaseSelectors<AppState extends Record<string, any>, FeatureName extends keyof AppState & string, FeatureState extends AppState[FeatureName]> = FeatureSelector<AppState, FeatureName, FeatureState> & NestedSelectors<AppState, FeatureState>;
 type SelectorsDictionary = Record<string, Selector<Record<string, any>, unknown> | ((...args: any[]) => Selector<Record<string, any>, unknown>)>;
 type ExtraSelectorsFactory<FeatureName extends string, FeatureState, ExtraSelectors extends SelectorsDictionary> = (baseSelectors: BaseSelectors<Record<string, any>, FeatureName, FeatureState>) => ExtraSelectors;
