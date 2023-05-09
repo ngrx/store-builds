@@ -1,1 +1,1 @@
-c870b30f docs(store): update createActionGroup guide (#3878)
+634fdcb0 fix(store): add Signal equal function for immutable object comparison (#3883)
