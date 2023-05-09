@@ -1,1 +1,1 @@
-235f7409 refactor: detect standalone application when using ng add (#3885)
+5843e7fc fix(component-store): use default equality function for selectSignal (#3884)
