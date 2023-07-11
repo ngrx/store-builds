@@ -1,1 +1,1 @@
-ee00ed40 chore: release 16.1.0
+2efd805b fix(eslint-plugin): fix prefer-contact-latest-from rule to detect inject (#3946)
