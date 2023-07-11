@@ -1,1 +1,1 @@
-2efd805b fix(eslint-plugin): fix prefer-contact-latest-from rule to detect inject (#3946)
+d3e84d8c fix(eslint-plugin): support inject for no-typed-global-store rule (#3951)
