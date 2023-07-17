@@ -1,1 +1,1 @@
-490e5cc2 test(eslint-plugin): add inject tests for avoid-dispatching-multiple-actions-sequentially (#3949)
+a0530aa7 test(eslint-plugin): add inject tests for avoid-combining-selector (#3948)
