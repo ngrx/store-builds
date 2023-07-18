@@ -1,1 +1,1 @@
-a0530aa7 test(eslint-plugin): add inject tests for avoid-combining-selector (#3948)
+27f09df1 fix(eslint-plugin): prefix-selectors-with-select suggestion (#3959)
