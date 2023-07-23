@@ -1,1 +1,1 @@
-c96d740c ci: update node images and browser tools (#3966)
+644f0b6f fix(store-devtools): resolve memory leak when devtools are destroyed (#3965)
