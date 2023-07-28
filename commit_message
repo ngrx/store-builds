@@ -1,1 +1,1 @@
-b8d9aaa4 refactor(store): remove AppState generic from Feature Creator (#3980)
+1ee80e51 feat(store-devtools): provide the ability to connect extension outside of Angular zone (#3970)
