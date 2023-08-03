@@ -1,1 +1,1 @@
-f371d9e5 test(eslint-plugin): add inject tests for select-style rule (#3981)
+caa74ffa fix(eslint-plugin): support inject for use-consistent-global-store-name rule (#3983)
