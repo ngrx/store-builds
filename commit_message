@@ -1,1 +1,1 @@
-caa74ffa fix(eslint-plugin): support inject for use-consistent-global-store-name rule (#3983)
+1879cc91 fix(effects): register functional effects from object without prototype (#3984)
