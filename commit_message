@@ -1,1 +1,1 @@
-0b98a654 fix(data): make DataServiceError extend from Error (#3988)
+19ebb0af feat(schematics): add entity generation as part of feature schematic (#3850)
