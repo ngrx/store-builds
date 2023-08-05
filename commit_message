@@ -1,1 +1,1 @@
-65acf861 docs(effects): remove unneeded critical div (#3986)
+0b98a654 fix(data): make DataServiceError extend from Error (#3988)
