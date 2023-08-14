@@ -1,1 +1,1 @@
-067b2b8a test(eslint-plugin): add inject tests for prefer-action-creator-in-dispatch rule (#4004)
+7716e46c docs(data): clarify entity dispatcher fires action once (#4005)
