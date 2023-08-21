@@ -1,4 +1,4 @@
-import { ActionReducer, Primitive, Selector } from './models';
+import { ActionReducer, Prettify, Primitive, Selector } from './models';
 import { MemoizedSelector } from './selector';
 export interface FeatureConfig<FeatureName extends string, FeatureState> {
     name: FeatureName;
@@ -27,7 +27,7 @@ type NotAllowedFeatureStateCheck<FeatureState> = FeatureState extends Required<F
  */
 export declare function createFeature<FeatureName extends string, FeatureState, ExtraSelectors extends SelectorsDictionary>(featureConfig: FeatureConfig<FeatureName, FeatureState> & {
     extraSelectors: ExtraSelectorsFactory<FeatureName, FeatureState, ExtraSelectors>;
-} & NotAllowedFeatureStateCheck<FeatureState>): FeatureWithExtraSelectors<FeatureName, FeatureState, ExtraSelectors>;
+} & NotAllowedFeatureStateCheck<FeatureState>): Prettify<FeatureWithExtraSelectors<FeatureName, FeatureState, ExtraSelectors>>;
 /**
  * Creates a feature object.
  *
@@ -36,5 +36,5 @@ export declare function createFeature<FeatureName extends string, FeatureState, 
  * @returns An object that contains a feature name, a feature reducer,
  * a feature selector, and a selector for each feature state property.
  */
-export declare function createFeature<FeatureName extends string, FeatureState>(featureConfig: FeatureConfig<FeatureName, FeatureState> & NotAllowedFeatureStateCheck<FeatureState>): Feature<FeatureName, FeatureState>;
+export declare function createFeature<FeatureName extends string, FeatureState>(featureConfig: FeatureConfig<FeatureName, FeatureState> & NotAllowedFeatureStateCheck<FeatureState>): Prettify<Feature<FeatureName, FeatureState>>;
 export {};
