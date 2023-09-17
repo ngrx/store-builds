@@ -1,1 +1,1 @@
-f2514bae feat(signals): add `patchState` function and remove `$update` method (#4037)
+0bff4408 feat(eslint-plugin): add avoid-combining-component-store-selectors rule (#4043)
