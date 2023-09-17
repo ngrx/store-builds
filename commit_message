@@ -1,1 +1,1 @@
-099a07c2 docs: add signals package to the list of supported scopes (#4047)
+fdd701ee feat(data): standalone support for ng add @ngrx/data (#4019)
