@@ -1,1 +1,1 @@
-fdd701ee feat(data): standalone support for ng add @ngrx/data (#4019)
+40477dde feat(eslint-plugin): add new avoid-mapping-component-store-selectors rule (#4026)
