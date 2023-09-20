@@ -1,1 +1,1 @@
-40477dde feat(eslint-plugin): add new avoid-mapping-component-store-selectors rule (#4026)
+c97ccded docs(store-devtools): add docs for `connectOutsideZone` option (#4048)
