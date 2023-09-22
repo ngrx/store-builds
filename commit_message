@@ -1,1 +1,1 @@
-58e2c466 docs(component-store): add docs for `selectSignal` method  (#4027)
+00102819 feat(signals): add signalStore and signalStoreFeature (#4049)
