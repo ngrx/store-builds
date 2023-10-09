@@ -1,1 +1,1 @@
-52e7dbd8 chore: release 16.3.0
+71a9d7f2 fix(signals): do not create nested signals for STATE_SIGNAL property (#4062)
