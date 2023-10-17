@@ -1,1 +1,1 @@
-71a9d7f2 fix(signals): do not create nested signals for STATE_SIGNAL property (#4062)
+fd565ed9 feat(signals): add rxjs-interop subpackage (#4061)
