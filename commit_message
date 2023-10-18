@@ -1,1 +1,1 @@
-fd565ed9 feat(signals): add rxjs-interop subpackage (#4061)
+10c93ede fix(signals): improve state type and add type tests (#4064)
