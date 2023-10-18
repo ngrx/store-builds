@@ -39,10 +39,10 @@ function getProjectMainFile(host, options) {
     }
     var project = getProject(host, options);
     var projectOptions = project.architect['build'].options;
-    if (!(projectOptions === null || projectOptions === void 0 ? void 0 : projectOptions.main)) {
-        throw new schematics_1.SchematicsException("Could not find the main file");
+    if (!(projectOptions === null || projectOptions === void 0 ? void 0 : projectOptions.main) && !(projectOptions === null || projectOptions === void 0 ? void 0 : projectOptions.browser)) {
+        throw new schematics_1.SchematicsException("Could not find the main file ".concat(project));
     }
-    return projectOptions.main;
+    return (projectOptions.browser || projectOptions.main);
 }
 exports.getProjectMainFile = getProjectMainFile;
 //# sourceMappingURL=project.js.map
