@@ -1,1 +1,1 @@
-dd0af2ef refactor(store): remove default equality function (#4080)
+6032c816 refactor(component-store): remove default equality function (#4079)
