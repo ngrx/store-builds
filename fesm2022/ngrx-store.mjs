@@ -532,9 +532,7 @@ class Store extends Observable {
      * @param options select signal options
      */
     selectSignal(selector, options) {
-        return computed(() => selector(this.state()), {
-            equal: options?.equal || ((previous, current) => previous === current),
-        });
+        return computed(() => selector(this.state()), options);
     }
     lift(operator) {
         const store = new Store(this, this.actionsObserver, this.reducerManager);

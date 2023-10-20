@@ -1,1 +1,1 @@
-b3b571e9 fix(entity): set correct return type for getSelectors signature with parent selector (#4074)
+dd0af2ef refactor(store): remove default equality function (#4080)
