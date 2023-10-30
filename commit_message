@@ -1,1 +1,1 @@
-5871d4dc chore: release 17.0.0-beta.0
+050093f5 test(signals): verify that patchState does not emit on empty change (#4046)
