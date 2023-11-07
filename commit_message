@@ -1,1 +1,1 @@
-1c936454 docs: remove resources, events, and gitter links (#4104)
+d3b4db07 feat(store-devtools): change connectOutsideZone to be 'true' by default (#4103)
