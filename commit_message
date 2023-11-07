@@ -1,1 +1,1 @@
-d3b4db07 feat(store-devtools): change connectOutsideZone to be 'true' by default (#4103)
+73fda597 feat(store-devtools): add migration for connectInZone (#4106)
