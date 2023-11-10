@@ -1,1 +1,1 @@
-1b322d58 build: update Angular dependencies to 17.0.0 (#4113)
+79b07086 feat(signals): add `getState` function (#4118)
