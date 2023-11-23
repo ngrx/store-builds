@@ -1,1 +1,1 @@
-890ca5bb fix(signals): define deep signals as configurable properties (#4147)
+b1e00894 docs(store): add selectSignal documentation (#4111)
