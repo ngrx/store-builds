@@ -1,1 +1,1 @@
-c05d09bb docs: fix minor typos (#4153)
+ecc247c4 fix(signals): allow using signalStore and signalState in TS libs (#4152)
