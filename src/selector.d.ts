@@ -16,7 +16,7 @@ export interface MemoizedSelector<State, Result, ProjectorFn = DefaultProjectorF
     clearResult: () => void;
 }
 /**
- * @deprecated Selectors with props are deprecated, for more info see {@link https://github.com/ngrx/platform/issues/2980 Github Issue}
+ * @deprecated Selectors with props are deprecated, for more info see the {@link https://ngrx.io/guide/migration/v12#ngrxstore migration guide}
  */
 export interface MemoizedSelectorWithProps<State, Props, Result, ProjectorFn = DefaultProjectorFn<Result>> extends SelectorWithProps<State, Props, Result> {
     release(): void;
