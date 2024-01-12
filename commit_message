@@ -1,1 +1,1 @@
-3eb7cf3e docs(signals): improve SignalStore's Core Concepts page (#4207)
+916fba07 feat(signals): add `withHooks` signature with factory input (#4208)
