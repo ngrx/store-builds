@@ -1,1 +1,1 @@
-9043ea1b chore: release 17.1.0
+867bc3ea chore(eslint-plugin): use latest typescript versions in peerDependencies (#4215)
