@@ -1,1 +1,1 @@
-330bf7c7 docs: update Press Kit page and icons (#4223)
+fa45d92a perf(signals): avoid unecessary observable conversions in rxMethod (#4219)
