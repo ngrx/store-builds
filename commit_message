@@ -1,1 +1,1 @@
-1975af66 docs: add operators to issue template (#4231)
+b90da9d3 perf(signals): avoid creating unnecessary objects in excludeKeys (#4240)
