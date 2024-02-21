@@ -1,1 +1,1 @@
-e6fcc55b docs: fixed bracket typos in runtime checks guide (#4254)
+70517ead fix(signals): correctly infer the type of methods with generics (#4249)
