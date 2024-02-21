@@ -1,1 +1,1 @@
-70517ead fix(signals): correctly infer the type of methods with generics (#4249)
+3d45e5af fix(signals): add `StateSignal` to the public API (#4247)
