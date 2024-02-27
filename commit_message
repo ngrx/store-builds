@@ -1,1 +1,1 @@
-703a9c71 fix(ngrx.io): set correct path for pwa icons (#4263)
+79674b78 feat(effects): deprecate `concatLatestFrom` export (#4260)
