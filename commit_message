@@ -1,1 +1,1 @@
-79674b78 feat(effects): deprecate `concatLatestFrom` export (#4260)
+19969bd3 docs(store): add example of reusing extra selectors (#4269)
