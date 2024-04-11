@@ -1,1 +1,1 @@
-19c1f113 fix(effects): make createEffect work with TS 5.3 (#4296)
+531c2dea chore: update Angular ESLint version (#4295)
