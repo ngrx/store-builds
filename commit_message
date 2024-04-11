@@ -1,1 +1,1 @@
-6b440ee3 fix(signals): make patchState work with TS 5.4 (#4294)
+19c1f113 fix(effects): make createEffect work with TS 5.3 (#4296)
