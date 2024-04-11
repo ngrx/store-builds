@@ -1,1 +1,1 @@
-9c3f8456 refactor(signals): simpler entity named types (#4271)
+6b440ee3 fix(signals): make patchState work with TS 5.4 (#4294)
