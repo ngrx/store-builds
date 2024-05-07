@@ -1,9 +1,6 @@
 import { type ValueEqualityFn } from '@angular/core';
-export interface Action {
-    type: string;
-}
-export declare interface TypedAction<T extends string> extends Action {
-    readonly type: T;
+export interface Action<Type extends string = string> {
+    type: Type;
 }
 export type ActionType<A> = A extends ActionCreator<infer T, infer C> ? ReturnType<C> & {
     type: T;
@@ -65,7 +62,7 @@ export type NotAllowedInPropsCheck<T> = T extends object ? T extends any[] ? Arr
 /**
  * See `Creator`.
  */
-export type ActionCreator<T extends string = string, C extends Creator = Creator> = C & TypedAction<T>;
+export type ActionCreator<T extends string = string, C extends Creator = Creator> = C & Action<T>;
 export interface ActionCreatorProps<T> {
     _as: 'props';
     _p: T;
