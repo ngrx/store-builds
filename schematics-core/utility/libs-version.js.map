@@ -1,1 +1,1 @@
-{"version":3,"file":"libs-version.js","sourceRoot":"","sources":["../../../../../modules/store/schematics-core/utility/libs-version.ts"],"names":[],"mappings":";;;AAAa,QAAA,eAAe,GAAG,SAAS,CAAC","sourcesContent":["export const platformVersion = '^17.2.0';\n"]}
+{"version":3,"file":"libs-version.js","sourceRoot":"","sources":["../../../../../modules/store/schematics-core/utility/libs-version.ts"],"names":[],"mappings":";;;AAAa,QAAA,eAAe,GAAG,gBAAgB,CAAC","sourcesContent":["export const platformVersion = '^18.0.0-beta.1';\n"]}
