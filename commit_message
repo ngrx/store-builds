@@ -1,1 +1,1 @@
-98eb9dbd chore: release 18.0.0-beta.1
+c15990a1 docs(signals): clarify that signal type can only be an object literal. (#4327)
