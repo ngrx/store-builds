@@ -1,1 +1,1 @@
-c15990a1 docs(signals): clarify that signal type can only be an object literal. (#4327)
+920b2f5f build: update to Angular 18 (#4355)
