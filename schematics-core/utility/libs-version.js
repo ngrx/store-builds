@@ -1,5 +1,5 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.platformVersion = void 0;
-exports.platformVersion = '^18.0.0-beta.1';
+exports.platformVersion = '^18.0.0-rc.0';
 //# sourceMappingURL=libs-version.js.map
