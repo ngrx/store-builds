@@ -1,1 +1,1 @@
-a19d5794 docs(eslint-plugin): re-generate config (#4382)
+7c75dcff fix(eslint-plugin): include signals to ESLint v8 rules (#4387)

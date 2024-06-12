@@ -31,7 +31,7 @@ var schematics_core_1 = require("../../schematics-core");
 function replaceWithRuntimeChecks() {
     return function (tree) {
         // only add runtime checks when ngrx-store-freeze is used
-        (0, schematics_core_1.visitTSSourceFiles)(tree, removeUsages) &&
+        var _ = (0, schematics_core_1.visitTSSourceFiles)(tree, removeUsages) &&
             (0, schematics_core_1.visitTSSourceFiles)(tree, insertRuntimeChecks);
     };
 }
