@@ -1,1 +1,1 @@
-05f09401 feat(signals): rename signals to computed when defining custom features with input (#4395)
+67a5a93e feat(signals): replace `idKey` with `selectId` when defining custom entity ID (#4396)
