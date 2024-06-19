@@ -1,1 +1,1 @@
-67a5a93e feat(signals): replace `idKey` with `selectId` when defining custom entity ID (#4396)
+a15d53eb fix(component-store): resolve issues in migration script to v18 (#4403)
