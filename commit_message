@@ -1,1 +1,1 @@
-a15d53eb fix(component-store): resolve issues in migration script to v18 (#4403)
+c9c646c7 fix(eslint-plugin): only take return statement into account with no-multiple-actions-in-effects (#4410)
