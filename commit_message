@@ -1,1 +1,1 @@
-c9c646c7 fix(eslint-plugin): only take return statement into account with no-multiple-actions-in-effects (#4410)
+e202ca3c chore(eslint-plugin): fix typo in test (#4412)
