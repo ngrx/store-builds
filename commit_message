@@ -1,1 +1,1 @@
-1b1cf5b5 feat(signals): add entityConfig function (#4399)
+0106e930 fix(signals): allow modifying entity id on update (#4404)
