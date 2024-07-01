@@ -1,1 +1,1 @@
-0106e930 fix(signals): allow modifying entity id on update (#4404)
+377f3b83 chore: release @ngrx/signals 18.0.0-rc.2
