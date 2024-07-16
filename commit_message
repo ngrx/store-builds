@@ -1,1 +1,1 @@
-92a68bc1 fix(eslint-plugin): do not report non-array returns in no-multiple-actions-in-effects (#4418)
+e3fbd569 feat(signals): prevent overriding of SignalStore members (#4424)
