@@ -1,1 +1,1 @@
-e3fbd569 feat(signals): prevent overriding of SignalStore members (#4424)
+63de75a9 test(eslint-plugin): reproduce issue 4429 (#4430)
