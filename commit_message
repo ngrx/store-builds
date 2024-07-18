@@ -1,1 +1,1 @@
-889b2561 docs(signals): add note about TS issue for custom features with static input (#4436)
+52793fea feat(signals): limit external SignalStore state updates by default (#4432)
