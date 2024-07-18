@@ -1,1 +1,1 @@
-8740348b feat(signals): add additional signatures for signalStore and signalStoreFeature (#4425)
+87e3be82 feat(signals): add EntityComputed to the public API (#4437)
