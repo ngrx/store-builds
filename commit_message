@@ -1,1 +1,1 @@
-87e3be82 feat(signals): add EntityComputed to the public API (#4437)
+889b2561 docs(signals): add note about TS issue for custom features with static input (#4436)
