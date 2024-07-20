@@ -1,1 +1,1 @@
-52793fea feat(signals): limit external SignalStore state updates by default (#4432)
+22cba53f feat(signals): add models for building advanced features to the public API (#4441)
