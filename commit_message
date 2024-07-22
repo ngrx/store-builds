@@ -1,1 +1,1 @@
-0495fd11 feat(signals): add migration schematic for `protectedState` (#4444)
+3e15fcb8 feat(signals): remove RxMethodInput for better readability (#4445)
