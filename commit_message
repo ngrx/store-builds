@@ -1,1 +1,1 @@
-e2ab916b feat(eslint-plugin): add signalStoreFeatureShouldUseGenericType rule (#4454)
+1858a511 feat(signals): allow defining private SignalStore members (#4447)
