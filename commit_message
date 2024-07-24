@@ -1,1 +1,1 @@
-1858a511 feat(signals): allow defining private SignalStore members (#4447)
+30436fb5 feat(signals): add StateWatcher to the public API (#4456)
