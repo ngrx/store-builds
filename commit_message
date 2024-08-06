@@ -1,1 +1,1 @@
-cb3f6dee chore: release 18.0.2
+62cceeb3 fix(store-devtools): add @angular/core as peer dependency (#4478)
