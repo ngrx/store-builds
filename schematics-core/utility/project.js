@@ -1,6 +1,9 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.getProjectMainFile = exports.isLib = exports.getProjectPath = exports.getProject = void 0;
+exports.getProject = getProject;
+exports.getProjectPath = getProjectPath;
+exports.isLib = isLib;
+exports.getProjectMainFile = getProjectMainFile;
 var config_1 = require("./config");
 var schematics_1 = require("@angular-devkit/schematics");
 function getProject(host, options) {
@@ -15,7 +18,6 @@ function getProject(host, options) {
     }
     return workspace.projects[options.project];
 }
-exports.getProject = getProject;
 function getProjectPath(host, options) {
     var project = getProject(host, options);
     if (project.root.slice(-1) === '/') {
@@ -27,12 +29,10 @@ function getProjectPath(host, options) {
     }
     return options.path;
 }
-exports.getProjectPath = getProjectPath;
 function isLib(host, options) {
     var project = getProject(host, options);
     return project.projectType === 'library';
 }
-exports.isLib = isLib;
 function getProjectMainFile(host, options) {
     if (isLib(host, options)) {
         throw new schematics_1.SchematicsException("Invalid project type");
@@ -44,5 +44,4 @@ function getProjectMainFile(host, options) {
     }
     return (projectOptions.browser || projectOptions.main);
 }
-exports.getProjectMainFile = getProjectMainFile;
 //# sourceMappingURL=project.js.map

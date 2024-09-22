@@ -38,6 +38,7 @@ var __values = (this && this.__values) || function(o) {
     throw new TypeError(s ? "Object is not iterable." : "Symbol.iterator is not defined.");
 };
 Object.defineProperty(exports, "__esModule", { value: true });
+exports.default = default_1;
 var ts = require("typescript");
 var schematics_1 = require("@angular-devkit/schematics");
 var tasks_1 = require("@angular-devkit/schematics/tasks");
@@ -185,5 +186,4 @@ function default_1(options) {
         ])(host, context);
     };
 }
-exports.default = default_1;
 //# sourceMappingURL=index.js.map

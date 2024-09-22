@@ -1,6 +1,8 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.buildRelativePath = exports.findComponent = exports.findComponentFromOptions = void 0;
+exports.findComponentFromOptions = findComponentFromOptions;
+exports.findComponent = findComponent;
+exports.buildRelativePath = buildRelativePath;
 /**
  * @license
  * Copyright Google Inc. All Rights Reserved.
@@ -41,7 +43,6 @@ function findComponentFromOptions(host, options) {
         }
     }
 }
-exports.findComponentFromOptions = findComponentFromOptions;
 /**
  * Function to find the "closest" component to a generated file's path.
  */
@@ -62,7 +63,6 @@ function findComponent(host, generateDir) {
     throw new Error('Could not find an Component. Use the skip-import ' +
         'option to skip importing in Component.');
 }
-exports.findComponent = findComponent;
 /**
  * Build a relative path from one file path to another file path.
  */
@@ -79,7 +79,6 @@ function buildRelativePath(from, to) {
             ? fixedRelativePath
             : fixedRelativePath + '/').concat(convertToTypeScriptFileName(toFileName));
 }
-exports.buildRelativePath = buildRelativePath;
 function parsePath(path) {
     var pathNormalized = (0, core_1.normalize)(path);
     var filename = (0, core_1.extname)(pathNormalized) ? (0, core_1.basename)(pathNormalized) : '';

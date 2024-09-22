@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.updatePackage = void 0;
+exports.updatePackage = updatePackage;
 var schematics_1 = require("@angular-devkit/schematics");
 function updatePackage(name) {
     return function (tree, context) {
@@ -27,7 +27,6 @@ function updatePackage(name) {
         return tree;
     };
 }
-exports.updatePackage = updatePackage;
 function match(value, test) {
     return value === test ? test : '';
 }

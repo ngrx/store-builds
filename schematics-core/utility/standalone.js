@@ -36,7 +36,9 @@ var __spreadArray = (this && this.__spreadArray) || function (to, from, pack) {
     return to.concat(ar || Array.prototype.slice.call(from));
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.findBootstrapApplicationCall = exports.addFunctionalProvidersToStandaloneBootstrap = exports.callsProvidersFunction = void 0;
+exports.callsProvidersFunction = callsProvidersFunction;
+exports.addFunctionalProvidersToStandaloneBootstrap = addFunctionalProvidersToStandaloneBootstrap;
+exports.findBootstrapApplicationCall = findBootstrapApplicationCall;
 // copied from https://github.com/angular/angular-cli/blob/17.3.x/packages/schematics/angular/private/standalone.ts
 var schematics_1 = require("@angular-devkit/schematics");
 var path_1 = require("path");
@@ -66,7 +68,6 @@ function callsProvidersFunction(tree, filePath, functionName) {
             el.expression.text === functionName;
     }));
 }
-exports.callsProvidersFunction = callsProvidersFunction;
 /**
  * Adds a providers function call to the `bootstrapApplication` call.
  * @param tree File tree of the project.
@@ -128,7 +129,6 @@ function addFunctionalProvidersToStandaloneBootstrap(tree, filePath, functionNam
     tree.commitUpdate(recorder);
     return configFilePath;
 }
-exports.addFunctionalProvidersToStandaloneBootstrap = addFunctionalProvidersToStandaloneBootstrap;
 /**
  * Finds the call to `bootstrapApplication` within a file.
  * @deprecated Private utility that will be removed. Use `addRootImport` or `addRootProvider` from
@@ -152,7 +152,6 @@ function findBootstrapApplicationCall(sourceFile) {
     });
     return result;
 }
-exports.findBootstrapApplicationCall = findBootstrapApplicationCall;
 /** Finds the `providers` array literal within an application config. */
 function findProvidersLiteral(config) {
     var e_1, _a;

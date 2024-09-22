@@ -54,7 +54,13 @@ var __read = (this && this.__read) || function (o, n) {
     return ar;
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.visitDecorator = exports.visitNgModules = exports.visitComponents = exports.visitNgModuleExports = exports.visitNgModuleImports = exports.visitTemplates = exports.visitTSSourceFiles = void 0;
+exports.visitTSSourceFiles = visitTSSourceFiles;
+exports.visitTemplates = visitTemplates;
+exports.visitNgModuleImports = visitNgModuleImports;
+exports.visitNgModuleExports = visitNgModuleExports;
+exports.visitComponents = visitComponents;
+exports.visitNgModules = visitNgModules;
+exports.visitDecorator = visitDecorator;
 var ts = require("typescript");
 var core_1 = require("@angular-devkit/core");
 function visitTSSourceFiles(tree, visitor) {
@@ -75,7 +81,6 @@ function visitTSSourceFiles(tree, visitor) {
     }
     return result;
 }
-exports.visitTSSourceFiles = visitTSSourceFiles;
 function visitTemplates(tree, visitor) {
     visitTSSourceFiles(tree, function (source) {
         visitComponents(source, function (_, decoratorExpressionNode) {
@@ -119,15 +124,12 @@ function visitTemplates(tree, visitor) {
         });
     });
 }
-exports.visitTemplates = visitTemplates;
 function visitNgModuleImports(sourceFile, callback) {
     visitNgModuleProperty(sourceFile, callback, 'imports');
 }
-exports.visitNgModuleImports = visitNgModuleImports;
 function visitNgModuleExports(sourceFile, callback) {
     visitNgModuleProperty(sourceFile, callback, 'exports');
 }
-exports.visitNgModuleExports = visitNgModuleExports;
 function visitNgModuleProperty(sourceFile, callback, property) {
     visitNgModules(sourceFile, function (_, decoratorExpressionNode) {
         ts.forEachChild(decoratorExpressionNode, function findTemplates(n) {
@@ -145,11 +147,9 @@ function visitNgModuleProperty(sourceFile, callback, property) {
 function visitComponents(sourceFile, callback) {
     visitDecorator(sourceFile, 'Component', callback);
 }
-exports.visitComponents = visitComponents;
 function visitNgModules(sourceFile, callback) {
     visitDecorator(sourceFile, 'NgModule', callback);
 }
-exports.visitNgModules = visitNgModules;
 function visitDecorator(sourceFile, decoratorName, callback) {
     ts.forEachChild(sourceFile, function findClassDeclaration(node) {
         if (!ts.isClassDeclaration(node)) {
@@ -179,7 +179,6 @@ function visitDecorator(sourceFile, decoratorName, callback) {
         callback(classDeclarationNode, arg);
     });
 }
-exports.visitDecorator = visitDecorator;
 function visit(directory) {
     var _a, _b, path, entry, content, source, e_2_1, _c, _d, path, e_3_1;
     var e_2, _e, e_3, _f;

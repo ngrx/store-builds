@@ -1,6 +1,14 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.featurePath = exports.group = exports.pluralize = exports.capitalize = exports.underscore = exports.classify = exports.camelize = exports.dasherize = exports.decamelize = void 0;
+exports.decamelize = decamelize;
+exports.dasherize = dasherize;
+exports.camelize = camelize;
+exports.classify = classify;
+exports.underscore = underscore;
+exports.capitalize = capitalize;
+exports.pluralize = pluralize;
+exports.group = group;
+exports.featurePath = featurePath;
 /**
  * @license
  * Copyright Google Inc. All Rights Reserved.
@@ -26,7 +34,6 @@ var STRING_UNDERSCORE_REGEXP_2 = /-|\s+/g;
 function decamelize(str) {
     return str.replace(STRING_DECAMELIZE_REGEXP, '$1_$2').toLowerCase();
 }
-exports.decamelize = decamelize;
 /**
  Replaces underscores, spaces, or camelCase with dashes.
 
@@ -40,7 +47,6 @@ exports.decamelize = decamelize;
 function dasherize(str) {
     return decamelize(str || '').replace(STRING_DASHERIZE_REGEXP, '-');
 }
-exports.dasherize = dasherize;
 /**
  Returns the lowerCamelCase form of a string.
 
@@ -59,7 +65,6 @@ function camelize(str) {
     })
         .replace(/^([A-Z])/, function (match) { return match.toLowerCase(); });
 }
-exports.camelize = camelize;
 /**
  Returns the UpperCamelCase form of a string.
 
@@ -76,7 +81,6 @@ function classify(str) {
         .map(function (part) { return capitalize(camelize(part)); })
         .join('.');
 }
-exports.classify = classify;
 /**
  More general than decamelize. Returns the lower\_case\_and\_underscored
  form of a string.
@@ -94,7 +98,6 @@ function underscore(str) {
         .replace(STRING_UNDERSCORE_REGEXP_2, '_')
         .toLowerCase();
 }
-exports.underscore = underscore;
 /**
  Returns the Capitalized form of a string
 
@@ -108,7 +111,6 @@ exports.underscore = underscore;
 function capitalize(str) {
     return str.charAt(0).toUpperCase() + str.substring(1);
 }
-exports.capitalize = capitalize;
 /**
  Returns the plural form of a string
 
@@ -123,16 +125,13 @@ exports.capitalize = capitalize;
 function pluralize(str) {
     return camelize([/([^aeiou])y$/, /()fe?$/, /([^aeiou]o|[sxz]|[cs]h)$/].map(function (c, i) { return (str = str.replace(c, "$1".concat('iv'[i] || '', "e"))); }) && str + 's');
 }
-exports.pluralize = pluralize;
 function group(name, group) {
     return group ? "".concat(group, "/").concat(name) : name;
 }
-exports.group = group;
 function featurePath(group, flat, path, name) {
     if (group && !flat) {
         return "../../".concat(path, "/").concat(name, "/");
     }
     return group ? "../".concat(path, "/") : './';
 }
-exports.featurePath = featurePath;
 //# sourceMappingURL=strings.js.map

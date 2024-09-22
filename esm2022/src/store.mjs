@@ -49,10 +49,10 @@ export class Store extends Observable {
     removeReducer(key) {
         this.reducerManager.removeReducer(key);
     }
-    /** @nocollapse */ static { this.ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "18.0.0", ngImport: i0, type: Store, deps: [{ token: i1.StateObservable }, { token: i2.ActionsSubject }, { token: i3.ReducerManager }], target: i0.ɵɵFactoryTarget.Injectable }); }
-    /** @nocollapse */ static { this.ɵprov = i0.ɵɵngDeclareInjectable({ minVersion: "12.0.0", version: "18.0.0", ngImport: i0, type: Store }); }
+    /** @nocollapse */ static { this.ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "18.2.5", ngImport: i0, type: Store, deps: [{ token: i1.StateObservable }, { token: i2.ActionsSubject }, { token: i3.ReducerManager }], target: i0.ɵɵFactoryTarget.Injectable }); }
+    /** @nocollapse */ static { this.ɵprov = i0.ɵɵngDeclareInjectable({ minVersion: "12.0.0", version: "18.2.5", ngImport: i0, type: Store }); }
 }
-i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "18.0.0", ngImport: i0, type: Store, decorators: [{
+i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "18.2.5", ngImport: i0, type: Store, decorators: [{
             type: Injectable
         }], ctorParameters: () => [{ type: i1.StateObservable }, { type: i2.ActionsSubject }, { type: i3.ReducerManager }] });
 export const STORE_PROVIDERS = [Store];

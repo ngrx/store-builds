@@ -1,6 +1,8 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.buildRelativePath = exports.findModule = exports.findModuleFromOptions = void 0;
+exports.findModuleFromOptions = findModuleFromOptions;
+exports.findModule = findModule;
+exports.buildRelativePath = buildRelativePath;
 /**
  * @license
  * Copyright Google Inc. All Rights Reserved.
@@ -41,7 +43,6 @@ function findModuleFromOptions(host, options) {
         }
     }
 }
-exports.findModuleFromOptions = findModuleFromOptions;
 /**
  * Function to find the "closest" module to a generated file's path.
  */
@@ -63,7 +64,6 @@ function findModule(host, generateDir) {
     throw new Error('Could not find an NgModule. Use the skip-import ' +
         'option to skip importing in NgModule.');
 }
-exports.findModule = findModule;
 /**
  * Build a relative path from one file path to another file path.
  */
@@ -80,7 +80,6 @@ function buildRelativePath(from, to) {
             ? fixedRelativePath
             : fixedRelativePath + '/').concat(convertToTypeScriptFileName(toFileName));
 }
-exports.buildRelativePath = buildRelativePath;
 function parsePath(path) {
     var pathNormalized = (0, core_1.normalize)(path);
     var filename = (0, core_1.extname)(pathNormalized) ? (0, core_1.basename)(pathNormalized) : '';

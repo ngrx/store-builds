@@ -25,7 +25,9 @@ var __spreadArray = (this && this.__spreadArray) || function (to, from, pack) {
     return to.concat(ar || Array.prototype.slice.call(from));
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.migrateStoreTypedActionReferences = exports.migrateStoreTypedAction = void 0;
+exports.migrateStoreTypedAction = migrateStoreTypedAction;
+exports.migrateStoreTypedActionReferences = migrateStoreTypedActionReferences;
+exports.default = default_1;
 var ts = require("typescript");
 var schematics_1 = require("@angular-devkit/schematics");
 var schematics_core_1 = require("../../schematics-core");
@@ -96,7 +98,6 @@ function migrateStoreTypedAction() {
         });
     };
 }
-exports.migrateStoreTypedAction = migrateStoreTypedAction;
 function migrateStoreTypedActionReferences() {
     return function (tree, _ctx) {
         (0, schematics_core_1.visitTSSourceFiles)(tree, function (sourceFile) {
@@ -113,7 +114,6 @@ function migrateStoreTypedActionReferences() {
         });
     };
 }
-exports.migrateStoreTypedActionReferences = migrateStoreTypedActionReferences;
 function getImportDeclarations(node, imports) {
     if (ts.isImportDeclaration(node)) {
         imports.push(node);
@@ -146,5 +146,4 @@ function default_1() {
         migrateStoreTypedActionReferences(),
     ]);
 }
-exports.default = default_1;
 //# sourceMappingURL=index.js.map

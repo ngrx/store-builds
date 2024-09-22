@@ -1,5 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
+exports.default = default_1;
 var ts = require("typescript");
 var schematics_1 = require("@angular-devkit/schematics");
 var schematics_core_1 = require("../../schematics-core");
@@ -46,5 +47,4 @@ function updatecreateFeature() {
 function default_1() {
     return (0, schematics_1.chain)([updatecreateFeature]);
 }
-exports.default = default_1;
 //# sourceMappingURL=index.js.map
