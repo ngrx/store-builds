@@ -1,1 +1,1 @@
-3b4b9c45 fix(component-store): remove @ngrx/operators from dependencies (#4532)
+4fb78f17 fix(effects): remove @ngrx/operators from dependencies (#4531)
