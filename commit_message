@@ -1,1 +1,1 @@
-7ecd063f chore: update deps (#4527)
+cae429ad fix(signals): remove usage of SIGNAL from @angular/core/primitives/signals package (#4530)
