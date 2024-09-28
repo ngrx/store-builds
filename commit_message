@@ -1,1 +1,1 @@
-4fb78f17 fix(effects): remove @ngrx/operators from dependencies (#4531)
+ffc1d875 fix(signals): use `Injector` of `rxMethod` instance caller if available (#4529)
