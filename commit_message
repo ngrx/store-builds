@@ -1,1 +1,1 @@
-ffc1d875 fix(signals): use `Injector` of `rxMethod` instance caller if available (#4529)
+269bd32b feat(signals): add deepComputed function (#4539)
