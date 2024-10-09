@@ -1,1 +1,1 @@
-806c1d14 docs(eslint-plugin): add docs for signal-state-no-arrays-at-root-level (#4549)
+f9937595 fix(router-store): use non-const enum to allow isolatedModules tsconfig option (#4554)
