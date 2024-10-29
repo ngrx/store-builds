@@ -1,1 +1,1 @@
-f9937595 fix(router-store): use non-const enum to allow isolatedModules tsconfig option (#4554)
+4909627b fix(data): export HttpOptions (#4564)
