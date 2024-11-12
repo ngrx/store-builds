@@ -54,14 +54,10 @@
     },
     ".": {
       "types": "./index.d.ts",
-      "esm2022": "./esm2022/ngrx-store.mjs",
-      "esm": "./esm2022/ngrx-store.mjs",
       "default": "./fesm2022/ngrx-store.mjs"
     },
     "./testing": {
       "types": "./testing/index.d.ts",
-      "esm2022": "./esm2022/testing/ngrx-store-testing.mjs",
-      "esm": "./esm2022/testing/ngrx-store-testing.mjs",
       "default": "./fesm2022/ngrx-store-testing.mjs"
     }
   }
