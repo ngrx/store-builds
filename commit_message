@@ -1,1 +1,1 @@
-361bae62 build: update to Angular 19-rc (#4575)
+c7d0ce6e feat(schematics): change standalone default to true for components (#4569)
