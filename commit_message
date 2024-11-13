@@ -1,1 +1,1 @@
-de3ebcec docs: update @ngrx/store-devtools examples to standalone (#4558)
+57ad5c56 feat(signals): rename `rxMethod.unsubscribe` to `destroy` (#4584)
