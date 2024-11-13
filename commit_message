@@ -1,1 +1,1 @@
-35ad0296 docs(signals): add section about calling rx method in different injection ctx (#4583)
+de3ebcec docs: update @ngrx/store-devtools examples to standalone (#4558)
