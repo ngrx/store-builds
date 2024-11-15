@@ -1,1 +1,1 @@
-57ad5c56 feat(signals): rename `rxMethod.unsubscribe` to `destroy` (#4584)
+ab1d1b45 docs(example-app): remove data-example-app (#4594)
