@@ -1,1 +1,1 @@
-7a842095 feat(signals): throw error in dev mode on state mutation (#4526)
+4e8d529d docs(signals): add info about throwing error on state mutation in dev mode (#4595)
