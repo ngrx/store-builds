@@ -47,7 +47,7 @@ export declare const emptyObjectsAreNotAllowedInProps = "action creator props ca
 type EmptyObjectsAreNotAllowedInProps = typeof emptyObjectsAreNotAllowedInProps;
 export declare const primitivesAreNotAllowedInProps = "action creator props cannot be a primitive value";
 type PrimitivesAreNotAllowedInProps = typeof primitivesAreNotAllowedInProps;
-export type FunctionIsNotAllowed<T, ErrorMessage extends string> = T extends Function ? ErrorMessage : T;
+export type CreatorsNotAllowedCheck<T> = T extends ActionCreator ? 'Action creator is not allowed to be dispatched. Did you forget to call it?' : unknown;
 /**
  * A function that returns an object in the shape of the `Action` interface.  Configured using `createAction`.
  */

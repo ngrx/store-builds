@@ -1,14 +1,15 @@
-import { Provider, Signal } from '@angular/core';
+import { EffectRef, Injector, Provider, Signal } from '@angular/core';
 import { Observable, Observer, Operator } from 'rxjs';
 import { ActionsSubject } from './actions_subject';
-import { Action, ActionReducer, SelectSignalOptions, FunctionIsNotAllowed } from './models';
+import { Action, ActionReducer, CreatorsNotAllowedCheck, SelectSignalOptions } from './models';
 import { ReducerManager } from './reducer_manager';
 import { StateObservable } from './state';
 import * as i0 from "@angular/core";
 export declare class Store<T = object> extends Observable<T> implements Observer<Action> {
     private actionsObserver;
     private reducerManager;
-    constructor(state$: StateObservable, actionsObserver: ActionsSubject, reducerManager: ReducerManager);
+    private injector?;
+    constructor(state$: StateObservable, actionsObserver: ActionsSubject, reducerManager: ReducerManager, injector?: Injector | undefined);
     select<K>(mapFn: (state: T) => K): Observable<K>;
     /**
      * @deprecated Selectors with props are deprecated, for more info see {@link https://github.com/ngrx/platform/issues/2980 Github Issue}
@@ -29,12 +30,16 @@ export declare class Store<T = object> extends Observable<T> implements Observer
      */
     selectSignal<K>(selector: (state: T) => K, options?: SelectSignalOptions<K>): Signal<K>;
     lift<R>(operator: Operator<T, R>): Store<R>;
-    dispatch<V extends Action = Action>(action: V & FunctionIsNotAllowed<V, 'Functions are not allowed to be dispatched. Did you forget to call the action creator function?'>): void;
+    dispatch<V extends Action>(action: V & CreatorsNotAllowedCheck<V>): void;
+    dispatch<V extends () => Action>(dispatchFn: V & CreatorsNotAllowedCheck<V>, config?: {
+        injector: Injector;
+    }): EffectRef;
     next(action: Action): void;
     error(err: any): void;
     complete(): void;
     addReducer<State, Actions extends Action = Action>(key: string, reducer: ActionReducer<State, Actions>): void;
     removeReducer<Key extends Extract<keyof T, string>>(key: Key): void;
+    private processDispatchFn;
     static ɵfac: i0.ɵɵFactoryDeclaration<Store<any>, never>;
     static ɵprov: i0.ɵɵInjectableDeclaration<Store<any>>;
 }

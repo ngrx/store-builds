@@ -1,5 +1,5 @@
 import * as i0 from '@angular/core';
-import { Injectable, InjectionToken, Inject, computed, isDevMode, inject, makeEnvironmentProviders, ENVIRONMENT_INITIALIZER, NgModule, Optional } from '@angular/core';
+import { Injectable, InjectionToken, Inject, computed, effect, untracked, inject, Injector, isDevMode, makeEnvironmentProviders, ENVIRONMENT_INITIALIZER, NgModule, Optional } from '@angular/core';
 import { BehaviorSubject, Observable, Subject, queueScheduler } from 'rxjs';
 import { observeOn, withLatestFrom, scan, pluck, map, distinctUntilChanged } from 'rxjs/operators';
 import { toSignal } from '@angular/core/rxjs-interop';
@@ -124,6 +124,11 @@ function capitalize(text) {
 }
 function uncapitalize(text) {
     return (text.charAt(0).toLowerCase() + text.substring(1));
+}
+function assertDefined(value, name) {
+    if (value === null || value === undefined) {
+        throw new Error(`${name} must be defined.`);
+    }
 }
 
 /**
@@ -515,10 +520,11 @@ const STATE_PROVIDERS = [
 
 // disabled because we have lowercase generics for `select`
 class Store extends Observable {
-    constructor(state$, actionsObserver, reducerManager) {
+    constructor(state$, actionsObserver, reducerManager, injector) {
         super();
         this.actionsObserver = actionsObserver;
         this.reducerManager = reducerManager;
+        this.injector = injector;
         this.source = state$;
         this.state = state$.state;
     }
@@ -539,8 +545,11 @@ class Store extends Observable {
         store.operator = operator;
         return store;
     }
-    dispatch(action) {
-        this.actionsObserver.next(action);
+    dispatch(actionOrDispatchFn, config) {
+        if (typeof actionOrDispatchFn === 'function') {
+            return this.processDispatchFn(actionOrDispatchFn, config);
+        }
+        this.actionsObserver.next(actionOrDispatchFn);
     }
     next(action) {
         this.actionsObserver.next(action);
@@ -557,12 +566,20 @@ class Store extends Observable {
     removeReducer(key) {
         this.reducerManager.removeReducer(key);
     }
-    /** @nocollapse */ static { this.ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "19.0.0", ngImport: i0, type: Store, deps: [{ token: StateObservable }, { token: ActionsSubject }, { token: ReducerManager }], target: i0.ɵɵFactoryTarget.Injectable }); }
+    processDispatchFn(dispatchFn, config) {
+        assertDefined(this.injector, 'Store Injector');
+        const effectInjector = config?.injector ?? getCallerInjector() ?? this.injector;
+        return effect(() => {
+            const action = dispatchFn();
+            untracked(() => this.dispatch(action));
+        }, { injector: effectInjector });
+    }
+    /** @nocollapse */ static { this.ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "19.0.0", ngImport: i0, type: Store, deps: [{ token: StateObservable }, { token: ActionsSubject }, { token: ReducerManager }, { token: i0.Injector }], target: i0.ɵɵFactoryTarget.Injectable }); }
     /** @nocollapse */ static { this.ɵprov = i0.ɵɵngDeclareInjectable({ minVersion: "12.0.0", version: "19.0.0", ngImport: i0, type: Store }); }
 }
 i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "19.0.0", ngImport: i0, type: Store, decorators: [{
             type: Injectable
-        }], ctorParameters: () => [{ type: StateObservable }, { type: ActionsSubject }, { type: ReducerManager }] });
+        }], ctorParameters: () => [{ type: StateObservable }, { type: ActionsSubject }, { type: ReducerManager }, { type: i0.Injector }] });
 const STORE_PROVIDERS = [Store];
 function select(pathOrMapFn, propsOrPath, ...paths) {
     return function selectOperator(source$) {
@@ -580,6 +597,14 @@ function select(pathOrMapFn, propsOrPath, ...paths) {
         }
         return mapped$.pipe(distinctUntilChanged());
     };
+}
+function getCallerInjector() {
+    try {
+        return inject(Injector);
+    }
+    catch (_) {
+        return undefined;
+    }
 }
 
 const RUNTIME_CHECK_URL = 'https://ngrx.io/guide/store/configuration/runtime-checks';
