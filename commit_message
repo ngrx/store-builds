@@ -1,1 +1,1 @@
-2528d399 feat(store): enable dispatching actions on signal changes (#4600)
+e6260829 feat(signals): add `withProps` base feature (#4607)
