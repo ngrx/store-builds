@@ -1,1 +1,1 @@
-e2f35c87 fix(eslint-plugin): support ESM modudule syntax (.mjs)
+5f803d08 feat(signals): add migration for `withProps` (#4612)

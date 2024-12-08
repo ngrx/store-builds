@@ -61,6 +61,11 @@ exports.visitNgModuleExports = visitNgModuleExports;
 exports.visitComponents = visitComponents;
 exports.visitNgModules = visitNgModules;
 exports.visitDecorator = visitDecorator;
+exports.visitImportDeclaration = visitImportDeclaration;
+exports.visitImportSpecifier = visitImportSpecifier;
+exports.visitTypeReference = visitTypeReference;
+exports.visitTypeLiteral = visitTypeLiteral;
+exports.visitCallExpression = visitCallExpression;
 var ts = require("typescript");
 var core_1 = require("@angular-devkit/core");
 function visitTSSourceFiles(tree, visitor) {
@@ -179,9 +184,81 @@ function visitDecorator(sourceFile, decoratorName, callback) {
         callback(classDeclarationNode, arg);
     });
 }
+function visitImportDeclaration(node, callback) {
+    if (ts.isImportDeclaration(node)) {
+        var moduleSpecifier = node.moduleSpecifier.getText();
+        var moduleName = moduleSpecifier.replaceAll('"', '').replaceAll("'", '');
+        callback(node, moduleName);
+    }
+    ts.forEachChild(node, function (child) {
+        visitImportDeclaration(child, callback);
+    });
+}
+function visitImportSpecifier(node, callback) {
+    var e_2, _a, e_3, _b;
+    var importClause = node.importClause;
+    if (!importClause) {
+        return;
+    }
+    var importClauseChildren = importClause.getChildren();
+    try {
+        for (var importClauseChildren_1 = __values(importClauseChildren), importClauseChildren_1_1 = importClauseChildren_1.next(); !importClauseChildren_1_1.done; importClauseChildren_1_1 = importClauseChildren_1.next()) {
+            var namedImport = importClauseChildren_1_1.value;
+            if (ts.isNamedImports(namedImport)) {
+                var namedImportChildren = namedImport.elements;
+                try {
+                    for (var namedImportChildren_1 = (e_3 = void 0, __values(namedImportChildren)), namedImportChildren_1_1 = namedImportChildren_1.next(); !namedImportChildren_1_1.done; namedImportChildren_1_1 = namedImportChildren_1.next()) {
+                        var importSpecifier = namedImportChildren_1_1.value;
+                        if (ts.isImportSpecifier(importSpecifier)) {
+                            callback(importSpecifier);
+                        }
+                    }
+                }
+                catch (e_3_1) { e_3 = { error: e_3_1 }; }
+                finally {
+                    try {
+                        if (namedImportChildren_1_1 && !namedImportChildren_1_1.done && (_b = namedImportChildren_1.return)) _b.call(namedImportChildren_1);
+                    }
+                    finally { if (e_3) throw e_3.error; }
+                }
+            }
+        }
+    }
+    catch (e_2_1) { e_2 = { error: e_2_1 }; }
+    finally {
+        try {
+            if (importClauseChildren_1_1 && !importClauseChildren_1_1.done && (_a = importClauseChildren_1.return)) _a.call(importClauseChildren_1);
+        }
+        finally { if (e_2) throw e_2.error; }
+    }
+}
+function visitTypeReference(node, callback) {
+    if (ts.isTypeReferenceNode(node)) {
+        callback(node);
+    }
+    ts.forEachChild(node, function (child) {
+        visitTypeReference(child, callback);
+    });
+}
+function visitTypeLiteral(node, callback) {
+    if (ts.isTypeLiteralNode(node)) {
+        callback(node);
+    }
+    ts.forEachChild(node, function (child) {
+        visitTypeLiteral(child, callback);
+    });
+}
+function visitCallExpression(node, callback) {
+    if (ts.isCallExpression(node)) {
+        callback(node);
+    }
+    ts.forEachChild(node, function (child) {
+        visitCallExpression(child, callback);
+    });
+}
 function visit(directory) {
-    var _a, _b, path, entry, content, source, e_2_1, _c, _d, path, e_3_1;
-    var e_2, _e, e_3, _f;
+    var _a, _b, path, entry, content, source, e_4_1, _c, _d, path, e_5_1;
+    var e_4, _e, e_5, _f;
     return __generator(this, function (_g) {
         switch (_g.label) {
             case 0:
@@ -205,14 +282,14 @@ function visit(directory) {
                 return [3 /*break*/, 1];
             case 4: return [3 /*break*/, 7];
             case 5:
-                e_2_1 = _g.sent();
-                e_2 = { error: e_2_1 };
+                e_4_1 = _g.sent();
+                e_4 = { error: e_4_1 };
                 return [3 /*break*/, 7];
             case 6:
                 try {
                     if (_b && !_b.done && (_e = _a.return)) _e.call(_a);
                 }
-                finally { if (e_2) throw e_2.error; }
+                finally { if (e_4) throw e_4.error; }
                 return [7 /*endfinally*/];
             case 7:
                 _g.trys.push([7, 12, 13, 14]);
@@ -233,14 +310,14 @@ function visit(directory) {
                 return [3 /*break*/, 8];
             case 11: return [3 /*break*/, 14];
             case 12:
-                e_3_1 = _g.sent();
-                e_3 = { error: e_3_1 };
+                e_5_1 = _g.sent();
+                e_5 = { error: e_5_1 };
                 return [3 /*break*/, 14];
             case 13:
                 try {
                     if (_d && !_d.done && (_f = _c.return)) _f.call(_c);
                 }
-                finally { if (e_3) throw e_3.error; }
+                finally { if (e_5) throw e_5.error; }
                 return [7 /*endfinally*/];
             case 14: return [2 /*return*/];
         }
