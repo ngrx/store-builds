@@ -1,1 +1,1 @@
-4d34dc44 fix(signals): create deep signals for custom class instances (#4614)
+2ac43720 feat(eslint-plugin): add new rule require-super-ondestroy (#4611)
