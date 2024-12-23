@@ -1,1 +1,1 @@
-57d0c523 docs(component-store): add alert about NgRx Signals (#4629)
+5e98142c test(signals): migrate signals testing suite from Jest to Vitest (#4631)
