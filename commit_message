@@ -1,1 +1,1 @@
-5e98142c test(signals): migrate signals testing suite from Jest to Vitest (#4631)
+34d18af5 docs(store): recommend using NgRx Signals instead of ComponentStore (#4640)
