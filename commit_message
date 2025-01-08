@@ -1,1 +1,1 @@
-38035503 build: replace .nvmrc with .node-version for better compatibility (#4657)
+7f420658 fix(signals): remove `signalMethod` instance watcher on destroy (#4648)
