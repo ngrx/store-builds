@@ -1,1 +1,1 @@
-7f420658 fix(signals): remove `signalMethod` instance watcher on destroy (#4648)
+cf62e718 refactor(signals): improve `rxMethod` tests by using child injectors (#4652)
